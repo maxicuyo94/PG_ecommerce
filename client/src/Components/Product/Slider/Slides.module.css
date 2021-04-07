@@ -1,0 +1,46 @@
+.container {
+    height: 80%;
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.imgSmall {
+    width: 50px;
+    height: 50px;
+}
+.imgLarge {
+    width: 100%;
+    height: 100%;
+}
+
+.slide-desc {
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 70%;
+    padding-left: 30px;
+    border-top-left-radius: 20px;
+    opacity: 0.8;
+}
+
+span {
+    color: white;
+    display: block;
+    font-size: 22px;
+    padding: 20px 0 20px 10px;
+}
+
+
+
+/* img {
+    object-fit: contain;
+} */
+
+img:hover {
+    transform: scale(1.2);
+    opacity: 0.7;
+}
