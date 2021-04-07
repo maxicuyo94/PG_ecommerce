@@ -1,0 +1,18 @@
+.Div {
+display:grid;
+grid-template-columns: repeat(3, 1fr);
+width:800px;
+position:relative;
+left:450px;
+top:50px
+}
+
+.Div2 {
+height:100px;
+width:100px;
+background-color: #2C3A40;
+border-width: 3px;
+border: solid; 
+border-color: #9ABF15;
+margin:5px;
+}
