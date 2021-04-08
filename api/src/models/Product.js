@@ -6,52 +6,44 @@ module.exports = (sequelize) => {
   // Definimos el modelo
   sequelize.define('product', {
     id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      unique: true,
     },
     name: {
       type: DataTypes.STRING,
-      varchar: 200,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.STRING,
-      varchar: 20000,
-      allowNull: false,
-    },
-    picture: {
-      type: DataTypes.STRING,
-      varchar: 2000,
+    images: {
+      type: DataTypes.ARRAY(DataTypes.STRING)
     },
     stock: {
       type: DataTypes.INTEGER,
-      char: 10,
-    },
-    barCode: {
-      type: DataTypes.INTEGER,
-      char: 20,
+      allowNull: false
     },
     price: {
       type: DataTypes.FLOAT,
-      char: 15,
+      allowNull: false
     },
-    availableSize: {
-      type: DataTypes.FLOAT,
+    model: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-   availableColor: {
-      type: DataTypes.ENUM('aprobada', 'cancelada', 'rechazada'),
-    },
-    discount: {
-      type: DataTypes.BOOLEAN,
-    },
-    weight: {
-      type: DataTypes.FLOAT,
+    brand: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     ranking: {
-      type: DataTypes.INTEGER,
-      char: 200,
+      type: DataTypes.FLOAT,
+      allowNull: false
     },
-    })
-  };
+    description: {
+      type: DataTypes.JSON,
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    }
+  })
+};
