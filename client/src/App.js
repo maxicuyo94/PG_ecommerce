@@ -1,18 +1,24 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Searchbar} from './Components/Searchbar/Searchbar'
-import {Catalogo} from './Components/Catalogo/Catalogo'
+import {Catalogue} from './Components/Catalogue/Catalogue'
 import {Product} from './Components/Product/Product'
+import {Nav} from './Components/Nav/Nav'
+import {Header} from './Components/Header/Header'
+import {Footer} from './Components/Footer/Footer'
+
+
+
 import { Route} from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-   <Route path='/' component={Searchbar}/>
+   <Route path='/' component={Header}/>
+   <Route path='/' component={Nav}/>
    <Route exact path='/product/:id' component={Product}/>
-   <Route path='/' component={Catalogo}/>
-
+   <Route path='/' component={Catalogue}/>
+   <Route path='/' component={Footer}/>
     </div>
   );
 }

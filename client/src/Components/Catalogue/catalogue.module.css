@@ -16,3 +16,21 @@ border: solid;
 border-color: #9ABF15;
 margin:5px;
 }
+
+.Div3 {
+    position:relative;
+    left:350px
+}
+
+
+.Div4 {
+
+    position:relative;
+    background-color: #E9E9E9;
+    width:200px
+}
+
+
+.Div5 {
+display:grid
+}

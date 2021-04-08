@@ -1,0 +1,20 @@
+
+
+.Div {
+    background-color: #2C3A40;
+    position:relative;
+    top:150px
+}
+
+.Div2 {
+display:flex;
+flex-direction: row;
+}
+
+.Input {
+    height:20px;
+    position: relative;
+    top:35px;
+    left:10px;
+    margin: 5px
+}

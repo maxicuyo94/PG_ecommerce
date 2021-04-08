@@ -4,8 +4,7 @@ import {Buscar} from '../../Actions/actions'
 import Style from './searchbar.module.css'
 
 
-
-export function Searchbar() {
+export function SearchBar() {
 
 const dispatch = useDispatch()
 const [Input, setInput] = useState({input: ''})
