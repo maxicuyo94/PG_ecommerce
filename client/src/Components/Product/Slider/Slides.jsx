@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Slides.module.scss'
 
-export const slidesInfo = [{
+const slidesInfo = [{
     src: 'https://cdn.pixabay.com/photo/2016/12/19/08/39/mobile-phone-1917737_960_720.jpg',
     alt: 'Project 1',
     desc: 'Project 1',
@@ -22,15 +22,15 @@ export const slidesInfo = [{
 ]
 export const SlidesLarge = slidesInfo.map((slide, i) => {
     return (
-        <div className={styles.container}>
+        <div className={styles.SlideLarge}>
             <img className={styles.imgLarge} src={slide.src} alt={slide.alt} key={i} />
         </div>
     )
 })
 export const SlidesSmall = slidesInfo.map((slide, j) => {
     return (
-        <div className={styles.container}>
-            <img className={styles.imgSmall} src={slide.src} alt={slide.alt} key={j} />
+        <div className={styles.SlideSmall}>
+            <img src={slide.src} alt={slide.alt} key={j} />
         </div>
     )
 })
