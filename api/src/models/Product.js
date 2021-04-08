@@ -38,8 +38,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     description: {
-      type: DataTypes.JSON,
-      allowNull: false
+      type: DataTypes.TEXT
     },
     status: {
       type: DataTypes.BOOLEAN,
