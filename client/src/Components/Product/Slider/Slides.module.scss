@@ -1,0 +1,13 @@
+.container {
+    height: 80%;
+    overflow: hidden;
+    position: relative;
+    .imgSmall {
+        width: 80px;
+        height: 80px;
+        cursor: pointer;
+    }
+    .imgLarge {
+        object-fit:contain;
+    }
+}
