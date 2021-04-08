@@ -6,9 +6,6 @@ import {Product} from './Components/Product/Product'
 import {Nav} from './Components/Nav/Nav'
 import {Header} from './Components/Header/Header'
 import {Footer} from './Components/Footer/Footer'
-
-
-
 import { Route} from "react-router-dom";
 
 function App() {
