@@ -30,8 +30,9 @@ export const productDetail =  (input) => {
   return async function (dispatch) {
     const JSON =  await supabase
     .from('product')
-    .select("id")
-    dispatch({type: actionType.PRODUCT_DETAIL, payload: JSON.data})
+    .select("*")
+    .eq('id',input)
+    dispatch({type: actionType.PRODUCT_DETAIL, payload: JSON.data[0]})
   }
 }
 
