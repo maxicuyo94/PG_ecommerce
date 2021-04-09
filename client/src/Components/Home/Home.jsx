@@ -3,7 +3,7 @@ import { getCategories } from '../../Redux/Actions/actions'
 import {useDispatch, useSelector} from 'react-redux'
 
 import style from './home.module.scss'
-import {CategoriesHome} from './categories/CategoriesHome'
+import {CategoriesHome} from './Categories/CategoriesHome'
 
 export function Home() {
     const dispatch = useDispatch()
