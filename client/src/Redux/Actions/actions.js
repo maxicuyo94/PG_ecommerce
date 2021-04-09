@@ -15,11 +15,12 @@ export const Buscar =  (input) => {
 }
 
 
-export const allProducts =  () => {
+export const allProducts =  (limit,offset) => {
   return async function (dispatch) {
     const JSON =  await supabase
     .from('product')
-    .select("*")
+    .select('name,price,images,ranking')
+    .range(limit,offset)
     console.log(JSON)
     dispatch({type: actionType.SEARCH, payload: JSON.data})
   }
