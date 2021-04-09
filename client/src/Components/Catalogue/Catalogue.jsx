@@ -3,9 +3,11 @@ import React, { useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Style from './catalogue.module.css'
 import {Link} from 'react-router-dom'
+
 import {SearchBar} from '../SearchBar/SearchBar'
 import {ProductCard} from '../ProductCard/ProductCard'
 import {allProducts, getCategories, getProductsByCategories } from '../../Redux/Actions/actions'
+
 
 
 export  function Catalogue() {
