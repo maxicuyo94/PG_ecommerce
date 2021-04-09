@@ -14,12 +14,13 @@ export const Buscar =  (input) => {
   }
 }
 
+
 export const allProducts =  () => {
   return async function (dispatch) {
     const JSON =  await supabase
     .from('product')
     .select("*")
-    // dispatch({type: actionType.SEARCH, payload: JSON.data})
+    dispatch({type: actionType.SEARCH, payload: JSON.data})
   }
 }
 
