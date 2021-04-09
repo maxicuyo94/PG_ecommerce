@@ -7,6 +7,8 @@ import {Nav} from './Components/Nav/Nav'
 import {Header} from './Components/Header/Header'
 import {Footer} from './Components/Footer/Footer'
 import { Route} from "react-router-dom";
+import { AddProduct } from './Components/AddProduct/AddProduct.jsx'
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
    <Route exact path='/product/:id' component={Product}/>
    <Route path='/' component={Catalogue}/>
    <Route path='/' component={Footer}/>
+   <Route exact path='/addproduct' component={AddProduct}/>
     </div>
   );
 }
