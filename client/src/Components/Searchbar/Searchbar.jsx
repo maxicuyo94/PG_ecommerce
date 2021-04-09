@@ -4,6 +4,8 @@ import {Buscar} from '../../Redux/Actions/actions'
 import Style from './searchbar.module.css'
 
 
+
+
 export function SearchBar() {
 
 const dispatch = useDispatch()
@@ -12,8 +14,9 @@ const [Input, setInput] = useState({input: ''})
 const handlechange = (e) => {
     setInput({ ...Input, [e.target.name]: e.target.value });
   }
-
- const handlesubmit = (e) => {
+  
+  const handlesubmit = async (e) => {
+    console.log()
      e.preventDefault()
      dispatch(Buscar(Input.input))
      setInput({input:''})

@@ -6,6 +6,8 @@ import style from './home.module.scss'
 import {CategoriesHome} from './Categories/CategoriesHome'
 
 export function Home() {
+
+    console.log(process.env.SUPABASE_KEY)
     const dispatch = useDispatch()
     const categories = useSelector(state=> state.categories)
     useEffect(()=>{
