@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Carousel, { Dots } from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
-import './Slider.scss'
-
+import styles from './Slider.module.scss'
 import { SlidesLarge, SlidesSmall } from './Slides'
 const Slider = () => {
     const [value, setValue] = useState(0);
@@ -12,30 +11,27 @@ const Slider = () => {
     }
 
     return (
-        <>
+        <div className={styles.carousel}>
             <Carousel
-                //arrows
-                //autoPlay={3000}
+                autoPlay={3000}
                 stopAutoPlayOnHover={true}
-                slidesPerPage={1}
-                value={value}
                 infinite
-                animationSpeed={800}
                 centered
+                value={value}
+                slidesPerPage={1}
+                animationSpeed={500}
                 offset={50}
                 itemWidth={800}
                 onChange={onChange}
             >
-                {
-                    SlidesLarge
-                }
+                {SlidesLarge}
             </Carousel>
             <Dots
                 value={value}
                 onChange={onChange}
                 thumbnails={SlidesSmall}
             />
-        </>
+        </div>
     )
 };
 export default Slider

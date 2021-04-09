@@ -1,28 +1,57 @@
 import * as actionType from '../action_types/actionTypes'
 import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = 'https://zgycwtqkzgitgsycfdyk.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
-const supabase = createClient(supabaseUrl, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNzczMDk4NCwiZXhwIjoxOTMzMzA2OTg0fQ.v7M4hQhgNYxkXa3zwDLs5dAWR_1egDuCASySblcNgSA")
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E"
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export const Buscar =  (input) => {
   return async function (dispatch) {
-    const data =  await supabase
-    .from('products')
-    .select("*")
+    const JSON =  await supabase
+    .from('product')
+    .select('*')
     .ilike('name', `%${input}%`)
-    dispatch({type: actionType.SEARCH, payload: data})
+    dispatch({type: actionType.SEARCH, payload: JSON.data})
+  }
+}
+
+
+export const allProducts =  () => {
+  return async function (dispatch) {
+    const JSON =  await supabase
+    .from('product')
+    .select("*")
+    console.log(JSON)
+    dispatch({type: actionType.SEARCH, payload: JSON.data})
   }
 }
 
 export const productDetail =  (input) => {
   return async function (dispatch) {
-    const data =  await supabase
-    .from('products')
+    const JSON =  await supabase
+    .from('product')
     .select("id")
-    dispatch({type: actionType.PRODUCTDETAIL, payload: data})
+    dispatch({type: actionType.PRODUCT_DETAIL, payload: JSON.data})
   }
 }
 
+export const getCategories = () => {
+  return async function (dispatch) {
+    const JSON = await supabase
+    .from('categories')
+    .select('*')
+    dispatch({type: actionType.GET_CATEGORIES, payload: JSON.data})
+  }
+}
+
+export const getProductsByCategories = (id) => {
+  return async function (dispatch) {
+    const JSON = await supabase
+    .from('product_categories')
+    .select(`${id}`)
+    console.log(JSON)
+    // dispatch({type: actionType.GET_CATEGORIES, payload: JSON.data})
+  }
+}
 
 
 export const postProduct = (product) => {
@@ -34,6 +63,6 @@ export const postProduct = (product) => {
       brand: `${product.brand}`, description: `${product.description}`
      },
     ])
-    dispatch({type: actionType.POSTPRUDOCT})
+    dispatch({type: actionType.POST_PRODUCT})
   }
 }
