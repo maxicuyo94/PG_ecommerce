@@ -14,20 +14,21 @@ export const Buscar =  (input) => {
   }
 }
 
+
 export const allProducts =  () => {
   return async function (dispatch) {
     const JSON =  await supabase
-    .from('products')
+    .from('product')
     .select("*")
     console.log(JSON)
-    // dispatch({type: actionType.SEARCH, payload: JSON.data})
+    dispatch({type: actionType.SEARCH, payload: JSON.data})
   }
 }
 
 export const productDetail =  (input) => {
   return async function (dispatch) {
     const JSON =  await supabase
-    .from('products')
+    .from('product')
     .select("id")
     dispatch({type: actionType.PRODUCT_DETAIL, payload: JSON.data})
   }
