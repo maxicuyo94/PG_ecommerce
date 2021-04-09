@@ -44,13 +44,29 @@ export const getCategories = () => {
   }
 }
 
-export const getProductsByCategories = (id) => {
+export const getProductsByCategories = (id, name) => {
   return async function (dispatch) {
     const JSON = await supabase
     .from('product_categories')
-    .select(`${id}`)
-    console.log(JSON)
-    // dispatch({type: actionType.GET_CATEGORIES, payload: JSON.data})
+    .select(`product_id`)
+    .eq(`categories_id`, id)
+
+    const productArr = []
+
+    JSON.data.map(async(productId)=>{
+      
+      const product = await supabase
+      .from('product')
+      .select(`*`)
+      .eq('id', productId.product_id)
+      productArr.push(product.data[0])
+      }
+    )
+    const objProduct = {
+      product: productArr,
+      name: name, 
+    }
+    dispatch({type: actionType.GET_PRODUCTBYCATEGORIES, payload: objProduct})
   }
 }
 

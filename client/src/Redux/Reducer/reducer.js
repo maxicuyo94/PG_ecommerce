@@ -3,7 +3,8 @@ import * as actionType from '../action_types/actionTypes'
 const InitialState = {
     wantedProducts: [],
     productDetail: {},
-    categories: []
+    categories: [],
+    productByCategories: {}
   };
   
   function Reducer(state = InitialState, action) {
@@ -26,8 +27,13 @@ const InitialState = {
           categories: action.payload
         };
   
-      case "":
-        return {};
+      case actionType.GET_PRODUCTBYCATEGORIES:
+        return {
+          ...state,
+          productByCategories: {...state.productByCategories,           
+            [action.payload.name]:{name: action.payload.name, product: action.payload.product}
+        }
+        };
 
       default:
         return state;
