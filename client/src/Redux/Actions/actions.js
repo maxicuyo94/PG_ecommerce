@@ -1,14 +1,14 @@
 import * as actionType from '../action_types/actionTypes'
 import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = 'https://zgycwtqkzgitgsycfdyk.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
-const supabase = createClient(supabaseUrl, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNzczMDk4NCwiZXhwIjoxOTMzMzA2OTg0fQ.v7M4hQhgNYxkXa3zwDLs5dAWR_1egDuCASySblcNgSA")
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E"
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export const Buscar =  (input) => {
   return async function (dispatch) {
     const JSON =  await supabase
-    .from('products')
-    .select("*")
+    .from('product')
+    .select('*')
     .ilike('name', `%${input}%`)
     dispatch({type: actionType.SEARCH, payload: JSON.data})
   }
@@ -17,9 +17,8 @@ export const Buscar =  (input) => {
 export const allProducts =  () => {
   return async function (dispatch) {
     const JSON =  await supabase
-    .from('products')
+    .from('product')
     .select("*")
-    console.log(JSON)
     // dispatch({type: actionType.SEARCH, payload: JSON.data})
   }
 }
@@ -27,7 +26,7 @@ export const allProducts =  () => {
 export const productDetail =  (input) => {
   return async function (dispatch) {
     const JSON =  await supabase
-    .from('products')
+    .from('product')
     .select("id")
     dispatch({type: actionType.PRODUCT_DETAIL, payload: JSON.data})
   }
@@ -42,13 +41,29 @@ export const getCategories = () => {
   }
 }
 
-export const getProductsByCategories = (id) => {
+export const getProductsByCategories = (id, name) => {
   return async function (dispatch) {
     const JSON = await supabase
     .from('product_categories')
-    .select(`${id}`)
-    console.log(JSON)
-    // dispatch({type: actionType.GET_CATEGORIES, payload: JSON.data})
+    .select(`product_id`)
+    .eq(`categories_id`, id)
+
+    const productArr = []
+
+    JSON.data.map(async(productId)=>{
+      
+      const product = await supabase
+      .from('product')
+      .select(`*`)
+      .eq('id', productId.product_id)
+      productArr.push(product.data[0])
+      }
+    )
+    const objProduct = {
+      product: productArr,
+      name: name, 
+    }
+    dispatch({type: actionType.GET_PRODUCTBYCATEGORIES, payload: objProduct})
   }
 }
 
