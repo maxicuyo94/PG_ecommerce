@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import Style from './catalogue.module.css'
 import {Link} from 'react-router-dom'
-import {SearchBar} from '../SearchBar/SearchBar'
+import {SearchBar} from '../Searchbar/SearchBar'
 
 const EJProductos = [{Nombre:'aa'}, {Nombre:'bbb'}, {Nombre:'ccc'},]
 

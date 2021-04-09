@@ -2,7 +2,8 @@ import * as actionType from '../action_types/actionTypes'
 
 const InitialState = {
     wantedProducts: [],
-    productDetail: {}
+    productDetail: {},
+    categories: []
   };
   
   function Reducer(state = InitialState, action) {
@@ -13,14 +14,17 @@ const InitialState = {
           wantedProducts: action.payload
         };
         
-      case actionType.PRODUCTDETAIL:
+      case actionType.PRODUCT_DETAIL:
         return {
           ...state,
           productDetail: action.payload
         };
   
-      case "": 
-        return {};
+      case actionType.GET_CATEGORIES: 
+        return {
+          ...state,
+          categories: action.payload
+        };
   
       case "":
         return {};

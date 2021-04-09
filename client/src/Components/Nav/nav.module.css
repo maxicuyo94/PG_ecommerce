@@ -51,10 +51,27 @@
 
 
 .Div {
-    display:flex; justify-content:space-between; background-color:#FFFFFF;border-bottom-width: 3px; ;border-bottom: solid; border-color:  #9ABF15; 
+    display:flex;
+    width: 100%;
+    flex-direction: column;
+    background-color:#FFFFFF;
+    border-bottom-width: 3px;
+    border-bottom: solid; 
+    border-color:  #9ABF15; 
 }
 
 .Div:hover {
     height:90px;
     transition: 1000ms;
+}
+
+
+.header{
+  width: 100%;
+}
+
+.navigation{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
