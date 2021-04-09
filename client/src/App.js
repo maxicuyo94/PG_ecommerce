@@ -9,11 +9,13 @@ import { Footer } from './Components/Footer/Footer'
 import { Route, Router } from "react-router-dom"
 import { ProductCard } from './Components/ProductCard/ProductCard'
 import {Home} from './Components/Home/Home'
+import { AddProduct } from './Components/AddProduct/AddProduct.jsx'
 
 
 function App() {
   return (
     <div className="App">
+
       {/* <Route path='/' component={Header}/> */}
       <Route path='/' component={Nav} />
       <div className="">
@@ -21,7 +23,9 @@ function App() {
         <Route exact path='/product/:id' component={Product} />
         <Route exact path='/Catalogue' component={Catalogue} />
         <Route path='/' component={Footer} />
+        <Route exact path='/addproduct' component={AddProduct}/>
       </div>
+
     </div>
   );
 }
