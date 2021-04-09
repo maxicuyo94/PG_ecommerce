@@ -1,15 +1,19 @@
-import {useState, React, useEffect}  from 'react';
+import React from 'react';
+import {useState, useEffect}  from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { postProduct } from '../../Redux/Actions/actions.js';
 import style from './addproduct.module.scss';
 
-export function AddProduct({postProduct, showCategories}) {
+export function AddProduct({postProduct}) {
   const [data, setData] = useState({
     name: "",
     description: "",
     price: "",
-    image: "",
+    images: "",
+    brand: "",
+    stock: "",
+    model: "",
     category: [],
 });
 const dispatch = useDispatch()
@@ -35,9 +39,9 @@ const handleSelect = (e) => {
   });
 };
 
-useEffect(() => {
-  showCategories();
-}, []);
+// useEffect(() => {
+//   showCategories();
+// }, []);
 
 const createProd = (data) => {
   dispatch(postProduct(data));
@@ -46,7 +50,7 @@ const createProd = (data) => {
 
   return (
     <div>
-      <form class={style.form}>
+      <form>
         <h1>Agregar producto</h1>
         <div>
           <label>Titulo</label>
@@ -61,11 +65,21 @@ const createProd = (data) => {
           <label>Precio</label>
           <input name="price" onChange={(e) => handleInputChange(e)}></input>
         </div>
-       
+        <div>
+          <label>Marca</label>
+          <input name="brand" onChange={(e) => handleInputChange(e)}></input>
+        </div>
+        <div>
+          <label>Modelo</label>
+          <input name="mdoel" onChange={(e) => handleInputChange(e)}></input>
+        </div>
+        <div>
+          <label>Stock</label>
+          <input name="stock" onChange={(e) => handleInputChange(e)}></input>
+        </div>
         <div>
           <label>Selecciona la Cateogoria</label>
           <select onChange={handleSelect} name="categories" multiple>
-           {/* me tengo que traer las categorias del back y mapearlas */}
           </select>
         </div>
         <div>
