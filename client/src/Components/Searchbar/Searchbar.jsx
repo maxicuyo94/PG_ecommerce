@@ -5,10 +5,9 @@ import Style from './searchbar.module.scss'
 
 
 export function SearchBar() {
-
   const dispatch = useDispatch()
   const [Input, setInput] = useState({ input: '' })
-
+  
   const handlechange = (e) => {
     e.preventDefault();
     setInput({ ...Input, [e.target.name]: e.target.value });
@@ -18,12 +17,12 @@ export function SearchBar() {
     }
   }
 
-  //   const handlesubmit = async (e) => {
-  //     console.log()
-  //      e.preventDefault()
-  //      dispatch(Buscar(Input.input))
-  //      setInput({input:''})
-  //  }   
+    const handlesubmit = async (e) => {
+      console.log()
+       e.preventDefault()
+       dispatch(Buscar(Input.input))
+       setInput({input:''})
+   }   
 
   return (
     <div>
