@@ -1,10 +1,12 @@
 .carousel {
+    z-index: 0;
     width: 100%;
     display: flex;
-    vertical-align: center;
+    //vertical-align: center;
     align-items: center;
     flex-direction: column;
-    margin: auto;
+    margin: 0 auto;
+    justify-content:center;
 
     .Large {
         overflow: hidden;

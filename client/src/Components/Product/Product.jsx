@@ -8,7 +8,7 @@ export const Product = (props) => {
     const details = useSelector(state => state.productDetail)
     const id = props.match.params.id;
     const [value, setValue] = useState(1);
-    const handleSum = () => { setValue(value + 1) }
+    const handleSum = () => { value < details.stock && value < 10 && setValue(value + 1) }
     const handleRes = () => { value > 1 && setValue(value - 1) }
     useEffect(() => {
 
@@ -25,21 +25,12 @@ export const Product = (props) => {
                 <div className={styles.info}>
                     <span>{details.name}</span>
                     <div className={styles.desc}>
-                        <ul className={styles.keys}>
-                            {
-                                details.description &&
-                                Object.keys(details.description).map((el, i) => {
-                                    return <li key={i}>{el}:</li>
-                                })
-                            }
-                        </ul>
                         <ul className={styles.values} >
-                            {
-                                details.description &&
-                                Object.values(details.description).map((el, i) => {
-                                    return <li key={i}>{el}</li>
-                                })
-                            }
+
+                            {details.description &&
+                                Object.entries(details.description).map(([key, value]) => {
+                                    return <li key={key}><b>{key}</b>: {value.toString()}</li>
+                                })}
                         </ul>
 
                     </div>
