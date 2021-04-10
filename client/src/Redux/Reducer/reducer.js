@@ -8,14 +8,13 @@ const InitialState = {
   };
   
   function Reducer(state = InitialState, action) {
-  switch (action.type) { 
-  case actionType.SEARCH:
-    if(!action.priceA){return{...state,wantedProducts: action.payload}}
-    if(action.priceA === '0-100'){return {...state,wantedProducts: action.payload.filter((a) => a.price < 100)}}
-    if(action.priceA === '0-300'){return {...state,wantedProducts: action.payload.filter((a) => a.price < 300)}}
-    if(action.priceA === '+'){return {...state,wantedProducts: action.payload.filter((a) => a.price < 1000)}}
-    if(action.Category === 'Laptops'){return {...state, wantedProducts: action.payload.filter((a)=> a.categories[0].name === 'KeyBoards')}}
-  case actionType.PRODUCT_DETAIL:
+    switch (action.type) { 
+      case actionType.SEARCH:
+        return {
+          ...state,
+          wantedProducts: action.payload
+        };
+        
       case actionType.PRODUCT_DETAIL:
         return {
           ...state,

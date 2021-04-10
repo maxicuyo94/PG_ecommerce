@@ -1,46 +1,19 @@
+$minwidth:600px;
 .carousel {
     z-index: 0;
-    width: 100%;
+
+    /* overflow: hidden; */
     display: flex;
-    //vertical-align: center;
     align-items: center;
     flex-direction: column;
     margin: 0 auto;
-    justify-content:center;
-
-    .Large {
-        overflow: hidden;
-        position: relative;
-
-        height: 100%;
-        transition: 0.5s;
-        margin: 10px;
-
-        &:hover {
-            transform: scale(0.95);
-        }
-
-        img {
-
-            width: 500px;
-            height: 400px;
-
+    justify-content: center;
+    
+    @media screen and (max-width: $minwidth) {
+        div{
+            width: 100vw;
+            margin: 0 !important;
         }
     }
-
-    .Small {
-        overflow: hidden;
-        position: relative;
-        transition: 0.5s ease-out;
-
-        img {
-            width: 80px;
-            height: 80px;
-            cursor: pointer;
-        }
-
-        &:hover {
-            opacity: 0.7;
-        }
-    }
+    
 }
