@@ -77,8 +77,8 @@ export const getProductsByCategories = (id, name) => {
 
 
 export const postProduct = (product) => {
-  return async function (dispatch) {
-    const resp = await supabase
+  return async (dispatch) => {
+    await supabase
       .from("product")
       .insert([
         {
@@ -94,6 +94,23 @@ export const postProduct = (product) => {
           status: product.status,
         },
       ]);
+
+    const category_id = await supabase
+      .from('categories')
+      .select('id')
+      .eq('name', product.categories[0])
+
+    const product_id = await supabase
+      .from('product')
+      .select('id')
+      .eq('name', product.name)
+
+    await supabase
+      .from('product_categories')
+      .insert([
+        { product_id: product_id.data[0].id, categories_id: category_id.data[0].id }
+      ])
+
     dispatch({ type: actionType.POST_PRODUCT });
   };
 };
