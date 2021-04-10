@@ -28,11 +28,11 @@ export function Nav() {
           <SearchBar></SearchBar>
         </div>
         <div className={style.menu}>
-          <a>Carrito</a>
+          <a>Catalogue</a>
           <ul>
-            <Link to='/carrito'>
+            <Link to='/catalogue'>
               <text className={style.c}>
-                carrito
+                Catalogue
           </text>
             </Link>
           </ul>

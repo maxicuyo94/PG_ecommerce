@@ -23,11 +23,7 @@ export function Catalogue() {
     dispatch(allProducts(Pages*4,(Pages*4)+3))
   }, [Pages])
 
-  function handlesubmit(e) {
-    e.preventDefault();
-    dispatch(allProducts())
-  }
-
+console.log(Productos)
   function changepage(e) {
     
     if (e.target.id === "backward" && Pages > 0) {
@@ -40,6 +36,10 @@ export function Catalogue() {
     }
   }
 
+ function filters(e, priceA){
+e.preventDefault();
+dispatch(allProducts(Pages*4,(Pages*4)+3,priceA))
+}
 
 
 // if( i === true){
@@ -95,9 +95,11 @@ return (
 
       <div name='Price' className={Style.Div5}>
         <h1 className={Style.tags}>Prices</h1>
-        <Link>0 - 1.000</Link>
-        <Link>1.000 - 5.000</Link>
-        <Link>5.000 - + </Link>
+        <button onClick={(e) => filters(e,'0-100')}>0 - 100</button>
+
+        <button onClick={(e) => filters(e,'0-300')}>100 - 300</button>
+
+        <button onClick={(e) => filters(e,'+')}>300 - +</button>
       </div>
       <div>
         <h1 className={Style.tags}>Brands</h1>

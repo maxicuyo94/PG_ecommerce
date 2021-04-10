@@ -10,11 +10,25 @@ const InitialState = {
   function Reducer(state = InitialState, action) {
     switch (action.type) { 
       case actionType.SEARCH:
+        if(!action.priceA){return {
+          ...state,
+        wantedProducts: action.payload
+        } }
+        if(action.priceA === '0-100'){
         return {
           ...state,
-          wantedProducts: action.payload
-        };
-        
+          wantedProducts: action.payload.filter((a) => a.price < 100)
+        }}
+        if(action.priceA === '0-300'){
+          return {
+            ...state,
+            wantedProducts: action.payload.filter((a) => a.price < 300)
+          }}
+          if(action.priceA === '+'){
+            return {
+              ...state,
+              wantedProducts: action.payload.filter((a) => a.price < 1000)
+            }}
       case actionType.PRODUCT_DETAIL:
         return {
           ...state,
