@@ -27,7 +27,7 @@ export function Catalogue() {
     e.preventDefault();
     dispatch(allProducts())
   }
-//[0,3] [4,7] [8,11] [12,15] [16,19]
+
   function changepage(e) {
     
     if (e.target.id === "backward" && Pages > 0) {
@@ -72,14 +72,13 @@ return (
         <option value='list' id='list'>List</option>
         <option value='catalogue' id='catalogue'>Catalogue</option>
       </select>
-      <button onClick={(e) => handlesubmit(e)}></button>
     </div>
-    <input style={{width:"20px"}} id="backward" type="image" src={left} alt="img" onClick={e => changepage(e)} />
-    <input style={{width:"20px"}} id="upward" type="image" src={right} alt="img" onClick={e => changepage(e)} />
+    <input style={{width:"20px", position:'relative', right:'50px'}} id="backward" type="image" src={left} alt="img" onClick={e => changepage(e)} />
+    <input style={{width:"20px", position:'relative', right:'50px'}} id="upward" type="image" src={right} alt="img" onClick={e => changepage(e)} />
     <div className={i === true ? Style.Div : Style.DivB} name='muestraproducts'>
       {
         Productos && Productos.map((item, id) =>
-          <ProductCard key={id} name={item.name} price={item.price} images={item.images[0]} />
+          <ProductCard key={id} name={item.name} price={item.price} images={item.images[0]} id={item.id} />
         )
       }
     </div>
@@ -87,7 +86,6 @@ return (
       <div name='categories' className={Style.Div5}>
         <div>
           <h1 className={Style.tags}>Filters</h1>
-          <SearchBar></SearchBar>
         </div>
         <h1 className={Style.tags}>Categories</h1>
         <Link>Custom PCs</Link>

@@ -20,7 +20,7 @@ export const allProducts =  (limit,offset) => {
   return async function (dispatch) {
     const JSON =  await supabase
     .from('product')
-    .select('name,price,images,ranking')
+    .select('name,price,images,ranking,id')
     .range(limit,offset)
     console.log(JSON)
     dispatch({type: actionType.SEARCH, payload: JSON.data})
