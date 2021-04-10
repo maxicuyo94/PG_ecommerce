@@ -73,14 +73,40 @@ export const getProductsByCategories = (id, name) => {
 
 
 export const postProduct = (product) => {
-  return async function (dispatch) {
-    const { data, error } = await supabase
-    .from('product')
-    .insert([
-      { name: `${product.name}`, images: `${product.images}`, stock: `${product.stock}`, price: `${product.price}`, model: `${product.model}`,
-      brand: `${product.brand}`, description: `${product.description}`
-     },
-    ])
-    dispatch({type: actionType.POST_PRODUCT})
-  }
-}
+  return async (dispatch) => {
+    await supabase
+      .from("product")
+      .insert([
+        {
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          // images: product.images,
+          brand: product.brand,
+          stock: product.stock,
+          model: product.model,
+          ranking: product.ranking,
+          storage: product.storage,
+          status: product.status,
+        },
+      ]);
+
+    const category_id = await supabase
+      .from('categories')
+      .select('id')
+      .eq('name', product.categories[0])
+
+    const product_id = await supabase
+      .from('product')
+      .select('id')
+      .eq('name', product.name)
+
+    await supabase
+      .from('product_categories')
+      .insert([
+        { product_id: product_id.data[0].id, categories_id: category_id.data[0].id }
+      ])
+
+    dispatch({ type: actionType.POST_PRODUCT });
+  };
+};
