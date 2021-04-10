@@ -27,6 +27,7 @@ const Slider = ({ images }) => {
                     )
                 })}
             </Carousel>
+
         </div>
     )
 };
