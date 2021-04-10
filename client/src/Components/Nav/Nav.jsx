@@ -17,38 +17,16 @@ export function Nav() {
                 <text>Home</text>
               </Link>
             </li>
-<<<<<<< HEAD
             <li>
-              <Link to='/carrito'>
+              <Link to='/catalogue'>
                 <text>
-                  Cart
+                  Catalogue
                 </text>
               </Link>
             </li>
             <li>
               <SearchBar />
             </li>
-=======
-          </ul>
-        </div>
-        <div>
-          <SearchBar></SearchBar>
-        </div>
-        <div className={style.menu}>
-          <a>Catalogue</a>
-          <ul>
-            <Link to='/catalogue'>
-              <text className={style.c}>
-                Catalogue
-          </text>
-            </Link>
-          </ul>
-        </div>
-        <div className={style.menu}>
-
-          <a>Log In</a>
-          <ul>
->>>>>>> develop
             <li>
               <Link to="/login">
                 <text>Log In</text>
