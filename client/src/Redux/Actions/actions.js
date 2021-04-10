@@ -15,20 +15,30 @@ export const Buscar = (input) => {
   };
 };
 
-export const allProducts = () => {
+
+export const allProducts =  (limit,offset) => {
   return async function (dispatch) {
-    const JSON = await supabase.from("product").select("*");
-    console.log(JSON);
-    dispatch({ type: actionType.SEARCH, payload: JSON.data });
-  };
-};
+    const JSON =  await supabase
+    .from('product')
+    .select('name,price,images,ranking')
+    .range(limit,offset)
+    console.log(JSON)
+    dispatch({type: actionType.SEARCH, payload: JSON.data})
+  }
+}
+
 
 export const productDetail = (input) => {
   return async function (dispatch) {
-    const JSON = await supabase.from("product").select("id");
-    dispatch({ type: actionType.PRODUCT_DETAIL, payload: JSON.data });
-  };
-};
+
+    const JSON =  await supabase
+    .from('product')
+    .select("*")
+    .eq('id',input)
+    dispatch({type: actionType.PRODUCT_DETAIL, payload: JSON.data[0]})
+  }
+}
+
 
 export const getCategories = () => {
   return async function (dispatch) {
@@ -37,13 +47,34 @@ export const getCategories = () => {
   };
 };
 
-export const getProductsByCategories = (id) => {
+export const getProductsByCategories = (id, name) => {
   return async function (dispatch) {
-    const JSON = await supabase.from("product_categories").select(`${id}`);
-    console.log(JSON);
-    // dispatch({type: actionType.GET_CATEGORIES, payload: JSON.data})
-  };
-};
+
+    const JSON = await supabase
+    .from('product_categories')
+    .select(`product_id`)
+    .eq(`categories_id`, id)
+
+    const productArr = []
+
+    JSON.data.map(async(productId)=>{
+      
+      const product = await supabase
+      .from('product')
+      .select(`*`)
+      .eq('id', productId.product_id)
+      productArr.push(product.data[0])
+      }
+    )
+    const objProduct = {
+      product: productArr,
+      name: name, 
+    }
+    dispatch({type: actionType.GET_PRODUCTBYCATEGORIES, payload: objProduct})
+  }
+}
+
+
 
 export const postProduct = (product) => {
   return async function (dispatch) {

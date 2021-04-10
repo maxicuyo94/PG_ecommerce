@@ -3,16 +3,17 @@ import Style from './productcard.module.css'
 import greyheart from './greyheart.png'
 import sCart from './shopping-cart.svg'
 import revs from './grafico-de-barras.png'
-const props = {
-		name: 'Acer 32" Curved AMD FreeSync 1ms 165 Hz FHD 1920x1080 Gaming Monitor HDMI DP',
-		images: ["https://i.ebayimg.com/images/g/vWUAAOSwpqJfsorU/s-l640.jpg"],
-		stock: "15",
-		price: "455.00",
-		ranking: [5]
-	}
+// const props = {
+// 		name: 'Acer 32" Curved AMD FreeSync 1ms 165 Hz FHD 1920x1080 Gaming Monitor HDMI DP',
+// 		images: ["https://i.ebayimg.com/images/g/vWUAAOSwpqJfsorU/s-l640.jpg"],
+// 		stock: "15",
+// 		price: "455.00",
+// 		ranking: [5]
+// 	}
 
 
-export function ProductCard(){
+export function ProductCard(props){
+	
 	return(
 		<div className={Style.container}>
 			<div className={Style.favorite}>
@@ -41,6 +42,4 @@ export function ProductCard(){
 		</div>
 	)
 }
-
-export default ProductCard
 
