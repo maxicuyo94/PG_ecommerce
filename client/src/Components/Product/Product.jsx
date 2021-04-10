@@ -31,6 +31,7 @@ export const Product = (props) => {
                                 Object.entries(details.description).map(([key, value]) => {
                                     return <li key={key}><b>{key}</b>: {value.toString()}</li>
                                 })}
+
                         </ul>
 
                     </div>

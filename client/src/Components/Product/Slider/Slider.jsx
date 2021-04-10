@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
-/* import Carousel, { Dots } from '@brainhubeu/react-carousel'
-import '@brainhubeu/react-carousel/lib/style.css' */
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import styles from './Slider.module.scss'
 const Slider = ({ images }) => {
-    //const [value, setValue] = useState(0);
-    //const onChange = value => { setValue(value) };
 
     return (
         <div className={styles.carousel}>
@@ -25,6 +21,7 @@ const Slider = ({ images }) => {
                     )
                 })}
             </Carousel>
+
         </div>
     )
 };

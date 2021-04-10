@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Style from './catalogue.module.scss'
-import { Link } from 'react-router-dom'
-import { SearchBar } from '../SearchBar/SearchBar'
 import { ProductCard } from '../ProductCard/ProductCard'
 import { allProducts, getCategories, getProductsByCategories } from '../../Redux/Actions/actions'
 import left from '../Catalogue/left-arrow.svg'
@@ -10,7 +8,6 @@ import right from '../Catalogue/right-arrow.svg'
 
 
 export function Catalogue() {
-  let i = true;
   const Productos = useSelector(state => state.wantedProducts)
   const [Pages, setPages] = useState(0)
 
@@ -23,7 +20,7 @@ export function Catalogue() {
     e.preventDefault();
     dispatch(allProducts())
   }
-  //[0,3] [4,7] [8,11] [12,15] [16,19]
+
   function changepage(e) {
 
     if (e.target.id === "backward" && Pages > 0) {
@@ -36,42 +33,52 @@ export function Catalogue() {
     }
   }
 
-
-
-  // if( i === true){
-  //   i = false
-  //   return console.log(i)}
-  // if( i === false){
-  //   i = true;
-  //   return console.log(i)
-  // }
+ function filters(e, priceA){
+e.preventDefault();
+dispatch(allProducts(Pages*4,(Pages*4)+3,priceA))
+}
 
   return (
     <div className={Style.container}>
       <div name='filtros' className={Style.filters}>
         <div name='categories' className={Style.categoriesPrice}>
           <div className={Style.searchFilter}>
-            <h4>Filters</h4>
-            <SearchBar></SearchBar>
-          </div>
-          <h4>Categories</h4>
-          <Link>Custom PCs</Link>
-          <Link>All-in-One</Link>
-          <Link>Compac PCs</Link>
-        </div>
+          <h1 className={Style.tags}>Filters</h1>
+      <select id='category' className={Style.Div5}>
 
-        <div name='Price' className={Style.categoriesPrice}>
-          <h4>Prices</h4>
-          <Link>0 - 1.000</Link>
-          <Link>1.000 - 5.000</Link>
-          <Link>5.000 - + </Link>
-        </div>
-        <div>
-          <h4 className={Style.tags}>Brands</h4>
-          <button>All Brands</button>
-        </div>
+      <option >Search</option>
+
+
+        <option value='Laptops'>Laptops</option>
+
+        <option value='KeyBoards'>KeyBoards</option>
+
+        <option value='Processors'>Processors</option>
+
+        <option value='Monitors'>Monitors</option>
+
+      </select>
+      <h1 className={Style.tags}>Prices</h1>
+      <select id='price' className={Style.Div5}>
+      <option >Search</option>
+
+        <option value='0-100'>0 - 100</option>
+
+        <option value='0-300'>100 - 300</option>
+
+        <option value='+'>300 - +</option>
+      </select>
+
+      <button onClick={(e) => filters(e,document.getElementById('price').value, document.getElementById('category').value)}>Filtrar</button>
+
+      <div>
+        <h1 className={Style.tags}>Brands</h1>
+        <button>All Brands</button>
       </div>
-      {/* <div className={i === true ? Style.Div : Style.DivB} name='muestraproducts'> */}
+            </div>
+            </div>
+            
+      </div>
       <div className={Style.catalogue} name='muestraproducts'>
         <div className={Style.keypad}>
           <div>

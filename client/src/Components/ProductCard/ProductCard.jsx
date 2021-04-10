@@ -3,6 +3,7 @@ import Style from './productcard.module.scss'
 import greyheart from './greyheart.png'
 import sCart from './shopping-cart.svg'
 import revs from './grafico-de-barras.png'
+import {Link} from 'react-router-dom'
 // const props = {
 // 		name: 'Acer 32" Curved AMD FreeSync 1ms 165 Hz FHD 1920x1080 Gaming Monitor HDMI DP',
 // 		images: ["https://i.ebayimg.com/images/g/vWUAAOSwpqJfsorU/s-l640.jpg"],
@@ -16,6 +17,8 @@ export function ProductCard(props){
 	
 	return(
 		<div className={Style.container}>
+		<Link to={`/product/${props.id}`}>
+
 			<div className={Style.favorite}>
 				<img src={greyheart}/>
 				<img src={revs}/>
@@ -33,12 +36,16 @@ export function ProductCard(props){
 			 <div className={Style.name}>
 			 	<p>{props.name}</p>
 			 </div>
+
+           
+
 			 <div className={Style.price}>
 			 	<p><strong>{props.price}</strong></p>
 			 </div>
 			 <div>
 			 	<button> <img src={sCart}/><strong>Add to Cart</strong></button>
 			 </div>
+			 </Link>
 		</div>
 	)
 }
