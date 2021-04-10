@@ -1,43 +1,33 @@
-import React, { useState } from 'react'
-import Carousel, { Dots } from '@brainhubeu/react-carousel'
-import '@brainhubeu/react-carousel/lib/style.css'
+import React from 'react'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 import styles from './Slider.module.scss'
 const Slider = ({ images }) => {
-    const [value, setValue] = useState(0);
-    const onChange = value => { setValue(value) };
-
     return (
         <div className={styles.carousel}>
-            <Carousel 
-                arrows
-                autoPlay={3000}
-                stopAutoPlayOnHover={true}
-                infinite
-                centered
-                value={value}
-                slidesPerPage={1}
-                animationSpeed={500}
-                offset={40}
-                onChange={onChange}
+            <Carousel
+                //axis={'vertical'}
+                //centerMode={true}
+                //centerSlidePercentage={50}
+                showArrows={false}
+                showThumbs={true}
+                dynamicHeight={true}
+                infiniteLoop={true}
+                showIndicators={false}
+                showStatus={false}
+                useKeyboardArrows={true}
+                interval={1000}
+                //width={'80%'}
             >
-                {images?.map((slide, i) => 
-                        <div className={styles.Large} key={i} >
-                            <img src={slide} alt='.' />
-                        </div>
-                    )
-                }
-            </Carousel>
-            <Dots
-                value={value}
-                onChange={onChange}
-                thumbnails={images?.map((slide, i) => {
+                {images?.map((slide, i) => {
                     return (
-                        <div className={styles.Small} key={i}>
+                        <div key={i} >
                             <img src={slide} alt='.' />
                         </div>
                     )
                 })}
-            />
+            </Carousel>
+
         </div>
     )
 };

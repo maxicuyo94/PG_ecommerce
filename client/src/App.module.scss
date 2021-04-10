@@ -3,10 +3,11 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  width: 80vw;
   margin: 0;
+  
+  .containerBody{
+    display: flex;
+    justify-content: center;
+  }
 }
 
-.containerBody{
-  display: flex;
-}

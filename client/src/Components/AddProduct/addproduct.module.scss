@@ -1,6 +1,10 @@
 .form{
+    padding:10%;
     display:flex;
     flex-direction:column;
+    div{
+        width:90%
+    }
     label{
         font-size: 18px;
         margin:3px;
@@ -14,14 +18,15 @@
         background: transparent;
         margin-bottom: 20px;
         border: none;
-        width:50%;
-        border-bottom: 1px solid #9ABF15;
+        width:100%;
+        border-bottom: 1px solid #36825B;
     }
     button{
         border: 2px solid #36825B;
         background-color:transparent;
         padding:10px ;
-        margin:5%;
+                  
+        margin:5% 30%;
         border-radius:4px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
        font-family: Roboto;

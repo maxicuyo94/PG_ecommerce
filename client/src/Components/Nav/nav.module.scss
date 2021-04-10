@@ -1,0 +1,71 @@
+.container {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color:#FFFFFF;
+  border-bottom-width: 3px;
+  border-bottom: solid; 
+  border-color:  #9ABF15; 
+  .contents{
+    display: flex; 
+    width:80%;
+  }
+  ul{
+    display: flex;  
+    justify-content: space-around;
+    align-items: center;
+    width:100%;
+    padding: 0;
+  }
+  ul>li{
+    list-style: none;
+    text{
+      color:rgb(2, 2, 2);
+      font-size:1rem;
+      font-weight: 700;
+    }
+  }
+
+}
+
+
+
+// .Aca  {
+//     width:50px
+// }
+// .b{
+//     color:white;
+//     text-decoration: none;
+//     outline:none;
+//     color: black;
+//     font-family: Poppins;
+//     font-size:16px;
+//     position: relative;
+//     left:15px;
+//     top:-5px
+// }
+
+
+
+// .menu {
+//     display: flex;
+//     align-items: center;
+//     flex-direction: column;
+//     margin-right: 10px;
+//     cursor: pointer;
+//   }
+
+//   .menu ul {
+//     list-style: none;
+//     margin: 0px 0px 0px -14px;
+//     margin-top: 65px;
+//     padding: 0px;
+//     position: absolute;
+//     width: 100px;
+//     text-align: center;
+//   }
+
+//   .menu:hover ul{
+//     display: block;
+//   }
