@@ -1,14 +1,16 @@
 .carousel {
-    width: 100%;
+    position:absolute;
+    width: 40%;
     display: flex;
     vertical-align: center;
     align-items: center;
     flex-direction: column;
     margin: auto;
+    margin-top: 20px;
 
     .Large {
         overflow: hidden;
-        position: relative;
+   
         height: 100%;
         transition: 0.5s;
         margin: 10px;
@@ -18,8 +20,8 @@
         }
 
         img {
-            width: 500px;
-            height: 400px;
+            width: 300px;
+            height: 300px;
         }
     }
 

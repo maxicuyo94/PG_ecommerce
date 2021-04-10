@@ -8,7 +8,7 @@ const Slider = ({ images }) => {
 
     return (
         <div className={styles.carousel}>
-            <Carousel
+            <Carousel 
                 arrows
                 autoPlay={3000}
                 stopAutoPlayOnHover={true}
@@ -17,17 +17,15 @@ const Slider = ({ images }) => {
                 value={value}
                 slidesPerPage={1}
                 animationSpeed={500}
-                offset={20}
-                itemWidth={600}
+                offset={40}
                 onChange={onChange}
             >
-                {images?.map((slide, i) => {
-                    return (
+                {images?.map((slide, i) => 
                         <div className={styles.Large} key={i} >
                             <img src={slide} alt='.' />
                         </div>
                     )
-                })}
+                }
             </Carousel>
             <Dots
                 value={value}
