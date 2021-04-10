@@ -56,7 +56,7 @@ export const getProductsByCategories = (id, name) => {
 
     const productArr = []
 
-    JSON.data.map(async(productId)=>{
+    JSON&&JSON.data&&JSON.data.map(async(productId)=>{
       
       const product = await supabase
       .from('product')
@@ -72,8 +72,6 @@ export const getProductsByCategories = (id, name) => {
     dispatch({type: actionType.GET_PRODUCTBYCATEGORIES, payload: objProduct})
   }
 }
-
-
 
 export const postProduct = (product) => {
   return async function (dispatch) {
