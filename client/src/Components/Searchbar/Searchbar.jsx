@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import {Buscar} from '../../Redux/Actions/actions'
-import Style from './searchbar.module.css'
+import Style from './searchbar.module.scss'
 
 
 
