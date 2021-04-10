@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Carousel, { Dots } from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
 import styles from './Slider.module.scss'
-import { SlidesLarge, SlidesSmall } from './Slides'
-const Slider = () => {
+const Slider = ({ images }) => {
     const [value, setValue] = useState(0);
-    //const [size, setSize] = useState(500)
-    const onChange = value => {
-        setValue(value);
-    }
+    const onChange = value => { setValue(value) };
 
     return (
         <div className={styles.carousel}>
-            <Carousel
+            <Carousel 
+                arrows
                 autoPlay={3000}
                 stopAutoPlayOnHover={true}
                 infinite
@@ -20,16 +17,26 @@ const Slider = () => {
                 value={value}
                 slidesPerPage={1}
                 animationSpeed={500}
-                offset={50}
-                itemWidth={800}
+                offset={40}
                 onChange={onChange}
             >
-                {SlidesLarge}
+                {images?.map((slide, i) => 
+                        <div className={styles.Large} key={i} >
+                            <img src={slide} alt='.' />
+                        </div>
+                    )
+                }
             </Carousel>
             <Dots
                 value={value}
                 onChange={onChange}
-                thumbnails={SlidesSmall}
+                thumbnails={images?.map((slide, i) => {
+                    return (
+                        <div className={styles.Small} key={i}>
+                            <img src={slide} alt='.' />
+                        </div>
+                    )
+                })}
             />
         </div>
     )

@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+<<<<<<< HEAD
 import Style from './catalogue.module.scss'
+=======
+import Style from './catalogue.module.css'
+
+
+
+>>>>>>> develop
 import { Link } from 'react-router-dom'
 import { SearchBar } from '../SearchBar/SearchBar'
 import { ProductCard } from '../ProductCard/ProductCard'
 import { allProducts, getCategories, getProductsByCategories } from '../../Redux/Actions/actions'
 import left from '../Catalogue/left-arrow.svg'
 import right from '../Catalogue/right-arrow.svg'
+
 
 
 export function Catalogue() {
@@ -19,11 +27,15 @@ export function Catalogue() {
     dispatch(allProducts(Pages * 4, (Pages * 4) + 3))
   }, [Pages])
 
+<<<<<<< HEAD
   function handlesubmit(e) {
     e.preventDefault();
     dispatch(allProducts())
   }
   //[0,3] [4,7] [8,11] [12,15] [16,19]
+=======
+console.log(Productos)
+>>>>>>> develop
   function changepage(e) {
 
     if (e.target.id === "backward" && Pages > 0) {
@@ -36,6 +48,10 @@ export function Catalogue() {
     }
   }
 
+ function filters(e, priceA){
+e.preventDefault();
+dispatch(allProducts(Pages*4,(Pages*4)+3,priceA))
+}
 
 
   // if( i === true){
@@ -60,6 +76,7 @@ export function Catalogue() {
           <Link>Compac PCs</Link>
         </div>
 
+<<<<<<< HEAD
         <div name='Price' className={Style.categoriesPrice}>
           <h4>Prices</h4>
           <Link>0 - 1.000</Link>
@@ -69,6 +86,27 @@ export function Catalogue() {
         <div>
           <h4 className={Style.tags}>Brands</h4>
           <button>All Brands</button>
+=======
+      <select id='show'>
+        <option value="" disabled selected>Change view..</option>
+        <option value='list' id='list'>List</option>
+        <option value='catalogue' id='catalogue'>Catalogue</option>
+      </select>
+    </div>
+    <input style={{width:"20px", position:'relative', right:'50px'}} id="backward" type="image" src={left} alt="img" onClick={e => changepage(e)} />
+    <input style={{width:"20px", position:'relative', right:'50px'}} id="upward" type="image" src={right} alt="img" onClick={e => changepage(e)} />
+    <div className={i === true ? Style.Div : Style.DivB} name='muestraproducts'>
+      {
+        Productos && Productos.map((item, id) =>
+          <ProductCard key={id} name={item.name} price={item.price} images={item.images[0]} id={item.id} />
+        )
+      }
+    </div>
+    <div name='filtros' className={Style.Div4}>
+      <div name='categories' className={Style.Div5}>
+        <div>
+          <h1 className={Style.tags}>Filters</h1>
+>>>>>>> develop
         </div>
       </div>
       {/* <div className={i === true ? Style.Div : Style.DivB} name='muestraproducts'> */}
@@ -86,6 +124,7 @@ export function Catalogue() {
               <option value='precios' id='precios'>Precios</option>
             </select>
 
+<<<<<<< HEAD
             <select>
               <option value="" disabled selected>Show..</option>
               <option value='35' id='35'>Compu</option>
@@ -108,6 +147,19 @@ export function Catalogue() {
             )
           }
         </div>
+=======
+      <div name='Price' className={Style.Div5}>
+        <h1 className={Style.tags}>Prices</h1>
+        <button onClick={(e) => filters(e,'0-100')}>0 - 100</button>
+
+        <button onClick={(e) => filters(e,'0-300')}>100 - 300</button>
+
+        <button onClick={(e) => filters(e,'+')}>300 - +</button>
+      </div>
+      <div>
+        <h1 className={Style.tags}>Brands</h1>
+        <button>All Brands</button>
+>>>>>>> develop
       </div>
 
     </div>
