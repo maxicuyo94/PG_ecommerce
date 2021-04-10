@@ -1,27 +1,34 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-import style from "./nav.module.css";
+import style from "./nav.module.scss";
 import { SearchBar } from '../SearchBar/SearchBar'
-import { Header } from '../Header/Header';
+import { Header } from './Header/Header';
 
 
 export function Nav() {
   return (
-    <div className={style.Div}>
-      <div className={style.header}>
+    <div className={style.container}>
         <Header />
-      </div>
-      <div className={style.navigation}>
-        <div className={style.menu}>
-          <a>Home</a>
+        <div className={style.contents}>
           <ul>
             <li>
-              {" "}
               <Link to="/home">
-                <text className={style.b}>Home</text>
+                <text>Home</text>
               </Link>
             </li>
+<<<<<<< HEAD
+            <li>
+              <Link to='/carrito'>
+                <text>
+                  Cart
+                </text>
+              </Link>
+            </li>
+            <li>
+              <SearchBar />
+            </li>
+=======
           </ul>
         </div>
         <div>
@@ -41,24 +48,19 @@ export function Nav() {
 
           <a>Log In</a>
           <ul>
+>>>>>>> develop
             <li>
               <Link to="/login">
-                <text className={style.b}>log in</text>
+                <text>Log In</text>
               </Link>
             </li>
-          </ul>
-        </div>
-        <div className={style.menu}>
-          <a>Register</a>
-          <ul>
             <li>
               <Link to="/register">
-                <text className={style.b}>register</text>
+                <text>Register</text>
               </Link>
             </li>
           </ul>
         </div>
-      </div>
     </div>
   );
 }

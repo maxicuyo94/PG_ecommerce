@@ -1,5 +1,5 @@
 import React from 'react';
-import Style from './productcard.module.css'
+import Style from './productcard.module.scss'
 import greyheart from './greyheart.png'
 import sCart from './shopping-cart.svg'
 import revs from './grafico-de-barras.png'

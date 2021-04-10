@@ -1,29 +1,29 @@
 import React from 'react'
-import Style from './footer.module.css'
+import style from './footer.module.scss'
 
 
 export function Footer() {
-    return (
-        <div className={Style.Div}>
-        <div className={Style.Div2}>
-        <h1 >Sign up to ours NewsLetter</h1>
-        <input  className={Style.Input} placeholder='Email..'/>
-        <button className={Style.Input}>Suscribe</button>
+  return (
+    <div className={style.container}>
+      <div className={style.signNL}>
+        <h4 >Sign up to ours NewsLetter</h4>
+        <input className={style.input} placeholder='Email..' />
+        <button className={style.input}>Suscribe</button>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+        <div>
+          <h4>Information</h4>
         </div>
-          <div style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
-            <div>
-              <h1>Information</h1>
-            </div>
-            <div>
-                <h1>PC parts</h1>
-            </div>
-            <div>
-                <h1>Desktop PC</h1>
-            </div>
-            <div>
-                <h1>Laptops</h1>
-            </div>
-          </div>
+        <div>
+          <h4>PC parts</h4>
         </div>
-    )
+        <div>
+          <h4>Desktop PC</h4>
+        </div>
+        <div>
+          <h4>Laptops</h4>
+        </div>
+      </div>
+    </div>
+  )
 }
