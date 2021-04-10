@@ -1,25 +1,23 @@
 import React from 'react';
 import {useState, useEffect}  from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { postProduct, getCategories } from '../../Redux/Actions/actions.js';
+import { useDispatch } from 'react-redux';
+import { postProduct } from '../../Redux/Actions/actions.js';
 import style from './addproduct.module.scss';
 
-export function AddProduct() {
+export function AddProduct({postProduct}) {
   const [data, setData] = useState({
     name: "",
     description: "",
-    price: 0,
-    // images: "",
+    price: "",
+    images: "",
     brand: "",
-    stock: 0,
+    stock: "",
     model: "",
-    ranking: 0,
-    storage: "",
-    status: true,
+    category: [],
 });
 const dispatch = useDispatch()
-const categories = useSelector(state => state.categories)
+
 
 const handleInputChange = (e) => {
   setData({
@@ -37,63 +35,51 @@ const handleSelect = (e) => {
   }
   setData({
       ...data,
-      categories: selected,
+      category: selected,
   });
 };
 
-useEffect(() => {
-  dispatch(getCategories());
-}, []);
+// useEffect(() => {
+//   showCategories();
+// }, []);
 
 const createProd = (data) => {
   dispatch(postProduct(data));
 };
 
+
   return (
     <div>
-      <form class={style.form}>
+      <form>
         <h1>Agregar producto</h1>
         <div>
-          <label class={style.label}>Titulo</label>
-          <input class={style.input} name="name" onChange={(e) => handleInputChange(e)}></input>
+          <label>Titulo</label>
+          <input name="name" onChange={(e) => handleInputChange(e)}></input>
         </div>
         <div>
-          <label class={style.input}>Descripcion</label>
+          <label>Descripcion</label>
           <textarea name="description" rows="6" cols="40"
           onChange={(e) => handleInputChange(e)}></textarea>
         </div>
         <div>
           <label>Precio</label>
-          <input class={style.input} name="price" onChange={(e) => handleInputChange(e)}></input>
+          <input name="price" onChange={(e) => handleInputChange(e)}></input>
         </div>
         <div>
           <label>Marca</label>
-          <input class={style.input} name="brand" onChange={(e) => handleInputChange(e)}></input>
+          <input name="brand" onChange={(e) => handleInputChange(e)}></input>
         </div>
         <div>
           <label>Modelo</label>
-          <input class={style.input} name="model" onChange={(e) => handleInputChange(e)}></input>
+          <input name="mdoel" onChange={(e) => handleInputChange(e)}></input>
         </div>
         <div>
           <label>Stock</label>
-          <input class={style.input} name="stock" onChange={(e) => handleInputChange(e)}></input>
-        </div>
-        <div>
-          <label>Ranking</label>
-          <input class={style.input} name="ranking" onChange={(e) => handleInputChange(e)}></input>
-        </div>
-        <div>
-          <label>Storage</label>
-          <input class={style.input} name="storage" onChange={(e) => handleInputChange(e)}></input>
+          <input name="stock" onChange={(e) => handleInputChange(e)}></input>
         </div>
         <div>
           <label>Selecciona la Cateogoria</label>
           <select onChange={handleSelect} name="categories" multiple>
-          {categories.map((e) => {
-              return (
-               <option value={e.name} name={e.name}>{e.name}</option>
-                      );
-              })}
           </select>
         </div>
         <div>
