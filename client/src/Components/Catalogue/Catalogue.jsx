@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Style from './catalogue.module.css'
+
+
+
 import { Link } from 'react-router-dom'
 import { SearchBar } from '../SearchBar/SearchBar'
 import { ProductCard } from '../ProductCard/ProductCard'
 import { allProducts, getCategories, getProductsByCategories } from '../../Redux/Actions/actions'
 import left from '../Catalogue/left-arrow.svg'
 import right from '../Catalogue/right-arrow.svg'
+
 
 
 export function Catalogue() {
