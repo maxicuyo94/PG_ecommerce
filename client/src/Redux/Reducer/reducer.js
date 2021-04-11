@@ -5,11 +5,6 @@ const InitialState = {
     productDetail: {},
     categories: [],
     productByCategories: {},
-    filter:{
-      categories:"",
-      prices:100,
-      pages:0
-    }
   };
   
   function Reducer(state = InitialState, action) {
@@ -17,7 +12,7 @@ const InitialState = {
       case actionType.SEARCH:
         return {
           ...state,
-          wantedProducts: action.payload
+          wantedProducts: action.payload.filter(category => category.categories.length).slice(action.pages.limit,action.pages.offset)
         };
         
       case actionType.PRODUCT_DETAIL:

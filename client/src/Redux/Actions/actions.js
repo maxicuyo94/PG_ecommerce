@@ -16,27 +16,16 @@ export const Buscar = (input) => {
 
 
 export const allProducts = (limit, offset, cate, price) => {
-  let nm = !cate? '': 'name'
-  let pr = !price? '': 'product.price'
-  //laptops
+  let nm = !cate ? '' : 'categories.name'
+  let pr = !price ? '' : 'price'
   return async function (dispatch) {
-    const category = await supabase
-      .from('categories')
-      .select('id,name,product(name,images,price,ranking)')
-      .eq(nm, cate)
-      .eq(pr, price)
-     
-    const JSON = category.data.length && category.data.map(i => i.product).flat()
-
-    const dataArr = new Set(JSON.map(i=>i.name));
-
-    console.log("data",Array.from(dataArr))
-
-    let result = JSON.filter(i => i.name );
-
-    console.log("hola",result)
-
-    dispatch({ type: actionType.SEARCH, payload: JSON, pages:{limit,offset} })
+      let JSON = await supabase
+        .from('product')
+        .select('name,images,price,ranking,categories(name)')
+        .eq(nm, cate)
+        .gt(pr,price-200) 
+        .lt(pr,price)   
+    dispatch({ type: actionType.SEARCH, payload: JSON.data, pages:{limit,offset} })
   }
 }
 

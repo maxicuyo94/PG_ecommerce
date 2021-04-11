@@ -1,40 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Style from './catalogue.module.scss'
-import { Link } from 'react-router-dom'
-import { SearchBar } from '../SearchBar/Searchbar';
 import { ProductCard } from '../ProductCard/ProductCard'
-import { allProducts, getCategories, getProductsByCategories } from '../../Redux/Actions/actions'
+import { allProducts, getCategories} from '../../Redux/Actions/actions'
 import left from '../Catalogue/left-arrow.svg'
 import right from '../Catalogue/right-arrow.svg'
 
 
 export function Catalogue() {
-  let i = true;
   const Productos = useSelector(state => state.wantedProducts)
   const Categories = useSelector(state => state.categories)
-  const Filter = useSelector(state => state.filters)
   const [Pages, setPages] = useState(0)
-
-  console.log(Productos)
-
+  const [Category, setCategory] = useState('')
+  const [Prices, setPrices] = useState('')
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(allProducts(Pages * 4, ((Pages * 4) + 4),'',''));
+    dispatch(allProducts(Pages * 4, ((Pages * 4) + 4), Category, Prices));
     dispatch(getCategories())
-  }, [Pages])
+  }, [Pages, Category, Prices])
 
-  // useEffect(() => {
-  //   dispatch(allProducts(Filter.categories, Filter.prices, Filter.pages))
-  // }, [Filter])
+  const handleInputChange = (e) => {
+    e.preventDefault()
+    setCategory(e.target.value)
+  }
 
-  // const handleInputChange = (e) => {
-  //   if (e.target.value !== "All") {
-  //     return dispatch(allProducts(Pages * 4, (Pages * 4) + 3),e.target.value);
-  //   }
-  //   dispatch(allProducts(Pages * 4, (Pages * 4) + 3));
-  // }
+  const handleInputChangeP = (e) => {
+    e.preventDefault()
+    setPrices(e.target.value)
+  }
 
   function changepage(e) {
     if (e.target.id === "backward" && Pages > 0) {
@@ -53,18 +47,18 @@ export function Catalogue() {
             <h4>Filters</h4>
           </div>
           <h4>Categories</h4>
-          <select className={Style.categories} >
-            <option value="All">All</option>
+          <select className={Style.categories} onChange={(e) => { handleInputChange(e) }} >
+            <option value="">All</option>
             {Categories && Categories.map((item, i) => <option key={i} value={item.name}>{item.name}</option>)}
           </select>
         </div>
         <div name='Price' className={Style.categoriesPrice}>
           <h4>Prices</h4>
-          <select>
-            <option value="All">All</option>
-            <option value="100">0 - 100</option>
-            <option value="300">100 - 300</option>
-            <option value="500">300 - + </option>
+          <select onChange={(e) => { handleInputChangeP(e) }}>
+            <option value="">All</option>
+            <option value="200">0 - 200</option>
+            <option value="400">200 - 400</option>
+            <option value="600">400 - + </option>
           </select>
         </div>
         <div>
@@ -72,7 +66,6 @@ export function Catalogue() {
           <button>All Brands</button>
         </div>
       </div>
-      {/* <div className={i === true ? Style.Div : Style.DivB} name='muestraproducts'> */}
       <div className={Style.catalogue} name='muestraproducts'>
         <div className={Style.keypad}>
           <div>
