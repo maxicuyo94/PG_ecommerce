@@ -1,36 +1,41 @@
-import React, { useEffect } from 'react';
-import { getProductsByCategories } from '../../../Redux/Actions/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { ProductCard } from "../../ProductCard/ProductCard";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styles from './CategoriesHome.module.scss'
 
-export function CategoriesHome({ id, name }) {
-    const dispatch = useDispatch();
-    const productCateg = useSelector(state => state.productByCategories)
-
-    useEffect(() => {
-        const getProCate = async () => {
-            await dispatch(getProductsByCategories(id, name))
-        }
-        getProCate();
-    }, [])
-
-    // const showingProducts = async () => {
-    //     if(productCateg.KeyBoards != undefined) {
-    //         for 
-    //     }
-    // }
-
-        console.log("PRODUCTS", productCateg)
+export function CategoriesHome({ id, name, image, price }) {
 
 
     return (
-        <div className="container">
-            <div className="title">
-                <h2>{name}</h2>
-                <div className="showingProducts">
+
+        <div className={styles.container}>
+
+            <div className={styles.image}>
+                {/* <div className={styles.icons}>
+                        <NavLink to={'/'}>
+                            <button><i className="far fa-heart"></i></button>
+                        </NavLink>
+
+                    </div> */}
+                <NavLink to={`/product/${id}`}>
+                    <img src={image} alt='.' />
+                </NavLink>
+            </div>
+
+            <div className={styles.details}>
+
+                <NavLink to={`/product/${id}`}>
+                    <div className={styles.name}>
+                        <span>{name.split(' ').slice(0, 5).join(' ')}</span>
+                    </div>
+                </NavLink>
+                <div >
+                    <span>$<b>{price}</b></span>
 
                 </div>
+
             </div>
+
         </div>
+
     )
 };
