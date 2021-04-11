@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 import style from "./nav.module.scss";
-import { SearchBar } from '../Searchbar/Searchbar';
+import { SearchBar } from '../SearchBar/Searchbar';
 import { Header } from './Header/Header';
 
 
@@ -18,9 +18,16 @@ export function Nav() {
               </Link>
             </li>
             <li>
-              <Link to='/carrito'>
+              <Link to='/catalogue'>
                 <text>
-                  Cart
+                  Catalogue
+                </text>
+              </Link>
+            </li>
+            <li>
+              <Link to='/addproduct'>
+                <text>
+                  Add Product
                 </text>
               </Link>
             </li>
