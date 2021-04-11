@@ -100,6 +100,7 @@ export const postProduct = (product) => {
         .from('categories')
         .select('id')
         .eq('name', category)
+        
       await supabase
         .from('product_categories')
         .insert([
