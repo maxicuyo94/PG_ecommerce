@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styles from './Product.module.scss'
 import Slider from './Slider/Slider'
 import { productDetail } from '../../Redux/Actions/actions'
+
 export const Product = (props) => {
     const dispatch = useDispatch()
     const details = useSelector(state => state.productDetail)

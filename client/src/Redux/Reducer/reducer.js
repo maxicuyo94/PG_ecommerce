@@ -4,7 +4,12 @@ const InitialState = {
     wantedProducts: [],
     productDetail: {},
     categories: [],
-    productByCategories: {}
+    productByCategories: {},
+    filter:{
+      categories:"",
+      prices:100,
+      pages:0
+    }
   };
   
   function Reducer(state = InitialState, action) {
