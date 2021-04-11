@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 import style from "./nav.module.scss";
-import { SearchBar } from '../SearchBar/SearchBar';
+import { SearchBar } from '../SearchBar/Searchbar';
 import { Header } from './Header/Header';
 
 
