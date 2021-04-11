@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { postProduct, getCategories } from '../../Redux/Actions/actions.js';
 import style from './addproduct.module.scss';
+import { AddCategory } from '../AddCategory/AddCategory'
 
 export function AddProduct() {
   const [data, setData] = useState({
@@ -17,7 +18,7 @@ export function AddProduct() {
     ranking: 0,
     storage: "",
     status: true,
-    // categories: []
+    categories: []
 });
 const dispatch = useDispatch()
 const categories = useSelector(state => state.categories)
@@ -44,7 +45,7 @@ const handleSelect = (e) => {
 
 useEffect(() => {
   dispatch(getCategories());
-}, []);
+}, [categories]);
 
 const createProd = (data) => {
   dispatch(postProduct(data));
@@ -110,6 +111,9 @@ const createProd = (data) => {
           </Link>
         </div>
       </form>
+      <div>
+        <AddCategory/>
+      </div>
     </div>
   );
 }

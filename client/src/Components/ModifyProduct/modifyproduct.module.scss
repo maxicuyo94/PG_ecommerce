@@ -1,6 +1,10 @@
-.label{
+.form{
+    display:flex;
+    flex-direction:column;
+    label{
         font-size: 18px;
         margin:3px;
+
     }
     input{
         font-size:18px;
@@ -30,8 +34,4 @@
         }
 
     }
-
-    .labelCat{
-        font-size: 25px;
-        margin:3px;
-    }
+}

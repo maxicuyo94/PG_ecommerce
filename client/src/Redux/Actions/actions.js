@@ -81,14 +81,12 @@ export const postProduct = (product) => {
           name: product.name,
           description: product.description,
           price: product.price,
-          // images: product.images,
           brand: product.brand,
           stock: product.stock,
           model: product.model,
           ranking: product.ranking,
           storage: product.storage,
           status: product.status,
-          // categories: product.categories
         },
       ]);
 
@@ -97,17 +95,70 @@ export const postProduct = (product) => {
       .select('id')
       .eq('name', product.categories[0])
 
-    const product_id = await supabase
+    const productId = await supabase
       .from('product')
       .select('id')
       .eq('name', product.name)
 
-    await supabase
-      .from('product_categories')
-      .insert([
-        { product_id: product_id.data[0].id, categories_id: category_id.data[0].id }
-      ])
+    product.categories.map(async (category) => {
+      const categoryId = await supabase
+        .from('categories')
+        .select('id')
+        .eq('name', category)
+        
+      await supabase
+        .from('product_categories')
+        .insert([
+          { product_id: productId.data[0].id, categories_id: categoryId.data[0].id}
+        ])
+    })
+    dispatch({ type: actionType.POST_PRODUCT })
+  }
+}
 
-    dispatch({ type: actionType.POST_PRODUCT });
-  };
-};
+export const postCategory = (category) => {
+  return async (dispatch) => {
+    await supabase
+      .from("categories")
+      .insert([
+        {
+          name: category.name,
+          description: category.description,
+
+        },
+      ]);
+  }
+}
+
+export const updateProduct = (product, id) => {
+  return async () => {
+    await supabase
+      .from("product")
+      .update({
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        brand: product.brand,
+        stock: product.stock,
+        model: product.model,
+        ranking: product.ranking,
+        storage: product.storage,
+        status: true,
+      })
+      .eq('id', id)
+  }
+}
+
+// export const modifyCategoryOfProduct = (add, delete, product) => {
+//   return async (dispatch) => {
+//     await supabase
+//       .from("categories")
+//       .insert([
+//         {
+//           name: category.name,
+//           description: category.description,
+
+//         },
+//       ]);
+//   }
+// }
