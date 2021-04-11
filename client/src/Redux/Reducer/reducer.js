@@ -27,13 +27,11 @@ const InitialState = {
           categories: action.payload
         };
   
-      case actionType.GET_PRODUCTBYCATEGORIES:
-        return {
-          ...state,
-          productByCategories: {...state.productByCategories,           
-            [action.payload.name]:{name: action.payload.name, product: action.payload.product}
-        }
-        };
+        case actionType.GET_PRODUCTBYCATEGORIES:
+          return {
+            ...state,
+            productByCategories: action.payload
+          };
 
       default:
         return state;

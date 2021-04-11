@@ -24,15 +24,16 @@ $minwidth: 600px;
             padding: 2vmax;
             height: 100%;
             background-color: #E9E9E9;
-            margin-top: 20px;
+            //margin-top: 20px;
 
             .desc {
                 padding: 2vmax;
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 justify-content: flex-start;
                 height: 100%;
                 margin: auto;
+                align-items: flex-start;
 
                 .values {
                     padding: 1vh;
@@ -43,8 +44,31 @@ $minwidth: 600px;
                 li {
                     margin: 1vh 0;
                 }
+
                 li:first-letter {
-                    text-transform:capitalize;
+                    text-transform: capitalize;
+                }
+
+                button {
+                    padding: 1.5vh 2vh;
+                    border: none;
+                    outline: none;
+                    border-radius: 20px;
+                    background-color: #9ABF15;
+                    color: white;
+                    font-weight: bold;
+                    transition: 0.5s;
+
+                    @media screen and (max-width: $minwidth) {
+                        width: 70%;
+                        order: 2;
+                    }
+
+                    &:hover {
+                        background-color: #fff;
+                        color: black;
+                        border: 1px solid #9ABF15;
+                    }
                 }
 
             }
@@ -175,10 +199,10 @@ $minwidth: 600px;
             label {
                 @media screen and (max-width: $minwidth) {
                     order: 3;
+                    width: 100%;
                 }
-
+                padding: 5px;
                 background-color: #E9E9E9;
-                width: 100%;
                 margin: 1vh;
                 text-align: center;
                 border-radius: 10px;
