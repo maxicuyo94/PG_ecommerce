@@ -137,20 +137,19 @@ export const postCategory = (category) => {
   }
 }
 
-export const updateProduct = (type, category, product, id) => {
+export const updateProduct = (type, category, product) => {
   if(type === 'add') {
     return async () => {
       await supabase
       .from('product_categories')
-      .insert([{ product_id: product.id, categories_id: category.id}])
+      .insert([{ product_id: product.id, categories_id: category }])
     }
   } else if(type === 'remove') {
-    console.log('ENtreeeeeee' + category.id + '--' + id)
     return async () => {
       await supabase
         .from('product_categories')
         .delete()
-        .match({ product_id: id, categories_id: category.id })
+        .match({ product_id: product.id, categories_id: category })
     }
   } else {
     return async () => {
@@ -167,24 +166,7 @@ export const updateProduct = (type, category, product, id) => {
           storage: product.storage,
           status: true,
         })
-        .eq('id', id)
+        .eq('id', product.id)
     }
   }
 }
-
-// export const modifyCategoryOfProduct = (type) => {
-
-// }
-// export const modifyCategoryOfProduct = (add, delete, product) => {
-//   return async (dispatch) => {
-//     await supabase
-//       .from("categories")
-//       .insert([
-//         {
-//           name: category.name,
-//           description: category.description,
-
-//         },
-//       ]);
-//   }
-// }

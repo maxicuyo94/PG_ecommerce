@@ -2,11 +2,11 @@ import React from 'react';
 import {useState, useEffect}  from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProduct, productDetail } from '../../Redux/Actions/actions.js';
+import { updateProduct, productDetail, getCategories } from '../../Redux/Actions/actions.js';
 import style from './modifyproduct.module.scss';
 import {  } from '../AddCategory/AddCategory'
 
-export function ModifyProduct() {
+export function ModifyProduct({ id }) {
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -16,10 +16,12 @@ export function ModifyProduct() {
     model: "",
     ranking: 0,
     storage: "",
-    status: true,
+    status: true
 });
 const dispatch = useDispatch()
 const product = useSelector(state => state.productDetail)
+let categories = useSelector(state => state.categories)
+categories = categories.filter(i => product.categories && !product.categories.map(i => i.name).includes(i.name))
 
 const handleInputChange = (e) => {
   setData({
@@ -28,11 +30,14 @@ const handleInputChange = (e) => {
   });
 };
 
-const idPrueba = 'c3543d5a-cb0e-4a0d-8961-f9ad34ea5314'
 useEffect(() => {
-  dispatch(productDetail(idPrueba));
+  dispatch(getCategories());
 }, []);
-console.log(product)
+
+useEffect(() => {
+  dispatch(productDetail(id));
+}, []);
+
 useEffect(() => {
   setData({
     name: product.name,
@@ -48,12 +53,17 @@ useEffect(() => {
 }, [product]);
 
 const modifyProduct = (data) => {
-  dispatch(updateProduct(data, idPrueba));
+  dispatch(updateProduct(null, null, {...data, id}));
 };
 
-const modifyCategory = (e) => {
+const removeCategory = (e) => {
   e.preventDefault()
-  dispatch(updateProduct('remove', product.categories[0], data, idPrueba))
+  dispatch(updateProduct('remove', e.target.value, {...data, id}))
+}
+
+const addCategory = (e) => {
+  e.preventDefault()
+  dispatch(updateProduct('add', e.target.value, {...data, id}))
 }
 
   return (
@@ -95,28 +105,19 @@ const modifyCategory = (e) => {
           <input class={style.input} name="storage" value={data.storage} onChange={(e) => handleInputChange(e)}></input>
         </div>
         <div>
-          {/* {
-            product.categories && product.categories.map(category => <p>{category.name}<button onClick={() => dispatch(updateProduct('remove', 'd7f92a69-1c75-449e-92dd-0a195632f9ed', data, idPrueba))}>X</button></p>)
-          } */}
-          <p>{product.categories && product.categories[0].name}<button onClick={e => modifyCategory(e)}>X</button></p>
-        </div>
-        {/* <div>
-          <label>Selecciona la Cateogoria</label>
-          <select onChange={handleSelect} name="categories" multiple>
-          {categories.map((e) => {
-              return (
-               <option value={e.name} name={e.name}>{e.name}</option>
-                      );
-              })}
+          <select>
+            {
+              categories && categories.map(category => <option onClick={e => addCategory(e)} value={category.id}>{category.name}</option>)
+            }
           </select>
-        </div> */}
-        {/* <div>
-          <label>Agregar imagenes</label>
-          <input type="file" />
-          <button>Agregar</button>
-        </div> */}
+        </div>
         <div>
-          <Link to={`/product/:id`}>
+          {
+            product.categories && product.categories.map(category => <p>{category.name}<button value={category.id} onClick={e => removeCategory(e)}>X</button></p>)
+          }
+        </div>
+        <div>
+          <Link to={`/product/${id}`}>
             <button type="submit" onClick={() => modifyProduct(data)}>
               Modificar producto
             </button>
