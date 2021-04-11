@@ -28,19 +28,11 @@ const handleInputChange = (e) => {
   });
 };
 
-// const handleSelect = (e) => {
-//   let selected = [];
-//   for (let i = 0; i < e.target.options.length; i++) {
-//       if (e.target.options[i].selected === true) {
-//           selected.push(e.target.options[i].value);
-//       }
-//   }
-// };
-const idPrueba = 'b001ef4e-76ab-4635-9667-b43ebbc98f01'
+const idPrueba = 'c3543d5a-cb0e-4a0d-8961-f9ad34ea5314'
 useEffect(() => {
   dispatch(productDetail(idPrueba));
 }, []);
-
+console.log(product)
 useEffect(() => {
   setData({
     name: product.name,
@@ -58,6 +50,11 @@ useEffect(() => {
 const modifyProduct = (data) => {
   dispatch(updateProduct(data, idPrueba));
 };
+
+const modifyCategory = (e) => {
+  e.preventDefault()
+  dispatch(updateProduct('remove', product.categories[0], data, idPrueba))
+}
 
   return (
     <div>
@@ -96,6 +93,12 @@ const modifyProduct = (data) => {
         <div>
           <label>Storage</label>
           <input class={style.input} name="storage" value={data.storage} onChange={(e) => handleInputChange(e)}></input>
+        </div>
+        <div>
+          {/* {
+            product.categories && product.categories.map(category => <p>{category.name}<button onClick={() => dispatch(updateProduct('remove', 'd7f92a69-1c75-449e-92dd-0a195632f9ed', data, idPrueba))}>X</button></p>)
+          } */}
+          <p>{product.categories && product.categories[0].name}<button onClick={e => modifyCategory(e)}>X</button></p>
         </div>
         {/* <div>
           <label>Selecciona la Cateogoria</label>

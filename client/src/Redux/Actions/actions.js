@@ -90,11 +90,6 @@ export const postProduct = (product) => {
         },
       ]);
 
-    const category_id = await supabase
-      .from('categories')
-      .select('id')
-      .eq('name', product.categories[0])
-
     const productId = await supabase
       .from('product')
       .select('id')
@@ -130,35 +125,44 @@ export const postCategory = (category) => {
   }
 }
 
-export const updateProduct = async (add, remove, category, product, id) => {
-  if(add) {
-    await supabase
+export const updateProduct = (type, category, product, id) => {
+  if(type === 'add') {
+    return async () => {
+      await supabase
       .from('product_categories')
       .insert([{ product_id: product.id, categories_id: category.id}])
-  } else if(remove) {
-    await supabase
-      .from('product_categories')
-      .delete()
-      .eq('categories_id', category.id)
-  }
-  return async () => {
-    await supabase
-      .from("product")
-      .update({
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        brand: product.brand,
-        stock: product.stock,
-        model: product.model,
-        ranking: product.ranking,
-        storage: product.storage,
-        status: true,
-      })
-      .eq('id', id)
+    }
+  } else if(type === 'remove') {
+    console.log('ENtreeeeeee' + category.id + '--' + id)
+    return async () => {
+      await supabase
+        .from('product_categories')
+        .delete()
+        .match({ product_id: id, categories_id: category.id })
+    }
+  } else {
+    return async () => {
+      await supabase
+        .from("product")
+        .update({
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          brand: product.brand,
+          stock: product.stock,
+          model: product.model,
+          ranking: product.ranking,
+          storage: product.storage,
+          status: true,
+        })
+        .eq('id', id)
+    }
   }
 }
 
+// export const modifyCategoryOfProduct = (type) => {
+
+// }
 // export const modifyCategoryOfProduct = (add, delete, product) => {
 //   return async (dispatch) => {
 //     await supabase
