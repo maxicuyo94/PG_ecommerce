@@ -30,7 +30,7 @@ export const productDetail =  (input) => {
   return async function (dispatch) {
     const JSON =  await supabase
     .from('product')
-    .select("*")
+    .select('*, categories(id, name)')
     .eq('id',input)
     dispatch({type: actionType.PRODUCT_DETAIL, payload: JSON.data[0]})
   }
@@ -130,7 +130,17 @@ export const postCategory = (category) => {
   }
 }
 
-export const updateProduct = (product, id) => {
+export const updateProduct = async (add, remove, category, product, id) => {
+  if(add) {
+    await supabase
+      .from('product_categories')
+      .insert([{ product_id: product.id, categories_id: category.id}])
+  } else if(remove) {
+    await supabase
+      .from('product_categories')
+      .delete()
+      .eq('categories_id', category.id)
+  }
   return async () => {
     await supabase
       .from("product")
