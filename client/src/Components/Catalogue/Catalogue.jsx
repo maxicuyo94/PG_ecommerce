@@ -16,10 +16,12 @@ export function Catalogue() {
   const Filter = useSelector(state => state.filters)
   const [Pages, setPages] = useState(0)
 
+  console.log(Productos)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(allProducts(Pages * 4, (Pages * 4) + 3));
+    dispatch(allProducts(Pages * 4, ((Pages * 4) + 4),'',''));
     dispatch(getCategories())
   }, [Pages])
 
@@ -27,12 +29,12 @@ export function Catalogue() {
   //   dispatch(allProducts(Filter.categories, Filter.prices, Filter.pages))
   // }, [Filter])
 
-  const handleInputChange = (e) => {
-    if (e.target.value !== "All") {
-      return dispatch(allProducts(Pages * 4, (Pages * 4) + 3));
-    }
-    dispatch(allProducts(Pages * 4, (Pages * 4) + 3));
-  }
+  // const handleInputChange = (e) => {
+  //   if (e.target.value !== "All") {
+  //     return dispatch(allProducts(Pages * 4, (Pages * 4) + 3),e.target.value);
+  //   }
+  //   dispatch(allProducts(Pages * 4, (Pages * 4) + 3));
+  // }
 
   function changepage(e) {
     if (e.target.id === "backward" && Pages > 0) {
@@ -51,7 +53,7 @@ export function Catalogue() {
             <h4>Filters</h4>
           </div>
           <h4>Categories</h4>
-          <select className={Style.categories} onChange={handleInputChange}>
+          <select className={Style.categories} >
             <option value="All">All</option>
             {Categories && Categories.map((item, i) => <option key={i} value={item.name}>{item.name}</option>)}
           </select>
