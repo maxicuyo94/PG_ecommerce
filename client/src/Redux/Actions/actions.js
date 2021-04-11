@@ -54,7 +54,7 @@ export const getProductsByCategories = (id, name) => {
 
     const productArr = []
 
-    JSON.data.map(async(productId)=>{
+    JSON.data && JSON.data.map(async(productId)=>{
       
       const product = await supabase
       .from('product')
@@ -88,6 +88,7 @@ export const postProduct = (product) => {
           ranking: product.ranking,
           storage: product.storage,
           status: product.status,
+          // categories: product.categories
         },
       ]);
 

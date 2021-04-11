@@ -17,6 +17,7 @@ export function AddProduct() {
     ranking: 0,
     storage: "",
     status: true,
+    // categories: []
 });
 const dispatch = useDispatch()
 const categories = useSelector(state => state.categories)
