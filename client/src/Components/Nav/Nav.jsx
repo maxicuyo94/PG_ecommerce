@@ -18,9 +18,16 @@ export function Nav() {
               </Link>
             </li>
             <li>
-              <Link to='/carrito'>
+              <Link to='/catalogue'>
                 <text>
-                  Cart
+                  Catalogue
+                </text>
+              </Link>
+            </li>
+            <li>
+              <Link to='/addproduct'>
+                <text>
+                  Add Product
                 </text>
               </Link>
             </li>
