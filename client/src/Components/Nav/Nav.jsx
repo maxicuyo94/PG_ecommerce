@@ -13,12 +13,12 @@ export function Nav() {
         <div className={style.contents}>
           <ul>
             <li>
-              <Link to="/home">
+              <Link to="/">
                 <text>Home</text>
               </Link>
             </li>
             <li>
-              <Link to='/catalogue'>
+              <Link to='/Catalogue'>
                 <text>
                   Catalogue
                 </text>

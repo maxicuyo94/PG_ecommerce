@@ -12,22 +12,12 @@ import '@brainhubeu/react-carousel/lib/style.css'
 
 export function Home() {
 
-    // console.log(process.env.SUPABASE_KEY)
     const dispatch = useDispatch()
     const categories = useSelector(state => state.categories)
     const productByCategories = useSelector(state => state.productByCategories)
     const products = useSelector(state => state.wantedProducts)
 
-    useEffect(() => {
-        /* const getCateg = async () => {
-            await dispatch(getCategories());
-        }
-        getCateg() */
-        const getProducts = async () => {
-            await dispatch(getProductsByCategories());
-        }
-        getProducts()
-    }, [])
+    useEffect(() => dispatch(getProductsByCategories()), [])
 
     return (
         <div className={styles.container}>
@@ -43,7 +33,7 @@ export function Home() {
                     <div className={styles.title}>
                         <span>Computers</span>
                         <span>Components</span>
-                        <NavLink to={`/home`}>
+                        <NavLink to={`/`}>
                             <h6>See all Products</h6>
                         </NavLink>
                     </div>

@@ -17,7 +17,7 @@ import { ModifyProduct } from './Components/ModifyProduct/ModifyProduct.jsx'
 function App() {
   return (
     <Layout>
-      <Route exact path='/Home' component={Home} />
+      <Route exact path='/' component={Home} />
       <Route exact path='/Product/:id' component={Product} />
       <Route exact path='/Catalogue' component={Catalogue} />
       <Route exact path='/AddProduct' component={AddProduct} />

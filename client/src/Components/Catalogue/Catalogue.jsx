@@ -14,11 +14,17 @@ export function Catalogue() {
   const [Category, setCategory] = useState('')
   const [Prices, setPrices] = useState('')
   const dispatch = useDispatch()
+  const [Input, setInput] = useState({ input: '' })
+  
+  const handlechange = (e) => {
+    e.preventDefault();
+    setInput({ ...Input, [e.target.name]: e.target.value });
+  }
 
   useEffect(() => {
-    dispatch(allProducts(Pages * 4, ((Pages * 4) + 4), Category, Prices));
+    dispatch(allProducts(Pages * 4, ((Pages * 4) + 4), Category, Prices,Input.input));
     dispatch(getCategories())
-  }, [Pages, Category, Prices])
+  }, [Pages, Category, Prices, Input])
 
   const handleInputChange = (e) => {
     e.preventDefault()
@@ -44,6 +50,7 @@ export function Catalogue() {
       <div name='filtros' className={Style.filters}>
         <div name='categories' className={Style.categoriesPrice}>
           <div className={Style.searchFilter}>
+          <input className={Style.Input} placeholder='Buscar...' onChange={(e) => handlechange(e)} value={Input.input} name='input'></input>
             <h4>Filters</h4>
           </div>
           <h4>Categories</h4>
@@ -75,8 +82,8 @@ export function Catalogue() {
         </div>
         <div className={Style.products}>
           {
-            Productos && Productos.map((item, id) =>
-              <ProductCard key={id} name={item.name} price={item.price} images={item.images[0]} />
+            Productos && Productos.map((item) =>
+              <ProductCard  name={item.name} price={item.price} images={item.images[0]} id={item.id} />
             )
           }
         </div>

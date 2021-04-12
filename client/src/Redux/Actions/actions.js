@@ -10,18 +10,20 @@ export const Buscar = (input) => {
       .from('product')
       .select('*')
       .ilike('name', `%${input}%`)
-    dispatch({ type: actionType.SEARCH, payload: JSON.data })
+    dispatch({ type: actionType.SEARCHB, payload: JSON.data })
   }
 }
 
 
-export const allProducts = (limit, offset, cate, price) => {
+export const allProducts = (limit, offset, cate, price,input) => {
   let nm = !cate ? '' : 'categories.name'
   let pr = !price ? '' : 'price'
+  let name = !input ? '' : 'name'
   return async function (dispatch) {
       let JSON = await supabase
         .from('product')
-        .select('name,images,price,ranking,categories(name)')
+        .select('name,images,price,ranking,id,categories(name)')
+        .ilike(name, `%${input}%`)
         .eq(nm, cate)
         .gt(pr,price-200) 
         .lt(pr,price)   
@@ -48,9 +50,9 @@ export const getCategories = () => {
   }
 }
 
-export const getProductsByCategories = () => {
+export const getProductsByCategories = (input) => {
   return async function (dispatch) {
-
+  let Pname = !input ? '' : 'name'
     const categoriesID = await supabase
       .from('categories')
       .select('id, name')
@@ -61,7 +63,7 @@ export const getProductsByCategories = () => {
       categoriesID.data.map(async (categoryID) => {
         const productID = await supabase
           .from('product_categories')
-          .select('product_id')
+          .select('product_id, product(name)')
           .eq('categories_id', categoryID.id)
         return {data: productID.data, name: categoryID.name}
       })

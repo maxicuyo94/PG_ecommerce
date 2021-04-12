@@ -14,6 +14,11 @@ const InitialState = {
           ...state,
           wantedProducts: action.payload.filter(category => category.categories.length).slice(action.pages.limit,action.pages.offset)
         };
+        case actionType.SEARCHB:
+        return {
+          ...state,
+          wantedProducts: action.payload
+        };
         
       case actionType.PRODUCT_DETAIL:
         return {
