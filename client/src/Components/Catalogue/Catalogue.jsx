@@ -49,7 +49,7 @@ export function Catalogue() {
       <div name="filters" className={Style.filters}>
         <div name="categories" className={Style.categoriesPrice}>
           <div className={Style.searchFilter}>
-          <input className={Style.Input} placeholder='Buscar...' onChange={(e) => handlechange(e)} value={Input.input} name='input'></input>
+          <input className={Style.Input} placeholder='Search...' onChange={(e) => handlechange(e)} value={Input.input} name='input'></input>
             <h4>Filters</h4>
           </div>
           <h4>Categories</h4>

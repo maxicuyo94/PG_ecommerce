@@ -14,7 +14,7 @@ export function Home() {
     const productByCategories = useSelector(state => state.productByCategories)
     const [slide, setSlide] = useState(1)
     useEffect(() => {
-        window.innerWidth < 601 ? setSlide(1) : setSlide(5)
+        window.innerWidth < 601 ? setSlide(1) : setSlide(3)
         const getProducts = async () => {
             await dispatch(getProductsByCategories());
         }
@@ -33,7 +33,7 @@ export function Home() {
                 <div className={styles.containerP} >
                     <div className={styles.title}>
                         <span>Processors</span>
-                        <NavLink to={`/home`}>
+                        <NavLink to={`/catalogue`}>
                             <h6>See all Products</h6>
                         </NavLink>
                     </div>
@@ -58,7 +58,7 @@ export function Home() {
                 <div className={styles.containerP} >
                     <div className={styles.title}>
                         <span>Laptops</span>
-                        <NavLink to={`/home`}>
+                        <NavLink to={`/catalogue`}>
                             <h6>See all Products</h6>
                         </NavLink>
                     </div>
@@ -83,7 +83,7 @@ export function Home() {
                 <div className={styles.containerP} >
                     <div className={styles.title}>
                         <span>Keyboards</span>
-                        <NavLink to={`/home`}>
+                        <NavLink to={`/catalogue`}>
                             <h6>See all Products</h6>
                         </NavLink>
                     </div>

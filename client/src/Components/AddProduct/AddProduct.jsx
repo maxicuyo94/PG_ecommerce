@@ -54,7 +54,7 @@ export function AddProduct() {
   return (
     <div>
       <form class={style.form}>
-        <h1>Add product</h1>
+        <h1>Add Product</h1>
         <div>
           <label class={style.label}>Name</label>
           <input
