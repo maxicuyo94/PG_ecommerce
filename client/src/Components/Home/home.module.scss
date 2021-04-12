@@ -1,48 +1,47 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  .containerTitle {
+    height: 10%;
+    //background-color: red;
+  }
+
+  .products {
+    min-height: 90%;
+    //background-color: green;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
-    
-    .containerTitle {
-        height: 10%;
-        //background-color: red;
-    }
+    //margin-bottom:1vmax;
 
-    .products {
-        min-height: 90%;
-        //background-color: green;
+    .containerP {
+      margin-bottom: 10px;
+      display: flex;
+      height: 30%;
+
+      .title {
+        width: 10%;
+        background-color: #485f69;
+        color: white;
+        font-size: 1.5rem;
         display: flex;
         flex-direction: column;
-        //margin-bottom:1vmax;
-        .containerP {
-            margin-bottom: 10px;
-            display: flex;
-            height: 30%;
-            .title {
-                width: 10%;
-                background-color: #485F69;
-                color: white;
-                font-size: 1.5rem;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
-                align-items: center;
-            }
+        justify-content: space-around;
+        align-items: center;
+      }
 
-            .carousel {
-                width: 90%;
-                padding: 1vmax;
-                div{
-                    div{
-                        
-                            button{
-                                background-color: #9abf15;
-                            }
-                        
-                    }
-                }
+      .carousel {
+        width: 90%;
+        padding: 1vmax;
+        div {
+          div {
+            button {
+              background-color: #9abf15;
             }
+          }
         }
-
+      }
     }
+  }
 }

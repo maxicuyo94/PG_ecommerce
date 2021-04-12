@@ -1,156 +1,153 @@
-import * as actionType from '../action_types/actionTypes'
-import { createClient } from '@supabase/supabase-js'
-const supabaseUrl = 'https://zgycwtqkzgitgsycfdyk.supabase.co'
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E"
-const supabase = createClient(supabaseUrl, supabaseKey)
+import * as actionType from "../action_types/actionTypes";
+import { createClient } from "@supabase/supabase-js";
+const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-export const Buscar = (input) => {
+export const Search = (input) => {
   return async function (dispatch) {
     const JSON = await supabase
-      .from('product')
-      .select('*')
-      .ilike('name', `%${input}%`)
-    dispatch({ type: actionType.SEARCH, payload: JSON.data })
-  }
-}
-
+      .from("product")
+      .select("*")
+      .ilike("name", `%${input}%`);
+    dispatch({ type: actionType.SEARCH, payload: JSON.data });
+  };
+};
 
 export const allProducts = (limit, offset, cate, price) => {
-  let nm = !cate ? '' : 'categories.name'
-  let pr = !price ? '' : 'price'
+  let nm = !cate ? "" : "categories.name";
+  let pr = !price ? "" : "price";
   return async function (dispatch) {
-      let JSON = await supabase
-        .from('product')
-        .select('name,images,price,ranking,categories(name)')
-        .eq(nm, cate)
-        .gt(pr,price-200) 
-        .lt(pr,price)   
-    dispatch({ type: actionType.SEARCH, payload: JSON.data, pages:{limit,offset} })
-  }
-}
+    let JSON = await supabase
+      .from("product")
+      .select("name,images,price,ranking,categories(name)")
+      .eq(nm, cate)
+      .gt(pr, price - 200)
+      .lt(pr, price);
+    dispatch({
+      type: actionType.SEARCH,
+      payload: JSON.data,
+      pages: { limit, offset },
+    });
+  };
+};
 
 export const productDetail = (input) => {
   return async function (dispatch) {
-    const JSON =  await supabase
-    .from('product')
-    .select('*, categories(id, name)')
-    .eq('id',input)
-    dispatch({type: actionType.PRODUCT_DETAIL, payload: JSON.data[0]})
-  }
-}
+    const JSON = await supabase
+      .from("product")
+      .select("*, categories(id, name)")
+      .eq("id", input);
+    dispatch({ type: actionType.PRODUCT_DETAIL, payload: JSON.data[0] });
+  };
+};
 
 export const getCategories = () => {
   return async function (dispatch) {
-    const JSON = await supabase
-      .from('categories')
-      .select('*')
-    dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data })
-  }
-}
+    const JSON = await supabase.from("categories").select("*");
+    dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data });
+  };
+};
 
 export const getProductsByCategories = () => {
   return async function (dispatch) {
-
     const categoriesID = await supabase
-      .from('categories')
-      .select('id, name')
-      .range(0, 2)
-
+      .from("categories")
+      .select("id, name")
+      .range(0, 2);
 
     const productsID = await Promise.all(
       categoriesID.data.map(async (categoryID) => {
         const productID = await supabase
-          .from('product_categories')
-          .select('product_id')
-          .eq('categories_id', categoryID.id)
-        return {data: productID.data, name: categoryID.name}
+          .from("product_categories")
+          .select("product_id")
+          .eq("categories_id", categoryID.id);
+        return { data: productID.data, name: categoryID.name };
       })
-    )
+    );
     const products = await Promise.all(
-    productsID.map(async(arrProductbyCategory) => {
-      const promiseProducts = await Promise.all(arrProductbyCategory.data.map(async(objID) => {
-        const product = await supabase
-          .from('product')
-          .select('*')
-          .eq('id', objID.product_id)
-        return product.data[0]
-      }))
-      return {name: arrProductbyCategory.name, data: promiseProducts}
-    }))
+      productsID.map(async (arrProductbyCategory) => {
+        const promiseProducts = await Promise.all(
+          arrProductbyCategory.data.map(async (objID) => {
+            const product = await supabase
+              .from("product")
+              .select("*")
+              .eq("id", objID.product_id);
+            return product.data[0];
+          })
+        );
+        return { name: arrProductbyCategory.name, data: promiseProducts };
+      })
+    );
 
-    dispatch({ type: actionType.GET_PRODUCTBYCATEGORIES, payload: products })
-
-  }
-}
-
+    dispatch({ type: actionType.GET_PRODUCTBYCATEGORIES, payload: products });
+  };
+};
 
 export const postProduct = (product) => {
   return async (dispatch) => {
-    await supabase
-      .from("product")
-      .insert([
-        {
-          name: product.name,
-          description: product.description,
-          price: product.price,
-          brand: product.brand,
-          stock: product.stock,
-          model: product.model,
-          ranking: product.ranking,
-          storage: product.storage,
-          status: product.status,
-        },
-      ]);
+    await supabase.from("product").insert([
+      {
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        brand: product.brand,
+        stock: product.stock,
+        model: product.model,
+        ranking: product.ranking,
+        storage: product.storage,
+        status: product.status,
+      },
+    ]);
 
     const productId = await supabase
-      .from('product')
-      .select('id')
-      .eq('name', product.name)
+      .from("product")
+      .select("id")
+      .eq("name", product.name);
 
     product.categories.map(async (category) => {
       const categoryId = await supabase
-        .from('categories')
-        .select('id')
-        .eq('name', category)
-        
-      await supabase
-        .from('product_categories')
-        .insert([
-          { product_id: productId.data[0].id, categories_id: categoryId.data[0].id}
-        ])
-    })
-    dispatch({ type: actionType.POST_PRODUCT })
-  }
-}
+        .from("categories")
+        .select("id")
+        .eq("name", category);
+
+      await supabase.from("product_categories").insert([
+        {
+          product_id: productId.data[0].id,
+          categories_id: categoryId.data[0].id,
+        },
+      ]);
+    });
+    dispatch({ type: actionType.POST_PRODUCT });
+  };
+};
 
 export const postCategory = (category) => {
   return async (dispatch) => {
-    await supabase
-      .from("categories")
-      .insert([
-        {
-          name: category.name,
-          description: category.description,
-
-        },
-      ]);
-  }
-}
+    await supabase.from("categories").insert([
+      {
+        name: category.name,
+        description: category.description,
+      },
+    ]);
+  };
+};
 
 export const updateProduct = (type, category, product) => {
-  if(type === 'add') {
+  if (type === "add") {
     return async () => {
       await supabase
-      .from('product_categories')
-      .insert([{ product_id: product.id, categories_id: category }])
-    }
-  } else if(type === 'remove') {
+        .from("product_categories")
+        .insert([{ product_id: product.id, categories_id: category }]);
+    };
+  } else if (type === "remove") {
     return async () => {
       await supabase
-        .from('product_categories')
+        .from("product_categories")
         .delete()
-        .match({ product_id: product.id, categories_id: category })
-    }
+        .match({ product_id: product.id, categories_id: category });
+    };
   } else {
     return async () => {
       await supabase
@@ -166,7 +163,7 @@ export const updateProduct = (type, category, product) => {
           storage: product.storage,
           status: true,
         })
-        .eq('id', product.id)
-    }
+        .eq("id", product.id);
+    };
   }
-}
+};

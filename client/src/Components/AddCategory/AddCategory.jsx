@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postCategory } from "../../Redux/Actions/actions.js";
 import style from "./addcategory.module.scss";
@@ -18,35 +17,33 @@ export function AddCategory() {
     });
   };
 
-  const clearInputs = () => {
-  
-  }
+  const clearInputs = () => {};
 
   const createCat = (data) => {
     dispatch(postCategory(data));
-    clearInputs()
+    clearInputs();
   };
   return (
     <div>
-      <label class={style.labelCat}>Crear categoria</label>
+      <label class={style.labelCat}>Create category</label>
       <div>
-        <label class={style.label}>Nombre</label>
+        <label class={style.label}>Name</label>
         <input
-        class={style.input}
-        value={data.name}
+          class={style.input}
+          value={data.name}
           name="name"
           onChange={(e) => handleInputChange(e)}
         ></input>
       </div>
       <div>
-        <label class={style.label}>Descripcion</label>
+        <label class={style.label}>Descripction</label>
         <input
           class={style.input}
           name="description"
           onChange={(e) => handleInputChange(e)}
         ></input>
       </div>
-      <button onClick={() => createCat(data)}>Crear</button>
+      <button onClick={() => createCat(data)}>Create</button>
     </div>
   );
 }
