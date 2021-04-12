@@ -12,7 +12,7 @@ function App() {
     <Layout>
       <Route exact path="/" component={Home} />
       <Route exact path="/Product/:id" component={Product} />
-      <Route exact path="/Catalogue" component={Catalogue} />
+      <Route exact path="/catalogue" component={Catalogue} />
       <Route exact path="/AddProduct" component={AddProduct} />
       <Route
         exact

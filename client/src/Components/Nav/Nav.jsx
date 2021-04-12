@@ -1,11 +1,14 @@
-import React from "react";
+import React from 'react';
 import { Link } from "react-router-dom";
-import { SearchBar } from "../Searchbar/Searchbar";
-import { Header } from "./Header/Header";
+
 import style from "./nav.module.scss";
+import { SearchBar } from '../SearchBar/SearchBar';
+import { Header } from './Header/Header';
+
 
 export function Nav() {
   return (
+    <div className={style.container}>
         <Header />
         <div className={style.contents}>
           <ul>
@@ -15,7 +18,7 @@ export function Nav() {
               </Link>
             </li>
             <li>
-              <Link to='/Catalogue'>
+              <Link to='/catalogue'>
                 <text>
                   Catalogue
                 </text>
