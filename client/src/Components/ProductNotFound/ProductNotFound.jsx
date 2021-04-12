@@ -1,4 +1,5 @@
 import React from "react";
+import Style from "./ProductNotFound.module.scss";
 const image = `image.png`;
 
 const ProductNotFound = () => {
