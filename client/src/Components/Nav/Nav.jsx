@@ -31,9 +31,9 @@ export function Nav() {
                 </text>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <SearchBar />
-            </li>
+            </li> */}
             <li>
               <Link to="/login">
                 <text>Log In</text>

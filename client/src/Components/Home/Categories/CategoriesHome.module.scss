@@ -9,7 +9,7 @@ $minwidth:600px;
     border: 1px solid black;
     border-radius: 20px;
     margin: 1vmax;
-    height: 20vh;
+    height: 90%;
     overflow: hidden;
     padding: 5%;
     transition: 0.5s;
@@ -53,20 +53,22 @@ $minwidth:600px;
         align-items: center;
 
         img {
-          height: 10vh;
-          width: 100%;
-          transition: 0.5s;
-          margin: auto;
+            height: 10vh;
+            width: 70%;
+            transition: 0.5s;
+            display: flex;
+            align-items: center;
+            margin: auto;
 
-          @media screen and (max-width: $minwidth) {
-              height: 15vh;
-              width: 100%;
-          }
+            @media screen and (max-width: $minwidth) {
+                height: 15vh;
+                width: 100%;
+            }
 
-          &:hover {
-              transform: scale(1.05);
-          }
-      }
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
     }
 
     .details {
@@ -87,7 +89,6 @@ $minwidth:600px;
 
                 &:hover {
                     color: #B5E033;
-                    text-decoration-line: underline;
                 }
 
             }

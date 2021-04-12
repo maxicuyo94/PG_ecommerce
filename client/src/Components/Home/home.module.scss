@@ -25,7 +25,7 @@ $minwidth: 600px;
             }
 
             .title {
-                width: 10%;
+                min-width: 15%;
                 background-color: #485F69;
                 color: white;
                 font-size: 1.5rem;
@@ -48,7 +48,7 @@ $minwidth: 600px;
             }
 
             .carousel {
-                width: 90%;
+                width: 85%;
                 padding: 1vmax;
 
                 @media screen and (max-width: $minwidth) {

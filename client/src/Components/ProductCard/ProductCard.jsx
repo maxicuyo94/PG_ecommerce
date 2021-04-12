@@ -12,7 +12,7 @@ export function ProductCard(props){
 			<Link to={`/product/${props.id}`}>
 			<div className={Style.favorite}>
 				<img src={greyheart}/>
-				<img src={revs}/>
+				{/* <img src={revs}/> */}
 			</div>
 			<img src={props.images}
 			 className={Style.img}/>
@@ -28,7 +28,7 @@ export function ProductCard(props){
 			 	<p>{props.name}</p>
 			 </div>
 			 <div className={Style.price}>
-			 	<p><strong>{props.price}</strong></p>
+			 	<p><strong>US$ {props.price}</strong></p>
 			 </div>
 			 <div>
 			 	<button> <img src={sCart}/><strong>Add to Cart</strong></button>
