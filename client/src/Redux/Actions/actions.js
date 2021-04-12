@@ -133,23 +133,18 @@ export const postCategory = (category) => {
   };
 };
 
-export const updateProduct = (type, category, product) => {
-  if (type === "add") {
-    return async () => {
+export const updateProduct = (product, id) => {
+return async () => {
       await supabase
-        .from("product_categories")
-        .insert([{ product_id: product.id, categories_id: category }]);
-    };
-  } else if (type === "remove") {
-    return async () => {
-      await supabase
-        .from("product_categories")
-        .delete()
-        .match({ product_id: product.id, categories_id: category });
-    };
-  } else {
-    return async () => {
-      await supabase
+      .from("product_categories")
+      .delete('*')
+      .match({ product_id: product.id });
+       product.categories.map( async (category) => {
+         await supabase
+         .from("product_categories")
+         .insert([{ product_id: product.id, categories_id: category.id }]);
+          })
+          await supabase
         .from("product")
         .update({
           name: product.name,
@@ -160,9 +155,8 @@ export const updateProduct = (type, category, product) => {
           model: product.model,
           ranking: product.ranking,
           storage: product.storage,
-          status: true,
+          status: true
         })
         .eq("id", product.id);
     };
   }
-};
