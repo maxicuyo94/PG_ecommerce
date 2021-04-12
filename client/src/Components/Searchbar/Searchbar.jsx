@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
-import { Search } from "../../Redux/Actions/actions";
-import Style from "./searchbar.module.scss";
+import { Search, getProductsByCategories } from '../../Redux/Actions/actions'
+import Style from './searchbar.module.scss'
 
 export function SearchBar() {
   const dispatch = useDispatch();
@@ -11,8 +11,7 @@ export function SearchBar() {
     e.preventDefault();
     setInput({ ...Input, [e.target.name]: e.target.value });
     if (e.target.value !== "") {
-      console.log(Input.input);
-      return dispatch(Search(Input.input));
+      return dispatch(getProductsByCategories(Input.input))
     }
   };
 
