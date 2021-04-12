@@ -79,7 +79,7 @@ export function ModifyProduct({ id }) {
   return (
     <div>
       <form class={style.form}>
-        <h1>Add product</h1>
+        <h1>Modify Product</h1>
         <div>
           <label class={style.label}>Titulo</label>
           <input
