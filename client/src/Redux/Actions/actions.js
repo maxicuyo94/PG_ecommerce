@@ -31,11 +31,11 @@ export const allProducts = (limit, offset, cate, price) => {
 
 export const productDetail = (input) => {
   return async function (dispatch) {
-    const JSON = await supabase
-      .from('product')
-      .select("*")
-      .eq('id', input)
-    dispatch({ type: actionType.PRODUCT_DETAIL, payload: JSON.data[0] })
+    const JSON =  await supabase
+    .from('product')
+    .select('*, categories(id, name)')
+    .eq('id',input)
+    dispatch({type: actionType.PRODUCT_DETAIL, payload: JSON.data[0]})
   }
 }
 
@@ -99,8 +99,8 @@ export const postProduct = (product) => {
           ranking: product.ranking,
           storage: product.storage,
           status: product.status,
-        }
-      ])
+        },
+      ]);
 
     const productId = await supabase
       .from('product')
@@ -120,5 +120,53 @@ export const postProduct = (product) => {
         ])
     })
     dispatch({ type: actionType.POST_PRODUCT })
+  }
+}
+
+export const postCategory = (category) => {
+  return async (dispatch) => {
+    await supabase
+      .from("categories")
+      .insert([
+        {
+          name: category.name,
+          description: category.description,
+
+        },
+      ]);
+  }
+}
+
+export const updateProduct = (type, category, product) => {
+  if(type === 'add') {
+    return async () => {
+      await supabase
+      .from('product_categories')
+      .insert([{ product_id: product.id, categories_id: category }])
+    }
+  } else if(type === 'remove') {
+    return async () => {
+      await supabase
+        .from('product_categories')
+        .delete()
+        .match({ product_id: product.id, categories_id: category })
+    }
+  } else {
+    return async () => {
+      await supabase
+        .from("product")
+        .update({
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          brand: product.brand,
+          stock: product.stock,
+          model: product.model,
+          ranking: product.ranking,
+          storage: product.storage,
+          status: true,
+        })
+        .eq('id', product.id)
+    }
   }
 }

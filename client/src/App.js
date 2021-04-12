@@ -11,6 +11,7 @@ import { Route, Router } from "react-router-dom"
 import { ProductCard } from './Components/ProductCard/ProductCard'
 import { Home } from './Components/Home/Home'
 import { AddProduct } from './Components/AddProduct/AddProduct.jsx'
+import { ModifyProduct } from './Components/ModifyProduct/ModifyProduct.jsx'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Route exact path='/Product/:id' component={Product} />
       <Route exact path='/Catalogue' component={Catalogue} />
       <Route exact path='/AddProduct' component={AddProduct} />
+      <Route exact path='/modifyProduct/:id' render={({match}) => <ModifyProduct id={(match.params.id)}/>}/>
     </Layout>
 
 
