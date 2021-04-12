@@ -19,7 +19,7 @@ export function CategoriesHome({ id, name, image, price }) {
         </NavLink>
         <div>
           <span>
-            $<b>{price}</b>
+            US$ <b>{price}</b>
           </span>
         </div>
       </div>

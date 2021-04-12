@@ -8,30 +8,28 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export const Search = (input) => {
   return async function (dispatch) {
     const JSON = await supabase
-      .from("product")
-      .select("*")
-      .ilike("name", `%${input}%`);
-    dispatch({ type: actionType.SEARCH, payload: JSON.data });
-  };
-};
+      .from('product')
+      .select('*')
+      .ilike('name', `%${input}%`)
+    dispatch({ type: actionType.SEARCHB, payload: JSON.data })
+  }
+}
 
-export const allProducts = (limit, offset, cate, price) => {
-  let nm = !cate ? "" : "categories.name";
-  let pr = !price ? "" : "price";
+export const allProducts = (limit, offset, cate, price,input) => {
+  let nm = !cate ? '' : 'categories.name'
+  let pr = !price ? '' : 'price'
+  let name = !input ? '' : 'name'
   return async function (dispatch) {
-    let JSON = await supabase
-      .from("product")
-      .select("name,images,price,ranking,categories(name)")
-      .eq(nm, cate)
-      .gt(pr, price - 200)
-      .lt(pr, price);
-    dispatch({
-      type: actionType.SEARCH,
-      payload: JSON.data,
-      pages: { limit, offset },
-    });
-  };
-};
+      let JSON = await supabase
+        .from('product')
+        .select('name,images,price,ranking,id,categories(name)')
+        .ilike(name, `%${input}%`)
+        .eq(nm, cate)
+        .gt(pr,price-200) 
+        .lt(pr,price)   
+    dispatch({ type: actionType.SEARCH, payload: JSON.data, pages:{limit,offset} })
+  }
+}
 
 export const productDetail = (input) => {
   return async function (dispatch) {
@@ -50,8 +48,9 @@ export const getCategories = () => {
   };
 };
 
-export const getProductsByCategories = () => {
+export const getProductsByCategories = (input) => {
   return async function (dispatch) {
+  let Pname = !input ? '' : 'name'
     const categoriesID = await supabase
       .from("categories")
       .select("id, name")
@@ -60,10 +59,10 @@ export const getProductsByCategories = () => {
     const productsID = await Promise.all(
       categoriesID.data.map(async (categoryID) => {
         const productID = await supabase
-          .from("product_categories")
-          .select("product_id")
-          .eq("categories_id", categoryID.id);
-        return { data: productID.data, name: categoryID.name };
+          .from('product_categories')
+          .select('product_id, product(name)')
+          .eq('categories_id', categoryID.id)
+        return {data: productID.data, name: categoryID.name}
       })
     );
     const products = await Promise.all(

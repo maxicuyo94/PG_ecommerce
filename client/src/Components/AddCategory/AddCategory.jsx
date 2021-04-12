@@ -36,7 +36,7 @@ export function AddCategory() {
         ></input>
       </div>
       <div>
-        <label class={style.label}>Descripction</label>
+        <label class={style.label}>Description</label>
         <input
           class={style.input}
           name="description"

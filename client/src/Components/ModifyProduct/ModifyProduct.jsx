@@ -6,7 +6,6 @@ import {
   productDetail,
   getCategories,
 } from "../../Redux/Actions/actions.js";
-import {} from "../AddCategory/AddCategory";
 import style from "./modifyproduct.module.scss";
 
 export function ModifyProduct({ id }) {
@@ -72,6 +71,7 @@ export function ModifyProduct({ id }) {
   };
 
   const addCategory = (e) => {
+    console.log("hola",e.target.value)
     e.preventDefault();
     dispatch(updateProduct("add", e.target.value, { ...data, id }));
   };
@@ -79,7 +79,7 @@ export function ModifyProduct({ id }) {
   return (
     <div>
       <form class={style.form}>
-        <h1>Add product</h1>
+        <h1>Modify Product</h1>
         <div>
           <label class={style.label}>Titulo</label>
           <input
@@ -158,7 +158,7 @@ export function ModifyProduct({ id }) {
           <select>
             {categories &&
               categories.map((category) => (
-                <option onClick={(e) => addCategory(e)} value={category.id}>
+                <option value={category.id} onClick={(e) => addCategory(e)}>
                   {category.name}
                 </option>
               ))}
