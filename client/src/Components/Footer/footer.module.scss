@@ -1,21 +1,18 @@
 .container {
-    background-color: #2C3A40;
-    width: 100%;
-    overflow: unset;
+  background-color: #2c3a40;
+  width: 100%;
+  overflow: unset;
 
-    .signNL {
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        h4{
-            margin: 0;
-        }
-        }
-    .input {
-        height:20px;
-        margin: 5px
+  .signNL {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h4 {
+      margin: 0;
     }
+  }
+  .input {
+    height: 20px;
+    margin: 5px;
+  }
 }
-
-
-

@@ -1,4 +1,4 @@
-import * as actionType from '../action_types/actionTypes'
+import * as actionType from "../action_types/actionTypes";
 
 const InitialState = {
     wantedProducts: [],
@@ -32,15 +32,14 @@ const InitialState = {
           categories: action.payload
         };
   
-        case actionType.GET_PRODUCTBYCATEGORIES:
-          return {
-            ...state,
-            productByCategories: action.payload
-          };
-
-      default:
-        return state;
-    }
+      case actionType.GET_PRODUCTBYCATEGORIES:
+        return {
+          ...state,
+          productByCategories: action.payload
+        };
+    default:
+      return state;
   }
-  
-  export default Reducer;
+}
+
+export default Reducer;

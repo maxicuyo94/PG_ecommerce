@@ -1,101 +1,48 @@
-.container{
-    display:flex;
-    flex-direction: row;
-    height: 100%;
-    .filters{
-        width: 25%;
-        background-color: #E9E9E9;
-        border-radius: 5%;
-        padding-left: 1rem;
-        padding-right: 1rem;
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 
-        .searchFilter{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            
-            div{
-                width:100%;
-            }
-             div>input {
-                width: 100%;
-            }
-        }
+  .filters {
+    width: 25%;
+    background-color: #e9e9e9;
+    border-radius: 5%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    .searchFilter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      div {
+        width: 100%;
+      }
+      div > input {
+        width: 100%;
+      }
     }
-    .catalogue{
-        @extend .container;
-        flex-direction: column;
-        .keypad{
-            @extend .container;
-            justify-content: space-around;
-            height: 2rem;
-            .backward, .upward{
-                height: 1.5rem;
-                width: 1.5rem;
-            }
-        }
+  }
+  .catalogue {
+    @extend .container;
+    flex-direction: column;
+    .keypad {
+      @extend .container;
+      justify-content: space-around;
+      height: 2rem;
+      .backward,
+      .upward {
+        height: 1.5rem;
+        width: 1.5rem;
+      }
     }
-    .products{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        div{
-            margin: 1rem
-        }
+  }
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    div {
+      margin: 1rem;
     }
+  }
 }
-
-
-// .Div {
-//     display:grid;
-//     grid-template-columns: repeat(3, 1fr);
-//     width:800px;
-//     position:relative;
-//     left:240px;
-//     top:50px
-
-// }
-    
-//     .DivB {
-//         display:flex;
-//         flex-direction: column;
-//         width:800px;
-//         position:relative;
-//         left:350px;
-//         top:50px
-//         }
-    
-//     .Div2 {
-//     height:100px;
-//     width:100px;
-//     background-color: #2C3A40;
-//     border-width: 3px;
-//     border: solid; 
-//     border-color: #9ABF15;
-//     margin:5px;
-//     }
-    
-//     .Div3 {
-//         position:relative;
-//         left:350px;
-//         top:20px
-//     }
-    
-    
-//     .Div4 {
-    
-//         position:absolute;
-//         background-color: #E9E9E9;
-//         width:200px;
-//         top:155px
-//     }
-    
-    
-//     .Div5 {
-//     display:grid
-//     }
-    
-//     .tags { 
-//         font-family:roboto
-//     }    
-

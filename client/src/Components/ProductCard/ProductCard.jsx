@@ -4,14 +4,6 @@ import greyheart from './greyheart.png'
 import sCart from './shopping-cart.svg'
 import revs from './grafico-de-barras.png'
 import {Link} from 'react-router-dom'
-// const props = {
-// 		name: 'Acer 32" Curved AMD FreeSync 1ms 165 Hz FHD 1920x1080 Gaming Monitor HDMI DP',
-// 		images: ["https://i.ebayimg.com/images/g/vWUAAOSwpqJfsorU/s-l640.jpg"],
-// 		stock: "15",
-// 		price: "455.00",
-// 		ranking: [5]
-// 	}
-
 
 export function ProductCard(props){
 	
@@ -45,4 +37,3 @@ export function ProductCard(props){
 		</div>
 	)
 }
-
