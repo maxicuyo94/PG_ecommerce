@@ -42,7 +42,7 @@ export function ModifyProduct({ id }) {
       dispatch(getCategories());
       dispatch(productDetail(id));
     })()
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     setData({
@@ -59,8 +59,8 @@ export function ModifyProduct({ id }) {
     });
   }, [product]);
 
-  const modifyProduct = () => {
-    dispatch(updateProduct(data, id));
+  const modifyProduct = async () => {
+   await dispatch(updateProduct(data, id));
   };
 
   const removeCategory = (e) => {

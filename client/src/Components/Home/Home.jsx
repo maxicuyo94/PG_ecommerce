@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { getProductsByCategories } from '../../Redux/Actions/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from "react-router-dom";
@@ -13,13 +13,11 @@ export function Home() {
     const dispatch = useDispatch()
     const productByCategories = useSelector(state => state.productByCategories)
     const [slide, setSlide] = useState(1)
+    const stableDispatch = useCallback(dispatch, [])
     useEffect(() => {
         window.innerWidth < 601 ? setSlide(1) : setSlide(3)
-        const getProducts = async () => {
-            await dispatch(getProductsByCategories());
-        }
-        getProducts()
-    }, [])
+        stableDispatch(getProductsByCategories());
+    }, [stableDispatch])
 
     return (
         <div className={styles.container}>

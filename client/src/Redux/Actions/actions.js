@@ -157,7 +157,6 @@ export const updateProduct = (product, id) => {
         name: product.name,
         description: product.description,
         price: product.price,
-        images: `["https://i.pinimg.com/736x/b4/d1/6f/b4d16ffc79273cdc090cd472e4a0dabf.jpg"]`,
         brand: product.brand,
         stock: product.stock,
         model: product.model,
