@@ -18,12 +18,16 @@ $minwidth: 600px;
 
     @media screen and (max-width: $minwidth) {
       width: 100%;
+      background-color: transparent !important;
     }
 
     .info {
       padding: 2vmax;
       height: 100%;
       background-color: #e9e9e9;
+      @media screen and (max-width: $minwidth) {
+        background-color: transparent;
+      }
       //margin-top: 20px;
 
       .desc {
@@ -88,7 +92,7 @@ $minwidth: 600px;
     display: flex;
     flex-direction: column;
     width: 50%;
-    min-height: 100%;
+    min-height: 90%;
 
     @media screen and (max-width: $minwidth) {
       width: 100%;
@@ -96,9 +100,11 @@ $minwidth: 600px;
 
     .carousel {
       display: flex;
-      margin: auto;
+      margin: 0 auto;
       height: 80%;
-
+      @media screen and (min-width: $minwidth) {
+        padding: 2vh;
+      }
       ul {
         display: flex;
         padding: 0;
@@ -112,16 +118,17 @@ $minwidth: 600px;
     }
 
     .buy {
-      margin: auto;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
 
-      min-height: 20%;
+      min-height: 10%;
       width: 80%;
 
       @media screen and (max-width: $minwidth) {
         flex-wrap: wrap;
+        width: 90%;
       }
 
       .cont {
