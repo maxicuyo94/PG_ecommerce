@@ -15,12 +15,6 @@ export function SearchBar() {
     }
   };
 
-  const handlesubmit = async (e) => {
-    e.preventDefault();
-    dispatch(Search(Input.input));
-    setInput({ input: "" });
-  };
-
   return (
     <div>
       <input

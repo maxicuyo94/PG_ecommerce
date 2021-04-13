@@ -10,7 +10,7 @@ export function AddProduct() {
     name: "",
     description: "",
     price: 0,
-    // images: "",
+    // images: [],
     brand: "",
     stock: 0,
     model: "",
@@ -44,27 +44,29 @@ export function AddProduct() {
 
   useEffect(() => {
     dispatch(getCategories());
-    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+
   }, [categories]);
 
-  const createProd = (data) => {
-    dispatch(postProduct(data));
+  const createProd = async (data) => {
+   await dispatch(postProduct(data));
   };
 
   return (
-    <div>
-      <form class={style.form}>
+    <div class={style.div}>
+      <form >
         <h1>Add Product</h1>
         <div>
-          <label class={style.label}>Name</label>
+          <label>Name</label>
           <input
-            class={style.input}
             name="name"
             onChange={(e) => handleInputChange(e)}
           ></input>
         </div>
         <div>
-          <label class={style.input}>Description</label>
+          <label>Description</label>
           <textarea
             name="description"
             rows="6"
@@ -75,7 +77,6 @@ export function AddProduct() {
         <div>
           <label>Price</label>
           <input
-            class={style.input}
             name="price"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -83,7 +84,6 @@ export function AddProduct() {
         <div>
           <label>Brand</label>
           <input
-            class={style.input}
             name="brand"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -91,7 +91,6 @@ export function AddProduct() {
         <div>
           <label>Model</label>
           <input
-            class={style.input}
             name="model"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -99,7 +98,6 @@ export function AddProduct() {
         <div>
           <label>Stock</label>
           <input
-            class={style.input}
             name="stock"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -107,7 +105,6 @@ export function AddProduct() {
         <div>
           <label>Ranking</label>
           <input
-            class={style.input}
             name="ranking"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -115,7 +112,6 @@ export function AddProduct() {
         <div>
           <label>Storage</label>
           <input
-            class={style.input}
             name="storage"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -132,13 +128,13 @@ export function AddProduct() {
             })}
           </select>
         </div>
-        <div>
+        <div class={style.upload}>
           <label>Upload images</label>
-          <input type="file" />
-          <button>Add</button>
+          <input class={style.input2} type="file"/>
+          <button class={style.button2} >Add</button>
         </div>
         <div>
-          <Link to={`/product/:id`}>
+          <Link to={`/catalogue`}>
             <button type="submit" onClick={() => createProd(data)}>
               Create product
             </button>

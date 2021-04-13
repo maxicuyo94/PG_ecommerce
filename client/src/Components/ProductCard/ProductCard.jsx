@@ -14,8 +14,7 @@ export function ProductCard(props){
 				<img src={greyheart}/>
 				{/* <img src={revs}/> */}
 			</div>
-			<img src={props.images}
-			 className={Style.img}/>
+			<img src={props.images} className={Style.img}/>
 			 <div className={Style.review}>
 				<label>★</label>
 				<label>★</label>
