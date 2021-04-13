@@ -21,7 +21,6 @@ export function ModifyProduct({ id }) {
     status: true,
     categories: []
   });
-console.log(data.categories)
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetail);
   let categories = useSelector((state) => state.categories);
@@ -65,8 +64,10 @@ console.log(data.categories)
   };
 
   const removeCategory = (e) => {
-    // e.preventDefault();
-    // dispatch(updateProduct("remove", e.target.value, { ...data, id }));
+    const filtredCat = data.categories.filter((cat) => {
+      return e.target.id !== cat.id
+    })
+    setData({...data, categories: filtredCat} )
   };
   const addCategory = (e) => {
     for (let i = 0; i < e.target.options.length; i++) {
@@ -167,10 +168,9 @@ console.log(data.categories)
         <div>
           {data.categories &&
             data.categories.map((category) => (
-              
               <p>
                 {category.name}
-                <button type='button' value={category.name} onClick={(e) => removeCategory(e)}>
+                <button type='button' id={category.id} value={category.name} onClick={(e) => removeCategory(e)}>
                   X
                 </button>
               </p>

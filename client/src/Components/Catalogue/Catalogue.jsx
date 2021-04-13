@@ -110,7 +110,7 @@ export function Catalogue() {
         <div className={Style.products}>
           {
             Products && Products.map((item) =>
-              <ProductCard  name={item.name} price={item.price} images={item.images[0]} id={item.id} />
+              <ProductCard  name={item.name} price={item.price} images={item.images ? item.images[0] : null} id={item.id} />
             )
           }
         </div>

@@ -17,7 +17,12 @@ export function AddCategory() {
     });
   };
 
-  const clearInputs = () => {};
+  const clearInputs = () => {
+    setData({
+      name: "",
+      description: "",
+    })
+  };
 
   const createCat = (data) => {
     dispatch(postCategory(data));
@@ -39,6 +44,7 @@ export function AddCategory() {
         <label class={style.label}>Description</label>
         <input
           class={style.input}
+          value={data.description}
           name="description"
           onChange={(e) => handleInputChange(e)}
         ></input>

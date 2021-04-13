@@ -10,7 +10,7 @@ export function AddProduct() {
     name: "",
     description: "",
     price: 0,
-    // images: "",
+    // images: [],
     brand: "",
     stock: 0,
     model: "",
@@ -44,11 +44,14 @@ export function AddProduct() {
 
   useEffect(() => {
     dispatch(getCategories());
-    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+
   }, [categories]);
 
-  const createProd = (data) => {
-    dispatch(postProduct(data));
+  const createProd = async (data) => {
+   await dispatch(postProduct(data));
   };
 
   return (
@@ -138,7 +141,7 @@ export function AddProduct() {
           <button>Add</button>
         </div>
         <div>
-          <Link to={`/product/:id`}>
+          <Link to={`/catalogue`}>
             <button type="submit" onClick={() => createProd(data)}>
               Create product
             </button>
