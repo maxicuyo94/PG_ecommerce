@@ -29,27 +29,27 @@ export function AddCategory() {
     clearInputs();
   };
   return (
-    <div>
-      <label class={style.labelCat}>Create category</label>
+    <div class={style.div}>
       <div>
-        <label class={style.label}>Name</label>
+      <h1>Create category</h1>
+      <div>
+        <label>Name</label>
         <input
-          class={style.input}
           value={data.name}
           name="name"
           onChange={(e) => handleInputChange(e)}
         ></input>
       </div>
       <div>
-        <label class={style.label}>Description</label>
+        <label>Description</label>
         <input
-          class={style.input}
           value={data.description}
           name="description"
           onChange={(e) => handleInputChange(e)}
         ></input>
       </div>
       <button onClick={() => createCat(data)}>Create</button>
+      </div>
     </div>
   );
 }

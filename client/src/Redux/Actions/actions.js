@@ -168,3 +168,13 @@ export const updateProduct = (product, id) => {
       .eq("id", id);
   };
 };
+
+export const deleteProduct = (id) => {
+  return async () => {
+    await supabase
+      .from("product")
+      .delete()
+      .match({ product_id: id });
+};
+};
+
