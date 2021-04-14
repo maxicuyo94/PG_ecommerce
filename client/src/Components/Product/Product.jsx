@@ -42,7 +42,6 @@ export const Product = (props) => {
     return (
         <div className={styles.container}>
             <ul className={styles.nav}>
-
                 <li onClick={() => { setNav('about') }}>About Product</li>
                 <li onClick={() => { setNav('details') }}>Details</li>
                 <li onClick={() => { setNav('category') }}>Categories</li>
@@ -72,10 +71,6 @@ export const Product = (props) => {
                                 {nav === 'about' && details.name &&
                                     <li>{details.name?.split(" ").slice(3, details.name.length).join(" ")}</li>}
                             </ul>
-
-                            {/* <NavLink to={`/modifyProduct/${id}`}>
-                                <button>Modify Product</button>
-                            </NavLink> */}
                         </div>
                     </div>
                 </div>

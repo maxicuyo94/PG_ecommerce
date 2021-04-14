@@ -47,7 +47,10 @@ export function AddProduct() {
 
   useEffect(() => {
     dispatch(getCategories());
-    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+
   }, [categories]);
 
   const createProd = (data) => {
@@ -143,24 +146,20 @@ export function AddProduct() {
         </div>
         <div>
           <label for="avatar">Choose a profile picture:</label>
-
           <input type="file"
             id="avatar" name="avatar"
             accept="image/png, image/jpeg"/>
-
             <button>Add</button>
         </div>
-          <div>
-            <Link to={`/product/:id`}>
-              <button type="submit" onClick={() => createProd(data)}>
-                Create product
+          <Link to={`/controlpanel`}>
+            <button type="submit" onClick={() => createProd(data)}>
+              Create product
             </button>
-            </Link>
-          </div>
+          </Link>
       </form>
       <div>
       <button class={style.button2} onClick={changeModal}>Add Category</button>  
-        <Modal open={modal} onClose={changeModal}>
+        <Modal class={style.modal} open={modal} onClose={changeModal}>
           <AddCategory />
           </Modal>  
       </div>

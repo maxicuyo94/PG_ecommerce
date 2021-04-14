@@ -10,27 +10,31 @@ export function Nav() {
 
   return (
     <div className={style.container}>
-      <Header />
-      <div className={style.contents}>
-        <ul>
-          <li>
-            <Link to="/">
-              <text>{t("navLink1.linkOne")}</text>
-            </Link>
-          </li>
-          <li>
-            <Link to="/catalogue">
-              <text>{t("navLink2.linkTwo")}</text>
-            </Link>
-          </li>
-          <li>
-            <Link to="/addproduct">
-              <text>{t("navLink3.linkThree")}</text>
-            </Link>
-          </li>
-          {/* <li>
+        <Header />
+        <div className={style.contents}>
+          <ul>
+            <li>
+              <Link to="/">
+                <text>Home</text>
+              </Link>
+            </li>
+            <li>
+              <Link to='/catalogue'>
+                <text>
+                  Catalogue
+                </text>
+              </Link>
+            </li>
+            <li>
+              <Link to='/controlpanel'>
+                <text>
+                  Control Panel
+                </text>
+              </Link>
+            </li>
+            <li>
               <SearchBar />
-            </li> */}
+            </li>
           <li>
             <Link to="/login">
               <text>{t("navLink4.linkFour")}</text>
