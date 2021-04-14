@@ -15,25 +15,24 @@ export const Search = (input) => {
   };
 };
 
-export const allProducts = (limit, offset, cate, price, input) => {
-  let nm = !cate ? "" : "categories.name";
-  let pr = !price ? "" : "price";
-  let name = !input ? "" : "name";
+
+export const allProducts = (limit, offset, cate, price,input) => {
+  let nm = !cate ? '' : 'categories.name'
+  let prg = !price[0]? '' : 'price'
+  let prl = !price[1]? '' : 'price'
+  let name = !input ? '' : 'name'
   return async function (dispatch) {
-    let JSON = await supabase
-      .from("product")
-      .select("name,images,price,ranking,id,categories(name)")
-      .ilike(name, `%${input}%`)
-      .eq(nm, cate)
-      .gt(pr, price - 200)
-      .lt(pr, price);
-    dispatch({
-      type: actionType.SEARCH,
-      payload: JSON.data,
-      pages: { limit, offset },
-    });
-  };
-};
+      let JSON = await supabase
+        .from('product')
+        .select('name,images,price,ranking,id,categories(name)')
+        .ilike(name, `%${input}%`)
+        .eq(nm, cate)
+        .gt(prg,price[0]) 
+        .lt(prl,price[1])   
+    dispatch({ type: actionType.SEARCH, payload: JSON.data, pages:{limit,offset} })
+  }
+}
+
 
 export const productDetail = (input) => {
   return async function (dispatch) {
