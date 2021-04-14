@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddCategory } from "../AddCategory/AddCategory";
 import { postProduct, getCategories } from "../../Redux/Actions/actions.js";
 import style from "./addproduct.module.scss";
+import Modal from '@material-ui/core/Modal';
+
 
 export function AddProduct() {
   const [data, setData] = useState({
@@ -19,6 +21,7 @@ export function AddProduct() {
     status: true,
     categories: [],
   });
+  const [modal, setModal] = useState(false)
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
 
@@ -50,6 +53,12 @@ export function AddProduct() {
   const createProd = (data) => {
     dispatch(postProduct(data));
   };
+
+  const changeModal = () => {
+    if(modal === true) {
+      setModal(false)
+    } else setModal(true)
+  }
 
   return (
     <div>
@@ -149,9 +158,12 @@ export function AddProduct() {
             </Link>
           </div>
       </form>
-        <div>
+      <div>
+      <button class={style.button2} onClick={changeModal}>Add Category</button>  
+        <Modal open={modal} onClose={changeModal}>
           <AddCategory />
-        </div>
+          </Modal>  
+      </div>
     </div>
   );
 }
