@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
-
+import { SearchBar } from "../SearchBar/SearchBar";
+import { Header } from "./Header/Header";
+import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
-import { SearchBar } from '../Searchbar/Searchbar';
-import { Header } from './Header/Header';
-
 
 export function Nav() {
+  const [t, i18n] = useTranslation("global");
+
   return (
     <div className={style.container}>
         <Header />
@@ -31,21 +32,27 @@ export function Nav() {
                 </text>
               </Link>
             </li>
-            {/* <li>
+            <li>
               <SearchBar />
-            </li> */}
-            <li>
-              <Link to="/login">
-                <text>Log In</text>
-              </Link>
             </li>
-            <li>
-              <Link to="/register">
-                <text>Register</text>
-              </Link>
-            </li>
-          </ul>
-        </div>
+          <li>
+            <Link to="/login">
+              <text>{t("navLink4.linkFour")}</text>
+            </Link>
+          </li>
+          <li>
+            <Link to="/register">
+              <text>{t("navLink5.linkFive")}</text>
+            </Link>
+          </li>
+          <li>
+            <button onClick={() => i18n.changeLanguage("es")}>ES</button>
+          </li>
+          <li>
+            <button onClick={() => i18n.changeLanguage("en")}>EN</button>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }

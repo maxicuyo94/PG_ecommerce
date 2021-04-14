@@ -1,0 +1,41 @@
+{
+    "home": {
+      "title": "PRODUCTOS MÁS VENDIDOS"
+    },
+
+    "seeProducts": {
+        "products": "Mira todos los productos"
+      },
+
+  "home-cat1": {
+    "processors": "Procesadores"
+  },
+
+  "home-cat2": {
+    "laptops": "Notebooks"
+  },
+
+  "home-cat3": {
+    "keyboards": "Teclados"
+  },
+
+  "navLink1": {
+    "linkOne": "Inicio"
+  },
+
+  "navLink2": {
+    "linkTwo": "Catálogo"
+  },
+
+  "navLink3": {
+    "linkThree": "Agregar producto"
+  },
+
+  "navLink4": {
+    "linkFour": "Ingresar"
+  },
+
+  "navLink5": {
+    "linkFive": "Registrarse"
+  }
+}

@@ -44,6 +44,7 @@ const InitialState = {
           ...state,
           productByCategories: action.payload
         };
+
     default:
       return state;
   }

@@ -28,24 +28,22 @@ export const totalProducts = () => {
 };
 
 export const allProducts = (limit, offset, cate, price, input) => {
-  let nm = !cate ? "" : "categories.name";
-  let pr = !price ? "" : "price";
-  let name = !input ? "" : "name";
+  let nm = !cate ? '' : 'categories.name'
+  let prg = !price[0] ? '' : 'price'
+  let prl = !price[1] ? '' : 'price'
+  let name = !input ? '' : 'name'
   return async function (dispatch) {
     let JSON = await supabase
-      .from("product")
-      .select("name,images,price,ranking,id,categories(name)")
+      .from('product')
+      .select('name,images,price,ranking,id,stock,categories(name)')
       .ilike(name, `%${input}%`)
       .eq(nm, cate)
-      .gt(pr, price - 200)
-      .lt(pr, price);
-    dispatch({
-      type: actionType.SEARCH,
-      payload: JSON.data,
-      pages: { limit, offset },
-    });
-  };
-};
+      .gt(prg, price[0])
+      .lt(prl, price[1])
+    dispatch({ type: actionType.SEARCH, payload: JSON.data, pages: { limit, offset } })
+  }
+}
+
 
 export const productDetail = (input) => {
   return async function (dispatch) {
@@ -101,8 +99,8 @@ export const getProductsByCategories = (input) => {
 };
 
 export const postProduct = (product) => {
-  return async (dispatch) => { 
-   const productResult =  await supabase.from("product").insert([
+  return async (dispatch) => {
+    const productResult = await supabase.from("product").insert([
       {
         name: product.name,
         description: product.description,
@@ -192,5 +190,75 @@ export const deleteProduct = (id) => {
       .delete()
       .eq("id", id);
 };
+
+export const postUser = async (user) => {
+  const userResult = await supabase.from("users").insert([
+    {
+      name: user.name,
+      surname: user.surname,
+      email: user.email,
+      username: user.username,
+      password: user.password,
+      phone: user.phone,
+      permission: user.permission,
+    },
+  ]);
+
+  const userId = await supabase
+    .from("users")
+    .select("id")
+    .eq("email", user.email);
+
+  await supabase.from("address").insert([
+    {
+      user_id: userId.data[0].id,
+      address: user.address,
+      city: user.city,
+      postalCode: user.postalCode,
+      country: user.country
+    },
+  ]);
 };
+
+export const updateUser = (user, id) => {
+  return async () => {
+    await supabase
+      .from("users,address(address,city,postalCode,country)")
+      .update({
+        name: user.name,
+        surname: user.surname,
+        email: user.email,
+        username: user.username,
+        password: user.password,
+        phone: user.phone,
+        permission: user.permission,
+      })
+      .eq("id", id);
+
+    const addressId = await supabase
+      .from("addres")
+      .select("id,user_id")
+      .eq("user_id", id)
+
+    await supabase
+      .from("address")
+      .update({
+        user_id: user.id,
+        address: user.address,
+        city: user.city,
+        postalCode: user.postalCode,
+        country: user.country,
+      })
+      .eq("id", addressId);
+  };
+};
+
+export const allUsers = (users) => {
+  return async function (dispatch) {
+    let JSON = await supabase
+      .from('users')
+      .select('name,surname,email,user_name,permission,phone,address(address,city,postalCode,country)')
+    dispatch({ type: actionType.allUsers, payload: JSON.data })
+  }
+}
 

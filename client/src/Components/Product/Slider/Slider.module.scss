@@ -12,8 +12,9 @@ $minwidth: 600px;
   div {
     width: 95%;
     margin: auto;
-
+    
     div {
+      color: black;
       width: 90%;
       img{
         @media screen and (min-width: $minwidth) {
@@ -38,14 +39,19 @@ $minwidth: 600px;
         &:hover {
           opacity: 0.5 !important;
         }
+        @media screen and (max-width: $minwidth) {
+          visibility: hidden;
+        }
       }
 
       div {
+        //border: 2px solid #9ABF15;
+        //border-radius: 50px;
         ul {
           li {
             div {
-              height: 50vh !important;
-              width: 70% !important;
+              height: 40vh !important;
+              width: 80% !important;
               //margin: 0 auto !important;
 
               img {
