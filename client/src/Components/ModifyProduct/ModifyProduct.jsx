@@ -19,15 +19,15 @@ export function ModifyProduct({ id }) {
     ranking: 0,
     storage: "",
     status: true,
+    categories: []
   });
-
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetail);
   let categories = useSelector((state) => state.categories);
   categories = categories.filter(
     (i) =>
-      product.categories &&
-      !product.categories.map((i) => i.name).includes(i.name)
+      data.categories &&
+      !data.categories.map((i) => i.name).includes(i.name)
   );
 
   const handleInputChange = (e) => {
@@ -38,14 +38,11 @@ export function ModifyProduct({ id }) {
   };
 
   useEffect(() => {
-    dispatch(getCategories());
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    dispatch(productDetail(id));
-    // eslint-disable-next-line
-  }, []);
+   (function getCatAndProd() {
+      dispatch(getCategories());
+      dispatch(productDetail(id));
+    })()
+  }, [id]);
 
   useEffect(() => {
     setData({
@@ -58,22 +55,26 @@ export function ModifyProduct({ id }) {
       ranking: product.ranking,
       storage: product.storage,
       status: true,
+      categories: product.categories
     });
   }, [product]);
 
-  const modifyProduct = (data) => {
-    dispatch(updateProduct(null, null, { ...data, id }));
+  const modifyProduct = async () => {
+   await dispatch(updateProduct(data, id));
   };
 
   const removeCategory = (e) => {
-    e.preventDefault();
-    dispatch(updateProduct("remove", e.target.value, { ...data, id }));
+    const filtredCat = data.categories.filter((cat) => {
+      return e.target.id !== cat.id
+    })
+    setData({...data, categories: filtredCat} )
   };
-
   const addCategory = (e) => {
-    console.log("hola",e.target.value)
-    e.preventDefault();
-    dispatch(updateProduct("add", e.target.value, { ...data, id }));
+    for (let i = 0; i < e.target.options.length; i++) {
+      if (e.target.options[i].selected === true) {
+          setData({...data, categories: data.categories.concat({id: e.target.options[i].id, name: e.target.options[i].value})} )
+      }
+    }  
   };
 
   return (
@@ -155,21 +156,21 @@ export function ModifyProduct({ id }) {
           ></input>
         </div>
         <div>
-          <select>
+          <select onClick={(e) => addCategory(e)}>
             {categories &&
               categories.map((category) => (
-                <option value={category.id} onClick={(e) => addCategory(e)}>
+                <option id={category.id} value={category.name}>
                   {category.name}
                 </option>
               ))}
           </select>
         </div>
         <div>
-          {product.categories &&
-            product.categories.map((category) => (
+          {data.categories &&
+            data.categories.map((category) => (
               <p>
                 {category.name}
-                <button value={category.id} onClick={(e) => removeCategory(e)}>
+                <button type='button' id={category.id} value={category.name} onClick={(e) => removeCategory(e)}>
                   X
                 </button>
               </p>
@@ -177,7 +178,7 @@ export function ModifyProduct({ id }) {
         </div>
         <div>
           <Link to={`/product/${id}`}>
-            <button type="submit" onClick={() => modifyProduct(data)}>
+            <button type="submit" onClick={modifyProduct}>
               Modify product
             </button>
           </Link>

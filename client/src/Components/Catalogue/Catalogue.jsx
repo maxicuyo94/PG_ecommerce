@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductCard } from "../ProductCard/ProductCard";
 import { allProducts, getCategories } from "../../Redux/Actions/actions";
+import ProductNotFound from "../ProductNotFound/ProductNotFound";
 import left from "../Catalogue/left-arrow.svg";
 import right from "../Catalogue/right-arrow.svg";
 import Style from "./catalogue.module.scss";
@@ -68,9 +69,9 @@ export function Catalogue() {
           >
             <option value="">All</option>
             {Categories &&
-              Categories.map((item, i) => (
+              Categories.map((item, i) => ( 
                 <option key={i} value={item.name}>
-                  {item.name}
+                 {item.name}
                 </option>
               ))}
           </select>
@@ -117,7 +118,9 @@ export function Catalogue() {
         <div className={Style.products}>
           {
             Products && Products.map((item) =>
-              <ProductCard  name={item.name} price={item.price} id={item.id} images={item.images[0]} />
+
+              <ProductCard  name={item.name} price={item.price} images={item.images ? item.images[0] : null} id={item.id} />
+
             )
           }
         </div>

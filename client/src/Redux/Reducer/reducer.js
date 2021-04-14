@@ -21,6 +21,7 @@ const InitialState = {
         };
         
       case actionType.PRODUCT_DETAIL:
+        state.productDetail = {}
         return {
           ...state,
           productDetail: action.payload

@@ -8,12 +8,13 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export const Search = (input) => {
   return async function (dispatch) {
     const JSON = await supabase
-      .from('product')
-      .select('*')
-      .ilike('name', `%${input}%`)
-    dispatch({ type: actionType.SEARCHB, payload: JSON.data })
-  }
-}
+      .from("product")
+      .select("*")
+      .ilike("name", `%${input}%`);
+    dispatch({ type: actionType.SEARCHB, payload: JSON.data });
+  };
+};
+
 
 export const allProducts = (limit, offset, cate, price,input) => {
   let nm = !cate ? '' : 'categories.name'
@@ -31,6 +32,7 @@ export const allProducts = (limit, offset, cate, price,input) => {
     dispatch({ type: actionType.SEARCH, payload: JSON.data, pages:{limit,offset} })
   }
 }
+
 
 export const productDetail = (input) => {
   return async function (dispatch) {
@@ -51,7 +53,7 @@ export const getCategories = () => {
 
 export const getProductsByCategories = (input) => {
   return async function (dispatch) {
-  let Pname = !input ? '' : 'name'
+    let Pname = !input ? "" : "name";
     const categoriesID = await supabase
       .from("categories")
       .select("id, name")
@@ -60,10 +62,10 @@ export const getProductsByCategories = (input) => {
     const productsID = await Promise.all(
       categoriesID.data.map(async (categoryID) => {
         const productID = await supabase
-          .from('product_categories')
-          .select('product_id, product(name)')
-          .eq('categories_id', categoryID.id)
-        return {data: productID.data, name: categoryID.name}
+          .from("product_categories")
+          .select("product_id, product(name)")
+          .eq("categories_id", categoryID.id);
+        return { data: productID.data, name: categoryID.name };
       })
     );
     const products = await Promise.all(
@@ -86,8 +88,8 @@ export const getProductsByCategories = (input) => {
 };
 
 export const postProduct = (product) => {
-  return async (dispatch) => {
-    await supabase.from("product").insert([
+  return async (dispatch) => { 
+   const productResult =  await supabase.from("product").insert([
       {
         name: product.name,
         description: product.description,
@@ -131,39 +133,46 @@ export const postCategory = (category) => {
         description: category.description,
       },
     ]);
+    const JSON = await supabase.from("categories").select("*");
+    dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data });
   };
 };
 
-export const updateProduct = (type, category, product) => {
-  if (type === "add") {
-    return async () => {
+export const updateProduct = (product, id) => {
+  console.log(product.images)
+  return async () => {
+    await supabase
+      .from("product_categories")
+      .delete("*")
+      .match({ product_id: id });
+    product.categories.map(async (category) => {
       await supabase
         .from("product_categories")
-        .insert([{ product_id: product.id, categories_id: category }]);
-    };
-  } else if (type === "remove") {
-    return async () => {
-      await supabase
-        .from("product_categories")
-        .delete()
-        .match({ product_id: product.id, categories_id: category });
-    };
-  } else {
-    return async () => {
-      await supabase
-        .from("product")
-        .update({
-          name: product.name,
-          description: product.description,
-          price: product.price,
-          brand: product.brand,
-          stock: product.stock,
-          model: product.model,
-          ranking: product.ranking,
-          storage: product.storage,
-          status: true,
-        })
-        .eq("id", product.id);
-    };
-  }
+        .insert([{ product_id: id, categories_id: category.id }]);
+    });
+    await supabase
+      .from("product")
+      .update({
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        brand: product.brand,
+        stock: product.stock,
+        model: product.model,
+        ranking: product.ranking,
+        storage: product.storage,
+        status: true,
+      })
+      .eq("id", id);
+  };
 };
+
+export const deleteProduct = (id) => {
+  return async () => {
+    await supabase
+      .from("product")
+      .delete()
+      .match({ product_id: id });
+};
+};
+

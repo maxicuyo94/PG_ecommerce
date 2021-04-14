@@ -1,76 +1,126 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "./Slider/Slider";
-import { productDetail } from "../../Redux/Actions/actions";
-import { NavLink } from "react-router-dom";
+import { productDetail, getProductsByCategories } from "../../Redux/Actions/actions";
+//import { NavLink } from "react-router-dom";
 import styles from "./Product.module.scss";
+import { CategoriesHome } from '../Home/Categories/CategoriesHome'
+import Carousel from '@brainhubeu/react-carousel'
+import '@brainhubeu/react-carousel/lib/style.css'
 
 export const Product = (props) => {
-  const dispatch = useDispatch();
-  const details = useSelector((state) => state.productDetail);
-  const id = props.match.params.id;
-  const [value, setValue] = useState(1);
-  const handleSum = () => {
-    value < details.stock && value < 10 && setValue(value + 1);
-  };
-  const handleRes = () => {
-    value > 1 && setValue(value - 1);
-  };
-  useEffect(() => {
-    const idDetails = async () => {
-      await dispatch(productDetail(id));
-    };
-    idDetails();
-    //console.log('estoy en product: ', details)
-    // eslint-disable-next-line
-  }, []);
+    const dispatch = useDispatch();
+    const details = useSelector((state) => state.productDetail);
+    const productByCategories = useSelector(state => state.productByCategories)
+    const id = props.match.params.id;
+    const [value, setValue] = useState(1);
+    const [nav, setNav] = useState('details')
+    const [index, setIndex] = useState(1)
+    const [slide, setSlide] = useState(1)
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.details}>
-        <div className={styles.info}>
-          <span>{details.name}</span>
-          <div className={styles.desc}>
-            <ul className={styles.values}>
-              {details.description &&
-                Object.entries(details.description).map(([key, value]) => {
-                  return (
-                    <li key={key}>
-                      <b>{key}</b>: {value.toString()}
-                    </li>
-                  );
-                })}
+    const handleSum = () => { value < details.stock && value < 10 && setValue(value + 1) };
+    const handleRes = () => { value > 1 && setValue(value - 1) };
+
+    useEffect(() => {
+        const idDetails = async () => {
+            await dispatch(productDetail(id));
+        };
+        idDetails();
+        const Products = async () => {
+            await dispatch(getProductsByCategories());
+        };
+        Products();
+        window.innerWidth < 601 ? setSlide(1) : setSlide(3)
+        return () => {
+            setNav('details')
+        }
+        // eslint-disable-next-line
+    }, [id]);
+
+
+    return (
+        <div className={styles.container}>
+            <ul className={styles.nav}>
+
+                <li onClick={() => { setNav('about') }}>About Product</li>
+                <li onClick={() => { setNav('details') }}>Details</li>
+                <li onClick={() => { setNav('category') }}>Categories</li>
             </ul>
-            <NavLink to={`/modifyProduct/${id}`}>
-              <button>Modify Product</button>
-            </NavLink>
-          </div>
-        </div>
-      </div>
-      <div className={styles.images}>
-        <div className={styles.carousel}>
-          <Slider images={details.images} />
-        </div>
-        <div className={styles.buy}>
-          <label>
-            On sale from <b>${(details.price * value).toFixed(2)}</b>
-          </label>
-          <div className={styles.cont}>
-            <input type="text" value={value} disabled />
-            <div className={styles.change}>
-              <button onClick={handleSum}>+</button>
-              <button onClick={handleRes}>-</button>
+            <div className={styles.main}>
+                <div className={styles.details}>
+                    <div className={styles.info}>
+                        <span>{details.name?.split(" ").slice(0, 3).join(" ")}</span>
+                        <div className={styles.desc}>
+                            <ul className={styles.values}>
+                                {nav === 'details' && details.description &&
+                                    Object.entries(details.description).map(([key, value]) => {
+                                        return (
+                                            <li key={key}>
+                                                <b>{key.split(/(?=[A-Z])/).join(' ')}</b>: {value.toString()}
+                                            </li>
+                                        );
+                                    })}
+                                {nav === 'category' && details.categories &&
+                                    details.categories.map((category) => {
+                                        return (
+                                            <li key={category.id}>
+                                                <b>{category.name}</b>
+                                            </li>
+                                        );
+                                    })}
+                                {nav === 'about' && details.name &&
+                                    <li>{details.name?.split(" ").slice(3, details.name.length).join(" ")}</li>}
+                            </ul>
+
+                            {/* <NavLink to={`/modifyProduct/${id}`}>
+                                <button>Modify Product</button>
+                            </NavLink> */}
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.images}>
+                    <div className={styles.carousel}>
+                        <Slider images={details.images} />
+                    </div>
+                    <div className={styles.buy}>
+                        <label>
+                            On sale from <b>${(details.price * value).toFixed(2)}</b>
+                        </label>
+                        <div className={styles.cont}>
+                            <input type="text" value={value} disabled />
+                            <div className={styles.change}>
+                                <button onClick={handleSum}>+</button>
+                                <button onClick={handleRes}>-</button>
+                            </div>
+                        </div>
+                        <button onClick={() => { alert("The product is yours!"); }} >
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <button
-            onClick={() => {
-              alert("The product is yours!");
-            }}
-          >
-            Add to Cart
-          </button>
+
+            <div className={styles.related}>
+                <div className={styles.title}>
+                    <span>MORE PRODUCTS</span>
+                </div>
+                <Carousel
+                    arrows
+                    slidesPerPage={slide}
+                    infinite
+                    animationSpeed={200}
+                    centered
+                >
+                    {
+                        productByCategories.length > 0 &&
+                        productByCategories[Math.floor(Math.random() * 3)].data.map((product) => {
+                            return product.images &&
+                                <CategoriesHome key={product.id} id={product.id} name={product.name} price={product.price} image={product.images[0]} />
+                        })
+
+                    }
+                </Carousel>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
