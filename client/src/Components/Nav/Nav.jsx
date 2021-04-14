@@ -25,9 +25,9 @@ export function Nav() {
               </Link>
             </li>
             <li>
-              <Link to='/addproduct'>
+              <Link to='/controlpanel'>
                 <text>
-                  Add Product
+                  Control Panel
                 </text>
               </Link>
             </li>

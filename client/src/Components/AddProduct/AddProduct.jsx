@@ -50,7 +50,6 @@ export function AddProduct() {
   }, []);
 
   useEffect(() => {
-
   }, [categories]);
 
   const createProd = async (data) => {
@@ -143,7 +142,7 @@ export function AddProduct() {
           <button class={style.button2} >Add</button>
         </div>
         <div>
-          <Link to={`/catalogue`}>
+          <Link to={`/controlpanel`}>
             <button type="submit" onClick={() => createProd(data)}>
               Create product
             </button>
@@ -152,7 +151,7 @@ export function AddProduct() {
       </form>
       <div>
       <button class={style.button2} onClick={changeModal}>Add Category</button>  
-        <Modal open={modal} onClose={changeModal}>
+        <Modal class={style.modal} open={modal} onClose={changeModal}>
           <AddCategory />
           </Modal>  
       </div>

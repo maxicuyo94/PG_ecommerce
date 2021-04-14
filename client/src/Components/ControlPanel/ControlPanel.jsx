@@ -9,31 +9,44 @@ import { Link } from "react-router-dom";
 export function ControlPanel() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.wantedProducts);
-console.log(products)
+  console.log('aca', products)
   useEffect(() => {
     dispatch(allProducts());
   }, []);
 
-  const handleDelete = (e) => {
-    console.log('aca' + e.target.id)
-        // dispatch(deleteProduct(e.target.id))
-  }
+  
   return (
-    <div>
-      <div>
-        <span>bar to configure sorting and naming of every column</span>
+    <div class={style.container}>
+      <h2>Control Panel</h2>
+      <div class={style.barButtons}>
+      <button>Products</button>
+      <button>Orders</button>
+      <button>Categories</button>
+      <Link to='/addproduct'>
+                <button>
+                  Add Product
+                </button>
+              </Link>
       </div>
-      <div>
+      <div class={style.containerList}>
+      <div class={style.bar}>
+        <h4><CheckBoxOutlineBlank/></h4>
+        <h4 class={style.name}>Product</h4>
+        <h4>Modify</h4>
+        <h4>Delete</h4>
+      </div>
+      <div class={style.containerList}>
           {products.map((product) => {
               return (
-                    <div>
-                      <CheckBoxOutlineBlank/>
-                      <span>{product.name}</span>
-                      <Link to={`/modifyproduct/${product.id}`}><Edit/></Link>
-                      <Delete id={product.id} onClick={(e) => handleDelete(e)}/>
+                    <div class={style.list}>
+                      <CheckBoxOutlineBlank class={style.icon}/>
+                      <span class={style.name}>{product.name}</span>
+                      <Link to={`/modifyproduct/${product.id}`}><Edit class={style.icon}/></Link>
+                      <Delete class={style.icon} id={product.id}/>
                     </div>
               )
           })}
+      </div>
       </div>
     </div>
   );
