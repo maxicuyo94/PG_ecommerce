@@ -1,9 +1,15 @@
-.div {  display: flex;
+.div {  
+  display: flex;
   flex-direction: row;
-  margin-left: 10rem;
-
+  justify-content: center;
+  height: 20rem;
+  width: 35rem;
+  background-color: white;
+  border-radius: 4px;
+  
   div {
     display: flex;
+    justify-content: center;
     flex-direction: column;
   }
 
@@ -32,6 +38,8 @@
     border-radius: 2rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     color:white;
+    margin-bottom: 1rem;
+
 
     &:hover {
       cursor: pointer;
