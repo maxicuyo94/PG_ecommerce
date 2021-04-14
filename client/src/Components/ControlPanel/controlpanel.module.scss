@@ -25,8 +25,11 @@
   .list {
     flex-direction: row;
     justify-content: space-between;
-    .icons {
-        margin-right: 20px;
+
+    .icon {
+      margin-right: 1rem;
+      height: 1.5rem;
+      cursor: pointer;
     }
   }
 }

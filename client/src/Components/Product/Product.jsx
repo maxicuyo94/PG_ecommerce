@@ -52,10 +52,6 @@ export const Product = (props) => {
                                 })}
                             {nav === 'spec' && <li>Specs</li>}
                         </ul>
-
-                        <NavLink to={`/modifyProduct/${id}`}>
-                            <button>Modify Product</button>
-                        </NavLink>
                     </div>
                 </div>
             </div>

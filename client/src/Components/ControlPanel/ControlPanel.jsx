@@ -1,19 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { allProducts, deleteProduct } from "../../Redux/Actions/actions.js";
+import { totalProducts, deleteProduct } from "../../Redux/Actions/actions.js";
 import style from "./controlpanel.module.scss";
-import { Edit, Delete, CheckBoxOutlineBlank } from '@material-ui/icons';
+import { Edit, Delete, CheckBoxOutlineBlank, CheckBox } from '@material-ui/icons';
 import { Link } from "react-router-dom";
 
 
 export function ControlPanel() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.wantedProducts);
-  console.log('aca', products)
+  const products = useSelector((state) => state.allproducts);
   useEffect(() => {
-    dispatch(allProducts());
-  }, []);
+    dispatch(totalProducts());
+  }, [products.length]);
 
+  const handleDelete = async (id) => {
+    await dispatch(deleteProduct(id))
+    await dispatch(totalProducts());
+  }
+
+const [checkbox, setCheckbox] = useState([])
+console.log(checkbox)
+const checkPress = (id) => {
+  for(let i=0; i <= checkbox.length; i++) {
+    if(checkbox[i] === id) {
+      return setCheckbox(...checkbox, checkbox.pop(id))
+   } else return setCheckbox(...checkbox, checkbox.push(id))
+  }
+}
+  
   
   return (
     <div class={style.container}>
@@ -39,10 +53,13 @@ export function ControlPanel() {
           {products.map((product) => {
               return (
                     <div class={style.list}>
-                      <CheckBoxOutlineBlank class={style.icon}/>
+                      {checkbox.includes(product.id) ? <CheckBox id={product.id} onClick={() => checkPress(product.id)} class={style.icon}/> : 
+                      <CheckBoxOutlineBlank id={product.id} onClick={() => checkPress(product.id)} class={style.icon}/>}
+                      
                       <span class={style.name}>{product.name}</span>
                       <Link to={`/modifyproduct/${product.id}`}><Edit class={style.icon}/></Link>
-                      <Delete class={style.icon} id={product.id}/>
+                      <Delete class={style.icon} id={product.id} 
+                      onClick={() => handleDelete(product.id)}/>
                     </div>
               )
           })}
