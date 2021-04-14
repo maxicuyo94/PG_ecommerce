@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Carousel } from "react-responsive-carousel";
 import styles from "./Slider.module.scss";
+import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useEffect } from "react";
 
@@ -15,10 +15,10 @@ const Slider = ({ images }) => {
         //axis={'vertical'}
         //centerMode={true}
         //centerSlidePercentage={50}
-        showArrows={!res}
-        showThumbs={res}
+        showArrows={false}
+        showThumbs={true}
         dynamicHeight={false}
-        infiniteLoop={true}
+        infiniteLoop={false}
         showIndicators={false}
         showStatus={res}
         useKeyboardArrows={true}
