@@ -11,7 +11,7 @@ export function Catalogue() {
   const Categories = useSelector(state => state.categories)
   const [Pages, setPages] = useState(0)
   const [Category, setCategory] = useState('')
-  const [Prices, setPrices] = useState('')
+  const [Prices, setPrices] = useState(['',''])
   const dispatch = useDispatch()
   const [Input, setInput] = useState({ input: '' })
   
@@ -19,6 +19,10 @@ export function Catalogue() {
     e.preventDefault();
     setInput({ ...Input, [e.target.name]: e.target.value });
   }
+
+  useEffect(() => {
+    setPages(0)
+  }, [Category, Prices])
 
   useEffect(() => {
     dispatch(allProducts(Pages * 4, ((Pages * 4) + 4), Category, Prices,Input.input));
@@ -32,8 +36,11 @@ export function Catalogue() {
 
   const handleInputChangeP = (e) => {
     e.preventDefault();
-    setPrices(e.target.value);
+    e.target.value == ''?setPrices(['','']):
+    e.target.value === '400'?setPrices([e.target.value,'']):
+    setPrices([e.target.value,200 + parseInt(e.target.value)]);
   };
+
 
   function changepage(e) {
     if (e.target.id === "backward" && Pages > 0) {
@@ -76,9 +83,9 @@ export function Catalogue() {
             }}
           >
             <option value="">All</option>
-            <option value="200">0 - 200</option>
-            <option value="400">200 - 400</option>
-            <option value="600">400 - + </option>
+            <option value="0">0 - 200</option>
+            <option value="200">200 - 400</option>
+            <option value="400">400 - + </option>
           </select>
         </div>
         <div>
@@ -110,7 +117,7 @@ export function Catalogue() {
         <div className={Style.products}>
           {
             Products && Products.map((item) =>
-              <ProductCard  name={item.name} price={item.price} images={item.images[0]} id={item.id} />
+              <ProductCard  name={item.name} price={item.price} id={item.id} images={item.images[0]} />
             )
           }
         </div>

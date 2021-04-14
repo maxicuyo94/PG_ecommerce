@@ -17,7 +17,8 @@ export const Search = (input) => {
 
 export const allProducts = (limit, offset, cate, price,input) => {
   let nm = !cate ? '' : 'categories.name'
-  let pr = !price ? '' : 'price'
+  let prg = !price[0]? '' : 'price'
+  let prl = !price[1]? '' : 'price'
   let name = !input ? '' : 'name'
   return async function (dispatch) {
       let JSON = await supabase
@@ -25,8 +26,8 @@ export const allProducts = (limit, offset, cate, price,input) => {
         .select('name,images,price,ranking,id,categories(name)')
         .ilike(name, `%${input}%`)
         .eq(nm, cate)
-        .gt(pr,price-200) 
-        .lt(pr,price)   
+        .gt(prg,price[0]) 
+        .lt(prl,price[1])   
     dispatch({ type: actionType.SEARCH, payload: JSON.data, pages:{limit,offset} })
   }
 }
