@@ -182,13 +182,14 @@ export const deleteProduct = (id) => {
   return async () => {
     console.log(id)
     await supabase
-    .from("images")
-    .delete("*")
-    .match({ product_id: id });
+      .from("images")
+      .delete("*")
+      .match({ product_id: id });
     await supabase
       .from('product')
       .delete()
       .eq("id", id);
+  }
 };
 
 export const postUser = (user) => {
