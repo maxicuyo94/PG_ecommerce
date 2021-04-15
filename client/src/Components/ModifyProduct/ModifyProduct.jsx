@@ -177,7 +177,7 @@ export function ModifyProduct({ id }) {
             ))}
         </div>
         <div>
-          <Link to={`/product/${id}`}>
+          <Link to={`/controlpanel`}>
             <button type="submit" onClick={modifyProduct}>
               Modify product
             </button>

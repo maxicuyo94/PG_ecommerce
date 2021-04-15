@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddCategory } from "../AddCategory/AddCategory";
 import { postProduct, getCategories } from "../../Redux/Actions/actions.js";
 import style from "./addproduct.module.scss";
+import Modal from '@material-ui/core/Modal';
+
 
 export function AddProduct() {
   const [data, setData] = useState({
     name: "",
     description: "",
     price: 0,
-    // images: [],
+    // images: "",
     brand: "",
     stock: 0,
     model: "",
@@ -19,6 +21,7 @@ export function AddProduct() {
     status: true,
     categories: [],
   });
+  const [modal, setModal] = useState(false)
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
 
@@ -50,23 +53,30 @@ export function AddProduct() {
 
   }, [categories]);
 
-  const createProd = async (data) => {
-   await dispatch(postProduct(data));
+  const createProd = (data) => {
+    dispatch(postProduct(data));
   };
 
+  const changeModal = () => {
+    if(modal === true) {
+      setModal(false)
+    } else setModal(true)
+  }
+
   return (
-    <div class={style.div}>
-      <form >
+    <div>
+      <form class={style.form}>
         <h1>Add Product</h1>
         <div>
-          <label>Name</label>
+          <label class={style.label}>Name</label>
           <input
+            class={style.input}
             name="name"
             onChange={(e) => handleInputChange(e)}
           ></input>
         </div>
         <div>
-          <label>Description</label>
+          <label class={style.input}>Description</label>
           <textarea
             name="description"
             rows="6"
@@ -77,6 +87,7 @@ export function AddProduct() {
         <div>
           <label>Price</label>
           <input
+            class={style.input}
             name="price"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -84,6 +95,7 @@ export function AddProduct() {
         <div>
           <label>Brand</label>
           <input
+            class={style.input}
             name="brand"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -91,6 +103,7 @@ export function AddProduct() {
         <div>
           <label>Model</label>
           <input
+            class={style.input}
             name="model"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -98,6 +111,7 @@ export function AddProduct() {
         <div>
           <label>Stock</label>
           <input
+            class={style.input}
             name="stock"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -105,6 +119,7 @@ export function AddProduct() {
         <div>
           <label>Ranking</label>
           <input
+            class={style.input}
             name="ranking"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -112,6 +127,7 @@ export function AddProduct() {
         <div>
           <label>Storage</label>
           <input
+            class={style.input}
             name="storage"
             onChange={(e) => handleInputChange(e)}
           ></input>
@@ -128,21 +144,24 @@ export function AddProduct() {
             })}
           </select>
         </div>
-        <div class={style.upload}>
-          <label>Upload images</label>
-          <input class={style.input2} type="file"/>
-          <button class={style.button2} >Add</button>
-        </div>
         <div>
-          <Link to={`/catalogue`}>
+          <label for="avatar">Choose a profile picture:</label>
+          <input type="file"
+            id="avatar" name="avatar"
+            accept="image/png, image/jpeg"/>
+            <button>Add</button>
+        </div>
+          <Link to={`/controlpanel`}>
             <button type="submit" onClick={() => createProd(data)}>
               Create product
             </button>
           </Link>
-        </div>
       </form>
       <div>
-        <AddCategory />
+      <button class={style.button2} onClick={changeModal}>Add Category</button>  
+        <Modal class={style.modal} open={modal} onClose={changeModal}>
+          <AddCategory />
+          </Modal>  
       </div>
     </div>
   );

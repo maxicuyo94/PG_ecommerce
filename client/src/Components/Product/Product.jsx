@@ -7,6 +7,7 @@ import styles from "./Product.module.scss";
 import { CategoriesHome } from '../Home/Categories/CategoriesHome'
 import Carousel from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
+import swal from 'sweetalert';
 
 export const Product = (props) => {
     const dispatch = useDispatch();
@@ -41,7 +42,6 @@ export const Product = (props) => {
     return (
         <div className={styles.container}>
             <ul className={styles.nav}>
-
                 <li onClick={() => { setNav('about') }}>About Product</li>
                 <li onClick={() => { setNav('details') }}>Details</li>
                 <li onClick={() => { setNav('category') }}>Categories</li>
@@ -71,10 +71,6 @@ export const Product = (props) => {
                                 {nav === 'about' && details.name &&
                                     <li>{details.name?.split(" ").slice(3, details.name.length).join(" ")}</li>}
                             </ul>
-
-                            {/* <NavLink to={`/modifyProduct/${id}`}>
-                                <button>Modify Product</button>
-                            </NavLink> */}
                         </div>
                     </div>
                 </div>
@@ -93,9 +89,11 @@ export const Product = (props) => {
                                 <button onClick={handleRes}>-</button>
                             </div>
                         </div>
-                        <button onClick={() => { alert("The product is yours!"); }} >
+                        {details.stock > 0?<button onClick={() => { swal("Done!","Added to cart","success"); }} >
                             Add to Cart
-                        </button>
+                        </button>:<button onClick={() => { swal("Sorry!","Come back in a few days","error"); }} >
+                            Sold out
+                        </button>}
                     </div>
                 </div>
             </div>

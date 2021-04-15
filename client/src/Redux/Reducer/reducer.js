@@ -1,6 +1,7 @@
 import * as actionType from "../action_types/actionTypes";
 
 const InitialState = {
+    allproducts: [],
     wantedProducts: [],
     productDetail: {},
     categories: [],
@@ -9,6 +10,11 @@ const InitialState = {
   
   function Reducer(state = InitialState, action) {
     switch (action.type) { 
+      case actionType.PRODUCTS:
+        return {
+          ...state,
+          allproducts: action.payload
+        };
       case actionType.SEARCH:
         return {
           ...state,
@@ -38,6 +44,7 @@ const InitialState = {
           ...state,
           productByCategories: action.payload
         };
+
     default:
       return state;
   }
