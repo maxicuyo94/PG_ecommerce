@@ -190,6 +190,7 @@ export const deleteProduct = (id) => {
       .delete()
       .eq("id", id);
 };
+};
 
 export const postUser = async (user) => {
   const userResult = await supabase.from("users").insert([
@@ -258,7 +259,7 @@ export const allUsers = (users) => {
     let JSON = await supabase
       .from('users')
       .select('name,surname,email,user_name,permission,phone,address(address,city,postalCode,country)')
-    dispatch({ type: actionType.allUsers, payload: JSON.data })
+    dispatch({ type: actionType.ALL_USERS, payload: JSON.data })
   }
 }
 

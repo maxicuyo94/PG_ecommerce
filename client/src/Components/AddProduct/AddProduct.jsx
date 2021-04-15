@@ -5,6 +5,8 @@ import { AddCategory } from "../AddCategory/AddCategory";
 import { postProduct, getCategories } from "../../Redux/Actions/actions.js";
 import style from "./addproduct.module.scss";
 import Modal from '@material-ui/core/Modal';
+import { ArrowBack } from '@material-ui/icons';
+
 
 
 export function AddProduct() {
@@ -64,7 +66,12 @@ export function AddProduct() {
   }
 
   return (
-    <div>
+    <div class={style.div}>
+      <Link to={`/controlpanel`}>
+            <ArrowBack class={style.button3}>
+              Back
+            </ArrowBack>
+          </Link>
       <form class={style.form}>
         <h1>Add Product</h1>
         <div>
