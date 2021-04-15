@@ -25,6 +25,8 @@
   }
   .catalogue {
     @extend .container;
+    height: calc(100vh - 203px);
+    overflow-x: auto;
     flex-direction: column;
     .keypad {
       @extend .container;
@@ -37,6 +39,26 @@
       }
     }
   }
+
+  .catalogue::-webkit-scrollbar {
+    width: 8px;
+  }
+  .catalogue::-webkit-scrollbar-track {
+    background-color:#ccc;
+  }
+  .catalogue::-webkit-scrollbar-thumb{
+    background-color:#777;
+    border-radius:4px;
+  }
+  .catalogue::-webkit-scrollbar-thumb:hover{
+    background-color:#777;
+    border:1px solid #333333;
+  }
+  .catalogue::-webkit-scrollbar-thumb:active{
+    background-color:#666;
+    border:1px solid #333333;
+  }
+
   .products {
     display: flex;
     flex-wrap: wrap;
