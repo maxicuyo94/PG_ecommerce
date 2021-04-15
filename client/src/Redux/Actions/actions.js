@@ -9,7 +9,7 @@ export const Search = (input) => {
   return async function (dispatch) {
     const JSON = await supabase
       .from("product")
-      .select("*")
+      .select("*, images(url)")
       .ilike("name", `%${input}%`);
     dispatch({ type: actionType.SEARCHB, payload: JSON.data });
   };
@@ -19,7 +19,7 @@ export const totalProducts = () => {
   return async function (dispatch) {
     let JSON = await supabase
       .from("product")
-      .select("*")
+      .select("*, images(url)")
     dispatch({
       type: actionType.PRODUCTS,
       payload: JSON.data,
@@ -35,7 +35,7 @@ export const allProducts = (limit, offset, cate, price, input) => {
   return async function (dispatch) {
     let JSON = await supabase
       .from('product')
-      .select('name,images,price,ranking,id,stock,categories(name)')
+      .select('name,price,ranking,id,stock,categories(name), images(url)')
       .ilike(name, `%${input}%`)
       .eq(nm, cate)
       .gt(prg, price[0])
@@ -49,7 +49,7 @@ export const productDetail = (input) => {
   return async function (dispatch) {
     const JSON = await supabase
       .from("product")
-      .select("*, categories(id, name)")
+      .select("*, categories(id, name), images(url)")
       .eq("id", input);
     dispatch({ type: actionType.PRODUCT_DETAIL, payload: JSON.data[0] });
   };
@@ -85,7 +85,7 @@ export const getProductsByCategories = (input) => {
           arrProductbyCategory.data.map(async (objID) => {
             const product = await supabase
               .from("product")
-              .select("*")
+              .select("*, images(url)")
               .eq("id", objID.product_id);
             return product.data[0];
           })
@@ -100,7 +100,7 @@ export const getProductsByCategories = (input) => {
 
 export const postProduct = (product) => {
   return async (dispatch) => {
-    const productResult = await supabase.from("product").insert([
+    await supabase.from("product").insert([
       {
         name: product.name,
         description: product.description,
@@ -118,6 +118,16 @@ export const postProduct = (product) => {
       .from("product")
       .select("id")
       .eq("name", product.name);
+
+    product.images.map(async image => {
+      await supabase
+        .from('images')
+        .insert([{
+          url: image.link,
+          product_id: productId.data[0].id,
+          cloudinary_id: image.public_id
+        }])
+    })
 
     product.categories.map(async (category) => {
       const categoryId = await supabase
@@ -180,7 +190,6 @@ export const updateProduct = (product, id) => {
 
 export const deleteProduct = (id) => {
   return async () => {
-    console.log(id)
     await supabase
     .from("images")
     .delete("*")
@@ -189,10 +198,11 @@ export const deleteProduct = (id) => {
       .from('product')
       .delete()
       .eq("id", id);
+  }
 };
 
 export const postUser = async (user) => {
-  const userResult = await supabase.from("users").insert([
+  await supabase.from("users").insert([
     {
       name: user.name,
       surname: user.surname,
@@ -253,12 +263,12 @@ export const updateUser = (user, id) => {
   };
 };
 
-export const allUsers = (users) => {
+export const allUsers = () => {
   return async function (dispatch) {
     let JSON = await supabase
       .from('users')
-      .select('name,surname,email,user_name,permission,phone,address(address,city,postalCode,country)')
-    dispatch({ type: actionType.allUsers, payload: JSON.data })
+      .select('*,address(*)')
+    dispatch({ type: actionType.ALL_USERS, payload: JSON.data })
   }
 }
 
