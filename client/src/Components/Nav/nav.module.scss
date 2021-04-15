@@ -11,23 +11,52 @@
   .contents {
     display: flex;
     width: 80%;
-  }
 
-  ul {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    padding: 0;
-  }
+    .logo {
+      width: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-  ul > li {
-    list-style: none;
+      a {
+        height: 100%;
+        margin: auto;
+      }
 
-    text {
-      color: rgb(2, 2, 2);
-      font-size: 1rem;
-      font-weight: 700;
+      img {
+        margin: auto;
+        height: 95;
+        width: 95%;
+        transition: 0.5s;
+
+        &:hover {
+          filter: grayscale(100%);
+        }
+      }
+    }
+
+    ul {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 95%;
+      padding: 0;
+
+      li {
+        list-style: none;
+
+        text {
+          color: rgb(2, 2, 2);
+          font-size: 0.8rem;
+          font-weight: 700;
+          transition: 0.5s;
+          &:hover{
+            color: #9abf15;
+            
+          }
+        }
+      }
     }
   }
+
 }

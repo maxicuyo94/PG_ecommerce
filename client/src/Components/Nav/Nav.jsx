@@ -1,36 +1,45 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
-
+import MiniShop from './MiniShop/MiniShop'
 export function Nav() {
   const [t, i18n] = useTranslation("global");
 
   return (
     <div className={style.container}>
-      <Header />
-      <div className={style.contents}>
-        <ul>
-          <li>
-            <Link to="/">
-              <text>{t("navLink1.linkOne")}</text>
-            </Link>
-          </li>
-          <li>
-            <Link to="/catalogue">
-              <text>{t("navLink2.linkTwo")}</text>
-            </Link>
-          </li>
-          <li>
-            <Link to="/addproduct">
-              <text>{t("navLink3.linkThree")}</text>
-            </Link>
-          </li>
-          {/* <li>
-              <SearchBar />
-            </li> */}
+        <Header />
+        <div className={style.contents}>
+          <div className={style.logo}>
+          <NavLink to={'/landing'}>
+            <img src={'https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png'} />
+          </NavLink>
+        </div>
+          <ul>
+            <li>
+              <Link to="/">
+                <text>Home</text>
+              </Link>
+            </li>
+            <li>
+              <Link to='/catalogue'>
+                <text>
+                  Catalogue
+                </text>
+              </Link>
+            </li>
+            <li>
+              <Link to='/controlpanel'>
+                <text>
+                  Control Panel
+                </text>
+              </Link>
+            </li>
+            <li>
+              <MiniShop />
+            </li>
           <li>
             <Link to="/login">
               <text>{t("navLink4.linkFour")}</text>

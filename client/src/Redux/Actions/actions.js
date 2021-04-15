@@ -15,6 +15,17 @@ export const Search = (input) => {
   };
 };
 
+export const totalProducts = () => {
+  return async function (dispatch) {
+    let JSON = await supabase
+      .from("product")
+      .select("*")
+    dispatch({
+      type: actionType.PRODUCTS,
+      payload: JSON.data,
+    });
+  };
+};
 
 export const allProducts = (limit, offset, cate, price, input) => {
   let nm = !cate ? '' : 'categories.name'
@@ -169,11 +180,15 @@ export const updateProduct = (product, id) => {
 
 export const deleteProduct = (id) => {
   return async () => {
+    console.log(id)
     await supabase
-      .from("product")
+    .from("images")
+    .delete("*")
+    .match({ product_id: id });
+    await supabase
+      .from('product')
       .delete()
-      .match({ product_id: id });
-  };
+      .eq("id", id);
 };
 
 export const postUser = (user) => {
