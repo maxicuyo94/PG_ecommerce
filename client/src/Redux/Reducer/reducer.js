@@ -44,7 +44,11 @@ const InitialState = {
           ...state,
           productByCategories: action.payload
         };
-
+        case actionType.ALL_USERS:
+          return {
+            ...state,
+            users: action.payload
+          };
     default:
       return state;
   }

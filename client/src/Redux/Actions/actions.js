@@ -182,42 +182,47 @@ export const deleteProduct = (id) => {
   return async () => {
     console.log(id)
     await supabase
-    .from("images")
-    .delete("*")
-    .match({ product_id: id });
+      .from("images")
+      .delete("*")
+      .match({ product_id: id });
     await supabase
       .from('product')
       .delete()
       .eq("id", id);
+  }
 };
 
-export const postUser = async (user) => {
-  const userResult = await supabase.from("users").insert([
-    {
-      name: user.name,
-      surname: user.surname,
-      email: user.email,
-      username: user.username,
-      password: user.password,
-      phone: user.phone,
-      permission: user.permission,
-    },
-  ]);
+export const postUser = (user) => {
+  return async (dispatch) => {
 
-  const userId = await supabase
-    .from("users")
-    .select("id")
-    .eq("email", user.email);
 
-  await supabase.from("address").insert([
-    {
-      user_id: userId.data[0].id,
-      address: user.address,
-      city: user.city,
-      postalCode: user.postalCode,
-      country: user.country
-    },
-  ]);
+    await supabase.from("users").insert([
+      {
+        name: user.nombre,
+        surname: user.apellido,
+        email: user.email,
+        user_name: user.userName,
+        user_password: user.password,
+        phone: user.phone
+      },
+    ]);
+
+    const userId = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", user.email);
+
+    await supabase.from("address").insert([
+      {
+        user_id: userId.data[0].id,
+        address: user.address,
+        city: user.city,
+        postal_code: user.postal_code,
+        country: user.country
+      },
+    ]);
+    dispatch({ type: actionType.POST_USER });
+  }
 };
 
 export const updateUser = (user, id) => {
@@ -253,12 +258,12 @@ export const updateUser = (user, id) => {
   };
 };
 
-export const allUsers = (users) => {
+export const allUsers = () => {
   return async function (dispatch) {
     let JSON = await supabase
       .from('users')
-      .select('name,surname,email,user_name,permission,phone,address(address,city,postalCode,country)')
-    dispatch({ type: actionType.allUsers, payload: JSON.data })
+      .select('*,address(*)')
+    dispatch({ type: actionType.ALL_USERS, payload: JSON.data })
   }
 }
 
