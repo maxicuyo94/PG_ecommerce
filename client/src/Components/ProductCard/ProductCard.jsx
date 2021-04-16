@@ -16,7 +16,7 @@ export function ProductCard(props) {
 	const handleAddToCart = (item) => {
 		let cartItemModel = {
 			title: item.title,
-			images: item.images,
+			image: item.images,
 			id: item.id,
 			quantity: 1,
 			price: item.price,

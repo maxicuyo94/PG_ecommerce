@@ -128,7 +128,7 @@ export default function CustomizedMenus() {
                                 <div className={styles.container}>
                                     <div className={styles.cant}>
                                         <span>{item.quantity} X</span>
-                                        {item.images && <img src={item.images} alt={item.name} />}
+                                        {item.image && <img src={item.image} alt={item.name} />}
                                     </div>
                                     <div className={styles.title}>
 
