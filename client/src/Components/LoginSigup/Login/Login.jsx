@@ -15,6 +15,8 @@ export function Login() {
         });
     };
 
+
+
     return (
         <div className={style.container}>
             <form className="form">
@@ -24,7 +26,7 @@ export function Login() {
                 <div>
                     <input className={!user.password ? "danger" : ""} type="password" name="password" placeholder="Password" value={user.password} onChange={handleState} />
                 </div>
-                <button type="button">Sign In</button>
+                <button type="button">LogIn</button>
             </form>
         </div>
     )

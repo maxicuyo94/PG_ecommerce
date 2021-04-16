@@ -6,7 +6,7 @@ import { SearchBar } from '../Searchbar/Searchbar';
 import { Header } from './Header/Header';
 
 
-export function Nav() {
+export function Nav({priority}) {
   return (
     <div className={style.container}>
         <Header />

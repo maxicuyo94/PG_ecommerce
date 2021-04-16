@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom'
+import { useLocalStorage } from '../../../LocalStorage/useLocalStorage'
 import style from './signup.module.scss';
 
 export function SignUp() {
+    const [priority, setPriorityStorage] = useLocalStorage ("priority", "")
+    const history = useHistory()
     const [user, setUser] = useState({
         name: "",
         lastName: "", 
@@ -23,15 +27,8 @@ export function SignUp() {
     }
 
     const created = () =>{
-        let success = false
-        for (const prop in validated) {
-            if (!validated[prop]) {
-                return success = false
-            }else{
-                success = true
-            }
-        }
-        console.log(success)
+        setPriorityStorage(1, true)
+        history.go(1)
     }
 
 
@@ -40,25 +37,25 @@ export function SignUp() {
             <form className="form">
                 <div>
                     <label htmlFor="name">Name *</label>
-                    <input className={!user.email ? "danger" : ""} type="text" name="name" placeholder="Name" value={user.name} onChange={handleState} />
+                    <input className={!user.email ? style.danger : ""} type="text" name="name" placeholder="Name" value={user.name} onChange={handleState} />
                 </div>
                 <div>
                     <label htmlFor="name">Lastname *</label>
-                    <input className={!user.email ? "danger" : ""} type="text" name="lastName" placeholder="Lastname" value={user.lastname} onChange={handleState} />
+                    <input className={!user.email ? style.danger  : ""} type="text" name="lastName" placeholder="Lastname" value={user.lastname} onChange={handleState} />
                 </div>
                 <div>
                     <label htmlFor="name">UserName *</label>
-                    <input className={!user.email ? "danger" : ""} type="text" name="userName" placeholder="Username" value={user.userName} onChange={handleState} />
+                    <input className={!user.email ? style.danger : ""} type="text" name="userName" placeholder="Username" value={user.userName} onChange={handleState} />
                 </div>
                 <div>
                     <label htmlFor="name">Email*</label>
-                    <input className={!user.email ? "danger" : ""} type="text" name="email" placeholder="Email" value={user.email} onChange={handleState} />
+                    <input className={!user.email ? style.danger : ""} type="text" name="email" placeholder="Email" value={user.email} onChange={handleState} />
                 </div>
                 <div>
                     <label htmlFor="name">Password *</label>
-                    <input className={!user.password ? "danger" : ""} type="password" name="password" placeholder="Password" value={user.password} onChange={handleState} />
+                    <input className={!user.password ? style.danger : ""} type="password" name="password" placeholder="Password" value={user.password} onChange={handleState} />
                 </div>
-                <button type="button" onClick={created}>Sign In</button>
+                <button type="button" className={validated.validated ? style.success : style.error} onClick={created}>SignUp</button>
             </form>
         </div>
     );
@@ -71,13 +68,14 @@ export function validate(user) {
     for (const prop in user) {
         if(!user[prop]){
             error[prop] = 'Campos invalido o vacio.'
-        }else if (prop = "email") {
+        }else if (prop === "email") {
             if (!/\S+@\S+\.\S+/.test(user[prop])){
                 error[prop] = 'Campos invalido o vacio.'
+                return error.error = "Los campos estan vacios o son invalidos"
             }else{
                 error[prop] = ''
             }
-        }else if (prop = "password"){
+        }else if (prop === "password"){
             if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(user[prop])){
                 error[prop] = 'Campos invalido o vacio.'
             }else{
@@ -86,17 +84,6 @@ export function validate(user) {
         }else{
             error[prop] = ''
         }
-    }
-
-    if (!user.email) {
-         error.err = 'Los campos son invalidos'
-    }else if (!/\S+@\S+\.\S+/.test(user.email)) {
-      error.err = 'Los campos son invalidos'
-    }else if ((!/(?=.*[0-9])/.test(user.password))) {
-      error.err= 'Los campos son invalidos'
-    }else{
-      error.err = ""
-  
     }
     return error
   };
