@@ -7,10 +7,10 @@ import { Home } from "./Components/Home/Home";
 import { AddProduct } from "./Components/AddProduct/AddProduct.jsx";
 import { ModifyProduct } from "./Components/ModifyProduct/ModifyProduct.jsx";
 import { ControlPanel } from "./Components/ControlPanel/ControlPanel.jsx";
-import { CheckOut } from "./Components/CheckOut/CheckOut.jsx"
+import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
 import { useDispatch } from "react-redux";
 import { setCart } from "./Redux/Actions/cartActions";
-
+import { OrderDetail } from "./Components/ControlPanel/OrderDetail/OrderDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ function App() {
       />
       <Route exact path="/controlpanel" component={ControlPanel} />
       <Route exact path="/Order" component={CheckOut} />
+      <Route exact path="/orderdetail/:id" component={OrderDetail} />
     </Layout>
   );
 }

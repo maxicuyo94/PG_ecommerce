@@ -7,6 +7,7 @@ const InitialState = {
   categories: [],
   productByCategories: {},
   cart: [],
+  orderDetail: {},
 };
 
 function Reducer(state = InitialState, action) {
