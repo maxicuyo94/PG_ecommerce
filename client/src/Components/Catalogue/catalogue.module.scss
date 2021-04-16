@@ -18,18 +18,24 @@
       div {
         width: 100%;
       }
-      div > input {
+
+      div>input {
         width: 100%;
       }
     }
   }
+
   .catalogue {
     @extend .container;
+    height: calc(100vh - 203px);
+    overflow-x: auto;
     flex-direction: column;
+    width: 75%;
     .keypad {
       @extend .container;
       justify-content: space-around;
       height: 2rem;
+
       .backward,
       .upward {
         height: 1.5rem;
@@ -37,10 +43,35 @@
       }
     }
   }
+
+  .catalogue::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .catalogue::-webkit-scrollbar-track {
+    background-color: #ccc;
+  }
+
+  .catalogue::-webkit-scrollbar-thumb {
+    background-color: #777;
+    border-radius: 4px;
+  }
+
+  .catalogue::-webkit-scrollbar-thumb:hover {
+    background-color: #777;
+    border: 1px solid #333333;
+  }
+
+  .catalogue::-webkit-scrollbar-thumb:active {
+    background-color: #666;
+    border: 1px solid #333333;
+  }
+
   .products {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+
     div {
       margin: 1rem;
     }

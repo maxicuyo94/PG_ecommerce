@@ -1,0 +1,16 @@
+.container{
+    width: 95vw;
+    max-width: 600px;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    border-radius: 4px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 15px rgba(128, 128, 128, 0.582);
+}
