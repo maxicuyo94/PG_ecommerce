@@ -8,6 +8,7 @@ import MiniShop from './MiniShop/MiniShop'
 import BtnLang from './BtnLang/BtnLang'
 
 export function Nav() {
+  // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
 
   return (

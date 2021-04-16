@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store/store";
+// eslint-disable-next-line
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import i18next from "i18next";
 import global_es from "./Traslations/ES/global.json";

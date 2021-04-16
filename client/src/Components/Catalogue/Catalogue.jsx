@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductCard } from "../ProductCard/ProductCard";
 import { allProducts, getCategories } from "../../Redux/Actions/actions";
-import ProductNotFound from "../ProductNotFound/ProductNotFound";
 import left from "../Catalogue/left-arrow.svg";
 import right from "../Catalogue/right-arrow.svg";
 import Style from "./catalogue.module.scss";
@@ -37,7 +36,7 @@ export function Catalogue() {
 
   const handleInputChangeP = (e) => {
     e.preventDefault();
-    e.target.value == ''?setPrices(['','']):
+    e.target.value === ''?setPrices(['','']):
     e.target.value === '400'?setPrices([e.target.value,'']):
     setPrices([e.target.value,200 + parseInt(e.target.value)]);
   };

@@ -13,6 +13,7 @@ export function Home() {
   const productByCategories = useSelector((state) => state.productByCategories);
   const [slide, setSlide] = useState(1);
   const stableDispatch = useCallback(dispatch, []);
+  // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
 
   useEffect(() => {
