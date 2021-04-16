@@ -116,10 +116,11 @@ export function Catalogue() {
           </div>
         </div>
         <div className={Style.products}>
+          {console.log(Products)}
           {
             Products && Products.map((item) =>
 
-              <ProductCard stock={item.stock} name={item.name?.split(" ").slice(0, 3).join(" ")} price={item.price} images={item.images && item.images[0]} id={item.id} />
+              <ProductCard stock={item.stock} title={item.name} price={item.price} images={item.images && item.images[0]} id={item.id} />
 
             )
           }

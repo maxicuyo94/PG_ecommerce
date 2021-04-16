@@ -13,14 +13,14 @@ import { addItemCart } from '../../Redux/Actions/cartActions';
 import { useDispatch } from 'react-redux'
 export function ProductCard(props) {
 	const dispatch = useDispatch();
-	const handleAddToCart = (details) => {
+	const handleAddToCart = (item) => {
 		let cartItemModel = {
-			title: details.name,
-			images: details.images,
-			id: details.id,
+			title: item.title,
+			images: item.images,
+			id: item.id,
 			quantity: 1,
-			price: details.price,
-			stock: details.stock
+			price: item.price,
+			stock: item.stock
 		}
 		console.log('Images', cartItemModel.images)
 		dispatch(addItemCart(cartItemModel))
@@ -50,7 +50,7 @@ export function ProductCard(props) {
 			</div> */}
 			<div className={Style.name}>
 				<NavLink to={`/product/${props.id}`}>
-					{props.name}
+					{props.title?.split(" ").slice(0, 3).join(" ")}
 				</NavLink>
 			</div>
 			<div className={Style.price}>

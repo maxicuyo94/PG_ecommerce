@@ -43,7 +43,7 @@ export const Product = (props) => {
         //console.log('add to cart')
         let cartItemModel = {
             title: details.name,
-            images: details.images,
+            images: details.images[0],
             id: details.id,
             quantity: value,
             price: details.price,
