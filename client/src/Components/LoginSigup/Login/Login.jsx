@@ -15,19 +15,16 @@ export function Login() {
         });
     };
 
-
-
     return (
-        <div className={style.container}>
-            <form className="form">
+
+            <form className={style.container}>
                 <div>
                     <input className={!user.email ? "danger" : ""} type="text" name="email" placeholder="Username or Email" value={user.email} onChange={handleState} />
                 </div>
                 <div>
                     <input className={!user.password ? "danger" : ""} type="password" name="password" placeholder="Password" value={user.password} onChange={handleState} />
                 </div>
-                <button type="button">LogIn</button>
+                <button className={style.simpleButton} type="button">LogIn</button>
             </form>
-        </div>
     )
 }
