@@ -6,6 +6,7 @@ const InitialState = {
   productDetail: {},
   categories: [],
   productByCategories: {},
+  users: [],
   cart: [],
 };
 
@@ -17,12 +18,10 @@ function Reducer(state = InitialState, action) {
         allproducts: action.payload,
       };
     case actionType.SEARCH:
-      return {
-        ...state,
-        wantedProducts: action.payload
-          .filter((category) => category.categories.length)
-          .slice(action.pages.limit, action.pages.offset),
-      };
+        return {
+          ...state,
+          wantedProducts: action.payload.filter(category => category.categories.length).slice(action.pages.limit,action.pages.offset)
+        };
     case actionType.SEARCHB:
       return {
         ...state,
@@ -97,7 +96,6 @@ function Reducer(state = InitialState, action) {
           ...state,
           cart: [...state.cart, action.payload],
         };
-
     case actionType.DELETE_ITEM_CART:
       return {
         ...state,
@@ -109,6 +107,7 @@ function Reducer(state = InitialState, action) {
         ...state,
         cart: [],
       };
+
 
     default:
       return state;

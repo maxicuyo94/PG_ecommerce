@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AddCategory } from "../AddCategory/AddCategory";
 import { postProduct, getCategories } from "../../Redux/Actions/actions.js";
+import axios from 'axios';
 import style from "./addproduct.module.scss";
 import Modal from '@material-ui/core/Modal';
+// import { LinkedCameraSharp } from "@material-ui/icons";
 
 
 export function AddProduct() {
@@ -12,7 +14,7 @@ export function AddProduct() {
     name: "",
     description: "",
     price: 0,
-    // images: "",
+    images: [],
     brand: "",
     stock: 0,
     model: "",
@@ -45,13 +47,28 @@ export function AddProduct() {
     });
   };
 
+  const [imageLink, setImageLink] = useState({
+    links: []
+  })
+
+  const upload = async () => {
+    let urls = await Promise.all(imageLink.links.map(async i => {
+      const formData = new FormData()
+      formData.append('file', i)
+      formData.append('upload_preset', 'techstore_uploads')
+      let response = await axios.post('http://api.cloudinary.com/v1_1/techstore/image/upload', formData)
+      return { link: response.data.secure_url, public_id: response.data.public_id}
+    }))
+
+    setData({
+      ...data,
+      images: [...data.images, ...urls]
+    })
+  }
+
   useEffect(() => {
     dispatch(getCategories());
   }, []);
-
-  useEffect(() => {
-
-  }, [categories]);
 
   const createProd = (data) => {
     dispatch(postProduct(data));
@@ -147,12 +164,20 @@ export function AddProduct() {
         <div>
           <label for="avatar">Choose a profile picture:</label>
           <input type="file"
+          onChange={(event) => {
+            for(let i = 0; i < event.target.files.length; i++) {
+              setImageLink({
+                ...imageLink,
+                links: [...imageLink.links, event.target.files[i]]
+              })
+            }
+          }}
             id="avatar" name="avatar"
-            accept="image/png, image/jpeg"/>
-            <button>Add</button>
+            accept="image/png, image/jpeg" multiple/>
+            <button onClick={(e) => {e.preventDefault(); upload()}}>Add</button>
         </div>
           <Link to={`/controlpanel`}>
-            <button type="submit" onClick={() => createProd(data)}>
+            <button type="submit" onClick={() => {createProd(data)}}>
               Create product
             </button>
           </Link>

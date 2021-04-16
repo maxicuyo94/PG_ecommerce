@@ -120,7 +120,9 @@ export function Catalogue() {
           {
             Products && Products.map((item) =>
 
-              <ProductCard stock={item.stock} title={item.name} price={item.price} images={item.images && item.images[0]} id={item.id} />
+
+              <ProductCard stock={item.stock}  title={item.name} price={item.price} images={item.images[0]?.url} id={item.id} />
+
 
             )
           }

@@ -28,7 +28,7 @@ const Slider = ({ images }) => {
         {images?.map((slide, i) => {
           return (
             <div key={i}>
-              <img src={slide} alt="." />
+              <img src={slide.url} alt="." />
             </div>
           );
         })}
