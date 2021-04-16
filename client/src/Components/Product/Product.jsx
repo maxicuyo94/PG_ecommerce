@@ -113,7 +113,7 @@ export const Product = (props) => {
                         productByCategories.length > 0 &&
                         productByCategories[Math.floor(Math.random() * 3)].data.map((product) => {
                             return product.images &&
-                                <CategoriesHome key={product.id} id={product.id} name={product.name} price={product.price} image={product.images[0]} />
+                                <CategoriesHome key={product.id} id={product.id} name={product.name} price={product.price} image={product.images[0].url} />
                         })
 
                     }

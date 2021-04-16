@@ -6,6 +6,7 @@ const InitialState = {
     productDetail: {},
     categories: [],
     productByCategories: {},
+    users: []
   };
   
   function Reducer(state = InitialState, action) {
@@ -20,12 +21,11 @@ const InitialState = {
           ...state,
           wantedProducts: action.payload.filter(category => category.categories.length).slice(action.pages.limit,action.pages.offset)
         };
-        case actionType.SEARCHB:
+      case actionType.SEARCHB:
         return {
           ...state,
           wantedProducts: action.payload
         };
-        
       case actionType.PRODUCT_DETAIL:
         state.productDetail = {}
         return {
@@ -44,11 +44,11 @@ const InitialState = {
           ...state,
           productByCategories: action.payload
         };
-        case actionType.ALL_USERS:
-          return {
-            ...state,
-            users: action.payload
-          };
+      case actionType.ALL_USERS:
+        return {
+          ...state,
+          users: action.payload
+        };
     default:
       return state;
   }
