@@ -9,6 +9,7 @@ const InitialState = {
   productByCategories: {},
   users: [],
   cart: [],
+  orders: [],
   orderDetail: {},
 };
 
@@ -98,16 +99,11 @@ function Reducer(state = InitialState, action) {
           ...state,
           cart: [...state.cart, action.payload],
         };
-
-        case actionType.ALL_USERS:
-        return {
-          ...state,
-          users: action.payload
-        };
-        case actionType.ORDENES:
+        
+        case actionType.ORDERS:
           return {
             ...state,
-            ordenes: action.payload
+            orders: action.payload
           };
 
     case actionType.DELETE_ITEM_CART:

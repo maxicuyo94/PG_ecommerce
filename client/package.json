@@ -19,6 +19,7 @@
     "react-responsive-carousel": "^3.2.18",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-super-responsive-table": "^5.2.0",
     "redux-thunk": "^2.3.0",
     "sass": "^1.32.8",
     "sweetalert": "^2.1.2"
