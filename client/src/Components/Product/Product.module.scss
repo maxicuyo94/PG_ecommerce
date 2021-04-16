@@ -153,6 +153,7 @@ $minwidth: 600px;
         margin: auto;
         height: 75%;
 
+
         @media screen and (min-width: $minwidth) {
           padding: 2vh;
         }
@@ -161,6 +162,7 @@ $minwidth: 600px;
           display: flex;
           padding: 0;
           justify-content: space-between;
+          height: 100px;
 
           li {
             margin: auto;

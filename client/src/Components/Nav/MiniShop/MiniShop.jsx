@@ -17,7 +17,7 @@ const StyledMenu = withStyles({
         //overflowY: 'scroll'
     },
     list: {
-        height:'100%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
@@ -84,41 +84,14 @@ const StyledGo = withStyles({
 
 export default function CustomizedMenus() {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    //const [cont, setCont] = React.useState(null);
     let cont = 0;
-    const props = [
-        {
-            id: 'fe637bc5-0954-4988-a47f-41eaad12af99',
-            name: '[AMD] Ryzen 3',
-            price: 200,
-            image: 'https://i.ebayimg.com/images/g/9koAAOSwh-RfwWxB/s-l500.jpg'
-        },
-        {
-            name: 'Lenovo IdeaPad 3 15ADA05 15.6',
-            price: 200,
-            image: 'https://i.ebayimg.com/images/g/9koAAOSwh-RfwWxB/s-l500.jpg'
-        },
-        {
-            name: 'Lenovo IdeaPad 3 15ADA05 15.6',
-            price: 200,
-            image: 'https://i.ebayimg.com/images/g/9koAAOSwh-RfwWxB/s-l500.jpg'
-        },
-        {
-            name: 'Lenovo IdeaPad 3 15ADA05 15.6',
-            price: 200,
-            image: 'https://i.ebayimg.com/images/g/9koAAOSwh-RfwWxB/s-l500.jpg'
-        },
-        {
-            name: 'Pantalla',
-            price: 200,
-            image: 'https://i.ebayimg.com/images/g/9koAAOSwh-RfwWxB/s-l500.jpg'
-        },
-        {
-            name: 'Pantalla',
-            price: 200,
-            image: 'https://i.ebayimg.com/images/g/9koAAOSwh-RfwWxB/s-l500.jpg'
-        }
-    ]
-    const shop = useSelector(state => state.productByCategories)
+
+    const cart = useSelector(state => state.cart)
+
+
+    // const shop = useSelector(state => state.productByCategories)
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -137,7 +110,7 @@ export default function CustomizedMenus() {
                 onClick={handleClick}
             >
                 <ShoppingCartIcon />
-                {shop[2]?.data.length}
+                {cart && cart.length}
             </StyledButton>
             <StyledMenu
                 id="customized-menu"
@@ -148,19 +121,19 @@ export default function CustomizedMenus() {
             >
                 <div className={styles.products}>
                     {
-                        shop[2] && shop[2].data.map((item) => {
+                        cart && cart.map((item) => {
                             console.log('Item: ', item)
-                            cont += item.price;
+                            cont += item.quantity * item.price;
                             return (
                                 <div className={styles.container}>
                                     <div className={styles.cant}>
-                                        <span>1 X</span>
-                                        {item.images && <img src={item.images[0]} />}
+                                        <span>{item.quantity} X</span>
+                                        {item.images && <img src={item.images} alt={item.name} />}
                                     </div>
                                     <div className={styles.title}>
 
                                         <NavLink to={`/product/${item.id}`}>
-                                            <span>{item.name?.split(" ").slice(0, 4).join(" ")}</span>
+                                            <span>{item.title?.split(" ").slice(0, 4).join(" ")}</span>
                                         </NavLink>
                                     </div>
                                 </div>
@@ -170,7 +143,7 @@ export default function CustomizedMenus() {
                 </div>
                 <span>US${cont.toFixed(2)}</span>
                 <StyledGo>
-                    <NavLink to={'/addproduct'}>
+                    <NavLink to={'/order'}>
                         <span>Go to Checkout</span>
 
                     </NavLink>
