@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
 import MiniShop from './MiniShop/MiniShop'
 import BtnLang from './BtnLang/BtnLang'
+
 export function Nav() {
   const [t, i18n] = useTranslation("global");
 
