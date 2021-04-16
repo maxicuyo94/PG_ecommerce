@@ -84,6 +84,7 @@ const StyledGo = withStyles({
 
 export default function CustomizedMenus() {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    //const [cont, setCont] = React.useState(null);
     let cont = 0;
 
     const cart = useSelector(state => state.cart)
@@ -122,7 +123,7 @@ export default function CustomizedMenus() {
                     {
                         cart && cart.map((item) => {
                             console.log('Item: ', item)
-                            cont += item.price;
+                            cont += item.quantity*item.price;
                             return (
                                 <div className={styles.container}>
                                     <div className={styles.cant}>

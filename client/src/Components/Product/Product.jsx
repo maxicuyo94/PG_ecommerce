@@ -40,7 +40,7 @@ export const Product = (props) => {
     }, [id]);
 
     const handleAddToCart = (details) => {
-        console.log('add to cart')
+        //console.log('add to cart')
         let cartItemModel = {
             title: details.name,
             images: details.images,
@@ -50,6 +50,7 @@ export const Product = (props) => {
             stock: details.stock
         }
         dispatch(addItemCart(cartItemModel))
+        setValue(1)
         swal("Done!","Added to cart","success");
     }
 
