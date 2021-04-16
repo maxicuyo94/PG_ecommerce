@@ -11,10 +11,10 @@ export function Catalogue() {
   const Categories = useSelector(state => state.categories)
   const [Pages, setPages] = useState(0)
   const [Category, setCategory] = useState('')
-  const [Prices, setPrices] = useState(['',''])
+  const [Prices, setPrices] = useState(['', ''])
   const dispatch = useDispatch()
   const [Input, setInput] = useState({ input: '' })
-  
+
   const handlechange = (e) => {
     e.preventDefault();
     setInput({ ...Input, [e.target.name]: e.target.value });
@@ -25,7 +25,7 @@ export function Catalogue() {
   }, [Category, Prices])
 
   useEffect(() => {
-    dispatch(allProducts(Pages * 4, ((Pages * 4) + 4), Category, Prices,Input.input));
+    dispatch(allProducts(Pages * 4, ((Pages * 4) + 4), Category, Prices, Input.input));
     dispatch(getCategories())
   }, [Pages, Category, Prices, Input])
 
@@ -36,9 +36,15 @@ export function Catalogue() {
 
   const handleInputChangeP = (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     e.target.value === ''?setPrices(['','']):
     e.target.value === '400'?setPrices([e.target.value,'']):
     setPrices([e.target.value,200 + parseInt(e.target.value)]);
+=======
+    e.target.value == '' ? setPrices(['', '']) :
+      e.target.value === '400' ? setPrices([e.target.value, '']) :
+        setPrices([e.target.value, 200 + parseInt(e.target.value)]);
+>>>>>>> develop
   };
 
 
@@ -56,7 +62,7 @@ export function Catalogue() {
       <div name="filters" className={Style.filters}>
         <div name="categories" className={Style.categoriesPrice}>
           <div className={Style.searchFilter}>
-          <input className={Style.Input} placeholder='Search...' onChange={(e) => handlechange(e)} value={Input.input} name='input'></input>
+            <input className={Style.Input} placeholder='Search...' onChange={(e) => handlechange(e)} value={Input.input} name='input'></input>
             <h4>Filters</h4>
           </div>
           <h4>Categories</h4>
@@ -68,9 +74,9 @@ export function Catalogue() {
           >
             <option value="">All</option>
             {Categories &&
-              Categories.map((item, i) => ( 
+              Categories.map((item, i) => (
                 <option key={i} value={item.name}>
-                 {item.name}
+                  {item.name}
                 </option>
               ))}
           </select>
@@ -115,10 +121,13 @@ export function Catalogue() {
           </div>
         </div>
         <div className={Style.products}>
+          {console.log(Products)}
           {
             Products && Products.map((item) =>
 
-              <ProductCard stock={item.stock}  name={item.name} price={item.price} images={item.images ? item.images[0] : null} id={item.id} />
+
+              <ProductCard stock={item.stock}  title={item.name} price={item.price} images={item.images[0]?.url} id={item.id} />
+
 
             )
           }

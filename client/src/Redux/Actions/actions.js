@@ -9,7 +9,7 @@ export const Search = (input) => {
   return async function (dispatch) {
     const JSON = await supabase
       .from("product")
-      .select("*")
+      .select("*, images(url)")
       .ilike("name", `%${input}%`);
     dispatch({ type: actionType.SEARCHB, payload: JSON.data });
   };
@@ -19,7 +19,7 @@ export const totalProducts = () => {
   return async function (dispatch) {
     let JSON = await supabase
       .from("product")
-      .select("*")
+      .select("*, images(url)")
     dispatch({
       type: actionType.PRODUCTS,
       payload: JSON.data,
@@ -28,28 +28,31 @@ export const totalProducts = () => {
 };
 
 export const allProducts = (limit, offset, cate, price, input) => {
-  let nm = !cate ? '' : 'categories.name'
-  let prg = !price[0] ? '' : 'price'
-  let prl = !price[1] ? '' : 'price'
-  let name = !input ? '' : 'name'
+  let nm = !cate ? "" : "categories.name";
+  let prg = !price[0] ? "" : "price";
+  let prl = !price[1] ? "" : "price";
+  let name = !input ? "" : "name";
   return async function (dispatch) {
     let JSON = await supabase
       .from('product')
-      .select('name,images,price,ranking,id,stock,categories(name)')
+      .select('name,price,ranking,id,stock,categories(name), images(url)')
       .ilike(name, `%${input}%`)
       .eq(nm, cate)
       .gt(prg, price[0])
-      .lt(prl, price[1])
-    dispatch({ type: actionType.SEARCH, payload: JSON.data, pages: { limit, offset } })
-  }
-}
-
+      .lt(prl, price[1]);
+    dispatch({
+      type: actionType.SEARCH,
+      payload: JSON.data,
+      pages: { limit, offset },
+    });
+  };
+};
 
 export const productDetail = (input) => {
   return async function (dispatch) {
     const JSON = await supabase
       .from("product")
-      .select("*, categories(id, name)")
+      .select("*, categories(id, name), images(url)")
       .eq("id", input);
     dispatch({ type: actionType.PRODUCT_DETAIL, payload: JSON.data[0] });
   };
@@ -85,7 +88,7 @@ export const getProductsByCategories = (input) => {
           arrProductbyCategory.data.map(async (objID) => {
             const product = await supabase
               .from("product")
-              .select("*")
+              .select("*, images(url)")
               .eq("id", objID.product_id);
             return product.data[0];
           })
@@ -100,7 +103,7 @@ export const getProductsByCategories = (input) => {
 
 export const postProduct = (product) => {
   return async (dispatch) => {
-    const productResult = await supabase.from("product").insert([
+    await supabase.from("product").insert([
       {
         name: product.name,
         description: product.description,
@@ -118,6 +121,16 @@ export const postProduct = (product) => {
       .from("product")
       .select("id")
       .eq("name", product.name);
+
+    product.images.map(async image => {
+      await supabase
+        .from('images')
+        .insert([{
+          url: image.link,
+          product_id: productId.data[0].id,
+          cloudinary_id: image.public_id
+        }])
+    })
 
     product.categories.map(async (category) => {
       const categoryId = await supabase
@@ -150,7 +163,7 @@ export const postCategory = (category) => {
 };
 
 export const updateProduct = (product, id) => {
-  console.log(product.images)
+  console.log(product.images);
   return async () => {
     await supabase
       .from("product_categories")
@@ -180,7 +193,6 @@ export const updateProduct = (product, id) => {
 
 export const deleteProduct = (id) => {
   return async () => {
-    console.log(id)
     await supabase
       .from("images")
       .delete("*")
@@ -194,8 +206,6 @@ export const deleteProduct = (id) => {
 
 export const postUser = (user) => {
   return async (dispatch) => {
-
-
     await supabase.from("users").insert([
       {
         name: user.nombre,
@@ -225,36 +235,10 @@ export const postUser = (user) => {
   }
 };
 
-export const updateUser = (user, id) => {
+export const deleteCategory = (id) => {
   return async () => {
-    await supabase
-      .from("users,address(address,city,postalCode,country)")
-      .update({
-        name: user.name,
-        surname: user.surname,
-        email: user.email,
-        username: user.username,
-        password: user.password,
-        phone: user.phone,
-        permission: user.permission,
-      })
-      .eq("id", id);
-
-    const addressId = await supabase
-      .from("addres")
-      .select("id,user_id")
-      .eq("user_id", id)
-
-    await supabase
-      .from("address")
-      .update({
-        user_id: user.id,
-        address: user.address,
-        city: user.city,
-        postalCode: user.postalCode,
-        country: user.country,
-      })
-      .eq("id", addressId);
+    console.log(id);
+    await supabase.from("categories").delete("*").match({ id: id });
   };
 };
 
@@ -266,4 +250,13 @@ export const allUsers = () => {
     dispatch({ type: actionType.ALL_USERS, payload: JSON.data })
   }
 }
+
+export const allOrdenes = () => {
+  return async function (dispatch) {
+    let JSON = await supabase.from("order").select("*");
+    dispatch({ type: actionType.ORDENES, payload: JSON.data });
+  };
+};
+
+
 
