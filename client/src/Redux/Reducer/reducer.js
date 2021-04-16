@@ -6,6 +6,8 @@ const InitialState = {
     productDetail: {},
     categories: [],
     productByCategories: {},
+    users: [],
+    ordenes: []
   };
   
   function Reducer(state = InitialState, action) {
@@ -44,6 +46,16 @@ const InitialState = {
           ...state,
           productByCategories: action.payload
         };
+        case actionType.ALL_USERS:
+        return {
+          ...state,
+          users: action.payload
+        };
+        case actionType.ORDENES:
+          return {
+            ...state,
+            ordenes: action.payload
+          };
 
     default:
       return state;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { totalProducts, deleteProduct, getCategories, allUsers } from "../../Redux/Actions/actions.js";
+import { totalProducts, deleteProduct, getCategories, deleteCategory, allOrdenes } from "../../Redux/Actions/actions.js";
+import { allUsers, deleteUser } from "../../Redux/Actions/usersActions.js";
 import style from "./controlpanel.module.scss";
 import { Edit, Delete, CheckBoxOutlineBlank, CheckBox } from '@material-ui/icons';
 import { Link } from "react-router-dom";
@@ -10,17 +11,28 @@ export function ControlPanel() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.allproducts);
   const categories = useSelector((state) => state.categories);
-  const users = useSelector((state) => state.allusers);
+  const users = useSelector((state) => state.users);
+  const orders = useSelector((state) => state.ordenes);
 
 
   useEffect(() => {
     dispatch(totalProducts());
     dispatch(getCategories());
+    dispatch(allUsers());
+    dispatch(allOrdenes());
   }, [products.length]);
 
   const handleDelete = async (id) => {
-    await dispatch(deleteProduct(id))
-    await dispatch(totalProducts());
+    if(tab === 'products') {
+      await dispatch(deleteProduct(id))
+      await dispatch(totalProducts());
+    } else if (tab === 'users'){
+      await dispatch(deleteUser(id));
+      await dispatch(allUsers());
+    } else if (tab === 'categories'){
+      await dispatch(deleteCategory(id));
+      await dispatch(getCategories());
+    }
   }
 
 const [checkbox, setCheckbox] = useState(false);
@@ -34,6 +46,7 @@ const [tab, setTab] = useState('products');
 const handleTab = (e) => {
   setTab(e.target.name)
 }
+console.log(orders, 'aca')
   
   return (
     <div class={style.container}>
@@ -44,23 +57,24 @@ const handleTab = (e) => {
       <button name='purchasehistory' onClick={(e) => handleTab(e)}>Purchase History</button>
       <button name='categories' onClick={(e) => handleTab(e)}>Categories</button>
       <button name='users' onClick={(e) => handleTab(e)}>Users</button>
-      <Link to='/addproduct'>
-                <button>
-                  Add Product
-                </button>
-              </Link>
+      {tab === 'products' ? <Link to='/addproduct'><button>Add Product</button></Link> : null}
       </div>
       <div class={style.containerList}>
       <div class={style.bar}>
         <h4><CheckBoxOutlineBlank/></h4>
-        <h4 class={style.name}>Product</h4>
+        {tab === 'products' ? <h4 class={style.name}>Product</h4> : null}
+        {tab === 'orders' ? <h4 class={style.name}>Order</h4> : null}
+        {tab === 'categories' ? <h4 class={style.name}>Category</h4> : null}
+        {tab === 'users' ? <h4 class={style.name}>User</h4> : null}
+        {tab === 'purchasehistory' ? <h4 class={style.name}>Purchase</h4> : null}
+
         <h4>Modify</h4>
         <h4>Delete</h4>
       </div>
       <div class={style.containerList}>
           {tab === 'products' ? products.map((product) => {
               return (
-                    <div class={style.list}>
+                    <div key={product.id} class={style.list}>
                       {checkbox ? <CheckBox id={product.id} class={style.icon} onClick={() => checkPress(product.id)}/> : <CheckBoxOutlineBlank id={product.id} class={style.icon} onClick={() => checkPress(product.id)}/>}
                       <span class={style.name}>{product.name}</span>
                       <Link to={`/modifyproduct/${product.id}`}><Edit class={style.icon}/></Link>
@@ -69,10 +83,12 @@ const handleTab = (e) => {
                     </div>
               )
           }) : null}
-            {tab === 'orders' ? products.map((order) => {
+            {tab === 'orders' ? orders.map((order) => {
               return (
                     <div class={style.list}>
-                      <span>Aca se tienen que renderizar las ordenes</span>
+                      <span class={style.name}>{order.orderDetails.prueba}</span>
+                      <span class={style.name}>{order.orderStatus[0]}</span>
+
                       {checkbox ? <CheckBox id={order.id} class={style.icon} onClick={() => checkPress(order.id)}/> : <CheckBoxOutlineBlank id={order.id} class={style.icon} onClick={() => checkPress(order.id)}/>}
                     </div>
               )
@@ -80,16 +96,20 @@ const handleTab = (e) => {
           {tab === 'categories' ? categories.map((category) => {
               return (
                     <div class={style.list}>
-                      <span>{category.name}</span>
-                      {checkbox ? <CheckBox id={category.id} class={style.icon} onClick={() => checkPress(category.id)}/> : <CheckBoxOutlineBlank id={category.id} class={style.icon} onClick={() => checkPress(category.id)}/>}
-                    </div>
+                    {checkbox ? <CheckBox id={category.id} class={style.icon} onClick={() => checkPress(category.id)}/> : <CheckBoxOutlineBlank id={category.id} class={style.icon} onClick={() => checkPress(category.id)}/>}
+                    <span class={style.name}>{category.name}</span>
+                    <Delete class={style.icon} id={category.id} 
+                      onClick={() => handleDelete(category.id)}/>
+                     </div>
               )
           }) : null}
-          {tab === 'users' ? products.map((user) => {
+          {tab === 'users' ? users.map((user) => {
               return (
-                    <div class={style.list}>
-                      <span>Aca se tienen que renderizar los users</span>
+                    <div key={user.id} class={style.list}>
                       {checkbox ? <CheckBox id={user.id} class={style.icon} onClick={() => checkPress(user.id)}/> : <CheckBoxOutlineBlank id={user.id} class={style.icon} onClick={() => checkPress(user.id)}/>}
+                      <span class={style.name}>{user.name}</span>
+                      <Delete class={style.icon} id={user.id} 
+                      onClick={() => handleDelete(user.id)}/>
                     </div>
               )
           }) : null}

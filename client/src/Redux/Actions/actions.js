@@ -17,9 +17,7 @@ export const Search = (input) => {
 
 export const totalProducts = () => {
   return async function (dispatch) {
-    let JSON = await supabase
-      .from("product")
-      .select("*")
+    let JSON = await supabase.from("product").select("*");
     dispatch({
       type: actionType.PRODUCTS,
       payload: JSON.data,
@@ -28,22 +26,25 @@ export const totalProducts = () => {
 };
 
 export const allProducts = (limit, offset, cate, price, input) => {
-  let nm = !cate ? '' : 'categories.name'
-  let prg = !price[0] ? '' : 'price'
-  let prl = !price[1] ? '' : 'price'
-  let name = !input ? '' : 'name'
+  let nm = !cate ? "" : "categories.name";
+  let prg = !price[0] ? "" : "price";
+  let prl = !price[1] ? "" : "price";
+  let name = !input ? "" : "name";
   return async function (dispatch) {
     let JSON = await supabase
-      .from('product')
-      .select('name,images,price,ranking,id,stock,categories(name)')
+      .from("product")
+      .select("name,images,price,ranking,id,stock,categories(name)")
       .ilike(name, `%${input}%`)
       .eq(nm, cate)
       .gt(prg, price[0])
-      .lt(prl, price[1])
-    dispatch({ type: actionType.SEARCH, payload: JSON.data, pages: { limit, offset } })
-  }
-}
-
+      .lt(prl, price[1]);
+    dispatch({
+      type: actionType.SEARCH,
+      payload: JSON.data,
+      pages: { limit, offset },
+    });
+  };
+};
 
 export const productDetail = (input) => {
   return async function (dispatch) {
@@ -150,7 +151,7 @@ export const postCategory = (category) => {
 };
 
 export const updateProduct = (product, id) => {
-  console.log(product.images)
+  console.log(product.images);
   return async () => {
     await supabase
       .from("product_categories")
@@ -180,86 +181,22 @@ export const updateProduct = (product, id) => {
 
 export const deleteProduct = (id) => {
   return async () => {
-    console.log(id)
-    await supabase
-    .from("images")
-    .delete("*")
-    .match({ product_id: id });
-    await supabase
-      .from('product')
-      .delete()
-      .eq("id", id);
-};
-};
-
-export const postUser = async (user) => {
-  const userResult = await supabase.from("users").insert([
-    {
-      name: user.name,
-      surname: user.surname,
-      email: user.email,
-      username: user.username,
-      password: user.password,
-      phone: user.phone,
-      permission: user.permission,
-    },
-  ]);
-
-  const userId = await supabase
-    .from("users")
-    .select("id")
-    .eq("email", user.email);
-
-  await supabase.from("address").insert([
-    {
-      user_id: userId.data[0].id,
-      address: user.address,
-      city: user.city,
-      postalCode: user.postalCode,
-      country: user.country
-    },
-  ]);
-};
-
-export const updateUser = (user, id) => {
-  return async () => {
-    await supabase
-      .from("users,address(address,city,postalCode,country)")
-      .update({
-        name: user.name,
-        surname: user.surname,
-        email: user.email,
-        username: user.username,
-        password: user.password,
-        phone: user.phone,
-        permission: user.permission,
-      })
-      .eq("id", id);
-
-    const addressId = await supabase
-      .from("addres")
-      .select("id,user_id")
-      .eq("user_id", id)
-
-    await supabase
-      .from("address")
-      .update({
-        user_id: user.id,
-        address: user.address,
-        city: user.city,
-        postalCode: user.postalCode,
-        country: user.country,
-      })
-      .eq("id", addressId);
+    console.log(id);
+    await supabase.from("images").delete("*").match({ product_id: id });
+    await supabase.from("product").delete().eq("id", id);
   };
 };
 
-export const allUsers = (users) => {
-  return async function (dispatch) {
-    let JSON = await supabase
-      .from('users')
-      .select('name,surname,email,user_name,permission,phone,address(address,city,postalCode,country)')
-    dispatch({ type: actionType.ALL_USERS, payload: JSON.data })
-  }
-}
+export const deleteCategory = (id) => {
+  return async () => {
+    console.log(id);
+    await supabase.from("categories").delete("*").match({ id: id });
+  };
+};
 
+export const allOrdenes = () => {
+  return async function (dispatch) {
+    let JSON = await supabase.from("order").select("*");
+    dispatch({ type: actionType.ORDENES, payload: JSON.data });
+  };
+};
