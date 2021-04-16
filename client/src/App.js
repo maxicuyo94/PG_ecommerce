@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import { Catalogue } from "./Components/Catalogue/Catalogue";
@@ -7,8 +7,17 @@ import { Home } from "./Components/Home/Home";
 import { AddProduct } from "./Components/AddProduct/AddProduct.jsx";
 import { ModifyProduct } from "./Components/ModifyProduct/ModifyProduct.jsx";
 import { ControlPanel } from "./Components/ControlPanel/ControlPanel.jsx";
+import { CheckOut } from "./Components/CheckOut/CheckOut.jsx"
+import { useDispatch } from "react-redux";
+import { setCart } from "./Redux/Actions/cartActions";
+
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setCart());
+  }, []);
+
   return (
     <Layout>
       <Route exact path="/" component={Home} />
@@ -21,6 +30,7 @@ function App() {
         render={({ match }) => <ModifyProduct id={match.params.id} />}
       />
       <Route exact path="/controlpanel" component={ControlPanel} />
+      <Route exact path="/Order" component={CheckOut} />
     </Layout>
   );
 }

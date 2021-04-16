@@ -8,6 +8,7 @@ import { CategoriesHome } from '../Home/Categories/CategoriesHome'
 import Carousel from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
 import swal from 'sweetalert';
+import { addItemCart } from "../../Redux/Actions/cartActions";
 
 export const Product = (props) => {
     const dispatch = useDispatch();
@@ -37,6 +38,20 @@ export const Product = (props) => {
         }
         // eslint-disable-next-line
     }, [id]);
+
+    const handleAddToCart = (details) => {
+        console.log('add to cart')
+        let cartItemModel = {
+            title: details.name,
+            images: details.images,
+            id: details.id,
+            quantity: value,
+            price: details.price,
+            stock: details.stock
+        }
+        dispatch(addItemCart(cartItemModel))
+        swal("Done!","Added to cart","success");
+    }
 
 
     return (
@@ -89,7 +104,7 @@ export const Product = (props) => {
                                 <button onClick={handleRes}>-</button>
                             </div>
                         </div>
-                        {details.stock > 0?<button onClick={() => { swal("Done!","Added to cart","success"); }} >
+                        {details.stock > 0?<button onClick={() => { handleAddToCart(details) }} >
                             Add to Cart
                         </button>:<button onClick={() => { swal("Sorry!","Come back in a few days","error"); }} >
                             Sold out
