@@ -1,6 +1,7 @@
 import * as actionType from "../action_types/actionTypes";
 
 const InitialState = {
+
   allproducts: [],
   wantedProducts: [],
   productDetail: {},
@@ -97,6 +98,18 @@ function Reducer(state = InitialState, action) {
           ...state,
           cart: [...state.cart, action.payload],
         };
+
+        case actionType.ALL_USERS:
+        return {
+          ...state,
+          users: action.payload
+        };
+        case actionType.ORDENES:
+          return {
+            ...state,
+            ordenes: action.payload
+          };
+
     case actionType.DELETE_ITEM_CART:
       return {
         ...state,

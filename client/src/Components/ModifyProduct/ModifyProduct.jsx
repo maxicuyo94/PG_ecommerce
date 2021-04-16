@@ -7,6 +7,7 @@ import {
   getCategories,
 } from "../../Redux/Actions/actions.js";
 import style from "./modifyproduct.module.scss";
+import { Clear } from '@material-ui/icons';
 
 export function ModifyProduct({ id }) {
   const [data, setData] = useState({
@@ -166,14 +167,15 @@ export function ModifyProduct({ id }) {
           </select>
         </div>
         <div>
+          <span>Selected categories</span>
           {data.categories &&
             data.categories.map((category) => (
-              <p>
-                {category.name}
+                <div class={style.categories}>
                 <button type='button' id={category.id} value={category.name} onClick={(e) => removeCategory(e)}>
-                  X
+                {category.name}
                 </button>
-              </p>
+                <Clear class={style.clear}></Clear>
+                </div>
             ))}
         </div>
         <div>
