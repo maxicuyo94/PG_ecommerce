@@ -251,12 +251,6 @@ export const allUsers = () => {
   }
 }
 
-export const allOrdenes = () => {
-  return async function (dispatch) {
-    let JSON = await supabase.from("order").select("*");
-    dispatch({ type: actionType.ORDENES, payload: JSON.data });
-  };
-};
 
 
 

@@ -7,7 +7,7 @@ export const POST_PRODUCT = "POSTPRUDOCT";
 export const PRODUCT_DETAIL = "PRODUCTDETAIL";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_PRODUCTBYCATEGORIES = "GET_PRODUCTBYCATEGORIES";
-export const ORDENES = "ORDENES";
+export const ORDERS = "ORDERS";
 
 
 //Cart
@@ -21,4 +21,4 @@ export const EDIT_STOCK = "EDIT_STOCK";
 
 //Order
 export const GET_ORDER = "GET_ORDER";
-
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS";

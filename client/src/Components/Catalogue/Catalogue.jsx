@@ -36,15 +36,9 @@ export function Catalogue() {
 
   const handleInputChangeP = (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-    e.target.value === ''?setPrices(['','']):
-    e.target.value === '400'?setPrices([e.target.value,'']):
-    setPrices([e.target.value,200 + parseInt(e.target.value)]);
-=======
     e.target.value == '' ? setPrices(['', '']) :
       e.target.value === '400' ? setPrices([e.target.value, '']) :
         setPrices([e.target.value, 200 + parseInt(e.target.value)]);
->>>>>>> develop
   };
 
 
