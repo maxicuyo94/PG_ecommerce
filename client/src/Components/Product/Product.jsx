@@ -43,7 +43,7 @@ export const Product = (props) => {
         //console.log('add to cart')
         let cartItemModel = {
             title: details.name,
-            images: details.images,
+            images: details.images[0],
             id: details.id,
             quantity: value,
             price: details.price,
@@ -129,7 +129,7 @@ export const Product = (props) => {
                         productByCategories.length > 0 &&
                         productByCategories[Math.floor(Math.random() * 3)].data.map((product) => {
                             return product.images &&
-                                <CategoriesHome key={product.id} id={product.id} name={product.name} price={product.price} image={product.images[0]} />
+                                <CategoriesHome key={product.id} id={product.id} name={product.name} price={product.price} image={product.images[0].url} />
                         })
 
                     }

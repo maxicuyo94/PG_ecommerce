@@ -30,7 +30,7 @@
     height: calc(100vh - 203px);
     overflow-x: auto;
     flex-direction: column;
-
+    width: 75%;
     .keypad {
       @extend .container;
       justify-content: space-around;

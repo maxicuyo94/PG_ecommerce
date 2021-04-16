@@ -17,7 +17,7 @@ const StyledMenu = withStyles({
         //overflowY: 'scroll'
     },
     list: {
-        height:'100%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
@@ -123,12 +123,12 @@ export default function CustomizedMenus() {
                     {
                         cart && cart.map((item) => {
                             console.log('Item: ', item)
-                            cont += item.quantity*item.price;
+                            cont += item.quantity * item.price;
                             return (
                                 <div className={styles.container}>
                                     <div className={styles.cant}>
                                         <span>{item.quantity} X</span>
-                                        {item.images && <img src={item.images[0]} alt={item.name}/>}
+                                        {item.images && <img src={item.images} alt={item.name} />}
                                     </div>
                                     <div className={styles.title}>
 
