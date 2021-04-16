@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { totalProducts, deleteProduct, getCategories } from "../../Redux/Actions/actions.js";
+import { totalProducts, deleteProduct, getCategories, allUsers } from "../../Redux/Actions/actions.js";
 import style from "./controlpanel.module.scss";
 import { Edit, Delete, CheckBoxOutlineBlank, CheckBox } from '@material-ui/icons';
 import { Link } from "react-router-dom";
@@ -10,6 +10,8 @@ export function ControlPanel() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.allproducts);
   const categories = useSelector((state) => state.categories);
+  const users = useSelector((state) => state.allusers);
+
 
   useEffect(() => {
     dispatch(totalProducts());
@@ -39,6 +41,7 @@ const handleTab = (e) => {
       <div class={style.barButtons}>
       <button name='products' onClick={(e) => handleTab(e)}>Products</button>
       <button name='orders' onClick={(e) => handleTab(e)}>Orders</button>
+      <button name='purchasehistory' onClick={(e) => handleTab(e)}>Purchase History</button>
       <button name='categories' onClick={(e) => handleTab(e)}>Categories</button>
       <button name='users' onClick={(e) => handleTab(e)}>Users</button>
       <Link to='/addproduct'>
