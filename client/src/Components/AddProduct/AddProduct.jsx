@@ -8,7 +8,6 @@ import style from "./addproduct.module.scss";
 import Modal from '@material-ui/core/Modal';
 // import { LinkedCameraSharp } from "@material-ui/icons";
 
-
 export function AddProduct() {
   const [data, setData] = useState({
     name: "",
@@ -57,7 +56,7 @@ export function AddProduct() {
       formData.append('file', i)
       formData.append('upload_preset', 'techstore_uploads')
       let response = await axios.post('http://api.cloudinary.com/v1_1/techstore/image/upload', formData)
-      return { link: response.data.secure_url, public_id: response.data.public_id}
+      return { link: response.data.secure_url, public_id: response.data.public_id }
     }))
 
     setData({
@@ -75,7 +74,7 @@ export function AddProduct() {
   };
 
   const changeModal = () => {
-    if(modal === true) {
+    if (modal === true) {
       setModal(false)
     } else setModal(true)
   }
@@ -164,29 +163,31 @@ export function AddProduct() {
         <div>
           <label for="avatar">Choose a profile picture:</label>
           <input type="file"
-          onChange={(event) => {
-            for(let i = 0; i < event.target.files.length; i++) {
+            onChange={(event) => {
+              let imgfiles = []
+              for (let i = 0; i < event.target.files.length; i++) {
+                imgfiles.push(event.target.files[i])
+              }
               setImageLink({
                 ...imageLink,
-                links: [...imageLink.links, event.target.files[i]]
+                links: imgfiles
               })
-            }
-          }}
+            }}
             id="avatar" name="avatar"
-            accept="image/png, image/jpeg" multiple/>
-            <button onClick={(e) => {e.preventDefault(); upload()}}>Add</button>
+            accept="image/png, image/jpeg" multiple />
+          <button onClick={(e) => { e.preventDefault(); upload() }}>Add</button>
         </div>
-          <Link to={`/controlpanel`}>
-            <button type="submit" onClick={() => {createProd(data)}}>
-              Create product
+        <Link to={`/controlpanel`}>
+          <button type="submit" onClick={() => { createProd(data) }}>
+            Create product
             </button>
-          </Link>
+        </Link>
       </form>
       <div>
-      <button class={style.button2} onClick={changeModal}>Add Category</button>  
+        <button class={style.button2} onClick={changeModal}>Add Category</button>
         <Modal class={style.modal} open={modal} onClose={changeModal}>
           <AddCategory />
-          </Modal>  
+        </Modal>
       </div>
     </div>
   );
