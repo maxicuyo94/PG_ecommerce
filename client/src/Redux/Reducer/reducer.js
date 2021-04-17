@@ -1,7 +1,6 @@
 import * as actionType from "../action_types/actionTypes";
 
 const InitialState = {
-
   allproducts: [],
   wantedProducts: [],
   productDetail: {},
@@ -10,6 +9,7 @@ const InitialState = {
   users: [],
   cart: [],
   orders: [],
+  userOrders: [],
   orderDetail: {},
 };
 
@@ -21,10 +21,12 @@ function Reducer(state = InitialState, action) {
         allproducts: action.payload,
       };
     case actionType.SEARCH:
-        return {
-          ...state,
-          wantedProducts: action.payload.filter(category => category.categories.length).slice(action.pages.limit,action.pages.offset)
-        };
+      return {
+        ...state,
+        wantedProducts: action.payload
+          .filter((category) => category.categories.length)
+          .slice(action.pages.limit, action.pages.offset),
+      };
     case actionType.SEARCHB:
       return {
         ...state,
@@ -99,12 +101,18 @@ function Reducer(state = InitialState, action) {
           ...state,
           cart: [...state.cart, action.payload],
         };
-        
-        case actionType.ORDERS:
-          return {
-            ...state,
-            orders: action.payload
-          };
+
+    case actionType.ORDERS:
+      return {
+        ...state,
+        orders: action.payload,
+      };
+
+    case actionType.GET_ORDER_DETAIL:
+      return {
+        ...state,
+        orderDetail: action.payload,
+      };
 
     case actionType.DELETE_ITEM_CART:
       return {

@@ -8,7 +8,7 @@ function Layout({ children }) {
     <div className={styles.containter}>
       <Nav />
       <main>{children}</main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
