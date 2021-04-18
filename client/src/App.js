@@ -16,7 +16,7 @@ import { setCart } from "./Redux/Actions/cartActions";
 import { OrderDetail } from "./Components/ControlPanel/OrderDetail/OrderDetail";
 
 function App() {
-  const [priority, setPriorityStorage] = useLocalStorage ("priority", "")
+  const [priority, setPriorityStorage] = useLocalStorage("priority", "")
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setCart());
@@ -24,16 +24,16 @@ function App() {
 
   return (
     <Layout priority={priority}>
-      <Route exact path="/" render={()=><Home priority={priority}/>} />
-      <Route exact path ="/login" render={()=><LoginSignup priority={priority}/>}/>
-      <Route exact path ="/modifyUser/:id" render={({ match }) => <ModifyUser id={match.params.id} />}/>
-      <Route exact path="/Product/:id" render={()=><Product priority={priority}/>}/>
-      <Route exact path="/catalogue" render={()=><Catalogue priority={priority}/>}/>
-      <Route exact path="/AddProduct" render={()=><AddProduct priority={priority}/>}/>
-      <Route exact path="/Order" render= {()=> <CheckOut priority={priority/>}/>
-      <Route exact path="/modifyProduct/:id" render={({ match }) => <ModifyProduct id={match.params.id} />}/>
-      <Route exact path="/controlpanel" render={()=><ControlPanel priority={priority}/>}/>
-      <Route exact path="/orderdetail/:id" render={()=><OrderDetail priority={priority}/>}/>
+      <Route exact path="/" render={() => <Home priority={priority} />} />
+      <Route exact path="/login" render={() => <LoginSignup priority={priority} />} />
+      <Route exact path="/modifyUser/:id" render={({ match }) => <ModifyUser id={match.params.id} />} />
+      <Route exact path="/Product/:id" render={({ match }) => <Product priority={priority} id={match.params.id} />} />
+      <Route exact path="/catalogue" render={() => <Catalogue priority={priority} />} />
+      <Route exact path="/AddProduct" render={() => <AddProduct priority={priority} />} />
+      <Route exact path="/Order" render={() => <CheckOut priority={priority} />} />
+      <Route exact path="/modifyProduct/:id" render={({ match }) => <ModifyProduct id={match.params.id} />} />
+      <Route exact path="/controlpanel" render={() => <ControlPanel priority={priority} />} />
+      <Route exact path="/orderdetail/:id" render={() => <OrderDetail priority={priority} />} />
     </Layout>
   );
 }

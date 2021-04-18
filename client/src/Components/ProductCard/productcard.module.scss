@@ -1,7 +1,6 @@
 .container {
-  min-height: 30vh;
-  max-height: 35vh;
-  width: 20%;
+  min-height: 20rem;
+  width: 15rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -37,7 +36,7 @@
     margin: 0 auto;
     width: 95%;
     font-weight: bolder;
-    font-size: 1vw;
+    font-size: 1rem;
     text-align: center;
     color: #000000;
     transition: 0.5s;
@@ -53,7 +52,7 @@
     height: 10%;
     margin: auto !important;
     font-weight: bolder;
-    font-size: 1vw;
+    font-size: 1vh;
     display: flex;
     justify-content: center;
 
@@ -105,7 +104,6 @@
   }
 
 
-
 }
 
 .off {
@@ -122,8 +120,6 @@
 
 
 }
-
-
 
 
 .review {
