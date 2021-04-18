@@ -11,7 +11,7 @@ import Style from "../OrderDetail/orderdetail.module.scss";
 export const OrderDetail = () => {
   const orderDetail = useSelector((state) => state.orderDetail);
   const orderInfo = useSelector((state) => state.orders);
-  const products = useSelector((state) => orderDetail.allproducts);
+  //const products = useSelector((state) => orderDetail.allproducts);
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -20,17 +20,17 @@ export const OrderDetail = () => {
     // dispatch(updateOrder(id));
   }, [dispatch, id]);
 
-console.log(JSON.stringify(orderDetail))
+console.log(orderDetail)
 
   return (
-    <div class="afafr">
-      <div class="Style.container">
+    <div class="container">
+      <div class="table">
         <h2>Order Detail N° {id}</h2>
         <td>Order Made By </td>
-        <td>sasas</td>
+        <td>p</td>
         <tr>
           <td>Order Date</td>
-          <td>aassd</td>
+          <td>asadsas</td>
         </tr>
         <tr>
           <td>Total amount</td>
