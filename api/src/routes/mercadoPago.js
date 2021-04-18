@@ -1,5 +1,4 @@
 const server = require("express").Router()
-const Sequelize = require("sequelize")
 // SDK
 const mercadopago = require ('mercadopago');
 
