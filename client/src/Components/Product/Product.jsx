@@ -14,7 +14,7 @@ export const Product = (props) => {
     const dispatch = useDispatch();
     const details = useSelector((state) => state.productDetail);
     const productByCategories = useSelector(state => state.productByCategories)
-    const id = props.match.params.id;
+    const id = props.id;
     const [value, setValue] = useState(1);
     const [nav, setNav] = useState('details')
     const [index, setIndex] = useState(1)

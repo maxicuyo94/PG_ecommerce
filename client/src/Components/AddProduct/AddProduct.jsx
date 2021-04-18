@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AddCategory } from "../AddCategory/AddCategory";
 import { postProduct, getCategories } from "../../Redux/Actions/actions.js";
-import axios from 'axios';
+import axios from "axios";
 import style from "./addproduct.module.scss";
-import Modal from '@material-ui/core/Modal';
-import { ArrowBack, LinkedCameraSharp } from '@material-ui/icons';
+import Modal from "@material-ui/core/Modal";
+import { ArrowBack, LinkedCameraSharp } from "@material-ui/icons";
+import { useTranslation } from "react-i18next";
 
 export function AddProduct() {
+  const [t, i18n] = useTranslation("global");
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -22,7 +24,7 @@ export function AddProduct() {
     status: true,
     categories: [],
   });
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
 
@@ -47,23 +49,31 @@ export function AddProduct() {
   };
 
   const [imageLink, setImageLink] = useState({
-    links: []
-  })
+    links: [],
+  });
 
   const upload = async () => {
-    let urls = await Promise.all(imageLink.links.map(async i => {
-      const formData = new FormData()
-      formData.append('file', i)
-      formData.append('upload_preset', 'techstore_uploads')
-      let response = await axios.post('http://api.cloudinary.com/v1_1/techstore/image/upload', formData)
-      return { link: response.data.secure_url, public_id: response.data.public_id }
-    }))
+    let urls = await Promise.all(
+      imageLink.links.map(async (i) => {
+        const formData = new FormData();
+        formData.append("file", i);
+        formData.append("upload_preset", "techstore_uploads");
+        let response = await axios.post(
+          "http://api.cloudinary.com/v1_1/techstore/image/upload",
+          formData
+        );
+        return {
+          link: response.data.secure_url,
+          public_id: response.data.public_id,
+        };
+      })
+    );
 
     setData({
       ...data,
-      images: [...data.images, ...urls]
-    })
-  }
+      images: [...data.images, ...urls],
+    });
+  };
 
   useEffect(() => {
     dispatch(getCategories());
@@ -75,21 +85,19 @@ export function AddProduct() {
 
   const changeModal = () => {
     if (modal === true) {
-      setModal(false)
-    } else setModal(true)
-  }
+      setModal(false);
+    } else setModal(true);
+  };
 
   return (
     <div class={style.div}>
       <Link to={`/controlpanel`}>
-            <ArrowBack class={style.button3}>
-              Back
-            </ArrowBack>
-          </Link>
+        <ArrowBack class={style.button3}>Back</ArrowBack>
+      </Link>
       <form class={style.form}>
-        <h1>Add Product</h1>
+        <h1>{t("addProduct.title")}</h1>
         <div>
-          <label class={style.label}>Name</label>
+          <label class={style.label}>{t("addProduct.title1")}</label>
           <input
             class={style.input}
             name="name"
@@ -97,7 +105,7 @@ export function AddProduct() {
           ></input>
         </div>
         <div>
-          <label class={style.input}>Description</label>
+          <label class={style.input}>{t("addProduct.title2")}</label>
           <textarea
             name="description"
             rows="6"
@@ -106,7 +114,7 @@ export function AddProduct() {
           ></textarea>
         </div>
         <div>
-          <label>Price</label>
+          <label>{t("addProduct.title3")}</label>
           <input
             class={style.input}
             name="price"
@@ -114,7 +122,7 @@ export function AddProduct() {
           ></input>
         </div>
         <div>
-          <label>Brand</label>
+          <label>{t("addProduct.title4")}</label>
           <input
             class={style.input}
             name="brand"
@@ -122,7 +130,7 @@ export function AddProduct() {
           ></input>
         </div>
         <div>
-          <label>Model</label>
+          <label>{t("addProduct.title5")}</label>
           <input
             class={style.input}
             name="model"
@@ -130,7 +138,7 @@ export function AddProduct() {
           ></input>
         </div>
         <div>
-          <label>Stock</label>
+          <label>{t("addProduct.title6")}</label>
           <input
             class={style.input}
             name="stock"
@@ -138,7 +146,7 @@ export function AddProduct() {
           ></input>
         </div>
         <div>
-          <label>Ranking</label>
+          <label>{t("addProduct.title7")}</label>
           <input
             class={style.input}
             name="ranking"
@@ -146,7 +154,7 @@ export function AddProduct() {
           ></input>
         </div>
         <div>
-          <label>Storage</label>
+          <label>{t("addProduct.title8")}</label>
           <input
             class={style.input}
             name="storage"
@@ -154,7 +162,7 @@ export function AddProduct() {
           ></input>
         </div>
         <div>
-          <label>Select categories</label>
+          <label>{t("addProduct.title9")}</label>
           <select onChange={handleSelect} name="categories" multiple>
             {categories.map((e) => {
               return (
@@ -166,30 +174,48 @@ export function AddProduct() {
           </select>
         </div>
         <div>
-          <label for="avatar">Choose a profile picture:</label>
-          <input type="file"
+          <label for="avatar">{t("addProduct.title10")}</label>
+          <input
+            type="file"
             onChange={(event) => {
-              let imgfiles = []
+              let imgfiles = [];
               for (let i = 0; i < event.target.files.length; i++) {
-                imgfiles.push(event.target.files[i])
+                imgfiles.push(event.target.files[i]);
               }
               setImageLink({
                 ...imageLink,
-                links: imgfiles
-              })
+                links: imgfiles,
+              });
             }}
-            id="avatar" name="avatar"
-            accept="image/png, image/jpeg" multiple />
-          <button onClick={(e) => { e.preventDefault(); upload() }}>Add</button>
+            id="avatar"
+            name="avatar"
+            accept="image/png, image/jpeg"
+            multiple
+          />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              upload();
+            }}
+          >
+            {t("addProduct.title11")}
+          </button>
         </div>
         <Link to={`/controlpanel`}>
-          <button type="submit" onClick={() => { createProd(data) }}>
-            Create product
-            </button>
+          <button
+            type="submit"
+            onClick={() => {
+              createProd(data);
+            }}
+          >
+            {t("addProduct.title12")}
+          </button>
         </Link>
       </form>
       <div>
-        <button class={style.button2} onClick={changeModal}>Add Category</button>
+        <button class={style.button2} onClick={changeModal}>
+          {t("addProduct.title13")}
+        </button>
         <Modal class={style.modal} open={modal} onClose={changeModal}>
           <AddCategory />
         </Modal>

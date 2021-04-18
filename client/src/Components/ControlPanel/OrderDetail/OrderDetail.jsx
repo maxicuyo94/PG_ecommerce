@@ -1,53 +1,52 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Axios from "axios";
 import {
   getOrderDetail,
   updateOrder,
 } from "../../../Redux/Actions/orderActions";
-import Style from "../OrderDetail/orderdetail.module.scss";
 
 export const OrderDetail = () => {
-  const orderDetail = useSelector((state) => state.orderDetail);
-  const orderInfo = useSelector((state) => state.orders);
-  const products = useSelector((state) => orderDetail.allproducts);
+  const order = useSelector((state) => state.order);
   const dispatch = useDispatch();
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(getOrderDetail(id));
-    // dispatch(updateOrder(id));
   }, [dispatch, id]);
 
-console.log(JSON.stringify(orderDetail))
+  //console.log(order);
 
   return (
-    <div class="afafr">
-      <div class="Style.container">
+    <div class="container">
+      <div class="table">
         <h2>Order Detail N° {id}</h2>
-        <td>Order Made By </td>
-        <td>sasas</td>
+        <td>Made By </td>
+        <td> User N° {order.user_id}</td>
         <tr>
-          <td>Order Date</td>
-          <td>aassd</td>
+          <td>Date</td>
+          <td>{order.orderDate}</td>
         </tr>
         <tr>
-          <td>Total amount</td>
-          <td>$</td>
+          <td>Payment Method</td>
+          <td>{order.paymentType}</td>
         </tr>
         <tr>
-          <td>Order status</td>
-          <td>status</td>
+          <td>Status</td>
+          {/* <td>order.orderStatus</td> hay que hacer un map */}
         </tr>
-        <tr>
-          <td>Payment</td>
-          <td>Payment</td>
-        </tr>
-        <tr>
-          <td>Order Quantity</td>
-          <td>Products</td>
-        </tr>
+        <div class="table">
+          {order.details &&
+            order.details.map(function (detail) {
+              return (
+                <tr>
+                  <td>{detail.name}</td>
+                  <td>{detail.price}</td>
+                  <td>{detail.quantity}</td>
+                </tr>
+              );
+            })}
+        </div>
       </div>
     </div>
   );

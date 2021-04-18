@@ -37,5 +37,38 @@
 
   "navLink5": {
     "linkFive": "Registrarse"
+  },
+  
+  "modifyProduct":{
+    "title":"Modificar Producto",
+    "title1":"titulo",
+    "title2":"Descripción",
+    "title3":"Precio",
+    "title4":"Marca",
+    "title5":"Modelo",
+    "title6":"Stock",
+    "title7":"Calificación",
+    "title8":"Almacenamiento",
+    "title9":"Categorías seleccionadas",
+    "title10":"Añadir o eliminar imagenes",
+    "title11":"Actualizar imagenes",
+    "title12":"Modificar producto"
+  },
+  "addProduct":{
+    "title":"Añadir Producto",
+    "title1":"Titulo",
+    "title2":"Descripción",
+    "title3":"Precio",
+    "title4":"Marca",
+    "title5":"Modelo",
+    "title6":"Stock",
+    "title7":"Calificación",
+    "title8":"Almacenamiento",
+    "title9":"Seleccionar categorías",
+    "title10":"Añadir imágenes",
+    "title11":"Añadir imagenes",
+    "title12":"Crear Producto",
+    "title13":"Añadir categoría"
   }
+
 }

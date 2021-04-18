@@ -1,102 +1,163 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { prueba } from '../../../Redux/Actions/actionsUser'
+import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useLocalStorage } from '../../../LocalStorage/useLocalStorage'
+import { postUser } from '../../../Redux/Actions/actionsUser'
 import style from './signup.module.scss';
 
 export function SignUp() {
+    const history = useHistory()
+    const dispatch = useDispatch()
+    const userLog = useSelector(state => state.userLog)
+    const [priority, setPriorityStorage] = useLocalStorage("priority", "")
     const [user, setUser] = useState({
         name: "",
-        lastName: "", 
+        surname: "",
         email: "",
         userName: "",
         password: "",
+        phone: "",
+        address: "",
+        city: "",
+        postal_code: "",
+        country: ""
     });
-    const [validated, setValidated] = useState ({})
+    const [errors, setErrors] = useState({})
+    const [success, setSuccess] = useState(true)
+    const VAL = "validated"
 
-    const  handleState = (e) =>{
+    const handleState = (e) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value
         });
-        setValidated(validate({
+        setErrors(validate({
             ...user,
             [e.target.name]: e.target.value
         }))
     }
 
-    const created = () =>{
-        let success = false
-        for (const prop in validated) {
-            if (!validated[prop]) {
-                return success = false
-            }else{
-                success = true
+    useEffect(() => {
+        const asyncFunction = async () => {
+            if (success === VAL) {
+                await dispatch(postUser(user))
             }
         }
-        console.log(success)
+        asyncFunction()
+    }, [success])
+
+    useEffect(()=> {
+        console.log(userLog)
+        // history.go(0)
+    },[userLog])
+
+    const created = () => {
+        let state = "waiting"
+        for (const prop in errors) {
+            if (errors[prop]) {
+                 state = false
+                 break
+            }else{
+                state = VAL
+            }
+        }
+        setSuccess(state)
     }
 
-
     return (
-        <div className={style.container}>
-            <form className="form">
+
+            <form className={style.container}>
                 <div>
-                    <label htmlFor="name">Name *</label>
-                    <input className={!user.email ? "danger" : ""} type="text" name="name" placeholder="Name" value={user.name} onChange={handleState} />
+                    <label className={errors.name  && success === false ? style.danger : ""} htmlFor="name">Name</label>
+                    <input className={errors.name  && success === false ? style.danger : ""} type="text" name="name" placeholder="Name" value={user.name} onChange={handleState} />
                 </div>
                 <div>
-                    <label htmlFor="name">Lastname *</label>
-                    <input className={!user.email ? "danger" : ""} type="text" name="lastName" placeholder="Lastname" value={user.lastname} onChange={handleState} />
+                    <label className={errors.lastName  && success === false ? style.danger : ""} htmlFor="surname">Surname</label>
+                    <input className={errors.lastName  && success === false ? style.danger : ""} type="text" name="surname" placeholder="Surname" value={user.lastname} onChange={handleState} />
                 </div>
                 <div>
-                    <label htmlFor="name">UserName *</label>
-                    <input className={!user.email ? "danger" : ""} type="text" name="userName" placeholder="Username" value={user.userName} onChange={handleState} />
+                    <label className={errors.userName  && success === false ? style.danger : ""} htmlFor="userName">UserName</label>
+                    <input className={errors.userName  && success === false ? style.danger : ""} type="text" name="userName" placeholder="Username" value={user.userName} onChange={handleState} />
                 </div>
                 <div>
-                    <label htmlFor="name">Email*</label>
-                    <input className={!user.email ? "danger" : ""} type="text" name="email" placeholder="Email" value={user.email} onChange={handleState} />
+                    <label className={errors.userName  && success === false ? style.danger : ""} htmlFor="phone">Phone</label>
+                    <input className={errors.userName  && success === false ? style.danger : ""} type="text" name="phone" placeholder="Phone" value={user.phone} onChange={handleState} />
                 </div>
                 <div>
-                    <label htmlFor="name">Password *</label>
-                    <input className={!user.password ? "danger" : ""} type="password" name="password" placeholder="Password" value={user.password} onChange={handleState} />
+                    <label className={errors.userName  && success === false ? style.danger : ""} htmlFor="address">Address</label>
+                    <input className={errors.userName  && success === false ? style.danger : ""} type="text" name="address" placeholder="Address" value={user.address} onChange={handleState} />
                 </div>
-                <button type="button" onClick={created}>Sign In</button>
+                <div>
+                    <label className={errors.userName  && success === false ? style.danger : ""} htmlFor="city">City</label>
+                    <input className={errors.userName  && success === false ? style.danger : ""} type="text" name="city" placeholder="Username" value={user.city} onChange={handleState} />
+                </div>
+                <div>
+                    <label className={errors.userName  && success === false ? style.danger : ""} htmlFor="postal_code">Postal Code</label>
+                    <input className={errors.userName  && success === false ? style.danger : ""} type="text" name="postal_code" placeholder="Username" value={user.postal_code} onChange={handleState} />
+                </div>
+                <div>
+                    <label className={errors.userName  && success === false ? style.danger : ""} htmlFor="country">Country</label>
+                    <input className={errors.userName  && success === false ? style.danger : ""} type="text" name="country" placeholder="Username" value={user.country} onChange={handleState} />
+                </div>
+                <div>
+                    <label className={errors.email  === "validate" || (errors.email  && success === false) ? style.danger : ""} htmlFor="email">Email</label>
+                    <input className={errors.email  === "validate" || (errors.email  && success === false) ? style.danger : ""} type="text" name="email" placeholder="Email" value={user.email} onChange={handleState} />
+                </div>
+                <div>
+                    <label className={errors.password === "validate" || (errors.password  && success === false) ? style.danger : ""} htmlFor="password">Password</label>
+                    <input className={errors.password === "validate" || (errors.password  && success === false) ? style.danger : ""} type="password" name="password" placeholder="Password" value={user.password} onChange={handleState} />
+                </div>
+                <button type="button" className={success === VAL ? style.successButton :  style.simpleButton} onClick={created}>SignUp</button>
             </form>
-        </div>
+
     );
 };
 
-
-
 export function validate(user) {
-    let error = {}
+    var error = {}
     for (const prop in user) {
-        if(!user[prop]){
-            error[prop] = 'Campos invalido o vacio.'
-        }else if (prop = "email") {
-            if (!/\S+@\S+\.\S+/.test(user[prop])){
-                error[prop] = 'Campos invalido o vacio.'
-            }else{
-                error[prop] = ''
+        if (prop === "email") {
+            if (user[prop] && !/\S+@\S+\.\S+/.test(user[prop])) {
+                error[prop] = "validate"
+            } else if (!user[prop]){
+                error[prop] = true
+            } else {
+                error[prop] = false
             }
-        }else if (prop = "password"){
-            if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(user[prop])){
-                error[prop] = 'Campos invalido o vacio.'
-            }else{
-                error[prop] = ''
+        } else if (prop === "password") {
+            if (user[prop] && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(user[prop])) {
+                error[prop] = "validate"
+            } else if (!user[prop]){
+                error[prop] = true
+            } else {
+                error[prop] = false
             }
-        }else{
-            error[prop] = ''
+        } else if (!user[prop]) {
+            error[prop] = true
+        } else {
+            error[prop] = false
         }
     }
-
-    if (!user.email) {
-         error.err = 'Los campos son invalidos'
-    }else if (!/\S+@\S+\.\S+/.test(user.email)) {
-      error.err = 'Los campos son invalidos'
-    }else if ((!/(?=.*[0-9])/.test(user.password))) {
-      error.err= 'Los campos son invalidos'
-    }else{
-      error.err = ""
-  
-    }
     return error
-  };
+};
+
+// export function validate(user) {
+//     var error = {}
+//     for (const prop in user) {
+//         if (prop === "email") {
+//             if (user[prop] && !/\S+@\S+\.\S+/.test(user[prop])) {
+//                 error[prop] = true
+//             } else {
+//                 error[prop] = false
+//             }
+//         } else if (prop === "password") {
+//             if (user[prop] && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(user[prop])) {
+//                 error[prop] = true
+//             } else {
+//                 error[prop] = false
+//             }
+//         }
+//     }
+//     return error
+// };

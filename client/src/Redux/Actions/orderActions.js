@@ -17,17 +17,18 @@ export const getAllOrders = () => {
 
 export const getOrderDetail = (id) => {
   return async function (dispatch) {
-    const JSON = await supabase
-      .from("order")
-      .select("*")
-      .eq("id", id);
-    await supabase
+    let orderRequest = await supabase.from("order").select("*").eq("id", id);
+    let order = orderRequest.data[0];
+    let orderDetail = await supabase
       .from("order_detail")
       .select("*")
-      .eq("order_id, id");
+      .eq("order_id", id);
+
+      order.details = orderDetail.data
+
     dispatch({
       type: actionType.GET_ORDER_DETAIL,
-      payload: JSON.data,
+      payload: order,
     });
   };
 };
