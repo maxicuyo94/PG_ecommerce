@@ -5,9 +5,9 @@ import {
   deleteProduct,
   getCategories,
   deleteCategory,
-} from "../../Redux/Actions/actions.js";
-import { allUsers, deleteUser } from "../../Redux/Actions/usersActions.js";
-import { getAllOrders } from "../../Redux/Actions/orderActions";
+} from "../../Redux/Products/productActions.js";
+import { allUsers, deleteUser } from "../../Redux/Users/usersActions";
+import { getAllOrders } from "../../Redux/Orders/orderActions";
 import style from "./controlpanel.module.scss";
 import {
   Edit,
@@ -19,10 +19,10 @@ import { Link } from "react-router-dom";
 
 export function ControlPanel() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.allproducts);
-  const categories = useSelector((state) => state.categories);
-  const users = useSelector((state) => state.users);
-  const orders = useSelector((state) => state.orders);
+  const products = useSelector((state) => state.productReducer.allproducts);
+  const categories = useSelector((state) => state.productReducer.categories);
+  const users = useSelector((state) => state.usersReducer.users);
+  const orders = useSelector((state) => state.orderReducer.orders);
 
   useEffect(() => {
     dispatch(totalProducts());

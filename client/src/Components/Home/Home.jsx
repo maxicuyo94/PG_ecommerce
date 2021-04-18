@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from "react";
-import { getProductsByCategories } from "../../Redux/Actions/actions";
+import { getProductsByCategories } from "../../Redux/Products/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styles from "./home.module.scss";
@@ -7,9 +7,10 @@ import { useTranslation } from "react-i18next";
 import SwiperSlider from './Swiper/SwiperSlider'
 export function Home() {
   const dispatch = useDispatch();
-  const productByCategories = useSelector((state) => state.productByCategories);
+  const productByCategories = useSelector((state) => state.productReducer.productByCategories);
   const stableDispatch = useCallback(dispatch, []);
   const [t, i18n] = useTranslation("global");
+
   useEffect(() => {
     stableDispatch(getProductsByCategories());
   }, [stableDispatch]);

@@ -5,7 +5,7 @@ import {
   updateProduct,
   productDetail,
   getCategories,
-} from "../../Redux/Actions/actions.js";
+} from "../../Redux/Products/productActions.js";
 import style from "./modifyproduct.module.scss";
 import { Clear } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
@@ -58,8 +58,8 @@ export function ModifyProduct({ id }) {
   };
 
   const dispatch = useDispatch();
-  const product = useSelector((state) => state.productDetail);
-  let categories = useSelector((state) => state.categories);
+  const product = useSelector((state) => state.productReducer.productDetail);
+  let categories = useSelector((state) => state.productReducer.categories);
   categories = categories.filter(
     (i) =>
       data.categories && !data.categories.map((i) => i.name).includes(i.name)

@@ -15,26 +15,7 @@ export function ModifyUser({ id }) {
         permission: "",
     });
     const dispatch = useDispatch();
-    const userDetail = useSelector((state) => state.userDetail);
-
-
-    // useEffect(() => {
-    // (function getCatAndProd() {
-    //     dispatch(userDetail(id));
-    // })()
-    // }, [id]);
-
-    // useEffect(() => {
-    //     setDataUser({
-    //         name: userDetail.name,
-    //         surname: userDetail.surname,
-    //         email: userDetail.email,
-    //         username: userDetail.username,
-    //         password: userDetail.password,
-    //         phone: userDetail.phone,
-    //     });
-    // }, [userDetail]);
-
+    const user = useSelector((state) => state.usersReducer.user);
 
     const handleInputChange = (e) => {
         setDataUser({

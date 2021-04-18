@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { postCategory } from "../../Redux/Actions/actions.js";
+import { postCategory } from "../../Redux/Products/productActions.js";
 import style from "./addcategory.module.scss";
 
 export function AddCategory() {

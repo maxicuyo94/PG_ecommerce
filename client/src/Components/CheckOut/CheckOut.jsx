@@ -11,8 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import style from "./checkout.module.scss";
 import { ItemCart } from './ItemCart';
-// import { useHistory } from 'react-router';
-import { clearCart } from '../../Redux/Actions/cartActions';
+import { clearCart } from '../../Redux/Cart/cartActions';
 
 
 
@@ -21,18 +20,14 @@ import { clearCart } from '../../Redux/Actions/cartActions';
 export function CheckOut() {
 
     const dispatch = useDispatch();
-    // const history = useHistory();
 
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.cartReducer.cart)
 
     const [total, setTotal] = useState(0.00);
     const [subtotal, setSubtotal] = useState(0.00);
     const [coupon, setCoupon] = useState(0);
 
-
-
     useEffect(() => {
-        // console.log(cart)
         if (cart) {
             setSubtotal(cart.reduce((acc, product) => {
                 acc = acc + (product.price * product.quantity)
