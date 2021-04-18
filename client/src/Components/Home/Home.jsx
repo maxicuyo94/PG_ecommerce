@@ -6,6 +6,7 @@ import styles from "./home.module.scss";
 import { useTranslation } from "react-i18next";
 import SwiperSlider from './Swiper/SwiperSlider'
 export function Home() {
+
   const dispatch = useDispatch();
   const productByCategories = useSelector((state) => state.productReducer.productByCategories);
   const stableDispatch = useCallback(dispatch, []);
