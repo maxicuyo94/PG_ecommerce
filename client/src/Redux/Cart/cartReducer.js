@@ -4,7 +4,7 @@ const InitialState = {
   cart: [],
   orders: [],
   userOrders: [],
-  orderDetail: [],
+  order: {},
 };
 
 function cartReducer(state = InitialState, action) {
@@ -54,6 +54,19 @@ function cartReducer(state = InitialState, action) {
           ...state,
           cart: [...state.cart, action.payload],
         };
+
+    case actionType.ORDERS:
+      return {
+        ...state,
+        orders: action.payload,
+      };
+
+    case actionType.GET_ORDER_DETAIL:
+      return {
+        ...state,
+        order: action.payload,
+      };
+
 
     case actionType.DELETE_ITEM_CART:
       return {

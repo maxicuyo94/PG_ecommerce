@@ -7,9 +7,12 @@ import {
   getCategories,
 } from "../../Redux/Products/productActions.js";
 import style from "./modifyproduct.module.scss";
-import { Clear } from '@material-ui/icons';
+import { Clear } from "@material-ui/icons";
+import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 export function ModifyProduct({ id }) {
+  const [t, i18n] = useTranslation("global");
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -20,15 +23,46 @@ export function ModifyProduct({ id }) {
     ranking: 0,
     storage: "",
     status: true,
-    categories: []
+    categories: [],
+    images: [],
+    delImages: [],
+    upImages: [],
   });
+
+  const [imageLink, setImageLink] = useState({
+    links: [],
+  });
+
+  const upload = async () => {
+    let urls = await Promise.all(
+      imageLink.links.map(async (i) => {
+        const formData = new FormData();
+        formData.append("file", i);
+        formData.append("upload_preset", "techstore_uploads");
+        let response = await axios.post(
+          "http://api.cloudinary.com/v1_1/techstore/image/upload",
+          formData
+        );
+        return {
+          link: response.data.secure_url,
+          public_id: response.data.public_id,
+        };
+      })
+    );
+
+    setData({
+      ...data,
+      upImages: [...data.upImages, ...urls],
+      images: [...data.images, ...urls],
+    });
+  };
+
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productReducer.productDetail);
   let categories = useSelector((state) => state.productReducer.categories);
   categories = categories.filter(
     (i) =>
-      data.categories &&
-      !data.categories.map((i) => i.name).includes(i.name)
+      data.categories && !data.categories.map((i) => i.name).includes(i.name)
   );
 
   const handleInputChange = (e) => {
@@ -39,10 +73,10 @@ export function ModifyProduct({ id }) {
   };
 
   useEffect(() => {
-   (function getCatAndProd() {
+    (function getCatAndProd() {
       dispatch(getCategories());
       dispatch(productDetail(id));
-    })()
+    })();
   }, [id]);
 
   useEffect(() => {
@@ -56,34 +90,60 @@ export function ModifyProduct({ id }) {
       ranking: product.ranking,
       storage: product.storage,
       status: true,
-      categories: product.categories
+      categories: product.categories,
+      images: product.images,
+      delImages: [],
+      upImages: [],
     });
   }, [product]);
 
   const modifyProduct = async () => {
-   await dispatch(updateProduct(data, id));
+    await dispatch(updateProduct(data, id));
   };
 
   const removeCategory = (e) => {
     const filtredCat = data.categories.filter((cat) => {
-      return e.target.id !== cat.id
-    })
-    setData({...data, categories: filtredCat} )
+      return e.target.id !== cat.id;
+    });
+    setData({ ...data, categories: filtredCat });
   };
+
   const addCategory = (e) => {
     for (let i = 0; i < e.target.options.length; i++) {
       if (e.target.options[i].selected === true) {
-          setData({...data, categories: data.categories.concat({id: e.target.options[i].id, name: e.target.options[i].value})} )
+        setData({
+          ...data,
+          categories: data.categories.concat({
+            id: e.target.options[i].id,
+            name: e.target.options[i].value,
+          }),
+        });
       }
-    }  
+    }
+  };
+  const removeImage = (c) => {
+    const filtredImage = data.images.filter((image) => {
+      return c.target.src !== image.url;
+    });
+    setData({
+      ...data,
+      images: filtredImage,
+      delImages: [
+        ...data.delImages,
+        {
+          url: c.target.src,
+          product_id: c.target.id,
+        },
+      ],
+    });
   };
 
   return (
     <div>
       <form class={style.form}>
-        <h1>Modify Product</h1>
+        <h1>{t("modifyProduct.title")}</h1>
         <div>
-          <label class={style.label}>Titulo</label>
+          <label class={style.label}>{t("modifyProduct.title1")}</label>
           <input
             class={style.input}
             type="text"
@@ -93,7 +153,7 @@ export function ModifyProduct({ id }) {
           ></input>
         </div>
         <div>
-          <label class={style.input}>Description</label>
+          <label class={style.input}>{t("modifyProduct.title2")}</label>
           <textarea
             name="description"
             rows="6"
@@ -103,7 +163,7 @@ export function ModifyProduct({ id }) {
           ></textarea>
         </div>
         <div>
-          <label>Price</label>
+          <label>{t("modifyProduct.title3")}</label>
           <input
             class={style.input}
             name="price"
@@ -112,7 +172,7 @@ export function ModifyProduct({ id }) {
           ></input>
         </div>
         <div>
-          <label>Brand</label>
+          <label>{t("modifyProduct.title4")}</label>
           <input
             class={style.input}
             name="brand"
@@ -121,7 +181,7 @@ export function ModifyProduct({ id }) {
           ></input>
         </div>
         <div>
-          <label>Model</label>
+          <label>{t("modifyProduct.title5")}</label>
           <input
             class={style.input}
             name="model"
@@ -130,7 +190,7 @@ export function ModifyProduct({ id }) {
           ></input>
         </div>
         <div>
-          <label>Stock</label>
+          <label>{t("modifyProduct.title6")}</label>
           <input
             class={style.input}
             name="stock"
@@ -139,7 +199,7 @@ export function ModifyProduct({ id }) {
           ></input>
         </div>
         <div>
-          <label>Ranking</label>
+          <label>{t("modifyProduct.title7")}</label>
           <input
             class={style.input}
             name="ranking"
@@ -148,7 +208,7 @@ export function ModifyProduct({ id }) {
           ></input>
         </div>
         <div>
-          <label>Storage</label>
+          <label>{t("modifyProduct.title8")}</label>
           <input
             class={style.input}
             name="storage"
@@ -167,21 +227,70 @@ export function ModifyProduct({ id }) {
           </select>
         </div>
         <div>
-          <span>Selected categories</span>
+          <span>{t("modifyProduct.title9")}</span>
           {data.categories &&
             data.categories.map((category) => (
-                <div class={style.categories}>
-                <button type='button' id={category.id} value={category.name} onClick={(e) => removeCategory(e)}>
-                {category.name}
+              <div class={style.categories}>
+                <button
+                  type="button"
+                  id={category.id}
+                  value={category.name}
+                  onClick={(e) => removeCategory(e)}
+                >
+                  {category.name}
                 </button>
                 <Clear class={style.clear}></Clear>
-                </div>
+              </div>
             ))}
         </div>
         <div>
+          <span>{t("modifyProduct.title10")}</span>
+          <div className={style.images}>
+            {data.images &&
+              data.images.map((img) => (
+                <img
+                  src={img.url}
+                  alt="."
+                  id={img.product_id}
+                  className={style.miniature}
+                  onClick={(e) => removeImage(e)}
+                />
+              ))}
+          </div>
+        </div>
+        <input
+          type="file"
+          onChange={(event) => {
+            let imgfiles = [];
+            for (let i = 0; i < event.target.files.length; i++) {
+              imgfiles.push(event.target.files[i]);
+            }
+            setImageLink({
+              ...imageLink,
+              links: imgfiles,
+            });
+          }}
+          id="avatar"
+          name="avatar"
+          accept="image/png, image/jpeg"
+          multiple
+        />
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            upload();
+          }}
+        >
+          {t("modifyProduct.title11")}
+        </button>
+        <div>
           <Link to={`/controlpanel`}>
-            <button type="submit" onClick={modifyProduct}>
-              Modify product
+            <button
+              className={style.updateImage}
+              type="submit"
+              onClick={modifyProduct}
+            >
+              {t("modifyProduct.title12")}
             </button>
           </Link>
         </div>

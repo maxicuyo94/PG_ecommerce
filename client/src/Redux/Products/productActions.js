@@ -163,7 +163,6 @@ export const postCategory = (category) => {
 };
 
 export const updateProduct = (product, id) => {
-  console.log(product.images);
   return async () => {
     await supabase
       .from("product_categories")
@@ -174,6 +173,21 @@ export const updateProduct = (product, id) => {
         .from("product_categories")
         .insert([{ product_id: id, categories_id: category.id }]);
     });
+    product.delImages.map(async (img) => {
+      await supabase
+      .from("images")
+      .delete("*")
+      .match({url: img.url})
+    })
+    product.upImages.map(async image => {
+      await supabase
+        .from('images')
+        .insert([{
+          url: image.link,
+          product_id: id,
+          cloudinary_id: image.public_id
+        }])
+    })
     await supabase
       .from("product")
       .update({
