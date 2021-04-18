@@ -1,12 +1,10 @@
 .container {
   display: flex;
-  flex-direction: row;
-  height: 100%;
-
-  .filters {
+  // height: 100%;
+    .filters {
     width: 25%;
     background-color: #e9e9e9;
-    // border-radius: 5%;
+    border-radius: 5%;
     padding-left: 1rem;
     padding-right: 1rem;
 
@@ -26,14 +24,15 @@
   }
 
   .catalogue {
-    @extend .container;
-    height: calc(100vh - 203px);
-    overflow-x: auto;
+    display: flex;
+
+    min-height: calc(100vh - 203px);
+    // overflow-x: auto;
     flex-direction: column;
     width: 75%;
     .keypad {
-      @extend .container;
-      justify-content: space-around;
+      display:flex;
+      justify-content: center;
       height: 2rem;
 
       .backward,
@@ -42,7 +41,9 @@
         width: 1.5rem;
       }
     }
+
   }
+
 
   .catalogue::-webkit-scrollbar {
     width: 8px;

@@ -95,36 +95,34 @@ export function Catalogue() {
       </div>
       <div className={Style.catalogue} name="showproducts">
         <div className={Style.keypad}>
-          <div>
-            <img
-              className={Style.backward}
-              id="backward"
-              type="image"
-              src={left}
-              alt="img"
-              onClick={(e) => changepage(e)}
-            />
-            <img
-              className={Style.upward}
-              id="upward"
-              type="image"
-              src={right}
-              alt="img"
-              onClick={(e) => changepage(e)}
-            />
-          </div>
+          <img
+            className={Style.backward}
+            id="backward"
+            type="image"
+            src={left}
+            alt="img"
+            onClick={(e) => changepage(e)}
+          />
+          <img
+            className={Style.upward}
+            id="upward"
+            type="image"
+            src={right}
+            alt="img"
+            onClick={(e) => changepage(e)}
+          />
         </div>
+
+        <div>
         <div className={Style.products}>
           {console.log(Products)}
           {
             Products && Products.map((item) =>
-
-
               <ProductCard stock={item.stock}  title={item.name} price={item.price} images={item.images[0]?.url} id={item.id} />
-
 
             )
           }
+        </div>
         </div>
       </div>
     </div>
