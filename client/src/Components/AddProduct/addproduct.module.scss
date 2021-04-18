@@ -29,6 +29,8 @@
 .div {  display: flex;
   flex-direction: row;
   margin-left: 10rem;
+  width: 100%;
+    min-height: calc(100vh - 203px);
 
 
 form {
