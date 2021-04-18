@@ -3,13 +3,13 @@ import { prueba } from '../../../Redux/Actions/actionsUser'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLocalStorage } from '../../../LocalStorage/useLocalStorage'
-import { Footer } from '../../Footer/Footer';
+import { postUser } from '../../../Redux/Actions/actionsUser'
 import style from './signup.module.scss';
 
 export function SignUp() {
     const history = useHistory()
     const dispatch = useDispatch()
-    const userLog = useSelector(state => state.prueba)
+    const userLog = useSelector(state => state.userLog)
     const [priority, setPriorityStorage] = useLocalStorage("priority", "")
     const [user, setUser] = useState({
         name: "",
@@ -41,17 +41,15 @@ export function SignUp() {
     useEffect(() => {
         const asyncFunction = async () => {
             if (success === VAL) {
-                await dispatch(prueba("user"))
-                // history.go(0)
-                console.log("algo")
+                await dispatch(postUser(user))
             }
-            console.log("loqueseas")
         }
         asyncFunction()
     }, [success])
 
     useEffect(()=> {
         console.log(userLog)
+        // history.go(0)
     },[userLog])
 
     const created = () => {
@@ -67,7 +65,6 @@ export function SignUp() {
         setSuccess(state)
     }
 
-console.log(success)
     return (
 
             <form className={style.container}>

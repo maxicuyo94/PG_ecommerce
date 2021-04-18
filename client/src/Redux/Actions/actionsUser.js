@@ -1,7 +1,14 @@
+// import * as actionType from "../action_types/actionTypes";
+// import { createClient } from "@supabase/supabase-js";
+// const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
+// const supabaseKey =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
+// const supabase = createClient(supabaseUrl, supabaseKey);
+
 // export const updateUser = (user, id) => {
 //     return async () => {
 //       await supabase
-//         .from("users,address(address,city,postalCode,country)")
+//         .from("users")
 //         .update({
 //           name: user.name,
 //           surname: user.surname,
@@ -17,7 +24,7 @@
 //         .from("addres")
 //         .select("id,user_id")
 //         .eq("user_id", id)
-  
+//   console.log(addressId)
 //       await supabase
 //         .from("address")
 //         .update({
@@ -97,7 +104,7 @@
 //         .from("users")
 //         .select("id")
 //         .eq("email", user.email);
-  
+//       console.log(userId)
 //       await supabase.from("address").insert([
 //         {
 //           user_id: userId.data[0].id,
@@ -110,10 +117,3 @@
 //       dispatch({ type: actionType.POST_USER });
 //     }
 //   };
-
-  export const prueba = (state) => {
-    return async (dispatch) => {
-      dispatch({ type: "prueba", payload: state });
-    };
-  
-  }
