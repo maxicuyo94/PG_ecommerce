@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductCard } from "../ProductCard/ProductCard";
-import { allProducts, getCategories } from "../../Redux/Actions/actions";
+import { allProducts, getCategories } from "../../Redux/Products/productActions";
 import left from "../Catalogue/left-arrow.svg";
 import right from "../Catalogue/right-arrow.svg";
 import Style from "./catalogue.module.scss";
 
 export function Catalogue() {
-  const Products = useSelector(state => state.wantedProducts)
-  const Categories = useSelector(state => state.categories)
+  const Products = useSelector(state => state.productReducer.wantedProducts)
+  const Categories = useSelector(state => state.productReducer.categories)
   const [Pages, setPages] = useState(0)
   const [Category, setCategory] = useState('')
   const [Prices, setPrices] = useState(['', ''])

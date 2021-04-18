@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "./Slider/Slider";
-import { productDetail, getProductsByCategories } from "../../Redux/Actions/actions";
+import { productDetail, getProductsByCategories } from "../../Redux/Products/productActions";
 //import { NavLink } from "react-router-dom";
 import styles from "./Product.module.scss";
 import { CategoriesHome } from '../Home/Categories/CategoriesHome'
 import Carousel from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
 import swal from 'sweetalert';
-import { addItemCart } from "../../Redux/Actions/cartActions";
+import { addItemCart } from "../../Redux/Cart/cartActions";
 
 export const Product = (props) => {
     const dispatch = useDispatch();
-    const details = useSelector((state) => state.productDetail);
-    const productByCategories = useSelector(state => state.productByCategories)
+    const details = useSelector((state) => state.productReducer.productDetail);
+    const productByCategories = useSelector(state => state.productReducer.productByCategories)
     const id = props.match.params.id;
     const [value, setValue] = useState(1);
     const [nav, setNav] = useState('details')

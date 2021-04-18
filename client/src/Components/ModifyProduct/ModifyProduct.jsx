@@ -5,7 +5,7 @@ import {
   updateProduct,
   productDetail,
   getCategories,
-} from "../../Redux/Actions/actions.js";
+} from "../../Redux/Products/productActions.js";
 import style from "./modifyproduct.module.scss";
 import { Clear } from '@material-ui/icons';
 
@@ -23,8 +23,8 @@ export function ModifyProduct({ id }) {
     categories: []
   });
   const dispatch = useDispatch();
-  const product = useSelector((state) => state.productDetail);
-  let categories = useSelector((state) => state.categories);
+  const product = useSelector((state) => state.productReducer.productDetail);
+  let categories = useSelector((state) => state.productReducer.categories);
   categories = categories.filter(
     (i) =>
       data.categories &&

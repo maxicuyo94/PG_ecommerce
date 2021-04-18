@@ -12,7 +12,7 @@ export function ModifyUser({ id }) {
         password: "",
     });
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => state.usersReducer.user);
 
     const handleInputChange = (e) => {
         setDataUser({

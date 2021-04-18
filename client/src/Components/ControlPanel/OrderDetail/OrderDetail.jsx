@@ -5,13 +5,13 @@ import Axios from "axios";
 import {
   getOrderDetail,
   updateOrder,
-} from "../../../Redux/Actions/orderActions";
+} from "../../../Redux/Orders/orderActions";
 import Style from "../OrderDetail/orderdetail.module.scss";
 
 export const OrderDetail = () => {
-  const orderDetail = useSelector((state) => state.orderDetail);
-  const orderInfo = useSelector((state) => state.orders);
-  const products = useSelector((state) => orderDetail.allproducts);
+  const orderDetail = useSelector((state) => state.orderReducer.orderDetail);
+  const orderInfo = useSelector((state) => state.orderReducer.orders);
+  const products = useSelector((state) => orderDetail.productsReducer.allproducts);
   const dispatch = useDispatch();
   const { id } = useParams();
 

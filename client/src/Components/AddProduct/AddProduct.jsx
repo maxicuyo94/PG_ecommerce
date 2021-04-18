@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AddCategory } from "../AddCategory/AddCategory";
-import { postProduct, getCategories } from "../../Redux/Actions/actions.js";
+import { postProduct, getCategories } from "../../Redux/Products/productActions.js";
 import axios from 'axios';
 import style from "./addproduct.module.scss";
 import Modal from '@material-ui/core/Modal';
@@ -24,7 +24,7 @@ export function AddProduct() {
   });
   const [modal, setModal] = useState(false)
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.categories);
+  const categories = useSelector((state) => state.productRedcuer.categories);
 
   const handleInputChange = (e) => {
     setData({

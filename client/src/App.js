@@ -9,7 +9,7 @@ import { ModifyProduct } from "./Components/ModifyProduct/ModifyProduct.jsx";
 import { ControlPanel } from "./Components/ControlPanel/ControlPanel.jsx";
 import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
 import { useDispatch } from "react-redux";
-import { setCart } from "./Redux/Actions/cartActions";
+import { setCart } from "./Redux/Cart/cartActions";
 import { OrderDetail } from "./Components/ControlPanel/OrderDetail/OrderDetail";
 
 function App() {
