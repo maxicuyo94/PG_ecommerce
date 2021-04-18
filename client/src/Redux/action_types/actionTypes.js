@@ -20,5 +20,6 @@ export const REMOVE_UNIT_ITEM_CART = "REMOVE_UNIT_ITEM_CART";
 export const EDIT_STOCK = "EDIT_STOCK";
 
 //Order
-export const GET_ORDER = "GET_ORDER";
+export const GET_ORDER_DETAIL = "GET_ORDER_DETAIL";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
+export const GET_USER_ORDERS = "GET_USER_ORDERS";

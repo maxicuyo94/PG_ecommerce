@@ -15,11 +15,18 @@ export const getAllOrders = () => {
   };
 };
 
-export const getOrder = (id) => {
+export const getOrderDetail = (id) => {
   return async function (dispatch) {
-    const JSON = await supabase.from("order_detail").select("*").eq("id", id);
+    const JSON = await supabase
+      .from("order")
+      .select("*")
+      .eq("id", id);
+    await supabase
+      .from("order_detail")
+      .select("*")
+      .eq("order_id, id");
     dispatch({
-      type: actionType.GET_ORDER,
+      type: actionType.GET_ORDER_DETAIL,
       payload: JSON.data,
     });
   };
