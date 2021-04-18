@@ -15,7 +15,7 @@ export const OrderDetail = () => {
     dispatch(getOrderDetail(id));
   }, [dispatch, id]);
 
-  console.log(order);
+  //console.log(order);
 
   return (
     <div class="container">
