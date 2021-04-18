@@ -1,55 +1,77 @@
 $minwidth: 600px;
 
 .container {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    height: 100%;
     overflow-x: auto;
-    flex-direction: column;
-
-    
-
-
 
     .containerTitle {
-        height: 10%;
+        height: 10vh;
+
+        span {
+            font-size: 2.5vw;
+            font-weight: bolder;
+        }
+
+        @media screen and (max-width: $minwidth) {
+            span {
+                font-size: 5vw;
+            }
+        }
     }
 
     .products {
-        min-height: 90%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-items: space-around;
 
         .containerP {
-            margin-bottom: 10px;
             display: flex;
-            //height: 30%;
+            height: fit-content;
+            width: 100%;
+            margin: 0.5vmax 0;
 
             @media screen and (max-width: $minwidth) {
                 flex-direction: column;
                 width: 100%;
+                margin: 2vh 0;
             }
 
             .title {
                 min-width: 15%;
                 background-color: #485F69;
                 color: white;
-                font-size: 1.5rem;
+                font-size: 1.5vw;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
                 align-items: center;
 
+                
+                span {
+                    font-size: 1.5vw;
+                }
+                p {
+                    font-size: 1.2vw;
+                    text-align: center;
+                }
+                
                 @media screen and (max-width: $minwidth) {
                     background-color: #2C3A40;
                     margin: 0 auto;
                     width: 90%;
                     height: 15vh;
-
-                    h6 {
+                    span {
+                        font-size: 5vw;
+                    }
+                    p {
+                        font-size: 3.5vw;
                         margin: 0;
                         text-decoration: underline;
+
                     }
                 }
             }
@@ -57,28 +79,20 @@ $minwidth: 600px;
             .carousel {
 
                 width: 85%;
-                padding: 1vmax;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: fit-content;
 
                 @media screen and (max-width: $minwidth) {
                     width: 100%;
-                    height: 40vh;
-                }
-
-                div {
-                    div {
-
-                        button {
-                            margin: 0;
-                            background-color: #9abf15;
-                        }
-
-                    }
                 }
             }
         }
 
     }
 }
+
 .container::-webkit-scrollbar {
     width: 8px;
 }
