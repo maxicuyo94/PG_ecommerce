@@ -1,0 +1,27 @@
+$minwidth: 600px;
+
+.swiper-button-prev {
+    color: #9abf15;
+    transition: 0.5s;
+
+    &:hover {
+        transform: translate(-5px, 0);
+        color: #2C3A40;
+
+        @media screen and (max-width: $minwidth) {
+            transform: none;
+        }
+    }
+}
+
+.swiper-button-next {
+    @extend .swiper-button-prev;
+
+    &:hover {
+        transform: translate(5px, 0);
+
+        @media screen and (max-width: $minwidth) {
+            transform: none;
+        }
+    }
+}

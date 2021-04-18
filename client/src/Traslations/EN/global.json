@@ -1,0 +1,41 @@
+{
+  "home": {
+    "title": "TOP PRODUCTS / DEALS"
+  },
+
+  "seeProducts": {
+    "products": "See all products"
+  },
+
+  "home-cat1": {
+    "processors": "Processors"
+  },
+
+  "home-cat2": {
+    "laptops": "Laptops"
+  },
+
+  "home-cat3": {
+    "keyboards": "Keyboards"
+  },
+
+  "navLink1": {
+    "linkOne": "Home"
+  },
+
+  "navLink2": {
+    "linkTwo": "Catalogue"
+  },
+
+  "navLink3": {
+    "linkThree": "Add product"
+  },
+
+  "navLink4": {
+    "linkFour": "Log In"
+  },
+
+  "navLink5": {
+    "linkFive": "Register"
+  }
+}

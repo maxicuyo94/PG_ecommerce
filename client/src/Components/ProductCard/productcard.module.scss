@@ -1,51 +1,130 @@
 .container {
-  border: 2px solid black;
+  min-height: 30vh;
+  max-height: 35vh;
+  width: 20%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  padding: 0px 25px;
-
-  position: relative;
-  width: 235px;
-  // height: 380px;
-
+  border-radius: 30px;
   background: #ffffff;
-  border: 1px solid #d0d8ca;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition-duration: 0.5s;
+  transition: 0.5s;
+  overflow: hidden;
+  outline: none;
+  box-shadow: 5px 5px 5px black;
+  border: 3px solid #9abf15;
+  transition: 0.5s;
+
+  &:hover {
+    transform: translate(5px, 5px);
+    box-shadow: none;
+  }
+
+  .image {
+    height: 30%;
+    margin: 0 auto;
+
+    img {
+      border-radius: 10px;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .name {
+    height: 10%;
+    display: flex;
+    margin: 0 auto;
+    width: 95%;
+    font-weight: bolder;
+    font-size: 1vw;
+    text-align: center;
+    color: #000000;
+    transition: 0.5s;
+    cursor: pointer;
+    justify-content: center;
+
+    &:hover {
+      color: #9abf15
+    }
+  }
+
+  .stock {
+    height: 10%;
+    margin: auto !important;
+    font-weight: bolder;
+    font-size: 1vw;
+    display: flex;
+    justify-content: center;
+
+    .on {
+      color: #9abf15;
+    }
+
+    .out {
+      color: #2C3A40;
+    }
+  }
+
+  .price {
+    height: 10%;
+    margin: auto !important;
+
+    span,
+    b {
+      margin: auto;
+    }
+  }
+
+  .btnOn {
+    height: 15%;
+    width: 100%;
+    background: transparent;
+    color: #fff;
+    background-color: #9abf15;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    font-family: Poppins;
+    transition: 0.5s;
+    font-weight: bolder;
+    outline: none;
+    margin: 0 auto;
+    margin-top: 5%;
+
+    &:hover {
+      color: #fff;
+      //border-top: 2.5px solid #000;
+      background-color: #000;
+    }
+  }
+
+  .btnOut {
+    @extend .btnOn;
+    background-color: #2C3A40;
+  }
+
+
+
 }
 
-.container:hover {
-  box-shadow: 1px 1px 2px black;
-  // height: 385px;
-  width: 240px;
+.off {
+  @extend .container;
+  border: 3px solid #2C3A40;
+  //color:#2C3A40;
+
+  .name {
+
+    &:hover {
+      color: #2C3A40;
+    }
+  }
+
+
 }
 
-.name {
-  position: static;
-  width: 185px;
-  height: 65px;
-  left: 25px;
-  top: 184px;
 
-  font-family: Work Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 15px;
-  display: flex;
-  align-items: flex-start;
-  text-align: left;
-  flex-direction: column;
 
-  color: #000000;
-}
-
-.img {
-  max-width: 140px;
-  margin-top: 15px;
-}
 
 .review {
   font-family: Work Sans;
@@ -60,32 +139,6 @@
   text-align: left;
 }
 
-.container button {
-  font-family: Poppins;
-  background: transparent;
-  color: #9abf15;
-  font-size: 14px;
-  border: 2.5px solid #9abf15;
-  height: 35px;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 150px;
-  cursor: pointer;
-}
-
-.container button img {
-  width: 18px;
-  margin-right: 10px;
-}
-
-.price {
-  display: flex;
-  align-items: flex-start;
-  width: 184px;
-}
-
 .favorite {
   width: 200px;
   height: 50px;
@@ -97,6 +150,7 @@
   position: absolute;
   flex-direction: column;
 }
+
 .favorite img {
   width: 20px;
 }
