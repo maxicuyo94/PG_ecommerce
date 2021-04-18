@@ -6,8 +6,8 @@ import {
   updateOrder,
   getAllOrders,
 } from "../../../Redux/Actions/orderActions";
-import { Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import Style from "./orderdetail.module.scss";
+// import { Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+// import Style from "./orderdetail.module.scss";
 
 export function OrderDetail() {
   const orderDetail = useSelector((state) => state.orderDetail);
