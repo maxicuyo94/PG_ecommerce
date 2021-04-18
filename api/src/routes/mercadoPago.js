@@ -16,7 +16,7 @@ server.post('/checkout', async (req, res) => {
       'pending': 'http://localhost:3000/'
     },
     auto_return: 'approved',
-    items: [] 
+    items: []
   }
 
   products.map(product => {
@@ -34,6 +34,7 @@ server.post('/checkout', async (req, res) => {
 
   try {
     let response = await mercadopago.preferences.create(preference)
+    console.log(response.body)
     res.redirect(response.body.init_point)
   } catch(err) {
     res.sendStatus(404)
