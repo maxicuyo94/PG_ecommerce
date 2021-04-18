@@ -30,7 +30,7 @@ function App() {
       <Route exact path="/Product/:id" render={()=><Product priority={priority}/>}/>
       <Route exact path="/catalogue" render={()=><Catalogue priority={priority}/>}/>
       <Route exact path="/AddProduct" render={()=><AddProduct priority={priority}/>}/>
-      <Route exact path="/Order" render= {()=> <CheckOut priority={priority/>}/>
+      <Route exact path="/Order" render= {()=> <CheckOut priority={priority}/>}/>
       <Route exact path="/modifyProduct/:id" render={({ match }) => <ModifyProduct id={match.params.id} />}/>
       <Route exact path="/controlpanel" render={()=><ControlPanel priority={priority}/>}/>
       <Route exact path="/orderdetail/:id" render={()=><OrderDetail priority={priority}/>}/>
