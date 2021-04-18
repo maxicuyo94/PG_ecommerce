@@ -15,14 +15,14 @@ export function Catalogue() {
   const [Prices, setPrices] = useState('')
   const dispatch = useDispatch()
   const [Input, setInput] = useState({ input: '' })
-  
+
   const handlechange = (e) => {
     e.preventDefault();
     setInput({ ...Input, [e.target.name]: e.target.value });
   }
 
   useEffect(() => {
-    dispatch(allProducts(Pages * 4, ((Pages * 4) + 4), Category, Prices,Input.input));
+    dispatch(allProducts(Pages * 4, ((Pages * 4) + 4), Category, Prices, Input.input));
     dispatch(getCategories())
   }, [Pages, Category, Prices, Input])
 
@@ -50,7 +50,7 @@ export function Catalogue() {
       <div name="filters" className={Style.filters}>
         <div name="categories" className={Style.categoriesPrice}>
           <div className={Style.searchFilter}>
-          <input className={Style.Input} placeholder='Search...' onChange={(e) => handlechange(e)} value={Input.input} name='input'></input>
+            <input className={Style.Input} placeholder='Search...' onChange={(e) => handlechange(e)} value={Input.input} name='input'></input>
             <h4>Filters</h4>
           </div>
           <h4>Categories</h4>
@@ -62,9 +62,9 @@ export function Catalogue() {
           >
             <option value="">All</option>
             {Categories &&
-              Categories.map((item, i) => ( 
+              Categories.map((item, i) => (
                 <option key={i} value={item.name}>
-                 {item.name}
+                  {item.name}
                 </option>
               ))}
           </select>
@@ -89,31 +89,32 @@ export function Catalogue() {
       </div>
       <div className={Style.catalogue} name="showproducts">
         <div className={Style.keypad}>
-          <div>
-            <img
-              className={Style.backward}
-              id="backward"
-              type="image"
-              src={left}
-              alt="img"
-              onClick={(e) => changepage(e)}
-            />
-            <img
-              className={Style.upward}
-              id="upward"
-              type="image"
-              src={right}
-              alt="img"
-              onClick={(e) => changepage(e)}
-            />
-          </div>
+          <img
+            className={Style.backward}
+            id="backward"
+            type="image"
+            src={left}
+            alt="img"
+            onClick={(e) => changepage(e)}
+          />
+          <img
+            className={Style.upward}
+            id="upward"
+            type="image"
+            src={right}
+            alt="img"
+            onClick={(e) => changepage(e)}
+          />
         </div>
+
+        <div>
         <div className={Style.products}>
           {
             Products && Products.map((item) =>
-              <ProductCard  name={item.name} price={item.price} images={item.images ? item.images[0] : null} id={item.id} />
+              <ProductCard name={item.name} price={item.price} images={item.images ? item.images[0] : null} id={item.id} />
             )
           }
+        </div>
         </div>
       </div>
     </div>

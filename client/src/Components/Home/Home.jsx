@@ -21,12 +21,10 @@ export function Home() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.containerTitle}>
-                <h1>TOP PRODUCTS / DEALS</h1>
-                {/* <Link to="/">
+            <h1>TOP PRODUCTS / DEALS</h1>
+            {/* <Link to="/">
                     <button type="submit">See All New Products</button>
                 </Link> */}
-            </div>
             <div className={styles.products}>
                 <div className={styles.containerP} >
                     <div className={styles.title}>

@@ -1,16 +1,18 @@
-$minwidth: 600px;
+$maxwidth: 600px;
 
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    // min-height: 100%;
+    min-height: calc(100vh - 203px);
+    // overflow-x: auto;
 
     .containerTitle {
         height: 10%;
     }
 
     .products {
-        min-height: 90%;
+        // min-height: 90%;
         display: flex;
         flex-direction: column;
 
@@ -19,7 +21,7 @@ $minwidth: 600px;
             display: flex;
             height: 30%;
 
-            @media screen and (max-width: $minwidth) {
+            @media screen and (max-width: $maxwidth) {
                 flex-direction: column;
                 width: 100%;
             }
@@ -34,7 +36,7 @@ $minwidth: 600px;
                 justify-content: space-around;
                 align-items: center;
 
-                @media screen and (max-width: $minwidth) {
+                @media screen and (max-width: $maxwidth) {
                     background-color: #2C3A40;
                     margin: 0 auto;
                     width: 90%;
@@ -51,7 +53,7 @@ $minwidth: 600px;
                 width: 85%;
                 padding: 1vmax;
 
-                @media screen and (max-width: $minwidth) {
+                @media screen and (max-width: $maxwidth) {
                     width: 100%;
                     height: 40vh;
                 }
@@ -71,3 +73,35 @@ $minwidth: 600px;
 
     }
 }
+
+
+@media screen and (max-width: $maxwidth) {
+
+    .container{
+        
+    align-items: center;
+    .products{
+        width: 100%;
+    }
+
+    }
+}
+
+// .container::-webkit-scrollbar {
+//     width: 8px;
+//   }
+//   .container::-webkit-scrollbar-track {
+//     background-color:#ccc;
+//   }
+//   .container::-webkit-scrollbar-thumb{
+//     background-color:#777;
+//     border-radius:4px;
+//   }
+//   .container::-webkit-scrollbar-thumb:hover{
+//     background-color:#777;
+//     border:1px solid #333333;
+//   }
+//   .container::-webkit-scrollbar-thumb:active{
+//     background-color:#666;
+//     border:1px solid #333333;
+//   }

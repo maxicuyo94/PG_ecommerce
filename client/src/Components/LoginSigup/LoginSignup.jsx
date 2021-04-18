@@ -25,6 +25,7 @@ export function LoginSignup() {
 
     return (
         <div className={style.container}>
+            <div className={style.contents}>
             <div className={stateCover === "LogIn" ? style.login : style.signup}>
                 <button onClick={handleCover}>{stateCover}</button>
             </div>
@@ -35,6 +36,7 @@ export function LoginSignup() {
                 <Login />
             </div>
             <Route exact path='/modifyUser' component={<ModifyUser />} />
+            </div>
         </div>
     );
 };
