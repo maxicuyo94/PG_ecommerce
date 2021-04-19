@@ -21,11 +21,11 @@ import Modal from "@material-ui/core/Modal";
 
 export function ControlPanel() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.allproducts);
-  const categories = useSelector((state) => state.categories);
-  const users = useSelector((state) => state.users);
-  const orders = useSelector((state) => state.orders);
-  const orderDetailId = useSelector((state) => state.order);
+  const products = useSelector((state) => state.productReducer.allproducts);
+  const categories = useSelector((state) => state.productReducer.categories);
+  const users = useSelector((state) => state.usersReducer.users);
+  const orders = useSelector((state) => state.orderReducer.orders);
+  const orderDetailId = useSelector((state) => state.orderReducer.orderDetail);
   const [modal, setModal] = useState(false);
 
   const changeModal = async (id) => {
@@ -42,7 +42,7 @@ export function ControlPanel() {
     dispatch(getCategories());
     dispatch(allUsers());
     dispatch(getAllOrders());
-  }, [products.length]);
+  }, [products?.length]);
 
   const handleDelete = async (id) => {
     if (tab === "products") {
