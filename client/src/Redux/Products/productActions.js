@@ -222,36 +222,6 @@ export const deleteProduct = (id) => {
   }
 };
 
-export const postUser = (user) => {
-  return async (dispatch) => {
-    await supabase.from("users").insert([
-      {
-        name: user.nombre,
-        surname: user.apellido,
-        email: user.email,
-        user_name: user.userName,
-        user_password: user.password,
-        phone: user.phone
-      },
-    ]);
-
-    const userId = await supabase
-      .from("users")
-      .select("id")
-      .eq("email", user.email);
-
-    await supabase.from("address").insert([
-      {
-        user_id: userId.data[0].id,
-        address: user.address,
-        city: user.city,
-        postal_code: user.postal_code,
-        country: user.country
-      },
-    ]);
-    dispatch({ type: actionType.POST_USER });
-  }
-};
 
 export const deleteCategory = (id) => {
   return async () => {
@@ -260,14 +230,7 @@ export const deleteCategory = (id) => {
   };
 };
 
-export const allUsers = () => {
-  return async function (dispatch) {
-    let JSON = await supabase
-      .from('users')
-      .select('*,address(*)')
-    dispatch({ type: actionType.ALL_USERS, payload: JSON.data })
-  }
-}
+
 
 
 

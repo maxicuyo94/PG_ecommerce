@@ -1,40 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from '../../../Redux/Actions/actionsUser'
 import style from "./modifyproduct.module.scss";
+import { updateUser } from "../../../Redux/Users/usersActions"
 
 export function ModifyUser({ id }) {
-    const [dataUser, setDataUser] = useState({
-        name: "",
-        surname: "",
-        email: "",
-        username: "",
-        password: "",
-        phone: "",
-        permission: "",
-    });
     const dispatch = useDispatch();
-    const userDetail = useSelector((state) => state.userDetail);
-
-
-    // useEffect(() => {
-    // (function getCatAndProd() {
-    //     dispatch(userDetail(id));
-    // })()
-    // }, [id]);
-
-    // useEffect(() => {
-    //     setDataUser({
-    //         name: userDetail.name,
-    //         surname: userDetail.surname,
-    //         email: userDetail.email,
-    //         username: userDetail.username,
-    //         password: userDetail.password,
-    //         phone: userDetail.phone,
-    //     });
-    // }, [userDetail]);
-
+    const userLog = useSelector(state => state.usersReducer.userLoged);
+    console.log(userLog)
+    const [dataUser, setDataUser] = useState({
+        id,
+        userName: "",
+        phone: "",
+        address: "",
+        city: "",
+        postal_code: "",
+        country: "",
+    });
 
     const handleInputChange = (e) => {
         setDataUser({
@@ -43,55 +25,58 @@ export function ModifyUser({ id }) {
         });
     };
 
-    const change = async () => {
-        await dispatch(updateUser(dataUser, id));
-    };
-console.log(id)
+    useEffect(() => {
+        setDataUser({
+            id: userLog.id,
+            userName: userLog.user_name,
+            phone: userLog.phone,
+            address: userLog.address[0].address,
+            city: userLog.address[0].city,
+            postal_code: userLog.address[0].postal_code,
+            country: userLog.address[0].country,
+        })
+    }, [userLog]);
+
+    const modifyUser = (e) => {
+        e.preventDefault()
+        dispatch(updateUser(dataUser))
+    }
 
     return (
-        <form className={style.container}>
-            <h1>Modify User</h1>
-            <div>
-                <label  htmlFor="name">Name</label>
-                <input type="text" name="name" placeholder="Name" value={dataUser.name} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="surname">Surname</label>
-                <input type="text" name="surname" placeholder="Surname" value={dataUser.lastname} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="userName">UserName</label>
-                <input type="text" name="userName" placeholder="Username" value={dataUser.userName} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="phone">Phone</label>
-                <input type="text" name="phone" placeholder="Phone" value={dataUser.phone} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="address">Address</label>
-                <input type="text" name="address" placeholder="Address" value={dataUser.address} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="city">City</label>
-                <input type="text" name="city" placeholder="Username" value={dataUser.city} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="postal_code">Postal Code</label>
-                <input type="text" name="postal_code" placeholder="Username" value={dataUser.postal_code} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="country">Country</label>
-                <input type="text" name="country" placeholder="Username" value={dataUser.country} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label htmlFor="permission">Permission</label>
-                <input type="text" name="permission" placeholder="Permission" value={dataUser.permission} onChange={handleInputChange} />
-            </div>
-            <div>
-                <label>Password</label>
-                <input name="password" value={dataUser.password} onChange={(e) => handleInputChange(e)}></input>
-            </div>
-            <button type="button" onClick={change}>SignUp</button>
-        </form>
+        <div>
+            <form class={style.form}>
+                <h1>Modify User</h1>
+                {/* <Link to={`/controlpanel`}> */}
+                <button type="submit" onClick={(e) => modifyUser(e)}>Modify User</button>
+                {/* </Link> */}
+                <div>
+                    <label class={style.label}>User name</label>
+                    <input class={style.input} type="text" value={dataUser.userName} name="userName" onChange={(e) => handleInputChange(e)}></input>
+                </div>
+                <div>
+                    <label class={style.input}>Phone</label>
+                    <textarea name="phone" rows="6" cols="40" value={dataUser.phone} onChange={(e) => handleInputChange(e)}
+                    ></textarea>
+                </div>
+                <div>
+                    <label>Address</label>
+                    <input class={style.input} name="address" value={dataUser.address} onChange={(e) => handleInputChange(e)}
+                    ></input>
+                </div>
+                <div>
+                    <label>City</label>
+                    <input class={style.input} name="city" value={dataUser.city} onChange={(e) => handleInputChange(e)}></input>
+                </div>
+                <div>
+                    <label>Postal code</label>
+                    <input class={style.input} name="postal_code" value={dataUser.postal_code} onChange={(e) => handleInputChange(e)}></input>
+                </div>
+                <div>
+                    <label>Country</label>
+                    <input class={style.input} name="country" value={dataUser.country} onChange={(e) => handleInputChange(e)}></input>
+                </div>
+
+            </form>
+        </div>
     );
 }

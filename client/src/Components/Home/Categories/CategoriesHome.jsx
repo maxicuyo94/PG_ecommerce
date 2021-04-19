@@ -6,7 +6,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import { useDispatch } from "react-redux";
 import swal from 'sweetalert';
-import { addItemCart } from '../../../Redux/Actions/cartActions';
+import { addItemCart } from '../../../Redux/Cart/cartActions';
 
 export const CategoriesHome = (props) => {
   const dispatch = useDispatch();

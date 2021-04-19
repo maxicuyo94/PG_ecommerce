@@ -5,9 +5,9 @@ import {
   deleteProduct,
   getCategories,
   deleteCategory,
-} from "../../Redux/Actions/actions.js";
-import { allUsers, deleteUser } from "../../Redux/Actions/usersActions.js";
-import { getAllOrders, getOrderDetail } from "../../Redux/Actions/orderActions";
+} from "../../Redux/Products/productActions.js";
+import { allUsers, deleteUser } from "../../Redux/Users/usersActions";
+import { getAllOrders, getOrderDetail } from "../../Redux/Orders/orderActions";
 import style from "./controlpanel.module.scss";
 import {
   Edit,
