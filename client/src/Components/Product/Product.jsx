@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Slider from "./Slider/Slider";
 import { productDetail, getProductsByCategories } from "../../Redux/Products/productActions";
-//import { NavLink } from "react-router-dom";
 import styles from "./Product.module.scss";
-import { CategoriesHome } from '../Home/Categories/CategoriesHome'
-import Carousel from '@brainhubeu/react-carousel'
-import '@brainhubeu/react-carousel/lib/style.css'
 import swal from 'sweetalert';
 import { addItemCart } from "../../Redux/Cart/cartActions";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
+import Slider from './Slider/Slider'
+import Thumbs from './Thumbs/Thumbs'
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y])
 
+const random = Math.round(Math.random() * 2)
 export const Product = (props) => {
     const dispatch = useDispatch();
-    const details = useSelector((state) => state.productDetail);
-    const productByCategories = useSelector(state => state.productByCategories)
+    const details = useSelector((state) => state.productReducer.productDetail);
+    const productByCategories = useSelector(state => state.productReducer.productByCategories)
     const id = props.id;
     const [value, setValue] = useState(1);
     const [nav, setNav] = useState('details')
-    const [index, setIndex] = useState(1)
-    const [slide, setSlide] = useState(1)
+    /*    const [index, setIndex] = useState(1)
+       const [slide, setSlide] = useState(1) */
 
     const handleSum = () => { value < details.stock && value < 10 && setValue(value + 1) };
     const handleRes = () => { value > 1 && setValue(value - 1) };
-
     useEffect(() => {
         const idDetails = async () => {
             await dispatch(productDetail(id));
@@ -32,7 +31,7 @@ export const Product = (props) => {
             await dispatch(getProductsByCategories());
         };
         Products();
-        window.innerWidth < 601 ? setSlide(1) : setSlide(3)
+        /*  window.innerWidth < 601 ? setSlide(1) : setSlide(3) */
         return () => {
             setNav('details')
         }
@@ -51,7 +50,7 @@ export const Product = (props) => {
         }
         dispatch(addItemCart(cartItemModel))
         setValue(1)
-        swal("Done!","Added to cart","success");
+        swal("Done!", "Added to cart", "success");
     }
 
 
@@ -92,7 +91,7 @@ export const Product = (props) => {
                 </div>
                 <div className={styles.images}>
                     <div className={styles.carousel}>
-                        <Slider images={details.images} />
+                        <Thumbs images={details.images} />
                     </div>
                     <div className={styles.buy}>
                         <label>
@@ -105,9 +104,9 @@ export const Product = (props) => {
                                 <button onClick={handleRes}>-</button>
                             </div>
                         </div>
-                        {details.stock > 0?<button onClick={() => { handleAddToCart(details) }} >
+                        {details.stock > 0 ? <button onClick={() => { handleAddToCart(details) }} >
                             Add to Cart
-                        </button>:<button onClick={() => { swal("Sorry!","Come back in a few days","error"); }} >
+                        </button> : <button onClick={() => { swal("Sorry!", "Come back in a few days", "error"); }} >
                             Sold out
                         </button>}
                     </div>
@@ -118,22 +117,12 @@ export const Product = (props) => {
                 <div className={styles.title}>
                     <span>MORE PRODUCTS</span>
                 </div>
-                <Carousel
-                    arrows
-                    slidesPerPage={slide}
-                    infinite
-                    animationSpeed={200}
-                    centered
-                >
-                    {
-                        productByCategories.length > 0 &&
-                        productByCategories[Math.floor(Math.random() * 3)].data.map((product) => {
-                            return product.images &&
-                                <CategoriesHome key={product.id} id={product.id} name={product.name} price={product.price} image={product.images} />
-                        })
+                <div className={styles.slider}>
+                    {productByCategories[random] && <Slider products={productByCategories[random].data} />}
 
-                    }
-                </Carousel>
+                </div>
+
+
             </div>
         </div>
     );
