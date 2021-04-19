@@ -1,6 +1,6 @@
 {
   "home": {
-    "title": "TOP PRODUCTS / DEALS"
+    "title": "TOP PRODUCTS & DEALS"
   },
 
   "seeProducts": {
@@ -37,6 +37,40 @@
 
   "navLink5": {
     "linkFive": "Register"
+  },
+
+  "navLink6": {
+    "linkSix": "Control Panel"
+  },
+
+  "footer": {
+    "textOne": "Sign up to our NewsLetter",
+    "textTwo": "Suscribe",
+    "texThree": "Information",
+    "textFour": "PC parts",
+    "textFive": "Desktop PC",
+    "textSix": "Laptops",
+    "placeholder": "E-mail..."
+  },
+
+  "card": {
+    "textOne": "Add to Cart",
+    "textTwo": "Sorry",
+    "texThree": "Come back in a few days",
+    "textFour": "Sold out",
+    "textFive": "On stock",
+    "alert": "Added to your cart"
+  },
+
+  "catalogue": {
+    "textOne": "Search...",
+    "textTwo": "Filters",
+    "texThree": "Categories",
+    "textFour": "All",
+    "textFive": "Prices",
+    "textSix": "All",
+    "textSeven": "All Brands",
+    "textEight": "All"
   },
   
   "modifyProduct":{

@@ -8,8 +8,12 @@ import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { addItemCart } from '../../../Redux/Cart/cartActions';
 import styles from "./Cards.module.scss";
+import { useTranslation } from "react-i18next";
 
 export const Cards = (props) => {
+      // eslint-disable-next-line
+  const [t, i18n] = useTranslation("global");
+  
     const dispatch = useDispatch();
     const handleAddToCart = (item) => {
         let cartItemModel = {
@@ -57,12 +61,12 @@ export const Cards = (props) => {
             {props.stock > 0 ?
                 <button className={styles.btnOn}
                     onClick={() => { handleAddToCart(props) }} >
-                    <span> Add to Cart!</span> <AddShoppingCartIcon />
+                    <span>{t("card.textOne")}</span> <AddShoppingCartIcon />
                 </button>
                 :
                 <button className={styles.btnOff}
                     onClick={() => { swal("Sorry!", "Come back in a few days", "error"); }} >
-                    <span> Sold Out! </span> <RemoveShoppingCartIcon />
+                    <span>{t("card.textFour")}</span> <RemoveShoppingCartIcon />
                 </button>
             }
         </div>
