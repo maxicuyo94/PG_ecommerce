@@ -1,45 +1,43 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 //import { SearchBar } from "../SearchBar/SearchBar";
-import { Header } from "./Header/Header";
+//import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
-import MiniShop from './MiniShop/MiniShop'
-import BtnLang from './BtnLang/BtnLang'
+import MiniShop from "./MiniShop/MiniShop";
+import BtnLang from "./BtnLang/BtnLang";
 
-
-export function Nav({priority}) {
-
+export function Nav({ priority }) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
 
   return (
     <div className={style.container}>
-      <Header />
+      {/* <Header /> */}
       <div className={style.contents}>
         <div className={style.logo}>
-          <NavLink to={'/landing'}>
-            <img src={'https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png'} />
+          <NavLink to={"/landing"}>
+            <img
+              src={
+                "https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png"
+              }
+            />
           </NavLink>
         </div>
         <ul>
           <li>
             <Link to="/">
-              <text>Home</text>
+              <text>{t("navLink1.linkOne")}</text>
             </Link>
           </li>
           <li>
-            <Link to='/catalogue'>
-              <text>
-                Catalogue
-                </text>
+            <Link to="/catalogue">
+              <text>{t("navLink2.linkTwo")}</text>
             </Link>
           </li>
           <li>
-            <Link to='/controlpanel'>
-              <text>
-                Control Panel
-                </text>
+            <Link to="/controlpanel">
+              <text>{t("navLink6.linkSix")}</text>
             </Link>
           </li>
           <li>
@@ -57,10 +55,6 @@ export function Nav({priority}) {
           </li>
           <li>
             <BtnLang />
-            {/* <button onClick={() => i18n.changeLanguage("es")}>ES</button>
-          </li>
-          <li>
-            <button onClick={() => i18n.changeLanguage("en")}>EN</button> */}
           </li>
         </ul>
       </div>
