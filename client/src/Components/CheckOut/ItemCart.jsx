@@ -65,7 +65,7 @@ export function ItemCart({ product }) {
                     <Icon> - </Icon>
                 </button>}
                 <h6 style={{ margin: "1rem" }}>{product.quantity}</h6>
-                {product.quantity < 10 && <button onClick={() => handleQuantityChange(+1)}>
+                {product.quantity < 10 && product.quantity < product.stock && <button onClick={() => handleQuantityChange(+1)}>
                     <Icon> + </Icon>
                 </button>}
 

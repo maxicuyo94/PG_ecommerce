@@ -24,7 +24,13 @@ export function Login() {
     };
 
     const loginUsers = () => {
-        dispatch(userLogin(user));
+        const userLog = async () => {
+            await dispatch(userLogin(user));
+            // console.log(logUser)
+            localStorage.getItem('supabase.auth.token') && history.push("/")
+        }
+        userLog()
+
     }
 
     // userId && history.push("/catalogue")

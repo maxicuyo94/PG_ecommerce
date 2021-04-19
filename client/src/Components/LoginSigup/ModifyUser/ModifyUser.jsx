@@ -26,7 +26,7 @@ export function ModifyUser({ id }) {
     };
 
     useEffect(() => {
-        setDataUser({
+        userLog && setDataUser({
             id: userLog.id,
             userName: userLog.user_name,
             phone: userLog.phone,
