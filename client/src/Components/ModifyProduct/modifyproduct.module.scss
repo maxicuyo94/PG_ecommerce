@@ -28,7 +28,7 @@
     color: #9abf15;
     &:hover {
       cursor: pointer;
-      background-color: #75ba93;
+      background-color: #9abf15;
       color: #e4fcdb;
     }
 
@@ -36,7 +36,9 @@
 }
 
 .categories {
-
+  display: flex;
+  justify-content:flex-start;
+  flex-direction: row;
   button {
     background-color: transparent;
     padding: 10px;
@@ -44,9 +46,6 @@
     border-radius: 4px;
     font-family: Roboto;
     color: #9abf15;
-  }
-  .clear {
-
   }
 }
 

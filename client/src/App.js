@@ -33,7 +33,6 @@ function App() {
       <Route exact path="/Order" render={() => <CheckOut priority={priority} />} />
       <Route exact path="/modifyProduct/:id" render={({ match }) => <ModifyProduct id={match.params.id} />} />
       <Route exact path="/controlpanel" render={() => <ControlPanel priority={priority} />} />
-      <Route exact path="/orderdetail/:id" render={() => <OrderDetail priority={priority} />} />
     </Layout>
   );
 }

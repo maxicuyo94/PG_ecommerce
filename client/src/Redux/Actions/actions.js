@@ -208,6 +208,10 @@ export const updateProduct = (product, id) => {
 export const deleteProduct = (id) => {
   return async () => {
     await supabase
+      .from("product_categories")
+      .delete("*")
+      .eq('product_id', id);
+    await supabase
       .from("images")
       .delete("*")
       .match({ product_id: id });
