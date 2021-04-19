@@ -1,5 +1,6 @@
 import * as actionType from "../action_types/actionTypes";
 import { createClient } from "@supabase/supabase-js";
+import swal from "sweetalert";
 const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
@@ -37,7 +38,7 @@ export const postUser = (users) => {
 
       console.log(user)
     } catch (e) {
-      alert(e)
+      swal('Oops!', e, 'error')
     }
   }
 };
@@ -98,7 +99,7 @@ export const userLogin = (users) => {
         email: users.email,
         password: users.password,
       })
-      if(error) alert(error.message)
+      if(error) swal('Oops!', error.message, 'error')
     }
      
     let userId = localStorage.getItem("supabase.auth.token") && JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user.id
@@ -115,7 +116,7 @@ export const userLogin = (users) => {
 export const sendMail = (email) => {
   return async function () {
     const { error, data } = await supabase.auth.api.resetPasswordForEmail(email)
-    error && alert(error.message)
+    error && swal('Oops!', error.message, 'error')
   }
 }
 
@@ -126,7 +127,7 @@ export const ResetPassword = (access_token, new_password) => {
       const { error, data } = await supabase.auth.api
         .updateUser(access_token, { password: new_password })
     } catch (e) {
-      alert("Invalid dates")
+      swal('Oops', 'Invalid dates', 'error')
     }
   }
 }

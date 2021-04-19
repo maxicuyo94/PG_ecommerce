@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import style from "./checkout.module.scss";
 import { ItemCart } from './ItemCart';
 import { clearCart } from '../../Redux/Cart/cartActions';
+import swal from 'sweetalert';
 
 
 
@@ -78,7 +79,7 @@ export function CheckOut() {
                     </ListItem>
                     <Button
                         variant="contained"
-                        onClick={() => alert('to CheckOut')}
+                        onClick={() => swal('To CheckOut', '', 'success')}
                     >
                         Check Out
                     </Button>

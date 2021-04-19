@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import swal from 'sweetalert';
 import { ResetPassword } from "../../../Redux/Users/usersActions"
 
 export function Reset() {
@@ -8,7 +9,7 @@ export function Reset() {
     const resetP = (e) => {
         e.preventDefault()
         if (!/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,15})/.test(document.getElementById("password").value)) {
-            alert('Campos invalido o vacio.')} else {
+            swal('Campos invalidos o vacios', '', 'success')} else {
                 dispatch(ResetPassword(token, document.getElementById("password").value))
             }
     }
