@@ -2,17 +2,26 @@
 .container{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         margin:0.5rem;
         label{
+            align-self: flex-start;
             font-weight: 200;
-            margin-right: 1rem;
+            font-size: small;
+            // margin-top: -10px;
+            // margin-right: 2rem;
+            // margin-left: -25px;
         }
         input{
-            border-radius: 6px;
-            width: 50%;
-
+            border-radius: 3px;
+            margin-bottom: -10px;
+            width: 175px;
+            height: 20px;
+            outline: none;
         }
         .danger{
             color: red;
@@ -28,10 +37,11 @@
         background-color: #B5E033;
     }
     .simpleButton {
-        outline:none;
-        height: 2rem;
+        outline: none;
+        height: 1.5rem;
         padding: 0;
         border-radius: 42px;
+        border-width: 1px;
         display: inline-block;
         cursor: pointer;
         color: #333333;
@@ -39,6 +49,13 @@
         font-weight: 900;
         padding: 0.3rem 1rem;
         text-decoration: none;
+        margin-top: 5px;
+        margin-bottom: 5px;
+
+        &:hover {
+            background-color: #abf5a1;
+            color: #555;
+        }
     }
     
 }
