@@ -3,7 +3,7 @@ const server = require("express").Router()
 const mercadopago = require ('mercadopago');
 // Credenciales
 mercadopago.configure({
-  access_token: 'APP_USR-8626539641988064-041815-61b37d9b217622d9f9a61d30d0bae74b-745811777'
+  access_token: process.env.MP_TOKEN
 });
 
 server.post('/checkout', async (req, res) => {
