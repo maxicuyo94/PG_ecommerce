@@ -7,7 +7,7 @@ const InitialState = {
 
 function Reducer(state = InitialState, action) {
   switch (action.type) {
-      case actionType.ORDERS:
+      case actionType.GET_ALL_ORDERS:
       return {
         ...state,
         orders: action.payload,

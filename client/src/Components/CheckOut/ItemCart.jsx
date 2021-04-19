@@ -28,7 +28,7 @@ export function ItemCart({ product }) {
             // let productToDispatch = { ...product };
             let productToDispatch = {
                 id: product.id,
-                image: product.images[0],
+                image: product.image,
                 quantity: amount,
             };
 
@@ -51,9 +51,9 @@ export function ItemCart({ product }) {
     return (
         <div>
             <ListItem>
-                {/* <ListItemAvatar>
-                    <Avatar variant="square" alt="product-avatar" src={`${product.images[0]}`} />
-                </ListItemAvatar> */}
+                <ListItemAvatar>
+                    <Avatar variant="square" alt="product-avatar" src={`${product.image}`} />
+                </ListItemAvatar>
                 <Link to={`product/${product.id}`}>
                     <ListItemText
                         primary={product.title}
@@ -61,13 +61,13 @@ export function ItemCart({ product }) {
                     />
                 </Link>
 
-                <button onClick={() => handleQuantityChange(-1)}>
+                {product.quantity > 1 && <button onClick={() => handleQuantityChange(-1)}>
                     <Icon> - </Icon>
-                </button>
+                </button>}
                 <h6 style={{ margin: "1rem" }}>{product.quantity}</h6>
-                <button onClick={() => handleQuantityChange(+1)}>
+                {product.quantity < 10 && <button onClick={() => handleQuantityChange(+1)}>
                     <Icon> + </Icon>
-                </button>
+                </button>}
 
 
                 <ListItemSecondaryAction>
@@ -78,8 +78,8 @@ export function ItemCart({ product }) {
                     </IconButton>
                 </ListItemSecondaryAction>
                 <ListItemText
-                    primary={`US$ ${product.price * product.quantity}`}
-                    secondary={`US$ ${product.price}`}
+                    primary={`US$ ${(product.price * product.quantity).toFixed(2)}`}
+                    secondary={`US$ ${product.price.toFixed(2)}`}
                 />
             </ListItem>
         </div>

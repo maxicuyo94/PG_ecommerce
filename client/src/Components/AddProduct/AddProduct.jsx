@@ -26,7 +26,7 @@ export function AddProduct() {
   });
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.productRedcuer.categories);
+  const categories = useSelector((state) => state.productReducer.categories);
 
   const handleInputChange = (e) => {
     setData({

@@ -30,10 +30,10 @@ export function ModifyUser({ id }) {
             id: userLog.id,
             userName: userLog.user_name,
             phone: userLog.phone,
-            address: userLog.address[0].address,
-            city: userLog.address[0].city,
-            postal_code: userLog.address[0].postal_code,
-            country: userLog.address[0].country,
+            address: userLog.address && userLog.address[0].address,
+            city: userLog.address && userLog.address[0].city,
+            postal_code: userLog.address && userLog.address[0].postal_code,
+            country: userLog.address && userLog.address[0].country,
         })
     }, [userLog]);
 

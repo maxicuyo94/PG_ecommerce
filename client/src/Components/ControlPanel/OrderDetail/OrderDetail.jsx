@@ -8,7 +8,7 @@ import {
 // import Style from "../OrderDetail/orderdetail.module.scss";
 
 export const OrderDetail = ({ id }) => {
-  const order = useSelector((state) => state.order);
+  const order = useSelector((state) => state.orderReducer.orderDetail);
   const dispatch = useDispatch();
   // const { id } = useParams();
 

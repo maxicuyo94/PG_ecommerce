@@ -95,21 +95,22 @@ export const deleteUser = (id) => {
 
 export const userLogin = (users) => {
   return async function (dispatch) {
-      if(users){const { user, session, error } = await supabase.auth.signIn({
-        email: users.email,
-        password: users.password,
-      })
-      if(error) swal('Oops!', error.message, 'error')
-    }
-     
-    let userId = localStorage.getItem("supabase.auth.token") && JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user.id
+    const { user, session, error } = await supabase.auth.signIn({
+      email: users.email,
+      password: users.password,
+    })
 
-    const JSON1 = userId && await supabase
+    if(error) alert(error.message)
+    // else console.log(user) 
+
+
+
+    const JSON = await supabase
     .from('users')
     .select('*,address(*)')
-    .eq('id', userId)
+    .eq('email', users.email)
 
-    userId && dispatch({ type: actionType.USER_LOGIN, payload: JSON1.data[0] })
+    dispatch({ type: actionType.USER_LOGIN, payload: JSON.data[0] })
   }
 }
 
@@ -130,4 +131,14 @@ export const ResetPassword = (access_token, new_password) => {
       swal('Oops', 'Invalid dates', 'error')
     }
   }
+}
+
+export const userLogOut = () => {
+  localStorage.removeItem("supabase.auth.token")
+
+    // try {
+    //   localStorage.removeItem("supabase.auth.token")
+    // } catch (e) {
+    //   alert(e)
+    // }
 }

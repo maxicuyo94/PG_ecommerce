@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
 import MiniShop from "./MiniShop/MiniShop";
 import BtnLang from "./BtnLang/BtnLang";
+import { userLogOut } from "../../Redux/Users/usersActions";
 
 export function Nav({ priority }) {
   // eslint-disable-next-line
@@ -40,16 +41,25 @@ export function Nav({ priority }) {
               <text>{t("navLink6.linkSix")}</text>
             </Link>
           </li>
+          {/* {!localStorage.getItem('supabase.auth.token') ?  */}
           <li>
             <Link to="/login">
               <text>{t("navLink4.linkFour")}</text>
             </Link>
           </li>
+          {/* : */}
+          <li>
+            <Link to="/home">
+              <text onClick={() => userLogOut()}>Log Out</text>
+            </Link>
+          </li>
+          {/* } */}
           <li>
             <Link to="/register">
               <text>{t("navLink5.linkFive")}</text>
             </Link>
           </li>
+          
           <li>
             <MiniShop />
           </li>
