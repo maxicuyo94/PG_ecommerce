@@ -87,7 +87,7 @@ export default function CustomizedMenus() {
     //const [cont, setCont] = React.useState(null);
     let cont = 0;
 
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.cartReducer.cart)
 
 
     // const shop = useSelector(state => state.productByCategories)

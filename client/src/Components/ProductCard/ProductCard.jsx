@@ -9,7 +9,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import BlockIcon from '@material-ui/icons/Block';
-import { addItemCart } from '../../Redux/Actions/cartActions';
+import { addItemCart } from '../../Redux/Cart/cartActions';
 import { useDispatch } from 'react-redux'
 export function ProductCard(props) {
 	const dispatch = useDispatch();

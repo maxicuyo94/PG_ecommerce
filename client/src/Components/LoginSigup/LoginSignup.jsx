@@ -7,7 +7,7 @@ import { ModifyUser } from './ModifyUser/ModifyUser.jsx'
 
 import style from './loginsignup.module.scss';
 import { Route } from 'react-router';
-import { prueba } from '../../Redux/Actions/actions.js';
+// import { prueba } from '../../Redux/Actions/actions.js';
 
 export function LoginSignup() {
     const [stateCover, setStateCover] = useState("LogIn")

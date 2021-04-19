@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import {
   getOrderDetail,
   updateOrder,
-} from "../../../Redux/Actions/orderActions";
+} from "../../../Redux/Orders/orderActions";
+// import Style from "../OrderDetail/orderdetail.module.scss";
 
 export const OrderDetail = () => {
   const order = useSelector((state) => state.order);
