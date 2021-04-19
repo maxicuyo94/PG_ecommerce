@@ -34,36 +34,36 @@ export const postUser = async (user) => {
   ]);
 };
 
-export const updateUser = (user, id) => {
+export const updateUser = (users) => {
   return async () => {
+
+    const { user, error } = await supabase.auth.update({
+      email: "new@email.com",
+      password: "new-password",
+    })
+
     await supabase
-      .from("users,address(address,city,postalCode,country)")
+      .from("users")
       .update({
-        name: user.name,
-        surname: user.surname,
-        email: user.email,
-        username: user.username,
-        password: user.password,
-        phone: user.phone,
-        permission: user.permission,
+        user_name: users.userName,
+        phone: users.phone,
       })
-      .eq("id", id);
+      .eq("id", users.id);
 
     const addressId = await supabase
-      .from("addres")
-      .select("id,user_id")
-      .eq("user_id", id);
+      .from("address")
+      .select("id")
+      .eq("user_id", users.id)
 
     await supabase
       .from("address")
       .update({
-        user_id: user.id,
-        address: user.address,
-        city: user.city,
-        postalCode: user.postalCode,
-        country: user.country,
+        address: users.address,
+        city: users.city,
+        postal_code: users.postal_code,
+        country: users.country,
       })
-      .eq("id", addressId);
+      .eq("id", addressId.data[0].id);
   };
 };
 
@@ -84,3 +84,41 @@ export const deleteUser = (id) => {
   };
 };
 
+export const userLogin = (users) => {
+  return async function (dispatch) {
+      if(users){const { user, session, error } = await supabase.auth.signIn({
+        email: users.email,
+        password: users.password,
+      })
+      if(error) alert(error.message)
+    }
+     
+    let userId = localStorage.getItem("supabase.auth.token") && JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user.id
+
+    const JSON1 = userId && await supabase
+    .from('users')
+    .select('*,address(*)')
+    .eq('id', userId)
+
+    userId && dispatch({ type: actionType.USER_LOGIN, payload: JSON1.data[0] })
+  }
+}
+
+export const sendMail = (email) => {
+  return async function () {
+    const { error, data } = await supabase.auth.api.resetPasswordForEmail(email)
+    error && alert(error.message)
+  }
+}
+
+export const ResetPassword = (access_token, new_password) => {
+  return async function () {
+    try {
+      console.log(access_token, new_password)
+      const { error, data } = await supabase.auth.api
+        .updateUser(access_token, { password: new_password })
+    } catch (e) {
+      alert("Invalid dates")
+    }
+  }
+}
