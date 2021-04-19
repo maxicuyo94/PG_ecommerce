@@ -151,7 +151,8 @@ $minwidth: 600px;
       .carousel {
         display: flex;
         margin: auto;
-        height: 75%;
+        height: 90%;
+        width: 90%;
 
 
         @media screen and (min-width: $minwidth) {
@@ -214,7 +215,7 @@ $minwidth: 600px;
               font-weight: bold;
               font-size: 1rem;
               transition: 0.5s;
-              
+
 
               &:hover {
                 background-color: #000000;
@@ -236,7 +237,7 @@ $minwidth: 600px;
         }
 
         button {
-          //padding: 1.5vh 2vh;
+          padding: 1vh;
           border: none;
           outline: none;
           border-radius: 20px;
@@ -247,6 +248,9 @@ $minwidth: 600px;
           margin: 0;
           width: 30%;
           font-family: 'Poppins' !important;
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
           @media screen and (max-width: $minwidth) {
             width: 70%;
@@ -282,6 +286,7 @@ $minwidth: 600px;
     margin: auto;
     width: 95%;
     display: flex;
+    height: fit-content;
 
     @media screen and (max-width: $minwidth) {
       width: 95%;
@@ -311,21 +316,10 @@ $minwidth: 600px;
       }
     }
 
-
-    div {
-      div {
-        button {
-          margin: auto 0;
-          background-color: #9abf15 !important;
-        }
-
-      }
+    .slider {
+      width: 85%;
+      margin: auto;
     }
 
-    h5 {
-      font-weight: bold;
-      font-size: 20px;
-      margin: 0;
-    }
   }
 }

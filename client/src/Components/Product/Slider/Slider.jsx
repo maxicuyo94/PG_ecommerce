@@ -1,40 +1,63 @@
-import React, { useState } from "react";
-import styles from "./Slider.module.scss";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { useEffect } from "react";
+import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectFade } from 'swiper'
+import Cards from '../Cards/Cards'
+import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
+import 'swiper/components/lazy/lazy.scss'
+import './Slider.scss'
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, EffectFade])
 
-const Slider = ({ images }) => {
-  const [res, setRes] = useState(true)
-  useEffect(() => {
-    window.innerWidth < 601 ? setRes(false) : setRes(true)
-  },[])
+const Slider = (products) => {
   return (
-    <div className={styles.carousel}>
-      <Carousel
-        //axis={'vertical'}
-        //centerMode={true}
-        //centerSlidePercentage={50}
-        showArrows={false}
-        showThumbs={true}
-        dynamicHeight={false}
-        infiniteLoop={false}
-        showIndicators={false}
-        showStatus={res}
-        useKeyboardArrows={true}
-        interval={1000}
-      //width={'80%'}
-      >
-        {images?.map((slide, i) => {
-          return (
-            <div key={i}>
-              <img src={slide.url} alt="." />
-            </div>
-          );
-        })}
-      </Carousel>
-    </div>
-  );
-};
+    <Swiper
+      spaceBetween={0}
+      navigation
+      pagination={false}
+      scrollbar={false}
+      autoHeight={false}
+      loop={true}
+      breakpoints={
+        {
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 0
+          },
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 0
+          },
 
-export default Slider;
+          640: {
+            slidesPerView: 3,
+            spaceBetween: 0
+          }
+        }
+      }
+    >
+      {products && console.log(products)}
+      {
+        products && products.products.map((product, i) => {
+          {
+            return (
+              <SwiperSlide key={i}>
+                <Cards
+                  key={product.id}
+                  id={product.id}
+                  images={product.images[0]?.url}
+                  title={product.name}
+                  stock={product.stock}
+                  price={product.price}
+                />
+              </SwiperSlide>
+            );
+          }
+        })
+      }
+    </Swiper>
+  )
+}
+
+export default Slider
