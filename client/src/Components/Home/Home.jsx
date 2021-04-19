@@ -29,7 +29,6 @@ export function Home() {
             </NavLink>
           </div>
           <div className={styles.carousel}>
-            {productByCategories[0] && console.log(productByCategories[0].data)}
             {productByCategories[0] && <SwiperSlider products={productByCategories[0].data} />}
           </div>
         </div>
@@ -41,7 +40,6 @@ export function Home() {
             </NavLink>
           </div>
           <div className={styles.carousel}>
-            {productByCategories[1] && console.log(productByCategories[1].data)}
             {productByCategories[1] && <SwiperSlider products={productByCategories[1].data} />}
           </div>
         </div>
@@ -53,7 +51,6 @@ export function Home() {
             </NavLink>
           </div>
           <div className={styles.carousel}>
-            {productByCategories[2] && console.log(productByCategories[2].data)}
             {productByCategories[2] && <SwiperSlider products={productByCategories[2].data} />}
           </div>
         </div>

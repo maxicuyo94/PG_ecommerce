@@ -226,11 +226,11 @@ export function ModifyProduct({ id }) {
               ))}
           </select>
         </div>
-        <div>
-          <span>{t("modifyProduct.title9")}</span>
+        <div class={style.categories}>
+          <h4>{t("modifyProduct.title9")}</h4>
           {data.categories &&
             data.categories.map((category) => (
-              <div class={style.categories}>
+              <div >
                 <button
                   type="button"
                   id={category.id}
@@ -239,12 +239,11 @@ export function ModifyProduct({ id }) {
                 >
                   {category.name}
                 </button>
-                <Clear class={style.clear}></Clear>
               </div>
             ))}
         </div>
         <div>
-          <span>{t("modifyProduct.title10")}</span>
+          <h4>{t("modifyProduct.title10")}</h4>
           <div className={style.images}>
             {data.images &&
               data.images.map((img) => (

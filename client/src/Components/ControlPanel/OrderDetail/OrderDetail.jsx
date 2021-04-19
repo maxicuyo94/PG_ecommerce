@@ -7,10 +7,10 @@ import {
 } from "../../../Redux/Orders/orderActions";
 // import Style from "../OrderDetail/orderdetail.module.scss";
 
-export const OrderDetail = () => {
+export const OrderDetail = ({ id }) => {
   const order = useSelector((state) => state.order);
   const dispatch = useDispatch();
-  const { id } = useParams();
+  // const { id } = useParams();
 
   useEffect(() => {
     dispatch(getOrderDetail(id));
