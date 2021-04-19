@@ -5,33 +5,41 @@ const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export const postUser = async (user) => {
-  const userResult = await supabase.from("users").insert([
-    {
-      name: user.name,
-      surname: user.surname,
-      email: user.email,
-      username: user.username,
-      password: user.password,
-      phone: user.phone,
-      permission: user.permission,
-    },
-  ]);
+export const postUser = (users) => {
+  return async () => {
+    try {
+      const { user, session, error } = await supabase
+        .auth.signUp({
+          email: users.email,
+          password: users.password,
+        })
 
-  const userId = await supabase
-    .from("users")
-    .select("id")
-    .eq("email", user.email);
+      await supabase.from("users").insert([
+        {
+          id: user.id,
+          name: users.name,
+          surname: users.surname,
+          email: user.email,
+          user_name: users.userName,
+          phone: users.phone
+        },
+      ]);
 
-  await supabase.from("address").insert([
-    {
-      user_id: userId.data[0].id,
-      address: user.address,
-      city: user.city,
-      postalCode: user.postalCode,
-      country: user.country,
-    },
-  ]);
+      await supabase.from("address").insert([
+        {
+          user_id: user.id,
+          address: users.address,
+          city: users.city,
+          postal_code: users.postal_code,
+          country: users.country
+        },
+      ]);
+
+      console.log(user)
+    } catch (e) {
+      alert(e)
+    }
+  }
 };
 
 export const updateUser = (users) => {

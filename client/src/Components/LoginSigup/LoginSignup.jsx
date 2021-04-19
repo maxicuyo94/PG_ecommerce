@@ -11,9 +11,6 @@ import { Route } from 'react-router';
 
 export function LoginSignup() {
     const [stateCover, setStateCover] = useState("SignUp")
-    const stateRedux = useSelector((state) => state.prueba);
-
-    const dispatch = useDispatch();
 
     const handleCover = () => {
         if (stateCover === "LogIn") {
