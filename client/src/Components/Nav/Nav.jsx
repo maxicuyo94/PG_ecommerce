@@ -21,7 +21,7 @@ export function Nav({ priority }) {
             <img
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png"
-              }
+              } alt="Ups, we don't found anything here. Try again tomorrow!"
             />
           </NavLink>
         </div>

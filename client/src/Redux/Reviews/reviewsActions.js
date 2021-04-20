@@ -7,6 +7,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const createReview = (reviews) => {
   return async () => {
+    // eslint-disable-next-line
     const { data, error } = await supabase
       .from("reviews")
       .insert([
@@ -33,19 +34,17 @@ export const getReviewsOfProduct = (id) => {
   };
 };
 
-
 export const updateReview = (id_review, id) => {
-    return async function (dispatch) {
-      const JSON = await supabase
-        .from("review")
-        .update({
-          description: id_review.description,
-          rating: id_review.rating
-        })
-        .eq("id_review", id);
-    };
+  return async function (dispatch) {
+    const JSON = await supabase
+      .from("review")
+      .update({
+        description: id_review.description,
+        rating: id_review.rating,
+      })
+      .eq("id_review", id);
   };
-  
+};
 
 export const deleteReview = (id, id_review) => {
   return async () => {
