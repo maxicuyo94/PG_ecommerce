@@ -13,6 +13,7 @@ const rootReducer = combineReducers(
        productReducer,
        orderReducer,
        usersReducer,
+       reviewsReducer,
     }
 )
 
