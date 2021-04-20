@@ -35,7 +35,7 @@ export function Catalogue() {
       allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input.input)
     );
     dispatch(getCategories());
-  }, [Pages, Category, Prices, Input]);
+  }, [dispatch, Pages, Category, Prices, Input]);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ export function Catalogue() {
 
   const handleInputChangeP = (e) => {
     e.preventDefault();
-    e.target.value == ""
+    e.target.value === ""
       ? setPrices(["", ""])
       : e.target.value === "400"
       ? setPrices([e.target.value, ""])

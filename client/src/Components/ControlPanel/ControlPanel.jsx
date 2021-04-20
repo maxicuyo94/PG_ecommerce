@@ -37,12 +37,14 @@ export function ControlPanel() {
     setModal(false);
   }
 
+  const checkProducts = products?.length;
+
   useEffect(() => {
     dispatch(totalProducts());
     dispatch(getCategories());
     dispatch(allUsers());
     dispatch(getAllOrders());
-  }, [products?.length]);
+  }, [dispatch, checkProducts]);
 
   const handleDelete = async (id) => {
     if (tab === "products") {

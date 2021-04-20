@@ -7,11 +7,12 @@ import {
   getCategories,
 } from "../../Redux/Products/productActions.js";
 import style from "./modifyproduct.module.scss";
-import { Clear } from "@material-ui/icons";
+//import { Clear } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 
 export function ModifyProduct({ id }) {
+  // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
   const [data, setData] = useState({
     name: "",
@@ -77,7 +78,7 @@ export function ModifyProduct({ id }) {
       dispatch(getCategories());
       dispatch(productDetail(id));
     })();
-  }, [id]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     setData({
@@ -230,7 +231,7 @@ export function ModifyProduct({ id }) {
           <h4>{t("modifyProduct.title9")}</h4>
           {data.categories &&
             data.categories.map((category) => (
-              <div >
+              <div>
                 <button
                   type="button"
                   id={category.id}

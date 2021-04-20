@@ -6,10 +6,11 @@ import { postProduct, getCategories } from "../../Redux/Products/productActions.
 import axios from 'axios';
 import style from "./addproduct.module.scss";
 import Modal from "@material-ui/core/Modal";
-import { ArrowBack, LinkedCameraSharp } from "@material-ui/icons";
+import { ArrowBack } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
 
 export function AddProduct() {
+  // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
   const [data, setData] = useState({
     name: "",
@@ -77,7 +78,7 @@ export function AddProduct() {
 
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [dispatch]);
 
   const createProd = (data) => {
     dispatch(postProduct(data));
