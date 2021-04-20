@@ -14,8 +14,9 @@ import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
 import { useDispatch } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
 import { OrderDetail } from "./Components/ControlPanel/OrderDetail/OrderDetail";
-import { Reset } from "./Components/LoginSigup/ResetPassword/ResetPassword"
-import { userLogin } from "./Redux/Users/usersActions"
+import { Reset } from "./Components/LoginSigup/ResetPassword/ResetPassword";
+import { Reviews } from "./Components/Reviews/review";
+import { userLogin } from "./Redux/Users/usersActions";
 
 function App() {
   const [priority, setPriorityStorage] = useLocalStorage("priority", "")

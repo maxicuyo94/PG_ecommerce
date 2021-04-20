@@ -1,12 +1,11 @@
 import * as actionType from "../action_types/actionTypes";
 import { createClient } from "@supabase/supabase-js";
-import swal from "sweetalert";
 const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export const createReview = () => {
+export const createReview = (reviews) => {
   return async () => {
     const { data, error } = await supabase
       .from("reviews")
@@ -22,20 +21,20 @@ export const createReview = () => {
 
 export const getReviewsOfProduct = (id) => {
   return async function (dispatch) {
-    const { data, error } = await supabase
+    const JSON = await supabase
       .from("reviews")
       .select("*")
       .eq("product_id", id);
 
     dispatch({
       type: actionType.GET_REVIEW_PRODUCT,
-      payload: reviews,
+      reviews: JSON.data,
     });
   };
 };
 
 
-export const updateReview = (id_review) => {
+export const updateReview = (id_review, id) => {
     return async function (dispatch) {
       const JSON = await supabase
         .from("review")

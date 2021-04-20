@@ -9,7 +9,7 @@ function reviewsReducer(state = InitialState, action) {
     case actionType.GET_REVIEW_PRODUCT:
       return {
         ...state,
-        reviews: payload,
+        reviews: action.payload,
       };
     default:
       return state;

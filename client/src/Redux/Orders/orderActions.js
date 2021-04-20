@@ -15,6 +15,10 @@ export const getAllOrders = () => {
   };
 };
 
+export const getUserOrders = () => {
+  
+}
+
 export const getOrderDetail = (id) => {
   return async function (dispatch) {
     let orderRequest = await supabase.from("order").select("*").eq("id", id);
