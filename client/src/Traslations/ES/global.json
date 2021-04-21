@@ -39,6 +39,40 @@
     "linkFive": "Registrarse"
   },
   
+  "navLink6": {
+    "linkSix": "Panel de Control"
+  },
+
+  "footer": {
+    "textOne": "Suscribite a nuestro boletín informativo",
+    "textTwo": "Suscribirse",
+    "texThree": "Información",
+    "textFour": "Componentes",
+    "textFive": "Computadoras de escritorio",
+    "textSix": "Notebooks",
+    "placeholder": "Dirección de correo..."
+  },
+
+  "card": {
+    "textOne": "Agregar al carrito",
+    "textTwo": "¡Perdón!",
+    "texThree": "Volve en unos días",
+    "textFour": "Sin stock",
+    "textFive": "En stock",
+    "alert": "Agregado a tu carrito"
+  },
+
+  "catalogue": {
+    "textOne": "Buscar...",
+    "textTwo": "Filtros",
+    "texThree": "Categorías",
+    "textFour": "Todas",
+    "textFive": "Precios",
+    "textSix": "Todos",
+    "textSeven": "Marcas",
+    "textEight": "Todas"
+  },
+
   "modifyProduct":{
     "title":"Modificar Producto",
     "title1":"titulo",

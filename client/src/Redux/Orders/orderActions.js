@@ -15,6 +15,8 @@ export const getAllOrders = () => {
   };
 };
 
+export const getUserOrders = () => {};
+
 export const getOrderDetail = (id) => {
   return async function (dispatch) {
     let orderRequest = await supabase.from("order").select("*").eq("id", id);
@@ -24,7 +26,7 @@ export const getOrderDetail = (id) => {
       .select("*")
       .eq("order_id", id);
 
-      order.details = orderDetail.data
+    order.details = orderDetail.data;
 
     dispatch({
       type: actionType.GET_ORDER_DETAIL,
@@ -35,6 +37,7 @@ export const getOrderDetail = (id) => {
 
 export const updateOrder = (status, id) => {
   return async function (dispatch) {
+    // eslint-disable-next-line
     const JSON = await supabase
       .from("order")
       .update({

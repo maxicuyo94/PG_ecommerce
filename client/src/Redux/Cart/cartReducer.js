@@ -55,7 +55,7 @@ function cartReducer(state = InitialState, action) {
           cart: [...state.cart, action.payload],
         };
 
-    case actionType.ORDERS:
+    case actionType.GET_ALL_ORDERS:
       return {
         ...state,
         orders: action.payload,

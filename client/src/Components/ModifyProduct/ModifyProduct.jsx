@@ -7,11 +7,12 @@ import {
   getCategories,
 } from "../../Redux/Products/productActions.js";
 import style from "./modifyproduct.module.scss";
-import { Clear } from "@material-ui/icons";
+//import { Clear } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 
 export function ModifyProduct({ id }) {
+  // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
   const [data, setData] = useState({
     name: "",
@@ -77,7 +78,7 @@ export function ModifyProduct({ id }) {
       dispatch(getCategories());
       dispatch(productDetail(id));
     })();
-  }, [id]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     setData({
@@ -226,11 +227,11 @@ export function ModifyProduct({ id }) {
               ))}
           </select>
         </div>
-        <div>
-          <span>{t("modifyProduct.title9")}</span>
+        <div class={style.categories}>
+          <h4>{t("modifyProduct.title9")}</h4>
           {data.categories &&
             data.categories.map((category) => (
-              <div class={style.categories}>
+              <div>
                 <button
                   type="button"
                   id={category.id}
@@ -239,12 +240,11 @@ export function ModifyProduct({ id }) {
                 >
                   {category.name}
                 </button>
-                <Clear class={style.clear}></Clear>
               </div>
             ))}
         </div>
         <div>
-          <span>{t("modifyProduct.title10")}</span>
+          <h4>{t("modifyProduct.title10")}</h4>
           <div className={style.images}>
             {data.images &&
               data.images.map((img) => (

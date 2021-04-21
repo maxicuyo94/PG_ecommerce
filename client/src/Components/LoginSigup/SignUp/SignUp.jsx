@@ -20,6 +20,7 @@ export function SignUp() {
     });
     const [errors, setErrors] = useState({})
     const [success, setSuccess] = useState(true)
+     // eslint-disable-next-line
     const [validated, setValidated] = useState({})
     const VAL = "validated"
 
@@ -40,7 +41,7 @@ export function SignUp() {
 
     useEffect(() => {
       dispatch(postUser(user))
-    }, [success])
+    }, [dispatch, user, success])
 
     const created = (e) => {
         e.preventDefault()
