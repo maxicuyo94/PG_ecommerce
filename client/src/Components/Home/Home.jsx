@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { getProductsByCategories } from "../../Redux/Products/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -14,14 +14,14 @@ export function Home() {
   const stableDispatch = useCallback(dispatch, []);
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-
+  const [dark, setDark] = useState(true)
   useEffect(() => {
     stableDispatch(getProductsByCategories());
   }, [stableDispatch]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.containerTitle}>
+    <div className={dark ? styles.containerDark : styles.container}>
+      <div className={styles.containerTitle} onClick={() => { setDark(!dark) }}>
         <span>{t("home.title")}</span>
       </div>
       <div className={styles.products}>
