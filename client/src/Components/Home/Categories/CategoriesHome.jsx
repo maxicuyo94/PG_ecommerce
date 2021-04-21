@@ -1,15 +1,25 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./CategoriesHome.module.scss";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarHalfIcon from '@material-ui/icons/StarHalf';
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { useDispatch } from "react-redux";
 import swal from 'sweetalert';
 import { addItemCart } from '../../../Redux/Cart/cartActions';
-
+import { useState } from "react";
 export const CategoriesHome = (props) => {
   const dispatch = useDispatch();
+  const [fav, setFav] = useState(false)
+  const handleFav = () => {
+    setFav(!fav)
+  }
   const handleAddToCart = (item) => {
     let cartItemModel = {
       title: item.title,
@@ -27,21 +37,39 @@ export const CategoriesHome = (props) => {
     <div className={styles.container}>
       <div className={styles.card}>
 
-        <span className={styles.stock}>
-          <WhatshotIcon fontSize="small" />10% OFF! <WhatshotIcon fontSize="small" />
-        </span>
+        <div className={styles.stock}>
+          <div className={styles.icon}>
+            <CheckCircleIcon style={{ fontSize: '1rem' }} />
+            <span>
+              in stock
+          </span>
+          </div>
+          <button className={styles.fav} onClick={handleFav}>
+            {fav ? <FavoriteIcon style={{ fontSize: '1.5rem' }} /> : <FavoriteBorderIcon style={{ fontSize: '1.5rem' }} />}
+          </button>
+        </div>
 
         <div className={styles.image} >
           <NavLink to={`/product/${props.id}`}>
             <img src={props.images} alt='.' />
           </NavLink>
         </div>
-
-        <div className={styles.title}>
+        <div className={styles.review}>
+          <span>
+            <StarIcon style={{ fontSize: '1rem' }} />
+            <StarIcon style={{ fontSize: '1rem' }} />
+            <StarIcon style={{ fontSize: '1rem' }} />
+            <StarIcon style={{ fontSize: '1rem' }} />
+            <StarHalfIcon style={{ fontSize: '1rem' }} />
+          </span>
           <NavLink to={`/product/${props.id}`}>
-            {props.title?.split(" ").slice(0, 3).join(" ")}
+            Reviews(5)
           </NavLink>
         </div>
+
+        <NavLink className={styles.title} to={`/product/${props.id}`}>
+          <span>{props.title}</span>
+        </NavLink>
 
         <div className={styles.offer}>
           <span>US$<b>{(props.price * 1.1).toFixed(2)}</b></span>
@@ -50,18 +78,18 @@ export const CategoriesHome = (props) => {
           <span>US$<b>{props.price}</b></span>
         </div>
 
+        {props.stock > 0 ?
+          <button className={styles.btnOn}
+            onClick={() => { handleAddToCart(props) }} >
+            <AddShoppingCartIcon /><span> Add to Cart!</span>
+          </button>
+          :
+          <button className={styles.btnOff}
+            onClick={() => { swal("Sorry!", "Come back in a few days", "error"); }} >
+            <span> Sold Out! </span> <RemoveShoppingCartIcon />
+          </button>
+        }
       </div>
-      {props.stock > 0 ?
-        <button className={styles.btnOn}
-          onClick={() => { handleAddToCart(props) }} >
-          <span> Add to Cart!</span> <AddShoppingCartIcon />
-        </button>
-        :
-        <button className={styles.btnOff}
-          onClick={() => { swal("Sorry!", "Come back in a few days", "error"); }} >
-          <span> Sold Out! </span> <RemoveShoppingCartIcon />
-        </button>
-      }
     </div>
   );
 }
