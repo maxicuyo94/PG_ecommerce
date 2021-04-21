@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-//import { SearchBar } from "../SearchBar/SearchBar";
+import { SearchBar } from "../SearchBar/SearchBar";
 //import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
@@ -28,35 +28,35 @@ export function Nav({ priority }) {
         <ul>
           <li>
             <Link to="/">
-              <text>{t("navLink1.linkOne")}</text>
+              <span>{t("navLink1.linkOne")}</span>
             </Link>
           </li>
           <li>
             <Link to="/catalogue">
-              <text>{t("navLink2.linkTwo")}</text>
+              <span>{t("navLink2.linkTwo")}</span>
             </Link>
           </li>
           <li>
             <Link to="/controlpanel">
-              <text>{t("navLink6.linkSix")}</text>
+              <span>{t("navLink6.linkSix")}</span>
             </Link>
           </li>
           {/* {!localStorage.getItem('supabase.auth.token') ?  */}
           <li>
             <Link to="/login">
-              <text>{t("navLink4.linkFour")}</text>
+              <span>{t("navLink4.linkFour")}</span>
             </Link>
           </li>
           {/* : */}
           <li>
             <Link to="/home">
-              <text onClick={() => userLogOut()}>Log Out</text>
+              <span onClick={() => userLogOut()}>Log Out</span>
             </Link>
           </li>
           {/* } */}
           <li>
             <Link to="/register">
-              <text>{t("navLink5.linkFive")}</text>
+              <span>{t("navLink5.linkFive")}</span>
             </Link>
           </li>
           
