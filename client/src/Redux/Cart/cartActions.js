@@ -55,46 +55,45 @@ export const addItemCart = (payload) => {
   //check if user logged
   let userId = localStorage.getItem("supabase.auth.token") && JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user.id;
 
-  let addItemstoDB = async () => {
-    var usercart = await supabase
-      .from("order")
-      .select("*,order_detail(*)")
-      .eq("orderStatus", "inCart")
-      .eq("user_id", userId);
-
-    // get userCart from DB
-    let databasecart = usercart.data[0].order_detail;
-    // check if the payload is on cart
-    let updateProduct = databasecart.find(
-      (item) => item.product_id === payload.id
-    );
-
-    if (updateProduct) { //if product is already on cart, update
-      await supabase
-        .from("order_detail")
-        .update({
-          quantity: updateProduct.quantity + payload.quantity,
-        })
-        .eq("order_id", updateProduct.order_id)
-        .eq("product_id", updateProduct.product_id);
-    } else { //if product is not in cart, insert
-      await supabase
-        .from("order_detail")
-        .insert([
-          {
-            product_id: payload.id,
-            price: payload.price,
-            quantity: payload.quantity,
-            title: payload.title,
-            order_id: usercart.data[0].id,
-            user_id: userId,
-            image: payload.image
-          },
-        ]);
-    }
-  };
-
   if (userId) {// IF IS LOGGED
+    let addItemstoDB = async () => {
+      var usercart = await supabase
+        .from("order")
+        .select("*,order_detail(*)")
+        .eq("orderStatus", "inCart")
+        .eq("user_id", userId);
+  
+      // get userCart from DB
+      let databasecart = usercart.data[0].order_detail;
+      // check if the payload is on cart
+      let updateProduct = databasecart.find(
+        (item) => item.product_id === payload.id
+      );
+  
+      if (updateProduct) { //if product is already on cart, update
+        await supabase
+          .from("order_detail")
+          .update({
+            quantity: updateProduct.quantity + payload.quantity,
+          })
+          .eq("order_id", updateProduct.order_id)
+          .eq("product_id", updateProduct.product_id);
+      } else { //if product is not in cart, insert
+        await supabase
+          .from("order_detail")
+          .insert([
+            {
+              product_id: payload.id,
+              price: payload.price,
+              quantity: payload.quantity,
+              title: payload.title,
+              order_id: usercart.data[0].id,
+              user_id: userId,
+              image: payload.image
+            },
+          ]);
+      }
+    };
     addItemstoDB();
 } // IF NOT LOGGED
   //check for previous cart in LocalStorage
