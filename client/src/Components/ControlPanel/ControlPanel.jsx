@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocalStorage } from  '../../LocalStorage/useLocalStorage' 
 import {
   totalProducts,
   deleteProduct,
@@ -27,7 +28,6 @@ export function ControlPanel() {
   const orders = useSelector((state) => state.orderReducer.orders);
   const orderDetailId = useSelector((state) => state.orderReducer.orderDetail);
   const [modal, setModal] = useState(false);
-
   const changeModal = async (id) => {
     await dispatch(getOrderDetail(id));
     setModal(true)
@@ -45,6 +45,7 @@ export function ControlPanel() {
     dispatch(allUsers());
     dispatch(getAllOrders());
   }, [dispatch, checkProducts]);
+  console.log(orders)
 
   const handleDelete = async (id) => {
     if (tab === "products") {
@@ -110,7 +111,7 @@ export function ControlPanel() {
           {tab === "purchasehistory" ? (
             <h4 class={style.name}>Purchase</h4>
           ) : null}
-          <h4>Modify</h4>
+          {tab === "orders" ? <h4 class={style.name}>Rate</h4> : <h4>Modify</h4>}
           {tab === "orders" ? null : <h4>Delete</h4>}
 
         </div>
@@ -170,6 +171,9 @@ export function ControlPanel() {
                   <span onClick={() => changeModal(order.id)} class={style.name}>{order.id}</span>
                   <span class={style.name}>{order.orderStatus[0]}</span>
                   <span class={style.name}>{order.orderDate}</span>
+                  <Link to={`/rate-product/${order.id}`}>
+                    <Edit class={style.icon} />
+                  </Link>
                 </div>
               );
             })
