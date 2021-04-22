@@ -29,7 +29,7 @@ export const CategoriesHome = (props) => {
       price: item.price,
       stock: item.stock
     }
-    console.log('Images', cartItemModel.images)
+    // console.log('Images', cartItemModel.images)
     dispatch(addItemCart(cartItemModel))
     swal("Done!", "Added to cart", "success");
   }

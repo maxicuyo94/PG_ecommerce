@@ -122,7 +122,7 @@ export default function CustomizedMenus() {
                 <div className={styles.products}>
                     {
                         cart && cart.map((item) => {
-                            console.log('Item: ', item)
+                            // console.log('Item: ', item)
                             cont += item.quantity * item.price;
                             return (
                                 <div className={styles.container}>
