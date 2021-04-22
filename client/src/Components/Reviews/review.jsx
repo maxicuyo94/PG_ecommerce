@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Form } from "react-bootstrap";
 import {
-  getReviewOfProduct,
   createReview,
 } from "../../Redux/Reviews/reviewsActions";
-import { getUserOrders } from "../../Redux/Orders/orderActions";
+import { getAllUserOrders } from "../../Redux/Orders/orderActions";
 import Rating from "./rating";
 import swal from "sweetalert";
 
-export function Reviews({ productId, renderReviews, currentReviewsOfProduct }) {
+export function Review({ productId, renderReviews, currentReviewsOfProduct }) {
   const dispatch = useDispatch();
 
   const [userPurchase, setUserPurchase] = useState(false);
@@ -18,8 +17,10 @@ export function Reviews({ productId, renderReviews, currentReviewsOfProduct }) {
   const [review, setReview] = useState({
     rating: null,
     description: null,
-    userId,
+    userId
   });
+
+  //const [hover, setHover] = useState(null);
 
   const setRatingValue = (rating) => {
     setReview({
@@ -38,13 +39,13 @@ export function Reviews({ productId, renderReviews, currentReviewsOfProduct }) {
       });
     } else return;
 
-    dispatch(getUserOrders(userActive.id)).then((orders) => {
+    dispatch(getAllUserOrders(userActive.id)).then((orders) => {
       if (!orders) return;
       let completed = orders.filter((order) => order.status === "completed");
       for (let cart of completed) {
         if (cart.products && cart.products[0]) {
           for (let product of cart.products) {
-            if (product.id == productId) {
+            if (product.id === productId) {
               setUserPurchase(true);
               return;
             }
@@ -52,18 +53,19 @@ export function Reviews({ productId, renderReviews, currentReviewsOfProduct }) {
         }
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   const submitReview = (e) => {
     e.preventDefault();
 
     const userPreviousReview = currentReviewsOfProduct.find(
-      (review) => review.userId == userId
+      (review) => review.userId === userId
     );
 
     if (userPreviousReview) {
       swal({
-        text: `We're sorry! You can only leave a single review`,
+        text: `We're sorry! You can leave a single review`,
         icon: "warning",
       });
       return;
@@ -92,7 +94,6 @@ export function Reviews({ productId, renderReviews, currentReviewsOfProduct }) {
       </div>
       <div className="review_container">
         <div className="Review__Input">
-          {/* <Form.Group controlId="exampleForm.ControlTextarea1"> */}
           <Form
             as="textarea"
             placeholder="Leave us your opinion about this product!"
@@ -117,4 +118,4 @@ export function Reviews({ productId, renderReviews, currentReviewsOfProduct }) {
     </>
   );
 }
-export default Reviews;
+export default Review;
