@@ -1,31 +1,28 @@
-$maxwidth: 600px;
+$phone: 600px;
+$tablet:768px;
+$laptop:992px;
+$pc:1200px;
+$pcxl:2100px;
+$dark:#2C3A40;
 
 .container {
     display: flex;
     flex-direction: column;
-
-    //height: 100%;
     min-height: 100%;
-    //overflow-y: scroll;
-
 
     .containerTitle {
         height: 10vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         span {
-            font-size: 2.5vw;
+            font-size: 2rem;
             font-weight: bolder;
-        }
-
-        @media screen and (max-width: $maxwidth) {
-            span {
-                font-size: 5vw;
-            }
         }
     }
 
     .products {
-        // min-height: 90%;
         display: flex;
         flex-direction: column;
 
@@ -35,11 +32,7 @@ $maxwidth: 600px;
             width: 100%;
             margin: 0.5vmax 0;
 
-            @media screen and (max-width: $maxwidth) {
-                flex-direction: column;
-                width: 100%;
-                margin: 2vh 0;
-            }
+
 
             .title {
                 min-width: 15%;
@@ -62,23 +55,6 @@ $maxwidth: 600px;
                     text-align: center;
                 }
 
-                @media screen and (max-width: $maxwidth) {
-                    background-color: #2C3A40;
-                    margin: 0 auto;
-                    width: 90%;
-                    height: 15vh;
-
-                    span {
-                        font-size: 5vw;
-                    }
-
-                    p {
-                        font-size: 3.5vw;
-                        margin: 0;
-                        text-decoration: underline;
-
-                    }
-                }
             }
 
             .carousel {
@@ -89,7 +65,76 @@ $maxwidth: 600px;
                 align-items: center;
                 height: 25%;
 
-                @media screen and (max-width: $maxwidth) {
+                /* @media screen and (max-width: $phone) {
+                    width: 100%;
+                } */
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width: $pcxl) {
+
+    /* span {
+        font-size: 5vw;
+    } */
+    .containerTitle {
+        //background-color: gold;
+    }
+}
+
+@media screen and (max-width: $pc) {
+
+    /* span {
+        font-size: 5vw;
+    } */
+    .containerTitle {
+        //background-color: green;
+    }
+}
+
+@media screen and (max-width: $laptop) {
+    .container {
+
+        //background-color: red;
+        .containerTitle {
+            span {
+                font-size: 1.5rem;
+            }
+        }
+
+        align-items: center;
+
+        .products {
+            width: 100%;
+
+            .containerP {
+                flex-direction: column;
+                width: 100%;
+                margin: 2vh 0;
+                align-items: center;
+                justify-content: center;
+
+                .title {
+                    background-color: #485F69;
+                    margin: 0 auto;
+                    width: 90%;
+                    height: 15vh;
+
+                    span {
+                        font-size: 2rem;
+                    }
+
+                    p {
+                        font-size: 1rem;
+                        margin: 0;
+                        text-decoration: underline;
+
+                    }
+                }
+
+                .carousel {
                     width: 100%;
                 }
             }
@@ -98,34 +143,65 @@ $maxwidth: 600px;
     }
 }
 
-@media screen and (max-width: $maxwidth) {
+@media screen and (max-width: $tablet) {
+    .containerTitle {
 
+        //background-color: blue;
+    }
+
+}
+
+@media screen and (max-width: $phone) {
     .container {
+
+        .containerTitle {
+            span {
+                font-size: 1.5rem;
+            }
+        }
 
         align-items: center;
 
         .products {
             width: 100%;
+
+            .containerP {
+                flex-direction: column;
+                width: 100%;
+                margin: 2vh 0;
+                align-items: center;
+                justify-content: center;
+
+                .title {
+                    background-color: #485F69;
+                    margin: 0 auto;
+                    width: 90%;
+                    height: 15vh;
+
+                    span {
+                        font-size: 2rem;
+                    }
+
+                    p {
+                        font-size: 1rem;
+                        margin: 0;
+                        text-decoration: underline;
+
+                    }
+                }
+
+                .carousel {
+                    width: 100%;
+                }
+            }
         }
 
     }
+
 }
 
-// .container::-webkit-scrollbar {
-//     width: 8px;
-//   }
-//   .container::-webkit-scrollbar-track {
-//     background-color:#ccc;
-//   }
-//   .container::-webkit-scrollbar-thumb{
-//     background-color:#777;
-//     border-radius:4px;
-//   }
-//   .container::-webkit-scrollbar-thumb:hover{
-//     background-color:#777;
-//     border:1px solid #333333;
-//   }
-//   .container::-webkit-scrollbar-thumb:active{
-//     background-color:#666;
-//     border:1px solid #333333;
-//   }
+.containerDark {
+    @extend .container;
+    background-color: $dark;
+    color:#fff
+}
