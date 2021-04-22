@@ -24,6 +24,10 @@ export const EDIT_STOCK = "EDIT_STOCK";
 export const GET_ORDER_DETAIL = "GET_ORDER_DETAIL";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const GET_USER_ORDER = "GET_USER_ORDER";
+export const USER_LOGOUT = "USER_LOGOUT";
 
 //Reviews
 export const GET_REVIEW_PRODUCT = "GET_REVIEW_PRODUCT";
+
+//LocalStorage
+export const RESTORE_REDUX = "RESTORE_REDUX";

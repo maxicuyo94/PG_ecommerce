@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 //import { SearchBar } from "../SearchBar/SearchBar";
 //import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
@@ -7,10 +7,22 @@ import style from "./nav.module.scss";
 import MiniShop from "./MiniShop/MiniShop";
 import BtnLang from "./BtnLang/BtnLang";
 import { userLogOut } from "../../Redux/Users/usersActions";
+import { useSelector } from "react-redux";
 
 export function Nav({ priority }) {
   // eslint-disable-next-line
+  const userLoged = useSelector(state =>  state.usersReducer.userLoged)
   const [t, i18n] = useTranslation("global");
+  const history = useHistory()
+
+  // useEffect(()=> {
+  //   history.push("/")
+  // })
+
+
+  const handleLogOut = () => {
+    userLogOut();
+  }
 
   return (
     <div className={style.container}>
@@ -43,16 +55,14 @@ export function Nav({ priority }) {
           </li>
           {/* {!localStorage.getItem('supabase.auth.token') ?  */}
           <li>
-            <Link to="/login">
+            <Link to="/access">
               <text>{t("navLink4.linkFour")}</text>
             </Link>
           </li>
           {/* : */}
-          <li>
-            <Link to="/home">
-              <text onClick={() => userLogOut()}>Log Out</text>
-            </Link>
-          </li>
+          {userLoged&&<li>
+              <text onClick={handleLogOut}>Log Out</text>
+          </li>}
           {/* } */}
           <li>
             <Link to="/register">

@@ -18,9 +18,12 @@ import {
 import { Link } from "react-router-dom";
 import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
+import { useLocalStorage } from "../../LocalStorage/useLocalStorage.js";
 
 export function ControlPanel() {
   const dispatch = useDispatch();
+  const userLoged = useSelector(state =>  state.usersReducer.userLoged)
+
   const products = useSelector((state) => state.productReducer.allproducts);
   const categories = useSelector((state) => state.productReducer.categories);
   const users = useSelector((state) => state.usersReducer.users);
@@ -87,9 +90,9 @@ export function ControlPanel() {
         <button name="categories" onClick={(e) => handleTab(e)}>
           Categories
         </button>
-        <button name="users" onClick={(e) => handleTab(e)}>
+        {userLoged.permission === "superadmin" && <button name="users" onClick={(e) => handleTab(e)}>
           Users
-        </button>
+        </button>}
         {tab === "products" ? (
           <Link to="/addproduct">
             <button>Add Product</button>
@@ -201,7 +204,7 @@ export function ControlPanel() {
               );
             })
             : null}
-          {tab === "users"
+          {tab === "users" && userLoged.permission === "superadmin"
             ? users.map((user) => {
               return (
                 <div key={user.id} class={style.list}>

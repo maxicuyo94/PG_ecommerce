@@ -97,7 +97,7 @@ export const userLogin = (users) => {
       email: users.email,
       password: users.password,
     });
-
+    
     if (error) alert(error.message);
 
     const JSON = await supabase
@@ -134,11 +134,8 @@ export const ResetPassword = (access_token, new_password) => {
 };
 
 export const userLogOut = () => {
-  localStorage.removeItem("supabase.auth.token");
-
-  // try {
-  //   localStorage.removeItem("supabase.auth.token")
-  // } catch (e) {
-  //   alert(e)
-  // }
+  return function (dispatch){
+    const { error } = supabase.auth.signOut()
+    dispatch({type: actionType.USER_LOGOUT})
+  }
 };
