@@ -22,16 +22,26 @@ export function setCart() {
         .select("*,order_detail(*)")
         .eq("orderStatus", "inCart")
         .eq("user_id", userId);
+      
       if(error) console.log(error.message)
       var cartDB = data.length
         ? data[0].order_detail.map((item) => {
+          // const DBstock = supabase
+          // .from("product")
+          // .select("stock")
+          // .eq("id", item.product_id)
+          // .then(resp => {
+          //   return resp
+          // })
+          // const stock = DBstock.data[0].stock
+          // console.log(stock)
             return {
               id: item.product_id,
               title: item.title,
               image: item.image,
               quantity: item.quantity,
               price: item.price,
-              stock: item.stock
+              stock: 100
             };
           })
         : [];
@@ -45,6 +55,7 @@ export function setCart() {
   if (previousStorage) {
     previousStorage = JSON.parse(previousStorage);
   } else {
+    localStorage.setItem("cart", "[]")
     previousStorage = [];
   }
 
@@ -89,7 +100,8 @@ export const addItemCart = (payload) => {
               title: payload.title,
               order_id: usercart.data[0].id,
               user_id: userId,
-              image: payload.image
+              image: payload.image,
+              stock: 100
             },
           ]);
       }
