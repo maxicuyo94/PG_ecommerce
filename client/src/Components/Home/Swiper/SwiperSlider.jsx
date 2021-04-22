@@ -21,8 +21,12 @@ const SwiperSlider = (products) => {
       breakpoints={
         {
           //Solo celulares
+          300: {
+            slidesPerView: 2,
+            spaceBetween: 0
+          },
           600: {
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 0
           },
           //Tablets medianas y Celulares grandes
@@ -37,6 +41,10 @@ const SwiperSlider = (products) => {
           },
           //Laptops grandes y PC
           1200: {
+            slidesPerView: 4,
+            spaceBetween: 0
+          },
+          1600: {
             slidesPerView: 5,
             spaceBetween: 0
           },

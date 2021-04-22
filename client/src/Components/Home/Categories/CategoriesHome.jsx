@@ -81,12 +81,12 @@ export const CategoriesHome = (props) => {
         {props.stock > 0 ?
           <button className={styles.btnOn}
             onClick={() => { handleAddToCart(props) }} >
-            <AddShoppingCartIcon /><span> Add to Cart!</span>
+            <AddShoppingCartIcon style={{ fontSize: '1.5rem' }} /><span> Add to Cart!</span>
           </button>
           :
           <button className={styles.btnOff}
             onClick={() => { swal("Sorry!", "Come back in a few days", "error"); }} >
-            <span> Sold Out! </span> <RemoveShoppingCartIcon />
+            <span> Sold Out! </span> <RemoveShoppingCartIcon style={{ fontSize: '1rem' }} />
           </button>
         }
       </div>

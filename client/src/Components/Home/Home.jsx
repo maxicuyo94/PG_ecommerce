@@ -6,7 +6,7 @@ import styles from "./home.module.scss";
 import { useTranslation } from "react-i18next";
 import SwiperSlider from "./Swiper/SwiperSlider";
 
-export function Home() {
+export function Home(props) {
   const dispatch = useDispatch();
   const productByCategories = useSelector(
     (state) => state.productReducer.productByCategories
@@ -14,14 +14,14 @@ export function Home() {
   const stableDispatch = useCallback(dispatch, []);
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-  const [dark, setDark] = useState(true)
+  //const dark = useSelector((state) => state.darkReducer.dark)
   useEffect(() => {
     stableDispatch(getProductsByCategories());
   }, [stableDispatch]);
 
   return (
-    <div className={dark ? styles.containerDark : styles.container}>
-      <div className={styles.containerTitle} onClick={() => { setDark(!dark) }}>
+    <div className={props.dark ? styles.containerDark : styles.container}>
+      <div className={styles.containerTitle}>
         <span>{t("home.title")}</span>
       </div>
       <div className={styles.products}>
