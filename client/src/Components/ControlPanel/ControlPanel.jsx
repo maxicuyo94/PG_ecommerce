@@ -37,12 +37,17 @@ export function ControlPanel() {
     setModal(false);
   }
 
+  const [search, setSearch] = useState();
+  const handleSearch = (e) => {
+    setSearch(e)
+  };
+
   useEffect(() => {
-    dispatch(totalProducts());
-    dispatch(getCategories());
-    dispatch(allUsers());
+    dispatch(totalProducts(search));
+    dispatch(getCategories(search));
+    dispatch(allUsers(search));
     dispatch(getAllOrders());
-  }, [products?.length]);
+  }, [products]);
 
   const handleDelete = async (id) => {
     if (tab === "products") {
@@ -69,6 +74,7 @@ export function ControlPanel() {
     setTab(e.target.name);
   };
 
+
   return (
     <div class={style.container}>
       <h2>Control Panel</h2>
@@ -94,6 +100,11 @@ export function ControlPanel() {
           </Link>
         ) : null}
       </div>
+      <div>
+        <input className={style.search} placeholder='Search...' name="input" onChange={(e) => handleSearch(e.target.value)}
+
+        ></input>
+      </div>
       <div class={style.containerList}>
         <div class={style.bar}>
           <h4>
@@ -114,7 +125,7 @@ export function ControlPanel() {
         </div>
         <div class={style.containerList}>
           {tab === "products"
-            ? products.map((product) => {
+            ? products?.map((product) => {
               return (
                 <div key={product.id} class={style.list}>
                   {checkbox ? (
