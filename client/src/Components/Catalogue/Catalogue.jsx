@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductCard } from "../ProductCard/ProductCard";
 import {
@@ -20,6 +20,8 @@ export function Catalogue() {
   const [Prices, setPrices] = useState(["", ""]);
   const dispatch = useDispatch();
   const [Input, setInput] = useState({ input: "" });
+  const stableDispatch = useCallback(dispatch, []);
+
 
   const handlechange = (e) => {
     e.preventDefault();
@@ -31,11 +33,11 @@ export function Catalogue() {
   }, [Category, Prices]);
 
   useEffect(() => {
-    dispatch(
+    stableDispatch(
       allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input.input)
     );
     dispatch(getCategories());
-  }, [dispatch, Pages, Category, Prices, Input]);
+  }, [stableDispatch, Pages, Category, Prices, Input]);
 
   const handleInputChange = (e) => {
     e.preventDefault();

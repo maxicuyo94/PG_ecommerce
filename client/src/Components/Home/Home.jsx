@@ -1,4 +1,6 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
+import swal from "sweetalert";
+import { useLocation } from 'react-router-dom'
 import { getProductsByCategories } from "../../Redux/Products/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -7,6 +9,13 @@ import { useTranslation } from "react-i18next";
 import SwiperSlider from "./Swiper/SwiperSlider";
 
 export function Home() {
+  const location = useLocation()
+
+  const [fromLocation, setFromLocation] = useState(()=>{
+    if (location.state){
+      return location.state.from
+    }
+  })
   const dispatch = useDispatch();
   const productByCategories = useSelector(
     (state) => state.productReducer.productByCategories
@@ -19,6 +28,11 @@ export function Home() {
     stableDispatch(getProductsByCategories());
   }, [stableDispatch]);
 
+
+  if(fromLocation){
+    swal(`Para ingresar a ${fromLocation} debe registrarse`)
+    setFromLocation(null)
+  }
   return (
     <div className={styles.container}>
       <div className={styles.containerTitle}>
