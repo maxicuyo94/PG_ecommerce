@@ -14,6 +14,7 @@ import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
 import { useDispatch } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
 import { Reset } from "./Components/LoginSigup/ResetPassword/ResetPassword";
+import { Review } from "./Components/Reviews/testingReview";
 
 function App() {
   // eslint-disable-next-line
@@ -69,6 +70,11 @@ function App() {
         exact
         path="/controlpanel"
         render={() => <ControlPanel priority={priority} />}
+      />
+      <Route
+        exact
+        path="/review"
+        render={() => <Review priority={priority} />}
       />
     </Layout>
   );

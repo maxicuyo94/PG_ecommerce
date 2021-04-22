@@ -3,12 +3,18 @@ import * as actionType from "../action_types/actionTypes";
 const InitialState = {
   orders: [],
   orderDetail: {},
-  userOrder: []
+  userOrder: [],
 };
 
 function Reducer(state = InitialState, action) {
   switch (action.type) {
-      case actionType.GET_ALL_ORDERS:
+    case actionType.GET_ALL_ORDERS:
+      return {
+        ...state,
+        orders: action.payload,
+      };
+
+    case actionType.GET_ALL_ORDERS_USER:
       return {
         ...state,
         orders: action.payload,
@@ -20,11 +26,11 @@ function Reducer(state = InitialState, action) {
         orderDetail: action.payload,
       };
 
-      case actionType.GET_USER_ORDER:
-        return {
-          ...state,
-          userOrder: action.payload,
-        };
+    case actionType.GET_USER_ORDER:
+      return {
+        ...state,
+        userOrder: action.payload,
+      };
 
     default:
       return state;

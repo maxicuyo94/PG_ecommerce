@@ -24,6 +24,7 @@ export const EDIT_STOCK = "EDIT_STOCK";
 export const GET_ORDER_DETAIL = "GET_ORDER_DETAIL";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const GET_USER_ORDER = "GET_USER_ORDER";
+export const GET_ALL_ORDERS_USER = "GET_ALL_ORDERS_USER";
 
 //Reviews
 export const GET_REVIEW_PRODUCT = "GET_REVIEW_PRODUCT";
