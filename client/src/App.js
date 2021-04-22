@@ -14,7 +14,8 @@ import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
 import { useDispatch } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
 import { Reset } from "./Components/LoginSigup/ResetPassword/ResetPassword";
-import { Review } from "./Components/Reviews/testingReview";
+import  { Review } from "./Components/Review/review"
+
 
 function App() {
   // eslint-disable-next-line
@@ -65,6 +66,11 @@ function App() {
         exact
         path="/modifyProduct/:id"
         render={({ match }) => <ModifyProduct id={match.params.id} />}
+      />
+      <Route
+        exact
+        path="/rate-product/:id"
+        render={({ match }) => <Review id={match.params.id} />}
       />
       <Route
         exact
