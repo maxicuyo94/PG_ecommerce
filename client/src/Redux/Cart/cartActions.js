@@ -22,7 +22,7 @@ export function setCart() {
         .select("*,order_detail(*)")
         .eq("orderStatus", "inCart")
         .eq("user_id", userId);
-
+      if(error) console.log(error.message)
       var cartDB = data.length
         ? data[0].order_detail.map((item) => {
             return {

@@ -95,7 +95,7 @@ export const deleteUser = (id) => {
 
 export const userLogin = (users) => {
   return async function (dispatch) {
-    const { user, session, error } = await supabase.auth.signIn({
+    const { session, error } = await supabase.auth.signIn({
       email: users.email,
       password: users.password,
     })
