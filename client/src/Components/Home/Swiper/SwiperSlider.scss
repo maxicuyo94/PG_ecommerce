@@ -1,7 +1,12 @@
-$minwidth: 600px;
+$phone: 600px;
+$tablet:768px;
+$laptop:992px;
+$pc:1200px;
+$pcxl:1600px;
 
 .swiper-slide {
-    height: 40vh;
+    height: 20rem;
+
 }
 
 .swiper-button-prev {

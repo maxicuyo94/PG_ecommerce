@@ -11,13 +11,14 @@ import { ModifyUser } from "./Components/LoginSigup/ModifyUser/ModifyUser";
 import { ModifyProduct } from "./Components/ModifyProduct/ModifyProduct.jsx";
 import { ControlPanel } from "./Components/ControlPanel/ControlPanel.jsx";
 import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
 import { Reset } from "./Components/LoginSigup/ResetPassword/ResetPassword";
 
 function App() {
   // eslint-disable-next-line
   const [priority, setPriorityStorage] = useLocalStorage("priority", "");
+  const dark = useSelector((state) => state.darkReducer.dark)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setCart());
@@ -26,7 +27,7 @@ function App() {
 
   return (
     <Layout priority={priority}>
-      <Route exact path="/" render={() => <Home priority={priority} />} />
+      <Route exact path="/" render={() => <Home priority={priority} dark={dark} />} />
       <Route
         exact
         path="/login"

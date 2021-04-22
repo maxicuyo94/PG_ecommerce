@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
 import MiniShop from "./MiniShop/MiniShop";
 import BtnLang from "./BtnLang/BtnLang";
+import BtnDark from './BtnDark/BtnDark'
 import { userLogOut } from "../../Redux/Users/usersActions";
 
 export function Nav({ priority }) {
@@ -65,6 +66,9 @@ export function Nav({ priority }) {
           </li>
           <li>
             <BtnLang />
+          </li>
+          <li>
+            <BtnDark />
           </li>
         </ul>
       </div>

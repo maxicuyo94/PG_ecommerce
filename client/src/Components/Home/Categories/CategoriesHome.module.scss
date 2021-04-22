@@ -1,6 +1,10 @@
-$minwidth:600px;
 $color:#485F69;
 $verde: #9abf15;
+$phone: 600px;
+$tablet:768px;
+$laptop:992px;
+$pc:1200px;
+$pcxl:2100px;
 
 .container {
     height: 100%;
@@ -8,10 +12,6 @@ $verde: #9abf15;
     flex-direction: column;
     justify-content: center;
     padding: 0.5rem 0.5rem;
-
-    @media screen and (max-width: $minwidth) {
-        padding: 3vw 15vw;
-    }
 
     .card {
         height: 100%;
@@ -47,10 +47,6 @@ $verde: #9abf15;
             .icon {
                 display: flex;
                 align-items: center;
-            }
-
-            @media screen and (max-width: $minwidth) {
-                font-size: 4vw;
             }
 
             .fav {
@@ -90,11 +86,18 @@ $verde: #9abf15;
 
         .review {
             @extend .stock;
+            height: 15%;
             justify-content: space-around;
+
+            @media screen and (max-width: $phone) {
+                flex-direction: column;
+            }
 
             span {
                 display: flex;
+
             }
+
         }
 
         .title {
@@ -117,17 +120,10 @@ $verde: #9abf15;
 
             transition: 0.5s;
 
-            @media screen and (max-width: $minwidth) {
-                font-size: 5vw;
-            }
-
             &:hover {
                 color: #000
             }
         }
-
-
-
 
     }
 
@@ -144,10 +140,6 @@ $verde: #9abf15;
         b {
             font-size: 1.25rem;
             color: #000;
-
-            /* @media screen and (max-width: $minwidth) {
-                font-size: 3.5vw;
-            } */
         }
     }
 
@@ -167,22 +159,20 @@ $verde: #9abf15;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 60%;
+        width: 80%;
+        height: 10%;
         padding: 0.25rem 0.5rem;
+        margin-bottom: 1rem;
         border: none;
         cursor: pointer;
-        font-family: Poppins;
         font-weight: bolder;
         outline: none;
-        margin: auto;
-        transition: 0.5s;
-        margin-bottom: 1rem;
         border: 3px solid $verde;
         border-radius: 30px;
-
         box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
         color: #fff;
         background-color: $verde;
+        transition: 0.5s;
 
         &:hover {
             background-color: transparent;
@@ -192,11 +182,7 @@ $verde: #9abf15;
         }
 
         .span {
-            font-size: 1vw;
-
-            @media screen and (max-width: $minwidth) {
-                font-size: 3.5vw;
-            }
+            font-size: 1rem;
         }
     }
 

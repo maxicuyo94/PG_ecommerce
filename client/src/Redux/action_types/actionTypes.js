@@ -9,7 +9,7 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_PRODUCTBYCATEGORIES = "GET_PRODUCTBYCATEGORIES";
 export const USER_LOGIN = "USER_LOGIN"
 export const ORDERS = "ORDERS";
-
+export const DARK = 'DARK'
 
 //Cart
 export const SET_CART = "SET_CART";
