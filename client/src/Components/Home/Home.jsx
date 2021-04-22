@@ -23,7 +23,7 @@ export function Home() {
   const stableDispatch = useCallback(dispatch, []);
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-
+  //const dark = useSelector((state) => state.darkReducer.dark)
   useEffect(() => {
     stableDispatch(getProductsByCategories());
   }, [stableDispatch]);
@@ -34,7 +34,7 @@ export function Home() {
     setFromLocation(null)
   }
   return (
-    <div className={styles.container}>
+    <div className={props.dark ? styles.containerDark : styles.container}>
       <div className={styles.containerTitle}>
         <span>{t("home.title")}</span>
       </div>

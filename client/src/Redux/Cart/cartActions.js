@@ -1,83 +1,217 @@
 import * as actionType from "../action_types/actionTypes";
 
+import { createClient } from "@supabase/supabase-js";
+const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 //Cart actions
 
-
 export function setCart() {
-    //check for previous cart in LocalStorage
-    let previousStorage = window.localStorage.getItem("cart");
-    if (previousStorage) {  
-      previousStorage = JSON.parse(previousStorage);
-    } else {
-      previousStorage = [];
-    }
-  
-    return { type: actionType.SET_CART, payload: previousStorage };
+  let userId =
+    localStorage.getItem("supabase.auth.token") &&
+    JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user
+      .id;
+
+  if (userId) {
+    //if logged
+    let getUserCart = async () => {
+      let { data, error } = await supabase
+        .from("order")
+        .select("*,order_detail(*)")
+        .eq("orderStatus", "inCart")
+        .eq("user_id", userId);
+      
+      if(error) console.log(error.message)
+      var cartDB = data.length
+        ? data[0].order_detail.map((item) => {
+          // const DBstock = supabase
+          // .from("product")
+          // .select("stock")
+          // .eq("id", item.product_id)
+          // .then(resp => {
+          //   return resp
+          // })
+          // const stock = DBstock.data[0].stock
+          // console.log(stock)
+            return {
+              id: item.product_id,
+              title: item.title,
+              image: item.image,
+              quantity: item.quantity,
+              price: item.price,
+              stock: 100
+            };
+          })
+        : [];
+
+      localStorage.setItem("cart", JSON.stringify(cartDB));
+    };
+    getUserCart();
   }
+
+  let previousStorage = window.localStorage.getItem("cart");
+  if (previousStorage) {
+    previousStorage = JSON.parse(previousStorage);
+  } else {
+    localStorage.setItem("cart", "[]")
+    previousStorage = [];
+  }
+
+  return { type: actionType.SET_CART, payload: previousStorage };
+}
+
+export const addItemCart = (payload) => {
+  //check if user logged
+  let userId = localStorage.getItem("supabase.auth.token") && JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user.id;
+
+  if (userId) {// IF IS LOGGED
+    let addItemstoDB = async () => {
+      var usercart = await supabase
+        .from("order")
+        .select("*,order_detail(*)")
+        .eq("orderStatus", "inCart")
+        .eq("user_id", userId);
   
-  export const addItemCart = (payload) => {
-    //check for previous cart in LocalStorage
-    let previousStorage = window.localStorage.getItem("cart");
-    if(previousStorage) {
-      previousStorage = JSON.parse(previousStorage);
-    } else {
-      previousStorage = [];
-    }
+      // get userCart from DB
+      let databasecart = usercart.data[0].order_detail;
+      // check if the payload is on cart
+      let updateProduct = databasecart.find(
+        (item) => item.product_id === payload.id
+      );
   
-    // console.log(previousStorage)
-    let found = previousStorage.find((item) => item.id === payload.id);
-    // if item is already in the previous cart
-    if(found) {
-      previousStorage.map((prod) => {
-        if (prod.id === payload.id) {
-          prod.quantity += payload.quantity;
-        }
-        return prod;
-      })
-    } else {
+      if (updateProduct) { //if product is already on cart, update
+        await supabase
+          .from("order_detail")
+          .update({
+            quantity: updateProduct.quantity + payload.quantity,
+          })
+          .eq("order_id", updateProduct.order_id)
+          .eq("product_id", updateProduct.product_id);
+      } else { //if product is not in cart, insert
+        await supabase
+          .from("order_detail")
+          .insert([
+            {
+              product_id: payload.id,
+              price: payload.price,
+              quantity: payload.quantity,
+              title: payload.title,
+              order_id: usercart.data[0].id,
+              user_id: userId,
+              image: payload.image,
+              stock: 100
+            },
+          ]);
+      }
+    };
+    addItemstoDB();
+} // IF NOT LOGGED
+  //check for previous cart in LocalStorage
+  let previousStorage = window.localStorage.getItem("cart");
+  if (previousStorage) {
+    previousStorage = JSON.parse(previousStorage);
+  } else {
+    previousStorage = [];
+  }
+
+  // console.log(previousStorage)
+  let found = previousStorage.find((item) => item.id === payload.id);
+  // if item is already in the previous cart
+  if (found) {
+    previousStorage.map((prod) => {
+      if (prod.id === payload.id) {
+        prod.quantity += payload.quantity;
+      }
+      return prod;
+    });
+  } else {
     // if not in the prev cart, add to cart
-      previousStorage.push(payload);
+    previousStorage.push(payload);
+  }
+  const updatedStorage = JSON.stringify(previousStorage);
+  window.localStorage.setItem("cart", updatedStorage);
+
+
+  // Update Redux
+  return { type: actionType.ADD_ITEM_CART, payload };
+};
+
+export const deleteItemCart = (payload) => {
+  let previousStorage = window.localStorage.getItem("cart");
+  if (previousStorage) {
+    previousStorage = JSON.parse(previousStorage);
+    previousStorage = previousStorage.filter((el) => el.id !== payload.id);
+
+    let userId =
+      localStorage.getItem("supabase.auth.token") &&
+      JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession
+        .user.id;
+
+    if (userId) {
+      let deleteItemDB = async () => {
+        const idOrder = await supabase
+          .from("order")
+          .select("id")
+          .eq("user_id", userId);
+        // console.log(idOrder);
+
+        await supabase.from("order_detail").delete().match({
+          product_id: payload.id,
+          order_id: idOrder.data[0].id,
+        });
+      };
+      deleteItemDB();
     }
-  
-    // console.log(previousStorage)
-    const updatedStorage = JSON.stringify(previousStorage);
-  
-    // console.log(updatedStorage)
-    window.localStorage.setItem("cart", updatedStorage);
-  
-    // let newLocalsStorge = window.localStorage.getItem("cart");
-    // console.log(newLocalsStorge)
-  
-    return { type: actionType.ADD_ITEM_CART, payload }
-  
+  } else {
+    previousStorage = [];
   }
-  
-  export const deleteItemCart = (payload) => {
-    let previousStorage = window.localStorage.getItem("cart");
-    if(previousStorage) {
-      previousStorage = JSON.parse(previousStorage);
-      previousStorage = previousStorage.filter(el => el.id !== payload.id);
-    } else {
-      previousStorage = [];
+  // console.log(previousStorage);
+  const updatedStorage = JSON.stringify(previousStorage);
+  window.localStorage.setItem("cart", updatedStorage);
+
+  return { type: actionType.DELETE_ITEM_CART, payload };
+};
+
+export const clearCart = () => {
+  localStorage.setItem("cart", "[]");
+  const userToken = localStorage.getItem("supabase.auth.token")
+  if (userToken) {
+    const userData = JSON.parse(userToken).currentSession.user
+
+    const clearDbCart = async(userId) => {
+      const idOrder = await supabase
+        .from("order")
+        .select("id")
+        .eq("user_id", userId);
+        console.log(idOrder)
+
+      supabase
+        .from('order_detail')
+        .delete()
+        .eq('order_id', idOrder.data[0].id)
+        .then(res => console.log(res))
     }
-    console.log(previousStorage)
-    const updatedStorage = JSON.stringify(previousStorage);
-    window.localStorage.setItem("cart", updatedStorage);
-  
-      return { 	type: actionType.DELETE_ITEM_CART, payload }
+    clearDbCart(userData.id)
   }
-  
-  export const clearCart = () => {
-      localStorage.setItem('cart', '[]');
-      return {
-          type: actionType.CLEAR_CART
-      }
-  }
-  
-  export const editStock = (payload) => {
-      return {
-          type: actionType.EDIT_STOCK,
-          payload
-      }
-  }
+  return {
+    type: actionType.CLEAR_CART,
+    payload: []
+  };
+};
+
+// export const checkOut = () => {
+//   let userId = localStorage.getItem("supabase.auth.token") && JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user.id;
+
+//   const checkStock = async(product_id) => {
+
+//   }
+//   checkStock()
+
+
+//   // return {
+//   //   type: actionType.CHECKOUT,
+//   //   payload,
+//   // };
+// };

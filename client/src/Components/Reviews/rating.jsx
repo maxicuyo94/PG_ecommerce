@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { AiFillGift, AiTwotoneHeart } from 'react-icons/ai';
 
-export default function Rating ({ setRatingValue, staticRating, finalRating, starsEmpty }) {
+export function Rating ({ setRatingValue, staticRating, finalRating, starsEmpty }) {
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
   
@@ -19,7 +19,9 @@ export default function Rating ({ setRatingValue, staticRating, finalRating, sta
           var yellow = '#ffc107';
           var red = '#d7414b';
           if (ratingValue === staticRating && finalRating < staticRating - 0.5) {
+            // eslint-disable-next-line
             var yellow = '#FFF96D';
+            // eslint-disable-next-line
             var red = '#FFA86D';
           }
           return (
@@ -79,3 +81,5 @@ export default function Rating ({ setRatingValue, staticRating, finalRating, sta
       </div>
     );
   }
+
+  export default Rating;
