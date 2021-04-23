@@ -20,8 +20,8 @@ const Slider = (products) => {
   return (
     <Swiper
       spaceBetween={0}
-      navigation
-      pagination={false}
+      navigation={false}
+      //pagination={false}
       scrollbar={false}
       autoHeight={false}
       loop={true}

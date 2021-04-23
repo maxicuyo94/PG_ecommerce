@@ -14,6 +14,7 @@ import { Review } from "../Reviews/review";
 import { deleteReview } from "../Reviews/deleteReview";
 import { Rating } from "../Reviews/rating";
 import { getReviewsOfProduct } from "../../Redux/Reviews/reviewsActions";
+import SwiperSlider from '../Home/Swiper/SwiperSlider'
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const random = Math.round(Math.random() * 2);
@@ -22,18 +23,18 @@ export const Product = (props) => {
   const state = useSelector((state) => state);
   const { currentProduct, currentReviewsOfProduct } = state;
   const [maxReviews, setMaxReviews] = useState(5);
+
+  const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const details = useSelector((state) => state.productReducer.productDetail);
   const productByCategories = useSelector(
     (state) => state.productReducer.productByCategories
   );
 
-  const renderReviews = () => dispatch(getReviewsOfProduct(id));
 
   const id = props.id;
   const [value, setValue] = useState(1);
   const [nav, setNav] = useState("details");
-  /*    const [index, setIndex] = useState(1)
-       const [slide, setSlide] = useState(1) */
+
 
   const handleSum = () => {
     value < details.stock && value < 10 && setValue(value + 1);
@@ -42,6 +43,10 @@ export const Product = (props) => {
     value > 1 && setValue(value - 1);
   };
   useEffect(() => {
+    const renderReviews = async () => {
+      await dispatch(getReviewsOfProduct(id))
+    };
+    renderReviews()
     const idDetails = async () => {
       await dispatch(productDetail(id));
     };
@@ -51,7 +56,6 @@ export const Product = (props) => {
     };
     renderReviews();
     Products();
-    /*  window.innerWidth < 601 ? setSlide(1) : setSlide(3) */
     return () => {
       setNav("details");
     };
@@ -153,7 +157,7 @@ export const Product = (props) => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={props.dark ? styles.containerDark : styles.container}>
       <ul className={styles.nav}>
         <li
           onClick={() => {
@@ -175,6 +179,13 @@ export const Product = (props) => {
           }}
         >
           Categories
+        </li>
+        <li
+          onClick={() => {
+            setNav("reviews");
+          }}
+        >
+          Reviews
         </li>
       </ul>
       <div className={styles.main}>
@@ -210,6 +221,11 @@ export const Product = (props) => {
                       .join(" ")}
                   </li>
                 )}
+                {nav === "reviews" &&
+                  reviews?.map((review) => {
+                    return <li>Description: {review.description}</li>
+                  })
+                }
               </ul>
             </div>
           </div>
@@ -256,7 +272,7 @@ export const Product = (props) => {
         </div>
         <div className={styles.slider}>
           {productByCategories[random] && (
-            <Slider products={productByCategories[random].data} />
+            <SwiperSlider products={productByCategories[random].data} />
           )}
         </div>
       </div>
