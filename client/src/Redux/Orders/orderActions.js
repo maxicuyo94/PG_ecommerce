@@ -15,6 +15,19 @@ export const getAllOrders = () => {
   };
 };
 
+//Harcodeada para probar reviews
+export const getAllUserOrders = () => {
+  const userId = "a89f265a-c5be-4de5-a961-a8e63fa204cd";
+  return async function (dispatch) {
+    let JSON = await supabase.from("order").select("*").eq("user_id", userId);
+    console.log(JSON);
+    dispatch({
+      type: actionType.GET_ALL_ORDERS_USER,
+      payload: JSON.data,
+    });
+  };
+};
+
 export const getOrderDetail = (id) => {
   return async function (dispatch) {
     let orderRequest = await supabase.from("order").select("*").eq("id", id);
@@ -24,7 +37,7 @@ export const getOrderDetail = (id) => {
       .select("*")
       .eq("order_id", id);
 
-      order.details = orderDetail.data
+    order.details = orderDetail.data;
 
     dispatch({
       type: actionType.GET_ORDER_DETAIL,
@@ -35,11 +48,25 @@ export const getOrderDetail = (id) => {
 
 export const updateOrder = (status, id) => {
   return async function (dispatch) {
+    // eslint-disable-next-line
     const JSON = await supabase
       .from("order")
       .update({
         orderStatus: status,
       })
       .eq("id", id);
+  };
+};
+
+export const getProductsOfOrder = (id) => {
+  return async function (dispatch) {
+    let products = await supabase
+      .from("order_detail")
+      .select("*, product_id")
+      .eq("order_id", id);
+    dispatch({
+      type: actionType.GET_PRODUCTS_ORDER,
+      payload: products.data,
+    });
   };
 };

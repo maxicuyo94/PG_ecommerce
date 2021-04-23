@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
 import MiniShop from "./MiniShop/MiniShop";
 import BtnLang from "./BtnLang/BtnLang";
+import BtnDark from './BtnDark/BtnDark'
 import { userLogOut } from "../../Redux/Users/usersActions";
 
 export function Nav({ priority }) {
@@ -21,42 +22,42 @@ export function Nav({ priority }) {
             <img
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png"
-              }
+              } alt="Ups, we don't found anything here. Try again tomorrow!"
             />
           </NavLink>
         </div>
         <ul>
           <li>
             <Link to="/">
-              <text>{t("navLink1.linkOne")}</text>
+              <span>{t("navLink1.linkOne")}</span>
             </Link>
           </li>
           <li>
             <Link to="/catalogue">
-              <text>{t("navLink2.linkTwo")}</text>
+              <span>{t("navLink2.linkTwo")}</span>
             </Link>
           </li>
           <li>
             <Link to="/controlpanel">
-              <text>{t("navLink6.linkSix")}</text>
+              <span>{t("navLink6.linkSix")}</span>
             </Link>
           </li>
           {/* {!localStorage.getItem('supabase.auth.token') ?  */}
           <li>
             <Link to="/login">
-              <text>{t("navLink4.linkFour")}</text>
+              <span>{t("navLink4.linkFour")}</span>
             </Link>
           </li>
           {/* : */}
           <li>
             <Link to="/home">
-              <text onClick={() => userLogOut()}>Log Out</text>
+              <span onClick={() => userLogOut()}>Log Out</span>
             </Link>
           </li>
           {/* } */}
           <li>
             <Link to="/register">
-              <text>{t("navLink5.linkFive")}</text>
+              <span>{t("navLink5.linkFive")}</span>
             </Link>
           </li>
           
@@ -65,6 +66,9 @@ export function Nav({ priority }) {
           </li>
           <li>
             <BtnLang />
+          </li>
+          <li>
+            <BtnDark />
           </li>
         </ul>
       </div>

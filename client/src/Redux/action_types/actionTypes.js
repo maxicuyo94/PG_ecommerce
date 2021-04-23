@@ -9,7 +9,7 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_PRODUCTBYCATEGORIES = "GET_PRODUCTBYCATEGORIES";
 export const USER_LOGIN = "USER_LOGIN"
 export const ORDERS = "ORDERS";
-
+export const DARK = 'DARK'
 
 //Cart
 export const SET_CART = "SET_CART";
@@ -23,5 +23,9 @@ export const EDIT_STOCK = "EDIT_STOCK";
 //Order
 export const GET_ORDER_DETAIL = "GET_ORDER_DETAIL";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
-export const GET_USER_ORDERS = "GET_USER_ORDERS";
+export const GET_USER_ORDER = "GET_USER_ORDER";
+export const GET_ALL_ORDERS_USER = "GET_ALL_ORDERS_USER";
+export const GET_PRODUCTS_ORDER = "GET_PRODUCTS_ORDER";
 
+//Reviews
+export const GET_REVIEW_PRODUCT = "GET_REVIEW_PRODUCT";

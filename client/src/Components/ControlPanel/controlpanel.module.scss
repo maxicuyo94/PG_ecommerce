@@ -44,6 +44,11 @@
     }
   }
 }
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .barButtons {
   margin-bottom: 1rem;
@@ -62,13 +67,4 @@
       }
     }
 
-  }
-
-  .modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: white;
-    height: 400px;
-    width: 500px;
   }

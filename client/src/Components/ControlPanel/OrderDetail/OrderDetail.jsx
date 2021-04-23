@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import {
   getOrderDetail,
-  updateOrder,
+  //updateOrder,
 } from "../../../Redux/Orders/orderActions";
-// import Style from "../OrderDetail/orderdetail.module.scss";
+import style from "./orderdetail.module.scss"
 
 export const OrderDetail = ({ id }) => {
   const order = useSelector((state) => state.orderReducer.orderDetail);
   const dispatch = useDispatch();
-  // const { id } = useParams();
 
   useEffect(() => {
     dispatch(getOrderDetail(id));
@@ -19,7 +17,7 @@ export const OrderDetail = ({ id }) => {
   //console.log(order);
 
   return (
-    <div class="container">
+    <div className={style.div}>
       <div class="table">
         <h2>Order Detail N° {id}</h2>
         <td>Made By </td>
@@ -34,7 +32,7 @@ export const OrderDetail = ({ id }) => {
         </tr>
         <tr>
           <td>Status</td>
-          {/* <td>order.orderStatus</td> hay que hacer un map */}
+          {order.orderStatus}
         </tr>
         <div class="table">
           {order.details &&

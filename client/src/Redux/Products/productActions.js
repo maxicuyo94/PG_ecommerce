@@ -20,7 +20,7 @@ export const totalProducts = (product) => {
     if(!product) {
       let JSON = await supabase
         .from("product")
-        .select("*")
+        .select("*, images(url)")
       return dispatch({
         type: actionType.PRODUCTS,
         payload: JSON.data,
@@ -28,9 +28,10 @@ export const totalProducts = (product) => {
     }
     const JSON = await supabase
     .from("product")
-    .select("*")
+    .select("*, images(url)")
     .ilike("name", `%${product}%`);
   dispatch({ type: actionType.PRODUCTS, payload: JSON.data });
+
   };
 };
 
@@ -41,8 +42,8 @@ export const allProducts = (limit, offset, cate, price, input) => {
   let name = !input ? "" : "name";
   return async function (dispatch) {
     let JSON = await supabase
-      .from('product')
-      .select('name,price,rating,id,stock,categories(name), images(url)')
+      .from("product")
+      .select("name,price,rating,id,stock,categories(name), images(url)")
       .ilike(name, `%${input}%`)
       .eq(nm, cate)
       .gt(prg, price[0])
@@ -78,6 +79,7 @@ export const getCategories = (category) => {
 
 export const getProductsByCategories = (input) => {
   return async function (dispatch) {
+    // eslint-disable-next-line
     let Pname = !input ? "" : "name";
     const categoriesID = await supabase
       .from("categories")
@@ -133,15 +135,15 @@ export const postProduct = (product) => {
       .select("id")
       .eq("name", product.name);
 
-    product.images.map(async image => {
-      await supabase
-        .from('images')
-        .insert([{
+    product.images.map(async (image) => {
+      await supabase.from("images").insert([
+        {
           url: image.link,
           product_id: productId.data[0].id,
-          cloudinary_id: image.public_id
-        }])
-    })
+          cloudinary_id: image.public_id,
+        },
+      ]);
+    });
 
     product.categories.map(async (category) => {
       const categoryId = await supabase
@@ -185,20 +187,17 @@ export const updateProduct = (product, id) => {
         .insert([{ product_id: id, categories_id: category.id }]);
     });
     product.delImages.map(async (img) => {
-      await supabase
-      .from("images")
-      .delete("*")
-      .match({url: img.url})
-    })
-    product.upImages.map(async image => {
-      await supabase
-        .from('images')
-        .insert([{
+      await supabase.from("images").delete("*").match({ url: img.url });
+    });
+    product.upImages.map(async (image) => {
+      await supabase.from("images").insert([
+        {
           url: image.link,
           product_id: id,
-          cloudinary_id: image.public_id
-        }])
-    })
+          cloudinary_id: image.public_id,
+        },
+      ]);
+    });
     await supabase
       .from("product")
       .update({
@@ -218,21 +217,11 @@ export const updateProduct = (product, id) => {
 
 export const deleteProduct = (id) => {
   return async () => {
-    await supabase
-      .from("product_categories")
-      .delete("*")
-      .eq('product_id', id);
-    await supabase
-      .from("images")
-      .delete("*")
-      .match({ product_id: id });
-    await supabase
-      .from('product')
-      .delete()
-      .eq("id", id);
-  }
+    await supabase.from("product_categories").delete("*").eq("product_id", id);
+    await supabase.from("images").delete("*").match({ product_id: id });
+    await supabase.from("product").delete().eq("id", id);
+  };
 };
-
 
 export const deleteCategory = (id) => {
   return async () => {
@@ -240,9 +229,3 @@ export const deleteCategory = (id) => {
     await supabase.from("categories").delete("*").match({ id: id });
   };
 };
-
-
-
-
-
-
