@@ -10,11 +10,12 @@ import style from "./checkout.module.scss";
 import { ItemCart } from "./ItemCart";
 import { clearCart } from "../../Redux/Cart/cartActions";
 import swal from "sweetalert";
+import { useHistory } from "react-router";
 
 export function CheckOut() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer.cart);
-
+  const history = useHistory();
   const [total, setTotal] = useState(0.0);
   const [subtotal, setSubtotal] = useState(0.0);
   // eslint-disable-next-line
@@ -41,9 +42,42 @@ export function CheckOut() {
   // }
 
   const handleClearCart = () => {
-    if (window.confirm("Do you really want to clear your shopping cart?")) {
-      dispatch(clearCart());
+    swal("Are you sure you want to CLEAR your cart?", {
+      dangerMode: true,
+      buttons: true,
+    }).then(resp => {
+      if(resp) {
+        dispatch(clearCart())
+        history.push("/");
+      }
+    })
+  };
+
+  const handleCheckOut = () => {
+    if(localStorage.getItem("supabase.auth.token")) {
+      swal("Proceed to payment", "", "success")
+        .then(resp => {
+          if(resp){
+            history.push("/order/payment");
+          }
+        })
+    } else {
+      swal("UPS! You must be logged to checkout!",{
+        buttons: {
+          button: "OK",
+          roll: {
+            text: "Sign In!",
+            value: "signIn",
+          },
+        },
+      }).then(resp => 
+        { 
+        if(resp === "signIn") {
+          history.push("/login");
+        }
+      })
     }
+    
   };
 
   return (
@@ -66,7 +100,7 @@ export function CheckOut() {
           </ListItem>
           <Button
             variant="contained"
-            onClick={() => swal("To CheckOut", "", "success")}
+            onClick={handleCheckOut}
           >
             Check Out
           </Button>

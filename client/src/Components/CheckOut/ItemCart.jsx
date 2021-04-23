@@ -9,10 +9,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-
 import Icon from "@material-ui/core/Icon";
 import { addItemCart, deleteItemCart } from "../../Redux/Cart/cartActions";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
+
 
 export function ItemCart({ product }) {
   const dispatch = useDispatch();
@@ -26,22 +27,23 @@ export function ItemCart({ product }) {
         image: product.image,
         quantity: amount,
       };
-
       productToDispatch.quantity = amount;
-
-
       dispatch(addItemCart(productToDispatch));
-      // let payload = {
-      //     id: product.id,
-      //     quantity: amount,
-      //     stock: product.stock
-      // };
-      // dispatch(editStock(payload));
+      swal("Quantity modify!", "", "success")
     }
   };
 
   const handleDeleteItem = () => {
-    dispatch(deleteItemCart(product));
+    swal("Delete item?", {
+      dangerMode: true,
+      buttons: true,
+    }).then(resp => {
+      if(resp) {
+        dispatch(deleteItemCart(product));
+        swal("Item deleted!", "", "success")
+      }
+    })
+    
   };
 
   return (
