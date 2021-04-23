@@ -18,6 +18,10 @@ export function Login() {
     JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user
       .id;
 
+  let storage =
+    localStorage.getItem("cart") &&
+    JSON.parse(localStorage.getItem("cart"))
+
   const handleState = (e) => {
     setUser({
       ...user,
