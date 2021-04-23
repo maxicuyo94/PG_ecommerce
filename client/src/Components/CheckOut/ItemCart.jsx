@@ -17,8 +17,8 @@ import swal from "sweetalert";
 
 export function ItemCart({ product }) {
   const dispatch = useDispatch();
-  let btnRefDELETE = useRef("");
-  let btnRefADD = useRef("");
+  let btnRefDELETE = useRef();
+  let btnRefADD = useRef();
 
 
   const handleQuantityChange = async (amount) => {
@@ -29,8 +29,9 @@ export function ItemCart({ product }) {
         id: product.id,
         image: product.image,
         quantity: amount,
+        stock: product.stock,
+
       };
-      productToDispatch.quantity = amount;
       dispatch(addItemCart(productToDispatch))
       if(amount > 0) {
         btnRefADD.current.setAttribute("disabled", "disabled");

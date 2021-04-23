@@ -99,7 +99,7 @@ export const deleteUser = (id) => {
 
 export const userLogin = (users) => {
   return async function (dispatch) {
-    const { session, error } = await supabase.auth.signIn({
+    const { data: user, error } = await supabase.auth.signIn({
       email: users.email,
       password: users.password,
     })
