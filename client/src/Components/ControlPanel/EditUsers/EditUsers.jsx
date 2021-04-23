@@ -100,9 +100,6 @@ export default function Profile(props) {
                                 <StyledMenuItem>
                                     <span onClick={changePermission} name="superadmin">SuperAdmin</span>
                                 </StyledMenuItem>
-                                <StyledMenuItem>
-                                    <span onClick={changePermission} name="customer">Customer</span>
-                                </StyledMenuItem>
                             </div>
                         );
                     default:

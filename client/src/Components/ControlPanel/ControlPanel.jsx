@@ -119,7 +119,7 @@ export function ControlPanel() {
         </div>
         <div class={style.containerList}>
           {tab === "products"
-            ? products.map((product) => {
+            ? products?.map((product) => {
               return (
                 <div key={product.id} class={style.list}>
                   {checkbox ? (
