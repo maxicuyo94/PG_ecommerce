@@ -15,13 +15,23 @@ export const Search = (input) => {
   };
 };
 
-export const totalProducts = () => {
+export const totalProducts = (product) => {
   return async function (dispatch) {
-    let JSON = await supabase.from("product").select("*, images(url)");
-    dispatch({
-      type: actionType.PRODUCTS,
-      payload: JSON.data,
-    });
+    if(!product) {
+      let JSON = await supabase
+        .from("product")
+        .select("*, images(url)")
+      return dispatch({
+        type: actionType.PRODUCTS,
+        payload: JSON.data,
+      });
+    }
+    const JSON = await supabase
+    .from("product")
+    .select("*, images(url)")
+    .ilike("name", `%${product}%`);
+  dispatch({ type: actionType.PRODUCTS, payload: JSON.data });
+
   };
 };
 
@@ -56,11 +66,15 @@ export const productDetail = (input) => {
   };
 };
 
-export const getCategories = () => {
+export const getCategories = (category) => {
   return async function (dispatch) {
-    const JSON = await supabase.from("categories").select("*");
-    dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data });
-  };
+    if(!category) {
+      const JSON = await supabase.from("categories").select("*");
+      return dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data });
+    };
+    const JSON = await supabase.from("categories").select("*").ilike("name", `%${category}%`);
+    return dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data });
+    }
 };
 
 export const getProductsByCategories = (input) => {

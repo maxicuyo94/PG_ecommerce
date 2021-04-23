@@ -79,10 +79,14 @@ export const updateUser = (users) => {
   };
 };
 
-export const allUsers = (users) => {
+export const allUsers = (user) => {
   return async function (dispatch) {
+    if(!user) {
     let JSON = await supabase.from("users").select("*");
-    dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
+    return dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
+  }
+  let JSON = await supabase.from("users").select("*").ilike("name", `%${user}%`);
+  dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
   };
 };
 

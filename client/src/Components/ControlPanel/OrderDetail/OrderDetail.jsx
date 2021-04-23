@@ -4,6 +4,7 @@ import {
   getOrderDetail,
   //updateOrder,
 } from "../../../Redux/Orders/orderActions";
+import style from "./orderdetail.module.scss"
 
 export const OrderDetail = ({ id }) => {
   const order = useSelector((state) => state.orderReducer.orderDetail);
@@ -16,7 +17,7 @@ export const OrderDetail = ({ id }) => {
   //console.log(order);
 
   return (
-    <div class="container">
+    <div className={style.div}>
       <div class="table">
         <h2>Order Detail N° {id}</h2>
         <td>Made By </td>

@@ -7,17 +7,19 @@ import {
   deleteCategory,
 } from "../../Redux/Products/productActions.js";
 import { allUsers, deleteUser } from "../../Redux/Users/usersActions";
-import { getAllOrders, getOrderDetail } from "../../Redux/Orders/orderActions";
+import { getAllOrders, getOrderDetail, getProductsOfOrder } from "../../Redux/Orders/orderActions";
 import style from "./controlpanel.module.scss";
 import {
   Edit,
   Delete,
+  MoreVert,
   CheckBoxOutlineBlank,
   CheckBox,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
+import {ProductSelection} from './Modals/ProductSelection'
 
 export function ControlPanel() {
   const dispatch = useDispatch();
@@ -26,25 +28,36 @@ export function ControlPanel() {
   const users = useSelector((state) => state.usersReducer.users);
   const orders = useSelector((state) => state.orderReducer.orders);
   const orderDetailId = useSelector((state) => state.orderReducer.orderDetail);
+  const productsOfOrder = useSelector((state) => state.orderReducer.orderProducts);
+  const container = products.lenght;
   const [modal, setModal] = useState(false);
+  const [modalTwo, setModalTwo] = useState(false);
 
   const changeModal = async (id) => {
     await dispatch(getOrderDetail(id));
     setModal(true);
   };
 
+  const openModalSelector = () => {
+    setModalTwo(true);
+  }
+
   const closeModal = () => {
     setModal(false);
+    setModalTwo(false);
   };
 
-  const checkProducts = products?.length;
+  const [search, setSearch] = useState();
+  const handleSearch = (e) => {
+    setSearch(e)
+  };
 
   useEffect(() => {
-    dispatch(totalProducts());
-    dispatch(getCategories());
-    dispatch(allUsers());
+    dispatch(totalProducts(search));
+    dispatch(getCategories(search));
+    dispatch(allUsers(search));
     dispatch(getAllOrders());
-  }, [dispatch, checkProducts]);
+  }, [container]);
 
   const handleDelete = async (id) => {
     if (tab === "products") {
@@ -71,6 +84,10 @@ export function ControlPanel() {
     setTab(e.target.name);
   };
 
+  const getProducts = async (e) => {
+    await dispatch(getProductsOfOrder(e.target.value));
+    openModalSelector();
+  }
   return (
     <div class={style.container}>
       <h2>Control Panel</h2>
@@ -96,6 +113,11 @@ export function ControlPanel() {
           </Link>
         ) : null}
       </div>
+      <div>
+        <input className={style.search} placeholder='Search...' name="input" onChange={(e) => handleSearch(e.target.value)}
+
+        ></input>
+      </div>
       <div class={style.containerList}>
         <div class={style.bar}>
           <h4>
@@ -115,10 +137,10 @@ export function ControlPanel() {
         </div>
         <div class={style.containerList}>
           {tab === "products"
-            ? products.map((product) => {
-                return (
-                  <div key={product.id} class={style.list}>
-                    {checkbox ? (
+                   ? products?.map((product) => {
+                   return (
+                    <div key={product.id} class={style.list}>
+                      {checkbox ? (
                       <CheckBox
                         id={product.id}
                         class={style.icon}
@@ -170,8 +192,14 @@ export function ControlPanel() {
                     >
                       {order.id}
                     </span>
-                    <span class={style.name}>{order.orderStatus[0]}</span>
-                    <span class={style.name}>{order.orderDate}</span>
+                      <span class={style.name}>{order.orderStatus}</span>
+                      <span class={style.name}>{order.orderDate}</span>
+                    <dvi>
+                      <button class={style.icon} value={order.id} onClick={(e) => getProducts(e)}>+</button>
+                      <Modal class={style.modal} open={modalTwo} onClose={closeModal} >
+                       <ProductSelection products={productsOfOrder}></ProductSelection>
+                      </Modal>
+                    </dvi>
                   </div>
                 );
               })

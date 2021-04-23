@@ -4,6 +4,7 @@ const InitialState = {
   orders: [],
   orderDetail: {},
   userOrder: [],
+  orderProducts: []
 };
 
 function Reducer(state = InitialState, action) {
@@ -30,6 +31,12 @@ function Reducer(state = InitialState, action) {
       return {
         ...state,
         userOrder: action.payload,
+      };
+
+    case actionType.GET_PRODUCTS_ORDER:
+      return {
+        ...state,
+        orderProducts: action.payload,
       };
 
     default:
