@@ -26,10 +26,10 @@ export const getReviewsOfProduct = (id) => {
       .from("reviews")
       .select("*")
       .eq("product_id", id);
-
+    console.log('Reviews: ', JSON.data)
     dispatch({
       type: actionType.GET_REVIEW_PRODUCT,
-      reviews: JSON.data,
+      payload: JSON.data,
     });
   };
 };

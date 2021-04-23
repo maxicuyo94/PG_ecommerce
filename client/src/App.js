@@ -45,7 +45,7 @@ function App() {
         exact
         path="/Product/:id"
         render={({ match }) => (
-          <Product priority={priority} id={match.params.id} />
+          <Product priority={priority} id={match.params.id} dark={dark}/>
         )}
       />
       <Route

@@ -2,8 +2,9 @@ $phone: 600px;
 $tablet:768px;
 $laptop:992px;
 $pc:1200px;
-$pcxl:2100px;
+$pcxl:1600px;
 $dark:#2C3A40;
+$verde:#9abf15;
 
 .container {
     display: flex;
@@ -20,6 +21,14 @@ $dark:#2C3A40;
             font-size: 2rem;
             font-weight: bolder;
         }
+
+        @media screen and (max-width: $tablet) {
+
+            span {
+                font-size: 1.5rem;
+            }
+
+        }
     }
 
     .products {
@@ -31,6 +40,15 @@ $dark:#2C3A40;
             height: fit-content;
             width: 100%;
             margin: 0.5vmax 0;
+
+            @media screen and (max-width: $tablet) {
+
+                flex-direction: column;
+                width: 100%;
+                margin: 2vh 0;
+                align-items: center;
+                justify-content: center;
+            }
 
 
 
@@ -44,15 +62,29 @@ $dark:#2C3A40;
                 justify-content: space-around;
                 align-items: center;
 
-
-
                 span {
-                    font-size: 1.5vw;
+                    font-size: 1.5rem;
                 }
 
                 p {
-                    font-size: 1.2vw;
+                    font-size: 1rem;
                     text-align: center;
+                }
+
+                @media screen and (max-width: $tablet) {
+                    background-color: #485F69;
+                    margin: 0 auto;
+                    width: 90%;
+                    height: 15vh;
+
+                    span {
+                        font-size: 1.5rem;
+                    }
+
+                    p {
+                        margin: 0;
+                        text-decoration: underline;
+                    }
                 }
 
             }
@@ -65,143 +97,24 @@ $dark:#2C3A40;
                 align-items: center;
                 height: 25%;
 
-                /* @media screen and (max-width: $phone) {
-                    width: 100%;
-                } */
-            }
-        }
-
-    }
-}
-
-@media screen and (max-width: $pcxl) {
-
-    /* span {
-        font-size: 5vw;
-    } */
-    .containerTitle {
-        //background-color: gold;
-    }
-}
-
-@media screen and (max-width: $pc) {
-
-    /* span {
-        font-size: 5vw;
-    } */
-    .containerTitle {
-        //background-color: green;
-    }
-}
-
-@media screen and (max-width: $laptop) {
-    .container {
-
-        //background-color: red;
-        .containerTitle {
-            span {
-                font-size: 1.5rem;
-            }
-        }
-
-        align-items: center;
-
-        .products {
-            width: 100%;
-
-            .containerP {
-                flex-direction: column;
-                width: 100%;
-                margin: 2vh 0;
-                align-items: center;
-                justify-content: center;
-
-                .title {
-                    background-color: #485F69;
-                    margin: 0 auto;
-                    width: 90%;
-                    height: 15vh;
-
-                    span {
-                        font-size: 2rem;
-                    }
-
-                    p {
-                        font-size: 1rem;
-                        margin: 0;
-                        text-decoration: underline;
-
-                    }
-                }
-
-                .carousel {
+                @media screen and (max-width: $tablet) {
                     width: 100%;
                 }
             }
         }
 
     }
-}
-
-@media screen and (max-width: $tablet) {
-    .containerTitle {
-
-        //background-color: blue;
-    }
-
-}
-
-@media screen and (max-width: $phone) {
-    .container {
-
-        .containerTitle {
-            span {
-                font-size: 1.5rem;
-            }
-        }
-
-        align-items: center;
-
-        .products {
-            width: 100%;
-
-            .containerP {
-                flex-direction: column;
-                width: 100%;
-                margin: 2vh 0;
-                align-items: center;
-                justify-content: center;
-
-                .title {
-                    background-color: #485F69;
-                    margin: 0 auto;
-                    width: 90%;
-                    height: 15vh;
-
-                    span {
-                        font-size: 2rem;
-                    }
-
-                    p {
-                        font-size: 1rem;
-                        margin: 0;
-                        text-decoration: underline;
-
-                    }
-                }
-
-                .carousel {
-                    width: 100%;
-                }
-            }
-        }
-
-    }
-
 }
 
 .containerDark {
     @extend .container;
     background-color: $dark;
-    color:#fff
+    color: #fff;
+    
+    .containerP {
+        .title {
+            color: $dark !important;
+            background-color: $verde !important;
+        }
+    }
 }
