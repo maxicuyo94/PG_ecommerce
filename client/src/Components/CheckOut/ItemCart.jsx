@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 //import style from "./checkout.module.scss";
-
+import {useRef} from 'react';
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -17,6 +17,9 @@ import swal from "sweetalert";
 
 export function ItemCart({ product }) {
   const dispatch = useDispatch();
+  let btnRefDELETE = useRef("");
+  let btnRefADD = useRef("");
+
 
   const handleQuantityChange = async (amount) => {
     const newValue = product.quantity + amount;
@@ -28,8 +31,23 @@ export function ItemCart({ product }) {
         quantity: amount,
       };
       productToDispatch.quantity = amount;
-      dispatch(addItemCart(productToDispatch));
-      swal("Quantity modify!", "", "success")
+      dispatch(addItemCart(productToDispatch))
+      if(amount > 0) {
+        btnRefADD.current.setAttribute("disabled", "disabled");
+        setTimeout(() => {
+          if(btnRefADD.current) btnRefADD.current.removeAttribute("disabled");
+        }, 1000);
+      } else {
+        btnRefDELETE.current.setAttribute("disabled", "disabled");
+        setTimeout(() => {
+          if(btnRefDELETE.current) btnRefDELETE.current.removeAttribute("disabled");
+        }, 1000);
+      }
+      
+      // if(btnRef.current){
+      //   btnRef.current.setAttribute("disabled", "disabled");
+      // }
+      // swal("Quantity modify!", "", "success")
     }
   };
 
@@ -64,13 +82,13 @@ export function ItemCart({ product }) {
         </Link>
 
         {product.quantity > 1 && (
-          <button onClick={() => handleQuantityChange(-1)}>
+          <button ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}>
             <Icon> - </Icon>
           </button>
         )}
         <h6 style={{ margin: "1rem" }}>{product.quantity}</h6>
         {product.quantity < 10 && product.quantity < product.stock && (
-          <button onClick={() => handleQuantityChange(+1)}>
+          <button ref={btnRefADD} onClick={() => handleQuantityChange(+1)}>
             <Icon> + </Icon>
           </button>
         )}
