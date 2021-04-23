@@ -42,9 +42,6 @@ export function Home() {
         <div className={styles.containerP}>
           <div className={styles.title}>
             <span>{t("home-cat1.processors")}</span>
-            <NavLink to={`/catalogue`}>
-              <p>{t("seeProducts.products")}</p>
-            </NavLink>
           </div>
           <div className={styles.carousel}>
             {productByCategories[0] && (
@@ -55,9 +52,6 @@ export function Home() {
         <div className={styles.containerP}>
           <div className={styles.title}>
             <span>{t("home-cat2.laptops")}</span>
-            <NavLink to={`/catalogue`}>
-              <p>{t("seeProducts.products")}</p>
-            </NavLink>
           </div>
           <div className={styles.carousel}>
             {productByCategories[1] && (
@@ -68,9 +62,6 @@ export function Home() {
         <div className={styles.containerP}>
           <div className={styles.title}>
             <span>{t("home-cat3.keyboards")}</span>
-            <NavLink to={`/catalogue`}>
-              <p>{t("seeProducts.products")}</p>
-            </NavLink>
           </div>
           <div className={styles.carousel}>
             {productByCategories[2] && (

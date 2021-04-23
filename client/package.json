@@ -11,13 +11,10 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
     "i18next": "^20.2.1",
     "react": "^16.13.1",
-    "react-bootstrap": "^1.5.2",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.8.13",
-    "react-icons": "^4.2.0",
     "react-redux": "^7.2.3",
     "react-responsive-carousel": "^3.2.18",
     "react-router-dom": "^5.2.0",
@@ -25,8 +22,7 @@
     "react-super-responsive-table": "^5.2.0",
     "redux-thunk": "^2.3.0",
     "sass": "^1.32.8",
-    "sweetalert": "^2.1.2",
-    "swiper": "^6.5.7"
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

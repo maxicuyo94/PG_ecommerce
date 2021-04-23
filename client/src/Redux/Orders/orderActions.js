@@ -57,3 +57,16 @@ export const updateOrder = (status, id) => {
       .eq("id", id);
   };
 };
+
+export const getProductsOfOrder = (id) => {
+  return async function (dispatch) {
+    let products = await supabase
+      .from("order_detail")
+      .select("*, product_id")
+      .eq("order_id", id);
+    dispatch({
+      type: actionType.GET_PRODUCTS_ORDER,
+      payload: products.data,
+    });
+  };
+};

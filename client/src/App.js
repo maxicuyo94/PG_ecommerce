@@ -14,39 +14,23 @@ import { ControlPanel } from "./Components/ControlPanel/ControlPanel.jsx";
 import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
-<<<<<<< HEAD
-import { restoredRedux } from "./Redux/LocalStorage/localstorageActions"
-import { Reset } from "./Components/Access/ResetPassword/ResetPassword";
-
-function App() {
-  // eslint-disable-next-line
-  const [userLocalStorage , setUserLocalStorager] = useLocalStorage("user", "")
-
-=======
 import { Reset } from "./Components/LoginSigup/ResetPassword/ResetPassword";
 import  { Review } from "./Components/Review/review"
 
 
 function App() {
   // eslint-disable-next-line
-  const [priority, setPriorityStorage] = useLocalStorage("priority", "");
+  const [userLocalStorage , setUserLocalStorager] = useLocalStorage("user", "")
   const dark = useSelector((state) => state.darkReducer.dark)
->>>>>>> 31afc46bcaa53b7de9ff11984b2c0ef6b68f0e6b
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setCart());
   }, [dispatch]);
 
   return (
-<<<<<<< HEAD
     <Layout>
-      <Route exact path="/" render={() => <Home />} />
+      <Route exact path="/" render={() => <Home  dark={dark}/>} />
       <ProtectedRoute
-=======
-    <Layout priority={priority}>
-      <Route exact path="/" render={() => <Home priority={priority} dark={dark} />} />
-      <Route
->>>>>>> 31afc46bcaa53b7de9ff11984b2c0ef6b68f0e6b
         exact
         path="/Access"
         component={() => <Access />}
@@ -61,7 +45,7 @@ function App() {
         exact
         path="/Product/:id"
         render={({ match }) => (
-          <Product id={match.params.id} />
+          <Product id={match.params.id} dark={dark} />
         )}
       />
       <Route
