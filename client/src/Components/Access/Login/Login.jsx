@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin, sendMail } from "../../../Redux/Users/usersActions";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, useLocation } from "react-router-dom";
 import style from "./login.module.scss";
 import { useLocalStorage } from "../../../LocalStorage/useLocalStorage";
 
 export function Login() {
   const dispatch = useDispatch();
   const userRegistered = useSelector(state => state.usersReducer.userLoged)
+  const location = useLocation()
   const history = useHistory();  
 
   const [user, setUser] = useState({
@@ -15,10 +16,15 @@ export function Login() {
     password: "",
   });
 
-
   useEffect(()=> {
     if(userRegistered?.id){
-      history.push("/")
+      if(location.state.from){
+        console.log("assssssssssssss")
+        history.push(location.state.from)
+      }else{
+        console.log("porque?")
+        // history.push("/")
+      }
     }
   },[userRegistered])
 
@@ -30,7 +36,6 @@ export function Login() {
   };
 
   const loginUsers = (e) => {
-    console.log(e.target.name)
     const userLog = async () => {
       await dispatch(userLogin(user));
     };

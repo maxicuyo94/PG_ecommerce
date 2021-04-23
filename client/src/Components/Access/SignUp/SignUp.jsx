@@ -42,7 +42,10 @@ export function SignUp() {
 
     useEffect(() => {
         if (success === VAL) {
-            stableDispatch(postUser(user))
+            const postError = stableDispatch(postUser(user))
+            if(postError){
+                setSuccess(false)
+            }
         }
     }, [stableDispatch, user, success])
 

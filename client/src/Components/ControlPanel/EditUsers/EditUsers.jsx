@@ -5,9 +5,15 @@ import { useTranslation } from "react-i18next";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Edit } from "@material-ui/icons";
-import { userLogOut, changeUserPermission } from "../../../Redux/Users/usersActions";
+import { userLogOut, changeUserPermission, allUsers } from "../../../Redux/Users/usersActions";
 import style from './editusers.module.scss'
 import { useDispatch, useSelector } from 'react-redux';
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const StyledMenu = withStyles({
     paper: {
@@ -54,12 +60,17 @@ export default function Profile(props) {
         setAnchorEl(event.currentTarget);
     };
 
+
+
+
+
     const handleClose = (e) => {
         setAnchorEl(null);
     };
 
     const changePermission = (e) => {
         dispatch(changeUserPermission(props.id, e.target.getAttribute('name')))
+        dispatch(allUsers())
     }
 
     const configRender = () => {

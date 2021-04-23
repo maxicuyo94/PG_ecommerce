@@ -5,8 +5,14 @@ $pc:1200px;
 $pcxl:1600px;
 
 .swiper-slide {
-    height: 20rem;
 
+    @media screen and (min-width: $laptop) {
+        height: 20rem;
+    }
+
+    @media screen and (min-width: $pcxl) {
+        height: 25rem;
+    }
 }
 
 .swiper-button-prev {

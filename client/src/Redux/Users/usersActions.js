@@ -16,6 +16,7 @@ export const postUser = (users) => {
 
     if (error) {
       alert(error.message)
+      return error
     } else {
       await supabase.from("users").insert([
         {
@@ -79,10 +80,14 @@ export const updateUser = (users) => {
   };
 };
 
-export const allUsers = (users) => {
+export const allUsers = (user) => {
   return async function (dispatch) {
+    if(!user) {
     let JSON = await supabase.from("users").select("*");
-    dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
+    return dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
+  }
+  let JSON = await supabase.from("users").select("*").ilike("name", `%${user}%`);
+  dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
   };
 };
 
@@ -103,18 +108,15 @@ export const userLogin = (users) => {
       alert(error.message)
     } else if (session) {
       let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-      console.log('prev ' + previousStorage)
       previousStorage.map(item => addItemCart(item))
       setCart()
       var newStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-      console.log('new ' + newStorage)
-    }
-    const userLoged = await supabase
+      const userLoged = await supabase
       .from("users")
       .select("*,address(*)")
       .eq("email", users.email);
-
-    dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
+      dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
+    }
     dispatch({ type: actionType.SET_CART, payload: newStorage });
   }
 };
@@ -158,6 +160,9 @@ export const userLogOut = () => {
     const { error } = supabase.auth.signOut()
     localStorage.setItem("cart", "[]")
     dispatch({ type: actionType.USER_LOGOUT })
+    if(error){
+      return error
+    }
   }
 };
 
@@ -169,5 +174,12 @@ export const changeUserPermission = (id, newPermission) => {
       permission: newPermission,
     })
     .eq("id", id);
+  }
+}
+
+export const prueba = () => {
+  return async function (){
+    const mySubscription = supabase   .from('users')   .on('*', payload => {     console.log('Change received!', payload)   })   .subscribe()
+    console.log(mySubscription)
   }
 }

@@ -24,7 +24,7 @@ export function setCart() {
         .eq("user_id", userId);
       
       if(error) console.log(error.message)
-      var cartDB = data.length
+      var cartDB = data?.length
         ? data[0].order_detail.map((item) => {
           // const DBstock = supabase
           // .from("product")
@@ -75,9 +75,9 @@ export const addItemCart = (payload) => {
         .eq("user_id", userId);
   
       // get userCart from DB
-      let databasecart = usercart.data[0].order_detail;
+      let databasecart = usercart.data[0]?.order_detail;
       // check if the payload is on cart
-      let updateProduct = databasecart.find(
+      let updateProduct = databasecart?.find(
         (item) => item.product_id === payload.id
       );
   
@@ -98,7 +98,7 @@ export const addItemCart = (payload) => {
               price: payload.price,
               quantity: payload.quantity,
               title: payload.title,
-              order_id: usercart.data[0].id,
+              order_id: usercart.data[0]?.id,
               user_id: userId,
               image: payload.image,
               stock: 100

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
+import { ProtectedRoute } from './AuthRoutes/ProtectedRoute'
 import { useLocalStorage } from "./LocalStorage/useLocalStorage";
 import Layout from "./Components/Layout/Layout";
 import { Catalogue } from "./Components/Catalogue/Catalogue";
@@ -31,23 +32,23 @@ function App() {
 
   return (
     <Layout>
-      <Route exact path="/" render={() => <Home dark={dark} />} />
-      <Route
+      <Route exact path="/" render={() => <Home  dark={dark}/>} />
+      <ProtectedRoute
         exact
         path="/Access"
-        render={() => <Access />}
+        component={() => <Access />}
       />
-      <Route
+      <ProtectedRoute
         exact
-        path="/modifyUser/:id"
-        render={({ match }) => <ModifyUser id={match.params.id} />}
+        path="/myprofile"
+        component={({ match }) => <ModifyUser id={match.params.id} />}
       />
       <Route exact path="/resetPassword" component={Reset} />
       <Route
         exact
         path="/Product/:id"
         render={({ match }) => (
-          <Product id={match.params.id} />
+          <Product id={match.params.id} dark={dark} />
         )}
       />
       <Route
@@ -60,25 +61,26 @@ function App() {
         path="/AddProduct"
         render={() => <AddProduct />}
       />
-      <Route
+      <ProtectedRoute
         exact
         path="/Order"
-        render={() => <CheckOut />}
+        component={() => <CheckOut />}
       />
-      <Route
+      <ProtectedRoute  
         exact
         path="/modifyProduct/:id"
-        render={({ match }) => <ModifyProduct id={match.params.id} />}
+        restringed="customer"
+        component={({ match }) => <ModifyProduct id={match.params.id} />}
       />
       <Route
         exact
         path="/rate-product/:id"
         render={({ match }) => <Review id={match.params.id} />}
       />
-      <Route
+      <ProtectedRoute
         exact
         path="/controlpanel"
-        render={() => <ControlPanel />}
+        component={() => <ControlPanel />}
       />
       <Route
         exact

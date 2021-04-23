@@ -1,4 +1,11 @@
-$minwidth: 600px;
+$color:#485F69;
+$verde: #9abf15;
+$phone: 600px;
+$tablet:768px;
+$laptop:992px;
+$pc:1200px;
+$pcxl:2100px;
+$gris:#2C3A40;
 
 .container {
   z-index: 1;
@@ -16,7 +23,7 @@ $minwidth: 600px;
     justify-content: flex-start;
     height: 5%;
 
-    @media screen and (max-width: $minwidth) {
+    @media screen and (max-width: $tablet) {
       z-index: 2;
       justify-content: space-evenly;
       padding: 0;
@@ -34,15 +41,12 @@ $minwidth: 600px;
         color: #9abf15
       }
 
-      @media screen and (max-width: $minwidth) {
+      @media screen and (max-width: $tablet) {
         &:hover {
           text-decoration: underline #9abf15;
         }
       }
     }
-
-
-
   }
 
   .main {
@@ -50,7 +54,7 @@ $minwidth: 600px;
     width: 100%;
     min-height: 65%;
 
-    @media screen and (max-width: $minwidth) {
+    @media screen and (max-width: $tablet) {
       flex-direction: column-reverse;
     }
 
@@ -58,7 +62,7 @@ $minwidth: 600px;
       width: 50%;
       min-height: 100%;
 
-      @media screen and (max-width: $minwidth) {
+      @media screen and (max-width: $tablet) {
         width: 100%;
         background-color: transparent !important;
       }
@@ -69,7 +73,7 @@ $minwidth: 600px;
         background-color: #e9e9e9;
         border-radius: 0 5vh 5vh 0;
 
-        @media screen and (max-width: $minwidth) {
+        @media screen and (max-width: $tablet) {
           background-color: transparent;
 
           span {
@@ -112,7 +116,7 @@ $minwidth: 600px;
             font-weight: bold;
             transition: 0.5s;
 
-            @media screen and (max-width: $minwidth) {
+            @media screen and (max-width: $tablet) {
               width: 70%;
               order: 2;
             }
@@ -129,7 +133,7 @@ $minwidth: 600px;
         span {
           font-size: 2vw;
 
-          @media screen and (max-width: $minwidth) {
+          @media screen and (max-width: $tablet) {
             font-size: 5vw;
           }
 
@@ -144,7 +148,7 @@ $minwidth: 600px;
       width: 50%;
       min-height: 90%;
 
-      @media screen and (max-width: $minwidth) {
+      @media screen and (max-width: $tablet) {
         width: 100%;
       }
 
@@ -155,7 +159,7 @@ $minwidth: 600px;
         width: 90%;
 
 
-        @media screen and (min-width: $minwidth) {
+        @media screen and (min-width: $tablet) {
           padding: 2vh;
         }
 
@@ -181,7 +185,7 @@ $minwidth: 600px;
         min-height: 10%;
         width: 80%;
 
-        @media screen and (max-width: $minwidth) {
+        @media screen and (max-width: $tablet) {
           flex-wrap: wrap;
           width: 90%;
         }
@@ -198,7 +202,7 @@ $minwidth: 600px;
             margin: 0;
           }
 
-          @media screen and (max-width: $minwidth) {
+          @media screen and (max-width: $tablet) {
             order: 1;
           }
 
@@ -252,7 +256,7 @@ $minwidth: 600px;
           justify-content: center;
           align-items: center;
 
-          @media screen and (max-width: $minwidth) {
+          @media screen and (max-width: $tablet) {
             width: 70%;
             order: 2;
           }
@@ -265,7 +269,7 @@ $minwidth: 600px;
         }
 
         label {
-          @media screen and (max-width: $minwidth) {
+          @media screen and (max-width: $tablet) {
             order: 3;
             width: 100%;
           }
@@ -288,7 +292,7 @@ $minwidth: 600px;
     display: flex;
     height: fit-content;
 
-    @media screen and (max-width: $minwidth) {
+    @media screen and (max-width: $tablet) {
       width: 95%;
       flex-direction: column;
     }
@@ -304,12 +308,12 @@ $minwidth: 600px;
         font-size: 2vh;
         text-align: center;
 
-        @media screen and (max-width: $minwidth) {
+        @media screen and (max-width: $tablet) {
           font-size: 4vh;
         }
       }
 
-      @media screen and (max-width: $minwidth) {
+      @media screen and (max-width: $tablet) {
         width: 100%;
         justify-content: center;
         font-size: 4vh;
@@ -322,4 +326,9 @@ $minwidth: 600px;
     }
 
   }
+}
+
+.containerDark {
+  @extend .container;
+  background-color: $gris;
 }

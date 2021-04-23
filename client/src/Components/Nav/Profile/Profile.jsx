@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import style from './profile.module.scss'
 import { useTranslation } from "react-i18next";
@@ -11,6 +11,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Avatar from '@material-ui/core/Avatar';
 import { userLogOut } from "../../../Redux/Users/usersActions";
 import { useDispatch, useSelector } from 'react-redux';
+import swal from "sweetalert";
+
 
 const StyledMenu = withStyles({
   paper: {
@@ -45,6 +47,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function Profile() {
   const userLoged = useSelector(state => state.usersReducer.userLoged)
+  const history = useHistory()
   const [t, i18n] = useTranslation("global");
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch()
@@ -53,7 +56,12 @@ export default function Profile() {
   };
 
   const handleLogOut = () => {
-    dispatch(userLogOut());
+    const error = dispatch(userLogOut());
+    if(error){
+      swal(error)
+    }else{
+      history.push("/")
+    }
   }
 
   const handleClose = () => {
@@ -77,19 +85,22 @@ export default function Profile() {
       >
         {!userLoged?.id &&
           <StyledMenuItem>
-            <li>
               <Link to="/access">
-                <span>{t("navLink4.linkFour")}</span>
+                {t("navLink4.linkFour")}
               </Link>
-            </li>
           </StyledMenuItem>
         }
         {userLoged?.id &&
+        <div>
           <StyledMenuItem>
-            <li>
-              <span onClick={handleLogOut}>Log Out</span>
-            </li>
+            <Link to={`/myProfile`}>
+              MyProfile
+            </Link>
           </StyledMenuItem>
+          <StyledMenuItem>
+              <span onClick={handleLogOut}>Log Out</span>
+          </StyledMenuItem>
+        </div>
         }
       </StyledMenu>
     </div>
