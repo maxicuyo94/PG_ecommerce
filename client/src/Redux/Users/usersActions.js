@@ -100,24 +100,25 @@ export const deleteUser = (id) => {
 
 export const userLogin = (users) => {
   return async function (dispatch) {
-    const { session, error } = await supabase.auth.signIn({
+    const { data: user, error } = await supabase.auth.signIn({
       email: users.email,
       password: users.password,
     })
     if (error) {
       alert(error.message)
-    } else if (session) {
+    } else {
       let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
       previousStorage.map(item => addItemCart(item))
-      setCart()
-      var newStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
+      setTimeout(() => {
+        console.log("pruebasssss")
+        dispatch(setCart())
+      }, 2000);
       const userLoged = await supabase
       .from("users")
       .select("*,address(*)")
       .eq("email", users.email);
       dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
     }
-    dispatch({ type: actionType.SET_CART, payload: newStorage });
   }
 };
 
@@ -159,9 +160,11 @@ export const userLogOut = () => {
   return function (dispatch) {
     const { error } = supabase.auth.signOut()
     localStorage.setItem("cart", "[]")
-    dispatch({ type: actionType.USER_LOGOUT })
     if(error){
       return error
+    }else{
+      dispatch({ type: actionType.SET_CART, payload: [] });
+      dispatch({ type: actionType.USER_LOGOUT })
     }
   }
 };
@@ -174,12 +177,5 @@ export const changeUserPermission = (id, newPermission) => {
       permission: newPermission,
     })
     .eq("id", id);
-  }
-}
-
-export const prueba = () => {
-  return async function (){
-    const mySubscription = supabase   .from('users')   .on('*', payload => {     console.log('Change received!', payload)   })   .subscribe()
-    console.log(mySubscription)
   }
 }
