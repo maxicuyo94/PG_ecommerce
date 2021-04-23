@@ -36,13 +36,14 @@ export function setCart() {
           // })
           // const stock = DBstock.data[0].stock
           // console.log(stock)
+
           return {
             id: item.product_id,
             title: item.title,
             image: item.image,
             quantity: item.quantity,
             price: item.price,
-            stock: 100
+            stock: item.stock
           };
         })
         : [];
@@ -103,7 +104,7 @@ export const addItemCart = (payload) => {
               order_id: usercart.data[0].id,
               user_id: userId,
               image: payload.image,
-              stock: 100
+              stock: payload.stock
             },
           ]);
       }
