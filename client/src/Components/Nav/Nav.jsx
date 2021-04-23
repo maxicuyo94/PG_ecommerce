@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 //import { SearchBar } from "../SearchBar/SearchBar";
 //import { Header } from "./Header/Header";
@@ -6,23 +6,16 @@ import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
 import MiniShop from "./MiniShop/MiniShop";
 import BtnLang from "./BtnLang/BtnLang";
-import { userLogOut } from "../../Redux/Users/usersActions";
+import BtnDark from './BtnDark/BtnDark'
+import Profile from './Profile/Profile'
 import { useSelector } from "react-redux";
 
 export function Nav({ priority }) {
   // eslint-disable-next-line
   const userLoged = useSelector(state =>  state.usersReducer.userLoged)
   const [t, i18n] = useTranslation("global");
-  const history = useHistory()
+  const history = useHistory();
 
-  // useEffect(()=> {
-  //   history.push("/")
-  // })
-
-
-  const handleLogOut = () => {
-    userLogOut();
-  }
 
   return (
     <div className={style.container}>
@@ -40,42 +33,29 @@ export function Nav({ priority }) {
         <ul>
           <li>
             <Link to="/">
-              <text>{t("navLink1.linkOne")}</text>
+              <span>{t("navLink1.linkOne")}</span>
             </Link>
           </li>
           <li>
             <Link to="/catalogue">
-              <text>{t("navLink2.linkTwo")}</text>
+              <span>{t("navLink2.linkTwo")}</span>
             </Link>
           </li>
-          <li>
+          {userLoged?.id&&<li>
             <Link to="/controlpanel">
-              <text>{t("navLink6.linkSix")}</text>
+              <span>{t("navLink6.linkSix")}</span>
             </Link>
-          </li>
-          {/* {!localStorage.getItem('supabase.auth.token') ?  */}
-          <li>
-            <Link to="/access">
-              <text>{t("navLink4.linkFour")}</text>
-            </Link>
-          </li>
-          {/* : */}
-          {userLoged&&<li>
-              <text onClick={handleLogOut}>Log Out</text>
-          </li>}
-          {/* } */}
-          <li>
-            <Link to="/register">
-              <text>{t("navLink5.linkFive")}</text>
-            </Link>
-          </li>
-          
+          </li>  }        
           <li>
             <MiniShop />
           </li>
           <li>
             <BtnLang />
           </li>
+          <li>
+            <BtnDark />
+          </li>
+          <Profile/>
         </ul>
       </div>
     </div>

@@ -17,7 +17,7 @@ export function Login() {
 
 
   useEffect(()=> {
-    if(userRegistered.id){
+    if(userRegistered?.id){
       history.push("/")
     }
   },[userRegistered])
@@ -29,7 +29,8 @@ export function Login() {
     });
   };
 
-  const loginUsers = () => {
+  const loginUsers = (e) => {
+    console.log(e.target.name)
     const userLog = async () => {
       await dispatch(userLogin(user));
     };
@@ -69,6 +70,7 @@ export function Login() {
           <button
             className={style.simpleButton}
             type="button"
+            name="login"
             onClick={(e) => loginUsers(e)}
           >
             LogIn

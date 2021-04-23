@@ -15,6 +15,7 @@ import {
   CheckBoxOutlineBlank,
   CheckBox,
 } from "@material-ui/icons";
+import EditUsers from './EditUsers/EditUsers'
 import { Link } from "react-router-dom";
 import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
@@ -22,7 +23,7 @@ import { useLocalStorage } from "../../LocalStorage/useLocalStorage.js";
 
 export function ControlPanel() {
   const dispatch = useDispatch();
-  const userLoged = useSelector(state =>  state.usersReducer.userLoged)
+  const userLoged = useSelector(state => state.usersReducer.userLoged)
 
   const products = useSelector((state) => state.productReducer.allproducts);
   const categories = useSelector((state) => state.productReducer.categories);
@@ -33,12 +34,12 @@ export function ControlPanel() {
 
   const changeModal = async (id) => {
     await dispatch(getOrderDetail(id));
-    setModal(true)
+    setModal(true);
   };
 
   const closeModal = () => {
     setModal(false);
-  }
+  };
 
   const checkProducts = products?.length;
 
@@ -115,7 +116,6 @@ export function ControlPanel() {
           ) : null}
           <h4>Modify</h4>
           {tab === "orders" ? null : <h4>Delete</h4>}
-
         </div>
         <div class={style.containerList}>
           {tab === "products"
@@ -137,9 +137,7 @@ export function ControlPanel() {
                   )}
 
                   <span class={style.name}>
-                    <Link to={`/product/${product.id}`}>
-                      {product.name}
-                    </Link>
+                    <Link to={`/product/${product.id}`}>{product.name}</Link>
                   </span>
                   <Link to={`/modifyproduct/${product.id}`}>
                     <Edit class={style.icon} />
@@ -170,7 +168,12 @@ export function ControlPanel() {
                       onClick={() => checkPress(order.id)}
                     />
                   )}
-                  <span onClick={() => changeModal(order.id)} class={style.name}>{order.id}</span>
+                  <span
+                    onClick={() => changeModal(order.id)}
+                    class={style.name}
+                  >
+                    {order.id}
+                  </span>
                   <span class={style.name}>{order.orderStatus[0]}</span>
                   <span class={style.name}>{order.orderDate}</span>
                 </div>
@@ -222,6 +225,10 @@ export function ControlPanel() {
                     />
                   )}
                   <span class={style.name}>{user.name}</span>
+                  <EditUsers
+                    permission={user.permission}
+                    id={user.id}
+                  />
                   <Delete
                     class={style.icon}
                     id={user.id}

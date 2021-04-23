@@ -1,6 +1,8 @@
 import * as actionType from "../action_types/actionTypes";
+
 import { createClient } from "@supabase/supabase-js";
 import swal from "sweetalert";
+import { addItemCart, setCart } from "../Cart/cartActions";
 const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
@@ -8,13 +10,13 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const postUser = (users) => {
   return async () => {
-    try {
-      // eslint-disable-next-line
-      const { user, session, error } = await supabase.auth.signUp({
-        email: users.email,
-        password: users.password,
-      });
+    const { user, error } = await supabase
+      .auth
+      .signUp({ email: users.email, password: users.password })
 
+    if (error) {
+      alert(error.message)
+    } else {
       await supabase.from("users").insert([
         {
           id: user.id,
@@ -22,25 +24,26 @@ export const postUser = (users) => {
           surname: users.surname,
           email: user.email,
           user_name: users.userName,
-          phone: users.phone,
+          phone: users.phone
         },
       ]);
-
       await supabase.from("address").insert([
         {
           user_id: user.id,
           address: users.address,
           city: users.city,
           postal_code: users.postal_code,
-          country: users.country,
+          country: users.country
         },
       ]);
-
-      console.log(user);
-    } catch (e) {
-      swal("Oops!", e, "error");
+      await supabase.from("order").insert([
+        {
+          user_id: user.id,
+          orderStatus: 'inCart',
+        },
+      ]);
     }
-  };
+  }
 };
 
 export const updateUser = (users) => {
@@ -92,22 +95,39 @@ export const deleteUser = (id) => {
 
 export const userLogin = (users) => {
   return async function (dispatch) {
-    // eslint-disable-next-line
-    const { user, session, error } = await supabase.auth.signIn({
+    const { session, error } = await supabase.auth.signIn({
       email: users.email,
       password: users.password,
-    });
-    
-    if (error) alert(error.message);
-
-    const JSON = await supabase
+    })
+    if (error) {
+      alert(error.message)
+    } else if (session) {
+      let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
+      console.log('prev ' + previousStorage)
+      previousStorage.map(item => addItemCart(item))
+      setCart()
+      var newStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
+      console.log('new ' + newStorage)
+    }
+    const userLoged = await supabase
       .from("users")
       .select("*,address(*)")
       .eq("email", users.email);
 
-    dispatch({ type: actionType.USER_LOGIN, payload: JSON.data[0] });
-  };
+    dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
+    dispatch({ type: actionType.SET_CART, payload: newStorage });
+  }
 };
+
+export const userStorage = (id) => {
+  return async function (dispatch) {    
+    const userLoged = await supabase
+      .from("users")
+      .select("*,address(*)")
+      .eq("id", id);
+    dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0]});
+  }
+}
 
 export const sendMail = (email) => {
   return async function () {
@@ -134,8 +154,20 @@ export const ResetPassword = (access_token, new_password) => {
 };
 
 export const userLogOut = () => {
-  return function (dispatch){
+  return function (dispatch) {
     const { error } = supabase.auth.signOut()
-    dispatch({type: actionType.USER_LOGOUT})
+    localStorage.setItem("cart", "[]")
+    dispatch({ type: actionType.USER_LOGOUT })
   }
 };
+
+export const changeUserPermission = (id, newPermission) => {
+  return async function (){
+    await supabase
+    .from("users")
+    .update({
+      permission: newPermission,
+    })
+    .eq("id", id);
+  }
+}

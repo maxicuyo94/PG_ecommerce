@@ -6,31 +6,36 @@ import { Catalogue } from "./Components/Catalogue/Catalogue";
 import { Product } from "./Components/Product/Product";
 import { Home } from "./Components/Home/Home";
 import { AddProduct } from "./Components/AddProduct/AddProduct.jsx";
-import { LoginSignup } from "./Components/LoginSigup/LoginSignup";
-import { ModifyUser } from "./Components/LoginSigup/ModifyUser/ModifyUser";
+import { Access } from "./Components/Access/Access";
+import { ModifyUser } from "./Components/Access/ModifyUser/ModifyUser";
 import { ModifyProduct } from "./Components/ModifyProduct/ModifyProduct.jsx";
 import { ControlPanel } from "./Components/ControlPanel/ControlPanel.jsx";
 import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
-import { Reset } from "./Components/LoginSigup/ResetPassword/ResetPassword";
+import { userStorage } from "./Redux/Users/usersActions"
+import { Reset } from "./Components/Access/ResetPassword/ResetPassword";
+import  { Review } from "./Components/Review/review"
 
 function App() {
   // eslint-disable-next-line
-  const [priority, setPriorityStorage] = useLocalStorage("priority", "");
+  const [userLogedStorage, setUserLogedStorage] = useLocalStorage("supabase.auth.token", "");
+  const dark = useSelector((state) => state.darkReducer.dark)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setCart());
-    // dispatch(userLogin());
+    if(userLogedStorage){
+      dispatch(userStorage(userLogedStorage.currentSession.user.id))
+    }
   }, [dispatch]);
 
   return (
-    <Layout priority={priority}>
-      <Route exact path="/" render={() => <Home priority={priority} />} />
+    <Layout>
+      <Route exact path="/" render={() => <Home dark={dark} />} />
       <Route
         exact
-        path="/login"
-        render={() => <LoginSignup priority={priority} />}
+        path="/Access"
+        render={() => <Access />}
       />
       <Route
         exact
@@ -42,23 +47,23 @@ function App() {
         exact
         path="/Product/:id"
         render={({ match }) => (
-          <Product priority={priority} id={match.params.id} />
+          <Product id={match.params.id} />
         )}
       />
       <Route
         exact
         path="/catalogue"
-        render={() => <Catalogue priority={priority} />}
+        render={() => <Catalogue />}
       />
       <Route
         exact
         path="/AddProduct"
-        render={() => <AddProduct priority={priority} />}
+        render={() => <AddProduct />}
       />
       <Route
         exact
         path="/Order"
-        render={() => <CheckOut priority={priority} />}
+        render={() => <CheckOut />}
       />
       <Route
         exact
@@ -67,8 +72,18 @@ function App() {
       />
       <Route
         exact
+        path="/rate-product/:id"
+        render={({ match }) => <Review id={match.params.id} />}
+      />
+      <Route
+        exact
         path="/controlpanel"
-        render={() => <ControlPanel priority={priority} />}
+        render={() => <ControlPanel />}
+      />
+      <Route
+        exact
+        path="/review"
+        render={() => <Review />}
       />
     </Layout>
   );

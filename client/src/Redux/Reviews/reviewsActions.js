@@ -36,6 +36,7 @@ export const getReviewsOfProduct = (id) => {
 
 export const updateReview = (id_review, id) => {
   return async function (dispatch) {
+    //eslint-disable-next-line
     const JSON = await supabase
       .from("review")
       .update({
