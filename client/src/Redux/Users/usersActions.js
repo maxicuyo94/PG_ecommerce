@@ -101,15 +101,15 @@ export const userLogin = (users) => {
     })
     if (error) {
       alert(error.message)
-    } else if (session) {
+    } else {
       let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-      console.log('prev '+previousStorage)
       previousStorage.map(item => addItemCart(item))
-      setCart()
-      var newStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-      console.log('new '+newStorage)
+      setTimeout(() => {
+        console.log("pruebasssss")
+        dispatch(setCart())
+      }, 2000);
+
     }
-    dispatch({ type: actionType.SET_CART, payload: newStorage });
   }
 };
 
@@ -138,6 +138,9 @@ export const ResetPassword = (access_token, new_password) => {
 };
 
 export const userLogOut = () => {
-  localStorage.removeItem("supabase.auth.token");
-  localStorage.setItem("cart", "[]")
+  return async function (dispatch) {
+    localStorage.removeItem("supabase.auth.token");
+    localStorage.setItem("cart", "[]")
+    dispatch({ type: actionType.SET_CART, payload: [] });
+  }
 };

@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 export function ItemCart({ product }) {
   const dispatch = useDispatch();
 
-  const handleQuantityChange = (amount) => {
+  const handleQuantityChange = async (amount) => {
     const newValue = product.quantity + amount;
     if (newValue <= product.stock && newValue >= 1 && newValue <= 10) {
       // let productToDispatch = { ...product };
@@ -28,6 +28,8 @@ export function ItemCart({ product }) {
       };
 
       productToDispatch.quantity = amount;
+
+
       dispatch(addItemCart(productToDispatch));
       // let payload = {
       //     id: product.id,

@@ -8,10 +8,13 @@ import MiniShop from "./MiniShop/MiniShop";
 import BtnLang from "./BtnLang/BtnLang";
 import BtnDark from './BtnDark/BtnDark'
 import { userLogOut } from "../../Redux/Users/usersActions";
+import { useDispatch, useSelector } from "react-redux";
 
 export function Nav({ priority }) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
+
+  const dispatch = useDispatch();
 
   return (
     <div className={style.container}>
@@ -51,7 +54,7 @@ export function Nav({ priority }) {
           {/* : */}
           <li>
             <Link to="/home">
-              <span onClick={() => userLogOut()}>Log Out</span>
+              <span onClick={() => dispatch(userLogOut())}>Log Out</span>
             </Link>
           </li>
           {/* } */}
