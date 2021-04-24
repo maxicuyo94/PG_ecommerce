@@ -213,7 +213,7 @@ export function SignUp() {
                     value={user.password}
                     onChange={handleState} 
                 />
-            <span>Use at least eight characters with a combination of letters, numbers, and symbols</span>
+            <span>Use at least eight characters with a combination of letters, numbers, and symbols (@$!%*?&)</span>
             </div>
             <Link to="/login">
                 <button
