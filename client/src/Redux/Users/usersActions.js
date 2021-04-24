@@ -98,6 +98,7 @@ export const deleteUser = (id) => {
   };
 };
 
+
 export const userLogin = (users) => {
   return async function (dispatch) {
     const { data: user, error } = await supabase.auth.signIn({
@@ -108,16 +109,17 @@ export const userLogin = (users) => {
       alert(error.message)
     } else {
       let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-      previousStorage.map(item => addItemCart(item))
-      setTimeout(() => {
-        console.log("pruebasssss")
-        dispatch(setCart())
-      }, 2000);
+      let guestCartAdded = previousStorage.map(item => addItemCart(item))
+      console.log( guestCartAdded )
+      dispatch({ type: actionType.USER_LOGIN, payload: user.user });
       const userLoged = await supabase
       .from("users")
       .select("*,address(*)")
       .eq("email", users.email);
       dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
+      setTimeout(() => {
+        dispatch(setCart(user.user.id));
+      }, 2000);
     }
   }
 };
