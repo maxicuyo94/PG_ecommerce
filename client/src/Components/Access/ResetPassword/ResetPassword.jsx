@@ -19,7 +19,9 @@ export function Reset() {
         document.getElementById("password").value
       )
     ) {
-      swal("Campos invalidos o vacios", "", "success");
+      swal("Invalid password", "", "warning");
+    } else if (document.getElementById("password").value !== document.getElementById("repeat").value) {
+      swal("Password doesn't match","","warning");
     } else {
       await dispatch(ResetPassword(token, document.getElementById("password").value));
       swal("Your password was successfully reset");
@@ -31,7 +33,11 @@ export function Reset() {
     <form className="form">
       <div>
         <label>New password</label>
-        <input type="text" id="password" placeholder="Epassword" />
+        <input type="password" id="password" placeholder="Password" />
+      </div>
+      <div>
+        <label>Repeat password</label>
+        <input type="password" id="repeat" placeholder="Password" />
       </div>
       <button type="submit" onClick={(e) => resetP(e)}>
         Reset password
