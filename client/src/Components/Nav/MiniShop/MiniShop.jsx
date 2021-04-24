@@ -93,7 +93,7 @@ export default function CustomizedMenus() {
     // const shop = useSelector(state => state.productByCategories)
 
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+        cart.length && setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
@@ -122,7 +122,6 @@ export default function CustomizedMenus() {
                 <div className={styles.products}>
                     {
                         cart && cart.map((item) => {
-                            // console.log('Item: ', item)
                             cont += item.quantity * item.price;
                             return (
                                 <div className={styles.container}>

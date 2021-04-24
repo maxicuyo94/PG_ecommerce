@@ -38,13 +38,14 @@ export function setCart(user_id) {
       let previousStorage = window.localStorage.getItem("cart");
       if (previousStorage) {
         previousStorage = JSON.parse(previousStorage);
+        dispatch({ type: actionType.SET_CART, payload: previousStorage });
       } else {
         localStorage.setItem("cart", "[]")
         dispatch({ type: actionType.SET_CART, payload: [] });
       }
     }
 
-    
+
 
   }
 
@@ -190,17 +191,22 @@ export const clearCart = () => {
   };
 };
 
-// export const checkOut = () => {
-//   let userId = localStorage.getItem("supabase.auth.token") && JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user.id;
+export const checkout = (userId, status) => {
+  return async function (dispatch) {
+    const { data, error } = await supabase
+      .from('order')
+      .update({ orderStatus: status })
+      .eq('user_id', userId)
+      .eq('orderStatus', "inCart")
 
-//   const checkStock = async(product_id) => {
+    await supabase.from("order").insert([
+      {
+        user_id: userId,
+        orderStatus: 'inCart',
+      },
+    ]);
+    localStorage.setItem("cart", "[]")
+    dispatch({ type: actionType.SET_CART, payload: [] });
+  }
+}
 
-//   }
-//   checkStock()
-
-
-//   // return {
-//   //   type: actionType.CHECKOUT,
-//   //   payload,
-//   // };
-// };
