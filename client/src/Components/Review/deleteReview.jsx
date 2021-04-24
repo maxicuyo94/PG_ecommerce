@@ -1,10 +1,8 @@
 import React from "react";
-import { Rating } from "./rating";
 import { deleteReview } from "../../Redux/Reviews/reviewsActions";
 
-export default function Modal({
+export default function cancelReview ({
   description,
-  rating,
   idReview,
   idProduct,
   dispatch,
@@ -19,7 +17,6 @@ export default function Modal({
       <div
         style={{ width: "fit-content", marginLeft: "10px", marginTop: "5px" }}
       >
-        <Rating staticRating={rating} />
       </div>
       <p>{description}</p>
       {idReview && (
