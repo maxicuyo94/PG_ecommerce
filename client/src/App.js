@@ -22,14 +22,10 @@ function App() {
   // eslint-disable-next-line
   const [userLogedStorage, setUserLogedStorage] = useLocalStorage("supabase.auth.token", "");
   const dark = useSelector((state) => state.darkReducer.dark)
- // const user = useSelector(state => state.usersReducer.userLoged)
   const dispatch = useDispatch();
   useEffect(() => {
-
-    dispatch(setCart());
-    if(userLogedStorage){
-      dispatch(userStorage(userLogedStorage.currentSession.user.id))
-    }
+    if(userLogedStorage) dispatch(userStorage(userLogedStorage.currentSession.user.id))
+    dispatch(setCart(userLogedStorage.currentSession?.user.id));
   }, [dispatch, userLogedStorage]);
 
 

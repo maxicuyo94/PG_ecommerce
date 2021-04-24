@@ -144,8 +144,7 @@ export default function CustomizedMenus() {
                 <span>US${cont.toFixed(2)}</span>
                 <StyledGo>
                     <NavLink to={'/order'}>
-                        <span>Go to Checkout</span>
-
+                        <span>Go to Cart</span>
                     </NavLink>
                 </StyledGo>
             </StyledMenu>
