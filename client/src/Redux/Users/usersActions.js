@@ -16,6 +16,7 @@ export const postUser = (users) => {
 
     if (error) {
       alert(error.message)
+      return error
     } else {
       await supabase.from("users").insert([
         {
@@ -110,12 +111,27 @@ export const userLogin = (users) => {
       let guestCartAdded = previousStorage.map(item => addItemCart(item))
       console.log( guestCartAdded )
       dispatch({ type: actionType.USER_LOGIN, payload: user.user });
+      const userLoged = await supabase
+      .from("users")
+      .select("*,address(*)")
+      .eq("email", users.email);
+      dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
     }
     setTimeout(() => {
       dispatch(setCart(user.user.id));
     }, 2000);
   }
 };
+
+export const userStorage = (id) => {
+  return async function (dispatch) {    
+    const userLoged = await supabase
+      .from("users")
+      .select("*,address(*)")
+      .eq("id", id);
+    dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0]});
+  }
+}
 
 export const sendMail = (email) => {
   return async function () {
@@ -142,10 +158,26 @@ export const ResetPassword = (access_token, new_password) => {
 };
 
 export const userLogOut = () => {
-  return async function (dispatch) {
-    localStorage.removeItem("supabase.auth.token");
+  return function (dispatch) {
+    const { error } = supabase.auth.signOut()
     localStorage.setItem("cart", "[]")
-    dispatch({ type: actionType.SET_CART, payload: [] });
-    dispatch({ type: actionType.USER_LOGIN, payload: {} });
+
+    if(error){
+      return error
+    }else{
+      dispatch({ type: actionType.SET_CART, payload: [] });
+      dispatch({ type: actionType.USER_LOGOUT })
+    }
   }
 };
+
+export const changeUserPermission = (id, newPermission) => {
+  return async function (){
+    await supabase
+    .from("users")
+    .update({
+      permission: newPermission,
+    })
+    .eq("id", id);
+  }
+}

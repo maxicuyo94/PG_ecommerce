@@ -16,6 +16,7 @@ function productReducer(state = InitialState, action) {
         allproducts: action.payload,
       };
     case actionType.SEARCH:
+      console.log(action.payload)
       return {
         ...state,
         wantedProducts: action.payload

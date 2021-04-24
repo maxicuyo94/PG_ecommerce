@@ -1,26 +1,32 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogin, sendMail } from "../../../Redux/Users/usersActions";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, useLocation } from "react-router-dom";
 import style from "./login.module.scss";
+import { useLocalStorage } from "../../../LocalStorage/useLocalStorage";
 
 export function Login() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const userRegistered = useSelector(state => state.usersReducer.userLoged)
+  const location = useLocation()
+  const history = useHistory();  
 
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
-  let userId =
-    localStorage.getItem("supabase.auth.token") &&
-    JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user
-      .id;
-
-  let storage =
-    localStorage.getItem("cart") &&
-    JSON.parse(localStorage.getItem("cart"))
+  useEffect(()=> {
+    if(userRegistered?.id){
+      if(location.state.from){
+        console.log("assssssssssssss")
+        history.push(location.state.from)
+      }else{
+        console.log("porque?")
+        // history.push("/")
+      }
+    }
+  },[userRegistered])
 
   const handleState = (e) => {
     setUser({
@@ -29,11 +35,9 @@ export function Login() {
     });
   };
 
-  const loginUsers = () => {
+  const loginUsers = (e) => {
     const userLog = async () => {
       await dispatch(userLogin(user));
-      // console.log(logUser)
-      localStorage.getItem("supabase.auth.token") && history.push("/");
     };
     userLog();
   };
@@ -47,8 +51,7 @@ export function Login() {
 
   return (
     <form className={style.container}>
-      {!userId && (
-        <div>
+        <>
           <div>
             <input
               className={!user.email ? "danger" : ""}
@@ -72,18 +75,18 @@ export function Login() {
           <button
             className={style.simpleButton}
             type="button"
+            name="login"
             onClick={(e) => loginUsers(e)}
           >
             LogIn
           </button>
-        </div>
-      )}
-      {/* No BORRAR!!! */}
-      <input type="text" id="email" placeholder="Email" />
-      <button type="button" onClick={(e) => resetPassword(e)}>
-        Forgot password?
-      </button>
-      {userId && <Link to={`/modifyUser/${userId}`}>Modify User</Link>}
+          <div>
+            <input type="text" id="email" placeholder="Email" />
+          </div>
+            <button className={style.simpleButton} type="button" onClick={(e) => resetPassword(e)}>
+              Forgot password?
+            </button>
+        </>
     </form>
   );
 }

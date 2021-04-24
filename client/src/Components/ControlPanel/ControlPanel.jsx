@@ -16,13 +16,17 @@ import {
   CheckBoxOutlineBlank,
   CheckBox,
 } from "@material-ui/icons";
+import EditUsers from './EditUsers/EditUsers'
 import { Link } from "react-router-dom";
 import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
-import {ProductSelection} from './Modals/ProductSelection'
+import { useLocalStorage } from "../../LocalStorage/useLocalStorage.js";
+import { ProductSelection } from './Modals/ProductSelection'
 
 export function ControlPanel() {
   const dispatch = useDispatch();
+  const userLoged = useSelector(state => state.usersReducer.userLoged)
+
   const products = useSelector((state) => state.productReducer.allproducts);
   const categories = useSelector((state) => state.productReducer.categories);
   const users = useSelector((state) => state.usersReducer.users);
@@ -79,7 +83,11 @@ export function ControlPanel() {
     } else setCheckbox(false);
   };
 
-  const [tab, setTab] = useState("products");
+  const [tab, setTab] = useState(()=>{
+    return (
+      userLoged.permission === "customer" ? "purchasehistory" : "products"
+    )
+  });
   const handleTab = (e) => {
     setTab(e.target.name);
   };
@@ -89,24 +97,35 @@ export function ControlPanel() {
     openModalSelector();
   }
   return (
-    <div class={style.container}>
+    <div className={style.container}>
       <h2>Control Panel</h2>
-      <div class={style.barButtons}>
-        <button name="products" onClick={(e) => handleTab(e)}>
-          Products
+      <div className={style.barButtons}>
+      {(userLoged.permission !== "customer")
+          &&
+          <button name="products" onClick={(e) => handleTab(e)}>
+            Products
         </button>
-        <button name="orders" onClick={(e) => handleTab(e)}>
-          Orders
+        }
+        {(userLoged.permission !== "customer")
+          &&
+          <button name="orders" onClick={(e) => handleTab(e)}>
+            Orders
         </button>
+        }
         <button name="purchasehistory" onClick={(e) => handleTab(e)}>
           Purchase History
         </button>
-        <button name="categories" onClick={(e) => handleTab(e)}>
-          Categories
+        {(userLoged.permission !== "customer")
+          &&
+          <button name="categories" onClick={(e) => handleTab(e)}>
+            Categories
         </button>
-        <button name="users" onClick={(e) => handleTab(e)}>
-          Users
-        </button>
+        }
+        {(userLoged.permission !== "customer")
+          &&
+          <button name="users" onClick={(e) => handleTab(e)}>
+            Users
+        </button>}
         {tab === "products" ? (
           <Link to="/addproduct">
             <button>Add Product</button>
@@ -115,148 +134,153 @@ export function ControlPanel() {
       </div>
       <div>
         <input className={style.search} placeholder='Search...' name="input" onChange={(e) => handleSearch(e.target.value)}
-
         ></input>
       </div>
-      <div class={style.containerList}>
-        <div class={style.bar}>
+      <div className={style.containerList}>
+        <div className={style.bar}>
           <h4>
             <CheckBoxOutlineBlank />
           </h4>
-          {tab === "products" ? <h4 class={style.name}>Product</h4> : null}
-          {tab === "orders" ? <h4 class={style.name}>Order ID</h4> : null}
-          {tab === "orders" ? <h4 class={style.name}>Status</h4> : null}
-          {tab === "orders" ? <h4 class={style.name}>Date</h4> : null}
-          {tab === "categories" ? <h4 class={style.name}>Category</h4> : null}
-          {tab === "users" ? <h4 class={style.name}>User</h4> : null}
+          {tab === "products" ? <h4 className={style.name}>Product</h4> : null}
+          {tab === "orders" ? <h4 className={style.name}>Order ID</h4> : null}
+          {tab === "orders" ? <h4 className={style.name}>Status</h4> : null}
+          {tab === "orders" ? <h4 className={style.name}>Date</h4> : null}
+          {tab === "categories" ? <h4 className={style.name}>Category</h4> : null}
+          {tab === "users" ? <h4 className={style.name}>User</h4> : null}
           {tab === "purchasehistory" ? (
-            <h4 class={style.name}>Purchase</h4>
+            <h4 className={style.name}>Purchase</h4>
           ) : null}
           <h4>Modify</h4>
           {tab === "orders" ? null : <h4>Delete</h4>}
         </div>
-        <div class={style.containerList}>
+        <div className={style.containerList}>
           {tab === "products"
-                   ? products?.map((product) => {
-                   return (
-                    <div key={product.id} class={style.list}>
-                      {checkbox ? (
-                      <CheckBox
-                        id={product.id}
-                        class={style.icon}
-                        onClick={() => checkPress(product.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={product.id}
-                        class={style.icon}
-                        onClick={() => checkPress(product.id)}
-                      />
-                    )}
-
-                    <span class={style.name}>
-                      <Link to={`/product/${product.id}`}>{product.name}</Link>
-                    </span>
-                    <Link to={`/modifyproduct/${product.id}`}>
-                      <Edit class={style.icon} />
-                    </Link>
-                    <Delete
-                      class={style.icon}
+            ? products?.map((product) => {
+              return (
+                <div key={product.id} className={style.list}>
+                  {checkbox ? (
+                    <CheckBox
                       id={product.id}
-                      onClick={() => handleDelete(product.id)}
+                      class={style.icon}
+                      onClick={() => checkPress(product.id)}
                     />
-                  </div>
-                );
-              })
+                  ) : (
+                    <CheckBoxOutlineBlank
+                      id={product.id}
+                      class={style.icon}
+                      onClick={() => checkPress(product.id)}
+                    />
+                  )}
+
+                  <span className={style.name}>
+                    <Link to={`/product/${product.id}`}>{product.name}</Link>
+                  </span>
+                  <Link to={`/modifyproduct/${product.id}`}>
+                    <Edit class={style.icon} />
+                  </Link>
+                  <Delete
+                    class={style.icon}
+                    id={product.id}
+                    onClick={() => handleDelete(product.id)}
+                  />
+                </div>
+              );
+            })
             : null}
           {tab === "orders"
             ? orders.map((order) => {
-                return (
-                  <div class={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    )}
-                    <span
-                      onClick={() => changeModal(order.id)}
-                      class={style.name}
-                    >
-                      {order.id}
-                    </span>
-                      <span class={style.name}>{order.orderStatus}</span>
-                      <span class={style.name}>{order.orderDate}</span>
-                    <dvi>
-                      <button class={style.icon} value={order.id} onClick={(e) => getProducts(e)}>+</button>
-                      <Modal class={style.modal} open={modalTwo} onClose={closeModal} >
-                       <ProductSelection products={productsOfOrder}></ProductSelection>
-                      </Modal>
-                    </dvi>
-                  </div>
-                );
-              })
+              return (
+                <div className={style.list}>
+                  {checkbox ? (
+                    <CheckBox
+                      id={order.id}
+                      class={style.icon}
+                      onClick={() => checkPress(order.id)}
+                    />
+                  ) : (
+                    <CheckBoxOutlineBlank
+                      id={order.id}
+                      class={style.icon}
+                      onClick={() => checkPress(order.id)}
+                    />
+                  )}
+                  <span
+                    onClick={() => changeModal(order.id)}
+                    className={style.name}
+                  >
+                    {order.id}
+                  </span>
+                  <span className={style.name}>{order.orderStatus}</span>
+                  <span className={style.name}>{order.orderDate}</span>
+                  <dvi>
+                    <button className={style.icon} value={order.id} onClick={(e) => getProducts(e)}>+</button>
+                    <Modal class={style.modal} open={modalTwo} onClose={closeModal} >
+                      <ProductSelection products={productsOfOrder}></ProductSelection>
+                    </Modal>
+                  </dvi>
+                </div>
+              );
+            })
             : null}
           {tab === "categories"
             ? categories.map((category) => {
-                return (
-                  <div class={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={category.id}
-                        class={style.icon}
-                        onClick={() => checkPress(category.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={category.id}
-                        class={style.icon}
-                        onClick={() => checkPress(category.id)}
-                      />
-                    )}
-                    <span class={style.name}>{category.name}</span>
-                    <Delete
-                      class={style.icon}
+              return (
+                <div className={style.list}>
+                  {checkbox ? (
+                    <CheckBox
                       id={category.id}
-                      onClick={() => handleDelete(category.id)}
-                    />
-                  </div>
-                );
-              })
-            : null}
-          {tab === "users"
-            ? users.map((user) => {
-                return (
-                  <div key={user.id} class={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={user.id}
-                        class={style.icon}
-                        onClick={() => checkPress(user.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={user.id}
-                        class={style.icon}
-                        onClick={() => checkPress(user.id)}
-                      />
-                    )}
-                    <span class={style.name}>{user.name}</span>
-                    <Delete
                       class={style.icon}
-                      id={user.id}
-                      onClick={() => handleDelete(user.id)}
+                      onClick={() => checkPress(category.id)}
                     />
-                  </div>
-                );
-              })
+                  ) : (
+                    <CheckBoxOutlineBlank
+                      id={category.id}
+                      class={style.icon}
+                      onClick={() => checkPress(category.id)}
+                    />
+                  )}
+                  <span className={style.name}>{category.name}</span>
+                  <Delete
+                    class={style.icon}
+                    id={category.id}
+                    onClick={() => handleDelete(category.id)}
+                  />
+                </div>
+              );
+            })
+            : null}
+          {tab === "users" && (userLoged.permission === "superadmin" || userLoged.permission === "admin")
+            ? users.map((user) => {
+              return (
+                <div key={user.id} className={style.list}>
+                  {checkbox ? (
+                    <CheckBox
+                      id={user.id}
+                      class={style.icon}
+                      onClick={() => checkPress(user.id)}
+                    />
+                  ) : (
+                    <CheckBoxOutlineBlank
+                      id={user.id}
+                      class={style.icon}
+                      onClick={() => checkPress(user.id)}
+                    />
+                  )}
+                  <span className={style.name}>{user.name}</span>
+                  <span className={style.name}>{user.permission}</span>
+                  {(user.permission === "superadmin" && userLoged.permission === "admin") ? null :
+                    <EditUsers
+                      permission={user.permission}
+                      id={user.id}
+                    />}
+                  <Delete
+                    class={style.icon}
+                    id={user.id}
+                    onClick={() => handleDelete(user.id)}
+                  />
+                </div>
+              );
+            })
             : null}
         </div>
       </div>
