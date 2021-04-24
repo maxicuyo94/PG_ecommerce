@@ -68,9 +68,9 @@ export default function Profile(props) {
         setAnchorEl(null);
     };
 
-    const changePermission = (e) => {
-        dispatch(changeUserPermission(props.id, e.target.getAttribute('name')))
-        dispatch(allUsers())
+    const changePermission = async (e) => {
+       await dispatch(changeUserPermission(props.id, e.target.getAttribute('name')))
+       await dispatch(allUsers())
     }
 
     const configRender = () => {
@@ -80,11 +80,11 @@ export default function Profile(props) {
                     case "superadmin":
                         return (
                             <div>
-                                <StyledMenuItem onChange={changePermission} name="admin">
+                                <StyledMenuItem onClick={changePermission} name="admin">
                                         <span>Admin</span>
                                 </StyledMenuItem>
                                 <StyledMenuItem>
-                                        <span onChange={changePermission} name="customer">Customer</span>
+                                        <span onClick={changePermission} name="customer">Customer</span>
                                 </StyledMenuItem>
                             </div>
                         );
