@@ -16,7 +16,6 @@ export function Nav({ priority }) {
   const [t, i18n] = useTranslation("global");
   const history = useHistory();
 
-
   return (
     <div className={style.container}>
       {/* <Header /> */}

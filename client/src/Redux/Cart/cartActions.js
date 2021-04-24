@@ -8,57 +8,44 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 //Cart actions
 
-export function setCart() {
+export function setCart(user_id) {
   return async function (dispatch) {
-    let userId =
-      localStorage.getItem("supabase.auth.token") &&
-      JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user
-        .id;
-
-    if (userId) {
+    if (user_id) {
       //if logged
       let { data, error } = await supabase
         .from("order")
         .select("*,order_detail(*)")
         .eq("orderStatus", "inCart")
-        .eq("user_id", userId);
-      
-      if(error) console.log(error.message)
-      var cartDB = data?.length
+        .eq("user_id", user_id);
+      if (error) console.log(error.message)
+      var cartDB = data.length
+
         ? data[0].order_detail.map((item) => {
-          // const DBstock = supabase
-          // .from("product")
-          // .select("stock")
-          // .eq("id", item.product_id)
-          // .then(resp => {
-          //   return resp
-          // })
-          // const stock = DBstock.data[0].stock
-          // console.log(stock)
           return {
             id: item.product_id,
             title: item.title,
             image: item.image,
             quantity: item.quantity,
             price: item.price,
-            stock: 100
+            stock: item.stock
           };
         })
         : [];
 
-      localStorage.setItem("cart", JSON.stringify(cartDB));
-      return dispatch({ type: actionType.SET_CART, payload: cartDB });
-    }
-
-    let previousStorage = window.localStorage.getItem("cart");
-    if (previousStorage) {
-      previousStorage = JSON.parse(previousStorage);
+      // localStorage.setItem("cart", JSON.stringify(cartDB));
+      dispatch({ type: actionType.SET_CART, payload: cartDB });
     } else {
-      localStorage.setItem("cart", "[]")
-      previousStorage = [];
+      let previousStorage = window.localStorage.getItem("cart");
+      if (previousStorage) {
+        previousStorage = JSON.parse(previousStorage);
+      } else {
+        localStorage.setItem("cart", "[]")
+        dispatch({ type: actionType.SET_CART, payload: [] });
+      }
     }
 
-    dispatch({ type: actionType.SET_CART, payload: previousStorage });
+    
+
   }
 
 }
@@ -102,7 +89,7 @@ export const addItemCart = (payload) => {
               order_id: usercart.data[0]?.id,
               user_id: userId,
               image: payload.image,
-              stock: 100
+              stock: payload.stock
             },
           ]);
       }
