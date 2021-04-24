@@ -37,7 +37,7 @@ export function Catalogue() {
       allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input.input)
     );
     dispatch(getCategories());
-  }, [stableDispatch, Pages, Category, Prices, Input]);
+  }, [dispatch, stableDispatch, Pages, Category, Prices, Input]);
 
   const handleInputChange = (e) => {
     e.preventDefault();

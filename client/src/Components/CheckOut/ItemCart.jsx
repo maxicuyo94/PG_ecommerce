@@ -59,7 +59,6 @@ export function ItemCart({ product }) {
     }).then(resp => {
       if(resp) {
         dispatch(deleteItemCart(product));
-        swal("Item deleted!", "", "success")
       }
     })
     

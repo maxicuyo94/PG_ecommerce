@@ -18,6 +18,7 @@ const SwiperSlider = (products) => {
       scrollbar={false}
       autoHeight={false}
       loop={true}
+      grabCursor={true}
       breakpoints={
         {
           //Solo celulares
@@ -52,11 +53,11 @@ const SwiperSlider = (products) => {
       }
     >
       {
-        products && products.products.map((item, i) => {
+        products && products.products.filter(item => item.stock > 0).map((item, i) => {
           {
             return (
               <SwiperSlide key={i}>
-                <CategoriesHome
+                <CategoriesHome 
                   key={item.id}
                   stock={item.stock} title={item.name} price={item.price} images={item.images[0]?.url} id={item.id}
                 />

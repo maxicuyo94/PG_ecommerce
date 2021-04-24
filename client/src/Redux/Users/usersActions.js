@@ -126,11 +126,16 @@ export const userLogin = (users) => {
 
 export const userStorage = (id) => {
   return async function (dispatch) {    
-    const userLoged = await supabase
-      .from("users")
-      .select("*,address(*)")
-      .eq("id", id);
-    dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0]});
+    if(id) {
+      const userLoged = await supabase
+        .from("users")
+        .select("*,address(*)")
+        .eq("id", id);
+      dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0]});
+    }
+    // else {
+    //   swal("no logged", "wanna log in?", "error");
+    // }
   }
 }
 
@@ -162,6 +167,7 @@ export const userLogOut = () => {
   return function (dispatch) {
     const { error } = supabase.auth.signOut()
     localStorage.setItem("cart", "[]")
+
     if(error){
       return error
     }else{

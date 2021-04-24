@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { Link, NavLink, useHistory } from "react-router-dom";
-//import { SearchBar } from "../SearchBar/SearchBar";
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import { SearchBar } from "../Searchbar/Searchbar";
 //import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
@@ -10,15 +10,16 @@ import BtnDark from './BtnDark/BtnDark'
 import Profile from './Profile/Profile'
 import { useSelector } from "react-redux";
 
-export function Nav({ priority }) {
+export function Nav({ priority, dark }) {
   // eslint-disable-next-line
   const userLoged = useSelector(state =>  state.usersReducer.userLoged)
+    // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-  const history = useHistory();
-
+  //const history = useHistory();
 
   return (
-    <div className={style.container}>
+    <div className={dark ? style.containerDark : style.container}>
+      {}
       {/* <Header /> */}
       <div className={style.contents}>
         <div className={style.logo}>
@@ -45,7 +46,10 @@ export function Nav({ priority }) {
             <Link to="/controlpanel">
               <span>{t("navLink6.linkSix")}</span>
             </Link>
-          </li>  }        
+          </li>  }  
+          <li>
+            <SearchBar/>
+            </li>      
           <li>
             <MiniShop />
           </li>

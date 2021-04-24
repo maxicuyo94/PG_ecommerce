@@ -24,26 +24,27 @@ function App() {
   const dark = useSelector((state) => state.darkReducer.dark)
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setCart());
-    if(userLogedStorage){
-      dispatch(userStorage(userLogedStorage.currentSession.user.id))
-    }
-  }, [dispatch]);
+    if(userLogedStorage) dispatch(userStorage(userLogedStorage.currentSession.user.id))
+    dispatch(setCart(userLogedStorage.currentSession?.user.id));
+  }, [dispatch, userLogedStorage]);
+
 
   return (
-    <Layout>
+    <Layout dark={dark}>
       <Route exact path="/" render={() => <Home  dark={dark}/>} />
       <ProtectedRoute
         exact
         path="/Access"
         component={() => <Access />}
+
       />
       <ProtectedRoute
         exact
         path="/myprofile"
-        component={({ match }) => <ModifyUser id={match.params.id} />}
+        component={({ match }) => <ModifyUser id={match.params.id} dark={dark} />}
+
       />
-      <Route exact path="/resetPassword" component={Reset} />
+      <Route exact path="/resetPassword" component={Reset} dark={dark} />
       <Route
         exact
         path="/Product/:id"
@@ -54,38 +55,38 @@ function App() {
       <Route
         exact
         path="/catalogue"
-        render={() => <Catalogue />}
+        render={() => <Catalogue dark={dark} />}
       />
       <Route
         exact
         path="/AddProduct"
-        render={() => <AddProduct />}
+        render={() => <AddProduct dark={dark} />}
       />
       <ProtectedRoute
         exact
         path="/Order"
-        component={() => <CheckOut />}
+        component={() => <CheckOut dark={dark} />}
       />
       <ProtectedRoute  
         exact
         path="/modifyProduct/:id"
         restringed="customer"
-        component={({ match }) => <ModifyProduct id={match.params.id} />}
+        component={({ match }) => <ModifyProduct id={match.params.id} dark={dark} />}
       />
       <Route
         exact
         path="/rate-product/:id"
-        render={({ match }) => <Review id={match.params.id} />}
+        render={({ match }) => <Review id={match.params.id} dark={dark} />}
       />
       <ProtectedRoute
         exact
         path="/controlpanel"
-        component={() => <ControlPanel />}
+        component={() => <ControlPanel dark={dark} />}
       />
       <Route
         exact
         path="/review"
-        render={() => <Review />}
+        render={() => <Review dark={dark} />}
       />
     </Layout>
   );
