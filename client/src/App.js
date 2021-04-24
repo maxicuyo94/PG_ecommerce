@@ -30,7 +30,7 @@ function App() {
 
 
   return (
-    <Layout>
+    <Layout dark={dark}>
       <Route exact path="/" render={() => <Home  dark={dark}/>} />
       <ProtectedRoute
         exact
