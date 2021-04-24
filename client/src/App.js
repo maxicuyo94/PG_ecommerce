@@ -17,6 +17,7 @@ import { setCart } from "./Redux/Cart/cartActions";
 import { userStorage } from "./Redux/Users/usersActions"
 import { Reset } from "./Components/Access/ResetPassword/ResetPassword";
 import  { Review } from "./Components/Review/review"
+import { Router } from "@material-ui/icons";
 
 function App() {
   // eslint-disable-next-line
@@ -62,10 +63,10 @@ function App() {
         path="/AddProduct"
         render={() => <AddProduct dark={dark} />}
       />
-      <ProtectedRoute
+      <Router
         exact
         path="/Order"
-        component={() => <CheckOut dark={dark} />}
+        render={() => <CheckOut dark={dark} />}
       />
       <ProtectedRoute  
         exact

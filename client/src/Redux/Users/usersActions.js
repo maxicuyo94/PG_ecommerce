@@ -43,6 +43,7 @@ export const postUser = (users) => {
           orderStatus: 'inCart',
         },
       ]);
+      return user
     }
   }
 };
@@ -145,7 +146,8 @@ export const sendMail = (email) => {
     const { error, data } = await supabase.auth.api.resetPasswordForEmail(
       email
     );
-    error && swal("Oops!", error.message, "error");
+    error ? swal("Oops!", error.message, "error") : swal("We send you an email to reset your password");
+
   };
 };
 
