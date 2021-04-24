@@ -107,13 +107,13 @@ export const userLogin = (users) => {
       alert(error.message)
     } else {
       let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-      previousStorage.map(item => addItemCart(item))
-      setTimeout(() => {
-        console.log("pruebasssss")
-        dispatch(setCart())
-      }, 2000);
-
+      let guestCartAdded = previousStorage.map(item => addItemCart(item))
+      console.log( guestCartAdded )
+      dispatch({ type: actionType.USER_LOGIN, payload: user.user });
     }
+    setTimeout(() => {
+      dispatch(setCart(user.user.id));
+    }, 2000);
   }
 };
 
@@ -146,5 +146,6 @@ export const userLogOut = () => {
     localStorage.removeItem("supabase.auth.token");
     localStorage.setItem("cart", "[]")
     dispatch({ type: actionType.SET_CART, payload: [] });
+    dispatch({ type: actionType.USER_LOGIN, payload: {} });
   }
 };

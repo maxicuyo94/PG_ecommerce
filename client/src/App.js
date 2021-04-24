@@ -21,11 +21,12 @@ function App() {
   // eslint-disable-next-line
   const [priority, setPriorityStorage] = useLocalStorage("priority", "");
   const dark = useSelector((state) => state.darkReducer.dark)
+  const user = useSelector(state => state.usersReducer.userLoged)
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setCart());
+    dispatch(setCart(user.id));
     // dispatch(userLogin());
-  }, [dispatch]);
+  }, [dispatch, user.id]);
 
   return (
     <Layout priority={priority}>
