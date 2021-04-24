@@ -60,7 +60,7 @@ export default function Profile() {
     if(error){
       swal(error)
     }else{
-      history.push("/")
+      history.go(0)
     }
   }
 
