@@ -108,28 +108,25 @@ export const userLogin = (users) => {
       alert(error.message)
     } else {
       let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-      let guestCartAdded = previousStorage.map(item => addItemCart(item))
-      console.log( guestCartAdded )
+      previousStorage.map(item => addItemCart(item))
       dispatch({ type: actionType.USER_LOGIN, payload: user.user });
-      const userLoged = await supabase
-      .from("users")
-      .select("*,address(*)")
-      .eq("email", users.email);
-      dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
     }
-    setTimeout(() => {
-      dispatch(setCart(user.user.id));
-    }, 2000);
+    dispatch(setCart(user.user.id));
   }
 };
 
 export const userStorage = (id) => {
   return async function (dispatch) {    
-    const userLoged = await supabase
-      .from("users")
-      .select("*,address(*)")
-      .eq("id", id);
-    dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0]});
+    if(id) {
+      const userLoged = await supabase
+        .from("users")
+        .select("*,address(*)")
+        .eq("id", id);
+      dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0]});
+    }
+    else {
+      swal("no logged", "wanna log in?", "error");
+    }
   }
 }
 
