@@ -8,21 +8,18 @@ import styles from "./Product.module.scss";
 import swal from "sweetalert";
 import { addItemCart } from "../../Redux/Cart/cartActions";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import Slider from "./Slider/Slider";
+//import Slider from "./Slider/Slider";
 import Thumbs from "./Thumbs/Thumbs";
-import { Review } from "../Reviews/review";
-import { deleteReview } from "../Reviews/deleteReview";
-import { Rating } from "../Reviews/rating";
 import { getReviewsOfProduct } from "../../Redux/Reviews/reviewsActions";
-import SwiperSlider from '../Home/Swiper/SwiperSlider'
+import SwiperSlider from "../Home/Swiper/SwiperSlider";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const random = Math.round(Math.random() * 2);
 export const Product = (props) => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  const { currentProduct, currentReviewsOfProduct } = state;
-  const [maxReviews, setMaxReviews] = useState(5);
+  //const state = useSelector((state) => state);
+  //const { currentProduct, currentReviewsOfProduct } = state;
+  //const [maxReviews, setMaxReviews] = useState(5);
 
   const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const details = useSelector((state) => state.productReducer.productDetail);
@@ -30,11 +27,9 @@ export const Product = (props) => {
     (state) => state.productReducer.productByCategories
   );
 
-
   const id = props.id;
   const [value, setValue] = useState(1);
   const [nav, setNav] = useState("details");
-
 
   const handleSum = () => {
     value < details.stock && value < 10 && setValue(value + 1);
@@ -44,9 +39,9 @@ export const Product = (props) => {
   };
   useEffect(() => {
     const renderReviews = async () => {
-      await dispatch(getReviewsOfProduct(id))
+      await dispatch(getReviewsOfProduct(id));
     };
-    renderReviews()
+    renderReviews();
     const idDetails = async () => {
       await dispatch(productDetail(id));
     };
@@ -62,14 +57,14 @@ export const Product = (props) => {
     // eslint-disable-next-line
   }, [id]);
 
-  const ratingReviews = () => {
+  /*   const ratingReviews = () => {
     let number =
       currentReviewsOfProduct.reduce(function (previous, current) {
         return parseInt(current.rating) + previous;
       }, 0) / currentReviewsOfProduct.length;
     return number;
   };
-
+ */
   /* const filterReview = () => {
     return currentReviewsOfProduct.filter((review) => {
       if (!!userActive && review.userId === userActive.id) return true;
@@ -92,69 +87,6 @@ export const Product = (props) => {
     setValue(1);
     swal("Done!", "Added to cart", "success");
   };
-
-  //Para agregar en la descripción:
-  {
-    /*
-  Total Reviews: {currentReviewsOfProduct.length}
-  {currentReviewsOfProduct[0] && (
-    <Rating finalRating={ratingReviews()}></Rating>
-  )}
-</p> */
-  }
-
-  //Para renderizar reviews
-  {
-    /* <div className="reviewContainer">
-<div className="review">
-    <h2> Reviews </h2>
-  <div>
-    <div className="FlexReviewsProduct">
-      {filterReview()[0] &&
-        filterReview()
-          .reverse()
-          .slice(0, maxReviews)
-          .map((review) => {
-            return (
-              <deleteReview
-                rating={review.rating}
-                description={review.description}
-                idReview={
-                  !!userActive &&
-                  review.userId === userActive.id &&
-                  review.id
-                }
-                idProduct={id}
-                dispatch={dispatch}
-                renderReviews={renderReviews}
-              ></deleteReview>
-            );
-          })}
-    </div>
-    <div className="buttonSeeMoreContainer">
-      <div className="buttonSeeMore">
-        {filterReview().length > maxReviews && (
-          <button
-            className="button-see"
-            onClick={() => setMaxReviews(maxReviews + 5)}
-          >
-            <span className="text-button-see">{"Read more"}</span>
-          </button>
-        )}
-      </div>
-    </div>
-
-    <Review
-      productId={id}
-      renderReviews={renderReviews}
-      currentReviewsOfProduct={currentReviewsOfProduct}
-    ></Review>
-  </div>
-</div>
-</div>
-);
-} */
-  }
 
   return (
     <div className={props.dark ? styles.containerDark : styles.container}>
@@ -223,9 +155,8 @@ export const Product = (props) => {
                 )}
                 {nav === "reviews" &&
                   reviews?.map((review) => {
-                    return <li>Description: {review.description}</li>
-                  })
-                }
+                    return <li>Description: {review.description}</li>;
+                  })}
               </ul>
             </div>
           </div>
