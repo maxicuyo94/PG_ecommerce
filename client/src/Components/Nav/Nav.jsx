@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, NavLink, useHistory } from "react-router-dom";
 //import { SearchBar } from "../SearchBar/SearchBar";
 //import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
@@ -7,14 +7,14 @@ import style from "./nav.module.scss";
 import MiniShop from "./MiniShop/MiniShop";
 import BtnLang from "./BtnLang/BtnLang";
 import BtnDark from './BtnDark/BtnDark'
-import { userLogOut } from "../../Redux/Users/usersActions";
-import { useDispatch, useSelector } from "react-redux";
+import Profile from './Profile/Profile'
+import { useSelector } from "react-redux";
 
 export function Nav({ priority, dark }) {
   // eslint-disable-next-line
+  const userLoged = useSelector(state =>  state.usersReducer.userLoged)
   const [t, i18n] = useTranslation("global");
-
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <div className={dark ? style.containerDark : style.container}>
@@ -41,30 +41,11 @@ export function Nav({ priority, dark }) {
               <span>{t("navLink2.linkTwo")}</span>
             </Link>
           </li>
-          <li>
+          {userLoged?.id&&<li>
             <Link to="/controlpanel">
               <span>{t("navLink6.linkSix")}</span>
             </Link>
-          </li>
-          {/* {!localStorage.getItem('supabase.auth.token') ?  */}
-          <li>
-            <Link to="/login">
-              <span>{t("navLink4.linkFour")}</span>
-            </Link>
-          </li>
-          {/* : */}
-          <li>
-            <Link to="/home">
-              <span onClick={() => dispatch(userLogOut())}>Log Out</span>
-            </Link>
-          </li>
-          {/* } */}
-          <li>
-            <Link to="/register">
-              <span>{t("navLink5.linkFive")}</span>
-            </Link>
-          </li>
-
+          </li>}        
           <li>
             <MiniShop />
           </li>
@@ -74,6 +55,7 @@ export function Nav({ priority, dark }) {
           <li>
             <BtnDark />
           </li>
+          <Profile/>
         </ul>
       </div>
     </div>

@@ -11,7 +11,7 @@ const InitialState = {
   orders: [],
   userOrders: [],
   orderDetail: {},
-  userLoged:{}
+  userLoged: {}
 };
 
 function usersReducer(state = InitialState, action) {
@@ -21,11 +21,21 @@ function usersReducer(state = InitialState, action) {
         ...state,
         users: action.payload,
       };
-      case actionType.USER_LOGIN:
-        return {
-          ...state,
-          userLoged: action.payload
-        };
+    case actionType.USER_LOGIN:
+      return {
+        ...state,
+        userLoged: action.payload
+      };
+    case actionType.USER_LOGOUT:
+      return {
+        ...state,
+        userLoged: {}
+      };
+    case actionType.RESTORE_REDUX:
+      return {
+        ...state,
+        userLoged: action.payload
+      };
     default:
       return state;
   }
