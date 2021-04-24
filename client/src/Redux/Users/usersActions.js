@@ -109,6 +109,7 @@ export const userLogin = (users) => {
     } else {
       let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
       previousStorage.map(item => addItemCart(item))
+
       dispatch({ type: actionType.USER_LOGIN, payload: user.user });
     }
     dispatch(setCart(user.user.id));
@@ -124,9 +125,9 @@ export const userStorage = (id) => {
         .eq("id", id);
       dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0]});
     }
-    else {
-      swal("no logged", "wanna log in?", "error");
-    }
+    // else {
+    //   swal("no logged", "wanna log in?", "error");
+    // }
   }
 }
 

@@ -145,7 +145,6 @@ export default function CustomizedMenus() {
                 <StyledGo>
                     <NavLink to={'/order'}>
                         <span>Go to Cart</span>
-
                     </NavLink>
                 </StyledGo>
             </StyledMenu>
