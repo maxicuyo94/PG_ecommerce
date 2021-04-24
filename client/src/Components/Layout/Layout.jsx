@@ -3,13 +3,13 @@ import { Nav } from "../Nav/Nav";
 import { Footer } from "../Footer/Footer";
 import styles from "./layout.module.scss";
 
-function Layout({ children, priority }) {
+function Layout({ children, priority, dark }) {
   return (
-    <div className={styles.containter}>
+    <div className={dark ? styles.containerDark : styles.container}>
       <main>
-        <Nav priority={priority} />
+        <Nav priority={priority} dark={dark}/>
         {children}
-        <Footer priority={priority} />
+        <Footer priority={priority}  dark={dark} />
       </main>
     </div>
   );

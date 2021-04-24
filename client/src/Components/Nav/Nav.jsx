@@ -10,14 +10,15 @@ import BtnDark from './BtnDark/BtnDark'
 import Profile from './Profile/Profile'
 import { useSelector } from "react-redux";
 
-export function Nav({ priority }) {
+export function Nav({ priority, dark }) {
   // eslint-disable-next-line
   const userLoged = useSelector(state =>  state.usersReducer.userLoged)
   const [t, i18n] = useTranslation("global");
   const history = useHistory();
 
   return (
-    <div className={style.container}>
+    <div className={dark ? style.containerDark : style.container}>
+      {}
       {/* <Header /> */}
       <div className={style.contents}>
         <div className={style.logo}>
@@ -44,7 +45,7 @@ export function Nav({ priority }) {
             <Link to="/controlpanel">
               <span>{t("navLink6.linkSix")}</span>
             </Link>
-          </li>  }        
+          </li>}        
           <li>
             <MiniShop />
           </li>
