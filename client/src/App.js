@@ -62,10 +62,10 @@ function App() {
         path="/AddProduct"
         render={() => <AddProduct dark={dark} />}
       />
-      <ProtectedRoute
+      <Route
         exact
         path="/Order"
-        component={() => <CheckOut dark={dark} />}
+        render={() => <CheckOut dark={dark} />}
       />
       <ProtectedRoute  
         exact
