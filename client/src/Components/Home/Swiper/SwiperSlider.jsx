@@ -18,6 +18,7 @@ const SwiperSlider = (products) => {
       scrollbar={false}
       autoHeight={false}
       loop={true}
+      grabCursor={true}
       breakpoints={
         {
           //Solo celulares

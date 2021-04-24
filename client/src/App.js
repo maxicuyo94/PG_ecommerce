@@ -28,19 +28,19 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Layout priority={priority}>
+    <Layout priority={priority} dark={dark}>
       <Route exact path="/" render={() => <Home priority={priority} dark={dark} />} />
       <Route
         exact
         path="/login"
-        render={() => <LoginSignup priority={priority} />}
+        render={() => <LoginSignup priority={priority} dark={dark} />}
       />
       <Route
         exact
         path="/modifyUser/:id"
-        render={({ match }) => <ModifyUser id={match.params.id} />}
+        render={({ match }) => <ModifyUser id={match.params.id} dark={dark} />}
       />
-      <Route exact path="/resetPassword" component={Reset} />
+      <Route exact path="/resetPassword" component={Reset} dark={dark} />
       <Route
         exact
         path="/Product/:id"
@@ -51,37 +51,37 @@ function App() {
       <Route
         exact
         path="/catalogue"
-        render={() => <Catalogue priority={priority} />}
+        render={() => <Catalogue priority={priority} dark={dark} />}
       />
       <Route
         exact
         path="/AddProduct"
-        render={() => <AddProduct priority={priority} />}
+        render={() => <AddProduct priority={priority} dark={dark} />}
       />
       <Route
         exact
         path="/Order"
-        render={() => <CheckOut priority={priority} />}
+        render={() => <CheckOut priority={priority} dark={dark} />}
       />
       <Route
         exact
         path="/modifyProduct/:id"
-        render={({ match }) => <ModifyProduct id={match.params.id} />}
+        render={({ match }) => <ModifyProduct id={match.params.id} dark={dark} />}
       />
       <Route
         exact
         path="/rate-product/:id"
-        render={({ match }) => <Review id={match.params.id} />}
+        render={({ match }) => <Review id={match.params.id} dark={dark} />}
       />
       <Route
         exact
         path="/controlpanel"
-        render={() => <ControlPanel priority={priority} />}
+        render={() => <ControlPanel priority={priority} dark={dark} />}
       />
       <Route
         exact
         path="/review"
-        render={() => <Review priority={priority} />}
+        render={() => <Review priority={priority} dark={dark} />}
       />
     </Layout>
   );

@@ -10,14 +10,15 @@ import BtnDark from './BtnDark/BtnDark'
 import { userLogOut } from "../../Redux/Users/usersActions";
 import { useDispatch, useSelector } from "react-redux";
 
-export function Nav({ priority }) {
+export function Nav({ priority, dark }) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
 
   const dispatch = useDispatch();
 
   return (
-    <div className={style.container}>
+    <div className={dark ? style.containerDark : style.container}>
+      {}
       {/* <Header /> */}
       <div className={style.contents}>
         <div className={style.logo}>
@@ -63,7 +64,7 @@ export function Nav({ priority }) {
               <span>{t("navLink5.linkFive")}</span>
             </Link>
           </li>
-          
+
           <li>
             <MiniShop />
           </li>
