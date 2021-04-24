@@ -1,5 +1,6 @@
 import * as actionType from "../action_types/actionTypes";
 import { createClient } from "@supabase/supabase-js";
+const axios = require('axios');
 const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
@@ -69,4 +70,15 @@ export const getProductsOfOrder = (id) => {
       payload: products.data,
     });
   };
+};
+
+export const orderPayment = (cart,infoUser) => {
+  return async function () {
+    try{
+      let response = await axios.post("http://localhost:3001/mercadopago/checkout", {cart,infoUser})
+      return response.data.redirect
+    } catch(e){
+      alert(e)
+    }
+  }
 };

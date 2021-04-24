@@ -13,9 +13,7 @@ export const postUser = (users) => {
     const { user, error } = await supabase
       .auth
       .signUp({ email: users.email, password: users.password })
-
     if (error) {
-      alert(error.message)
       return error
     } else {
       await supabase.from("users").insert([
