@@ -11,7 +11,10 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 //import Slider from "./Slider/Slider";
 import Thumbs from "./Thumbs/Thumbs";
 import { getReviewsOfProduct } from "../../Redux/Reviews/reviewsActions";
-import SwiperSlider from "../Home/Swiper/SwiperSlider";
+import SwiperSlider from '../Home/Swiper/SwiperSlider'
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarHalfIcon from '@material-ui/icons/StarHalf';
+import StarIcon from '@material-ui/icons/Star';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const random = Math.round(Math.random() * 2);
@@ -112,18 +115,13 @@ export const Product = (props) => {
         >
           Categories
         </li>
-        <li
-          onClick={() => {
-            setNav("reviews");
-          }}
-        >
-          Reviews
-        </li>
       </ul>
       <div className={styles.main}>
         <div className={styles.details}>
           <div className={styles.info}>
-            <span>{details.name?.split(" ").slice(0, 3).join(" ")}</span>
+            <div className={styles.name}>
+              <span>{details.name?.split(" ").slice(0, 3).join(" ")}</span>
+            </div>
             <div className={styles.desc}>
               <ul className={styles.values}>
                 {nav === "details" &&
@@ -131,8 +129,10 @@ export const Product = (props) => {
                   Object.entries(details.description).map(([key, value]) => {
                     return (
                       <li key={key}>
-                        <b>{key.split(/(?=[A-Z])/).join(" ")}</b>:{" "}
-                        {value.toString()}
+                        <p>
+                          <b>{key.split(/(?=[A-Z])/).join(" ")}</b>:{" "}
+                          {value.toString()}
+                        </p>
                       </li>
                     );
                   })}
@@ -153,10 +153,28 @@ export const Product = (props) => {
                       .join(" ")}
                   </li>
                 )}
-                {nav === "reviews" &&
-                  reviews?.map((review) => {
-                    return <li>Description: {review.description}</li>;
-                  })}
+                {/* {nav === "reviews" &&
+                  reviews.length === 0 ?
+                  <li>hola</li>
+                  :
+                  <li className={styles.review}>
+                    {reviews.map((review) => {
+                      return <>
+                        <span>Description: {review.description}</span>
+                        <span>User: {review.user_id}</span>
+                        <span>
+                          Rating:
+                        {Array.from(Array(review.rating).keys()).map(() => {
+                          return <StarIcon style={{ fontSize: '1rem' }} />
+                        })}
+                        </span>
+                        <hr />
+                      </>
+                    }
+                    )}
+                  </li>
+
+                } */}
               </ul>
             </div>
           </div>
@@ -172,12 +190,13 @@ export const Product = (props) => {
             <div className={styles.cont}>
               <input type="text" value={value} disabled />
               <div className={styles.change}>
-                <button onClick={handleSum}>+</button>
-                <button onClick={handleRes}>-</button>
+                <button className={styles.add} onClick={handleSum}>+</button>
+                <button className={styles.add} onClick={handleRes}>-</button>
               </div>
             </div>
             {details.stock > 0 ? (
               <button
+                className={styles.addCart}
                 onClick={() => {
                   handleAddToCart(details);
                 }}
@@ -186,6 +205,7 @@ export const Product = (props) => {
               </button>
             ) : (
               <button
+                className={styles.addCart}
                 onClick={() => {
                   swal("Sorry!", "Come back in a few days", "error");
                 }}
@@ -196,9 +216,39 @@ export const Product = (props) => {
           </div>
         </div>
       </div>
+      <div className={styles.review}>
+        <div className={styles.reviewTitle}>
+          <span> Reviews</span>
+        </div>
 
+        {reviews.length > 0 ?
+          <div className={styles.reviews}>
+            {reviews.map((review) => {
+              return <>
+                <span>Description: {review.description}</span>
+                <span>User: {review.user_id}</span>
+                <span>
+                  Rating:
+                        {Array.from(Array(review.rating).keys()).map(() => {
+                  return <StarIcon style={{ fontSize: '1rem' }} />
+                })}
+                </span>
+                <hr />
+              </>
+            })
+            }
+          </div> :
+          <div className={styles.notReviews}>
+            <span>
+              This product has no reviews yet
+            </span>
+            <hr />
+          </div>
+        }
+
+      </div>
       <div className={styles.related}>
-        <div className={styles.title}>
+        <div className={styles.more}>
           <span>MORE PRODUCTS</span>
         </div>
         <div className={styles.slider}>
