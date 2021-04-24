@@ -13,9 +13,10 @@ import { useDispatch, useSelector } from "react-redux";
 export function Nav({ priority }) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-
+  const user = useSelector(state => state.usersReducer.userLoged)
   const dispatch = useDispatch();
 
+  console.log(user)
   return (
     <div className={style.container}>
       {/* <Header /> */}
@@ -45,24 +46,19 @@ export function Nav({ priority }) {
               <span>{t("navLink6.linkSix")}</span>
             </Link>
           </li>
-          {/* {!localStorage.getItem('supabase.auth.token') ?  */}
+          {!user.id ?
           <li>
             <Link to="/login">
               <span>{t("navLink4.linkFour")}</span>
             </Link>
           </li>
-          {/* : */}
+          :
           <li>
-            <Link to="/home">
+            <Link to="/">
               <span onClick={() => dispatch(userLogOut())}>Log Out</span>
             </Link>
           </li>
-          {/* } */}
-          <li>
-            <Link to="/register">
-              <span>{t("navLink5.linkFive")}</span>
-            </Link>
-          </li>
+          }
           
           <li>
             <MiniShop />
