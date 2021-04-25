@@ -30,7 +30,7 @@ export default function BtnDark() {
 
     useEffect(() => {
         dispatch(setDarkMode(dark))
-    }, [dark])
+    }, [dispatch, dark])
 
 
     return (

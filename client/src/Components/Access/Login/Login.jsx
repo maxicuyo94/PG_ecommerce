@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin, sendMail } from "../../../Redux/Users/usersActions";
-import { useHistory, Link, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import style from "./login.module.scss";
-import { useLocalStorage } from "../../../LocalStorage/useLocalStorage";
+//import { useLocalStorage } from "../../../LocalStorage/useLocalStorage";
 
 export function Login() {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export function Login() {
         // history.push("/")
       }
     }
-  }, [userRegistered])
+  }, [userRegistered, history, location.state.from])
 
   const handleState = (e) => {
     setUser({
@@ -89,15 +89,15 @@ export function Login() {
         <div className={style.containerGG}>
           <div className={style.githubButton}
             onClick={() =>
-              window.location.href = "https://zgycwtqkzgitgsycfdyk.supabase.co/auth/v1/authorize?provider=github"}
+              window.location.href = "https://zgycwtqkzgitgsycfdyk.supabase.co/auth/v1/authorize?provider=github"} 
           >
-            <img src="/images/GitHub-Mark-Light-32px.png"
+            <img src="/images/GitHub-Mark-Light-32px.png" alt="We didn't find anything to show you here, we're sorry!"
               className={style.googleButton} type="button"
             />
             <span>Sign in with GitHub</span>
           </div>
           <img
-            src="/images/btn_google_signin_dark_normal_web.png"
+            src="/images/btn_google_signin_dark_normal_web.png" alt="We didn't find anything to show you here, we're sorry!"
             className={style.googleButton}
             type="button"
             onClick={() =>
