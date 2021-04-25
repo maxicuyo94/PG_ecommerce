@@ -12,11 +12,14 @@ export const createReview = (reviews) => {
       .from("reviews")
       .insert([
         {
+          user_id: reviews.userId,
           rating: reviews.rating,
           description: reviews.description,
+          product_id: reviews.productId
         },
+        console.log(reviews)
       ])
-      .catch((err) => alert(`${err}`));
+     //.catch((err) => alert(`${err}`));
   };
 };
 
@@ -41,7 +44,6 @@ export const getReviewById = (id) => {
       .select("*")
       .eq("id", id);
     dispatch({ type: actionType.GET_REVIEW_BY_ID, payload: JSON.data});
-    console.log('ACAAAAAAA MARCOS',JSON.data)
   };
 }
 

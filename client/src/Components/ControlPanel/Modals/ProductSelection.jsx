@@ -10,7 +10,7 @@ import style from "./productselection.module.scss";
 import { Link } from "react-router-dom";
 
 export function ProductSelection({ products }) {
-  console.log(products, "aca");
+ // console.log(products, "aca");
   return (
     <div className={style.div}>
       <h3>Review selection</h3>
