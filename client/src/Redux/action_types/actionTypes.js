@@ -29,6 +29,7 @@ export const GET_PRODUCTS_ORDER = "GET_PRODUCTS_ORDER";
 
 //Reviews
 export const GET_REVIEW_PRODUCT = "GET_REVIEW_PRODUCT";
+export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID"
 
 //LocalStorage
 export const RESTORE_REDUX = "RESTORE_REDUX";

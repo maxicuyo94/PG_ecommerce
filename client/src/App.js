@@ -18,6 +18,8 @@ import { userStorage } from "./Redux/Users/usersActions"
 import { Reset } from "./Components/Access/ResetPassword/ResetPassword";
 import { Review } from "./Components/Review/review"
 import { Payment } from "./Components/Payment/Payment"
+import {ModifyReview} from './Components/Review/modifyReview';
+
 import { checkout } from "./Redux/Cart/cartActions";
 import swal from "sweetalert";
 
@@ -123,6 +125,12 @@ function App() {
         exact
         path="/order/payment"
         render={() => <Payment dark={dark} />}
+      />
+      <ProtectedRoute
+        exact
+        path="/modifyReview/:id"
+        restringed="customer"
+        component={({ match }) => <ModifyReview id={match.params.id} dark={dark} />}
       />
     </Layout>
   );
