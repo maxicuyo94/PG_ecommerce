@@ -5,7 +5,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 //import WhatshotIcon from '@material-ui/icons/Whatshot';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
+//import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import StarIcon from '@material-ui/icons/Star';
 //import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';

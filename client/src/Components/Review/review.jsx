@@ -3,8 +3,7 @@ import style from "./review.module.scss";
 import { FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createReview } from "../../Redux/Reviews/reviewsActions";
-import { cancelReview } from "./deleteReview";
-import { useLocalStorage } from  '../../LocalStorage/useLocalStorage'
+//import { cancelReview } from "./deleteReview";
 import swal from "sweetalert";
 
 export function Review({
@@ -26,6 +25,7 @@ export function Review({
 
   const [hover, setHover] = useState(null);
 
+  // eslint-disable-next-line
   useEffect(() => {
     const userActive = JSON.parse(localStorage.getItem("User"));
     if (userActive) {
@@ -56,7 +56,6 @@ export function Review({
     dispatch(createReview(review)).then(() => renderReviews());
     swal({ text: `The review has been sent successfully`, icon: "success" });
   };
-
 
   return (
     <div className={style.containerReview}>
