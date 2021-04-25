@@ -37,7 +37,7 @@ $gris:#2C3A40;
 
         .stock {
             height: 10%;
-            width: 80%;
+            width: 85%;
             font-weight: bolder;
             font-size: 1rem;
             display: flex;
@@ -90,13 +90,6 @@ $gris:#2C3A40;
             height: 10%;
             justify-content: center;
             align-items: center;
-
-            @media screen and (max-width: $phone) {
-                flex-direction: column;
-            }
-
-
-
         }
 
         .title {
