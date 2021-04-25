@@ -83,13 +83,13 @@ export function ItemCart({ product }) {
 
         {product.quantity > 1 && (
           <button ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}>
-            <Icon> - </Icon>
+             - 
           </button>
         )}
         <h6 style={{ margin: "1rem" }}>{product.quantity}</h6>
         {product.quantity < 10 && product.quantity < product.stock && (
           <button ref={btnRefADD} onClick={() => handleQuantityChange(+1)}>
-            <Icon> + </Icon>
+             + 
           </button>
         )}
 

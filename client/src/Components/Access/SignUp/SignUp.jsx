@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { postUser } from "../../../Redux/Users/usersActions"
 import { Link } from "react-router-dom"
 import style from './signup.module.scss'
+import swal from 'sweetalert';
 
 export function SignUp() {
     const dispatch = useDispatch()
@@ -49,7 +50,7 @@ export function SignUp() {
         }
     }, [stableDispatch, user, success])
 
-    const created = (e) => {
+    const created = async (e) => {
         e.preventDefault()
         let state = "waiting"
         for (const prop in errors) {
@@ -61,7 +62,13 @@ export function SignUp() {
             }
         }
         setSuccess(state)
-        dispatch(postUser(user))
+        const confirmPost = await dispatch(postUser(user));
+        console.log(confirmPost)
+        if(confirmPost.status !== 400){
+            swal("Welcome to TechStore! Your user was created successfully, please check your email and verify it")
+        } else {
+            swal(confirmPost.message)
+        }
     }
 
     return (
@@ -204,7 +211,9 @@ export function SignUp() {
                     name="password"
                     placeholder="Password"
                     value={user.password}
-                    onChange={handleState} />
+                    onChange={handleState} 
+                />
+            <span>Use at least eight characters with a combination of letters, numbers, and symbols (@$!%*?&)</span>
             </div>
             <Link to="/login">
                 <button

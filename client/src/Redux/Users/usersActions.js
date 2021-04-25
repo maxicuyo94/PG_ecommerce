@@ -13,9 +13,7 @@ export const postUser = (users) => {
     const { user, error } = await supabase
       .auth
       .signUp({ email: users.email, password: users.password })
-
     if (error) {
-      alert(error.message)
       return error
     } else {
       await supabase.from("users").insert([
@@ -43,6 +41,7 @@ export const postUser = (users) => {
           orderStatus: 'inCart',
         },
       ]);
+      return user
     }
   }
 };
@@ -98,6 +97,7 @@ export const deleteUser = (id) => {
   };
 };
 
+
 export const userLogin = (users) => {
   return async function (dispatch) {
     const { data: user, error } = await supabase.auth.signIn({
@@ -108,11 +108,18 @@ export const userLogin = (users) => {
       alert(error.message)
     } else {
       let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-      previousStorage.map(item => addItemCart(item))
-
+      let guestCartAdded = previousStorage.map(item => addItemCart(item))
+      console.log( guestCartAdded )
       dispatch({ type: actionType.USER_LOGIN, payload: user.user });
+      const userLoged = await supabase
+      .from("users")
+      .select("*,address(*)")
+      .eq("email", users.email);
+      dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
+      setTimeout(() => {
+        dispatch(setCart(user.user.id));
+      }, 2000);
     }
-    dispatch(setCart(user.user.id));
   }
 };
 
@@ -137,7 +144,8 @@ export const sendMail = (email) => {
     const { error, data } = await supabase.auth.api.resetPasswordForEmail(
       email
     );
-    error && swal("Oops!", error.message, "error");
+    error ? swal("Oops!", error.message, "error") : swal("We send you an email to reset your password");
+
   };
 };
 
