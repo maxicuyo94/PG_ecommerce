@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { SearchBar } from "../Searchbar/Searchbar";
+import { SearchBar } from "../SearchBar/Searchbar";
 //import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";

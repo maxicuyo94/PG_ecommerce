@@ -5,7 +5,7 @@ import { ModifyUser } from "./ModifyUser/ModifyUser.jsx";
 import style from "./access.module.scss";
 import { Route } from "react-router";
 
-export function Access() {
+export function Access(props) {
   const [stateCover, setStateCover] = useState("SignUp");
 
   const handleCover = () => {
@@ -28,7 +28,7 @@ export function Access() {
         <div className={style.containerLoginSignin}>
           <Login />
         </div>
-        <Route exact path="/modifyUser" component={ModifyUser} />
+        <Route exact path="/modifyUser" component={ModifyUser} dark={props.dark}/>
       </div>
     </div>
   );
