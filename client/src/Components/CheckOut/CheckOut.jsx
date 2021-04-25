@@ -62,9 +62,16 @@ export function CheckOut() {
           }
         })
     } else {
+      // swal("Proceed to payment", "", "success")
+      //   .then(resp => {
+      //     if(resp){
+      //       history.push("/order/payment");
+      //     }
+      //   })
+      //------------------------------------------------//  
       swal("UPS! You must be logged to checkout!",{
         buttons: {
-          button: "OK",
+          button: "Go to Checkout",
           roll: {
             text: "Sign In!",
             value: "signIn",
@@ -74,8 +81,11 @@ export function CheckOut() {
         { 
         if(resp === "signIn") {
           history.push("/login");
+        } else {
+          history.push("/order/payment")
         }
       })
+      //------------------------------------------------//  
     }
     
   };
