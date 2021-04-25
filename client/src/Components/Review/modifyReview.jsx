@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import style from './modifyreview.module.scss'
+import React, { useState, useEffect } from "react";
+import style from "./modifyreview.module.scss";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {updateReview} from '../../Redux/Reviews/reviewsActions'
+import { updateReview } from "../../Redux/Reviews/reviewsActions";
 
-export function ModifyReview({id}) {
+export function ModifyReview({ id }) {
   const [data, setData] = useState({
     description: "",
     ranting: "",
-    id
+    id,
   });
 
   const [hover, setHover] = useState(null);
@@ -16,10 +16,10 @@ export function ModifyReview({id}) {
   // const dispatch = useDispatch();
   // const reviews = useSelector((state) => state.reviewsReducer.reviews);
 
-    const upReview = (upReview) => {
-      upReview.preventDefault()
-      updateReview(data, data.id)
-    }
+  const upReview = (upReview) => {
+    upReview.preventDefault();
+    updateReview(data, data.id);
+  };
 
   // useEffect(() => {
   //     dispatch(getReviewById(data.id));
@@ -32,7 +32,7 @@ export function ModifyReview({id}) {
   //   });
   // }, [reviews]);
 
-  return(
+  return (
     <div className={style.containerReview}>
       <span>Rate this product</span>
       <div>
@@ -59,9 +59,7 @@ export function ModifyReview({id}) {
                 onMouseEnter={() => setHover(ratingValue)}
                 onMouseLeave={() => setHover(null)}
                 color={
-                  ratingValue <= (hover || data.rating)
-                    ? "#9abf15"
-                    : "#e4e5e9"
+                  ratingValue <= (hover || data.rating) ? "#9abf15" : "#e4e5e9"
                 }
               />
             </label>
@@ -90,5 +88,5 @@ export function ModifyReview({id}) {
         <input type="submit" value="Send" />
       </form>
     </div>
-)
+  );
 }

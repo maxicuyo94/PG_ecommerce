@@ -4,15 +4,12 @@ import { FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createReview } from "../../Redux/Reviews/reviewsActions";
 //import { cancelReview } from "./deleteReview";
+import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
 import swal from "sweetalert";
 
-export function Review({
-  id,
-  renderReviews,
-  currentReviewsOfProduct,
-}) {
-  const [userLog] = useLocalStorage("supabase.auth.token")
-  const userId = userLog.currentSession.user.id
+export function Review({ id, renderReviews, currentReviewsOfProduct }) {
+  const [userLog] = useLocalStorage("supabase.auth.token");
+  const userId = userLog.currentSession.user.id;
   const dispatch = useDispatch();
   const [setUserId] = useState();
   const [review, setReview] = useState({
