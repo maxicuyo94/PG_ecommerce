@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
-import { Search, getProductsByCategories } from '../../Redux/Products/productActions'
+import { getProductsByCategories } from '../../Redux/Products/productActions'
 import Style from './searchbar.module.scss'
 
 export function SearchBar() {

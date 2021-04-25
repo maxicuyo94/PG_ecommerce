@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ItemCart } from '../CheckOut/ItemCart';
 import { orderPayment } from "../../Redux/Orders/orderActions"
 

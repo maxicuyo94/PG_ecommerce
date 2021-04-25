@@ -9,7 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Icon from "@material-ui/core/Icon";
+//import Icon from "@material-ui/core/Icon";
 import { addItemCart, deleteItemCart } from "../../Redux/Cart/cartActions";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
