@@ -18,8 +18,8 @@ const StyledMenu = withStyles({
         border: '1px solid #d3d4d5',
         backgroundColor: 'white',
         borderRadius: '10px',
-        width: '20vw',
-        height: '30vh',
+        width: '30vw',
+        height: '35vh',
         //overflowY: 'scroll'
     },
     list: {
@@ -150,7 +150,7 @@ export default function CustomizedMenus() {
                         }
                     </div>
                     <span>US${cont.toFixed(2)}</span>
-                    <Button onClick={() => handleClearCart()} children="Clear" variant="outlined" color="secondary"/>
+                    <button onClick={() => handleClearCart()} children="Clear"/>
     
                     <StyledGo>
                         <NavLink to={'/order'}>

@@ -89,36 +89,29 @@ export default function MiniCard({ product }) {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
-          {/* <Grid item>
+          <Grid item xs={2}>
             <Avatar className={classes.img} src={product.image} />
-          </Grid> */}
-          <Grid item sm={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
+          </Grid>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="row" spacing={2}>
+              <Grid item>
                 {/* <Typography gutterBottom variant="subtitle1">
                   {product.title}
                 </Typography> */}
                 <Typography variant="body2" gutterBottom>
-                  {product.title.slice(0, 20)}...
+                  {product.title.slice(0, 30)}...
                 </Typography>
-
-
-                <Button onClick={() => handleQuantityChange(-1)} ref={btnRefDELETE} children='-' variant="contained" size="small" />
-                {product.quantity}
-                <Button onClick={() => handleQuantityChange(1)} ref={btnRefADD} children='+' variant="contained" size="small" />
+                <Grid item>
+                  <Typography variant="subtitle1">$ {product.price}</Typography>
+                </Grid>
               </Grid>
               <Grid item>
-                <Button
-                  onClick={() => handleDeleteItem(product)}
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                  startIcon={<DeleteIcon />}
-                />
+              <button onClick={() => handleQuantityChange(-1)} ref={btnRefDELETE} children='-' variant="contained" size="small" />
+                {product.quantity}
+                <button onClick={() => handleQuantityChange(1)} ref={btnRefADD} children='+' variant="contained" size="small" />
+
+                <button onClick={() => handleDeleteItem(product)} children='Remove item'/>
               </Grid>
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle1">$ {product.price}</Typography>
             </Grid>
           </Grid>
         </Grid>
