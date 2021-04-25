@@ -46,7 +46,7 @@ export function ModifyUser({ id, dark }) {
     <div className={dark ? style.containerDark : style.container}>
       <div className={style.user}>
         <div className={style.title}>
-          <span>Modify User</span>
+          <span>My profile</span>
         </div>
         <form class={style.form}>
           <div className={style.name}>

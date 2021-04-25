@@ -19,7 +19,7 @@ export function ProductSelection({ products }) {
           return (
             <div className={style.list}>
               <tr>{product.title}</tr>
-              <Link to={`/rate-product/${product.id}`}>
+              <Link to={`/rate-product/${product.product_id}`}>
                 <button>Review</button>
               </Link>
             </div>

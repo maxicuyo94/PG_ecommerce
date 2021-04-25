@@ -50,7 +50,7 @@ export const Product = (props) => {
   };
 
   const [userLog] = useLocalStorage("supabase.auth.token")
-  const userId = userLog.currentSession.user.id
+  const userId = userLog&&userLog.currentSession.user.id
 
   useEffect(() => {
 

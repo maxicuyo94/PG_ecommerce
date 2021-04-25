@@ -43,8 +43,8 @@ export function Review({ id, currentReviewsOfProduct }) {
 
   const submitReview = (e) => {
     e.preventDefault();
-    /* 
-    const userPreviousReview = currentReviewsOfProduct.find(
+    
+    const userPreviousReview = currentReviewsOfProduct&&currentReviewsOfProduct.find(
       (review) => review.userId === userId
     );
 
@@ -55,7 +55,7 @@ export function Review({ id, currentReviewsOfProduct }) {
       });
       return;
     }
-    if (!review.rating) return; */
+    if (!review.rating) return;
 
     dispatch(createReview(review));
     swal({ text: `The review has been sent successfully`, icon: "success" });

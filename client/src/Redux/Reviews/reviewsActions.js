@@ -17,7 +17,6 @@ export const createReview = (reviews) => {
           description: reviews.description,
           product_id: reviews.productId
         },
-        console.log(reviews)
       ])
      //.catch((err) => alert(`${err}`));
   };
@@ -51,12 +50,12 @@ export const updateReview = (id_review, id) => {
   return async function (dispatch) {
     //eslint-disable-next-line
     const JSON = await supabase
-      .from("review")
+      .from("reviews")
       .update({
         description: id_review.description,
         rating: id_review.rating,
       })
-      .eq("id_review", id);
+      .eq("id", id);
   };
 };
 

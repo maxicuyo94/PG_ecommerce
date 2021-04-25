@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
 
-require("./db.js");
+//require("./db.js");
 
 const server = express();
 
@@ -33,6 +33,10 @@ server.use((err, req, res, next) => {
   const message = err.message || err;
   console.error(err);
   res.status(status).send(message);
+});
+
+server.listen(3001, () => {
+  console.log('%s listening at 3001'); // eslint-disable-line no-console
 });
 
 module.exports = server;

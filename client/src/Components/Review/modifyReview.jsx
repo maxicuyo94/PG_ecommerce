@@ -7,18 +7,20 @@ import { updateReview } from "../../Redux/Reviews/reviewsActions";
 export function ModifyReview({ id }) {
   const [data, setData] = useState({
     description: "",
-    ranting: "",
-    id,
+    rating: "",
+   //id,
   });
 
   const [hover, setHover] = useState(null);
+
+  const dispatch = useDispatch();
 
   // const dispatch = useDispatch();
   // const reviews = useSelector((state) => state.reviewsReducer.reviews);
 
   const upReview = (upReview) => {
     upReview.preventDefault();
-    updateReview(data, data.id);
+    dispatch(updateReview(data, id));
   };
 
   // useEffect(() => {
@@ -66,7 +68,7 @@ export function ModifyReview({ id }) {
           );
         })}
       </div>
-      <form className={style.formReview}>
+      <form className={style.formReview} onSubmit={(e) => upReview(e)}>
         {data.isRated ? (
           <div>
             <span>Would you like to give your opinion to others?</span>
@@ -81,7 +83,6 @@ export function ModifyReview({ id }) {
                   description: e.target.value,
                 });
               }}
-              onSubmit={upReview}
             ></textarea>
           </div>
         ) : null}

@@ -42,6 +42,8 @@ export function ControlPanel() {
   const container = products.lenght;
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
+  const userOrders = orders.filter((order) => order.user_id === userLoged.id && order.orderStatus != 'inCart')
+
 
   const changeModal = async (id) => {
     await dispatch(getOrderDetail(id));
@@ -264,6 +266,53 @@ export function ControlPanel() {
                       id={category.id}
                       onClick={() => handleDelete(category.id)}
                     />
+                  </div>
+                );
+              })
+            : null}
+          {tab === "purchasehistory"
+            ? userOrders.map((order) => {
+                return (
+                  <div className={style.list}>
+                    {checkbox ? (
+                      <CheckBox
+                        id={order.id}
+                        class={style.icon}
+                        onClick={() => checkPress(order.id)}
+                      />
+                    ) : (
+                      <CheckBoxOutlineBlank
+                        id={order.id}
+                        class={style.icon}
+                        onClick={() => checkPress(order.id)}
+                      />
+                    )}
+                    <span
+                      onClick={() => changeModal(order.id)}
+                      className={style.name}
+                    >
+                      {order.id}
+                    </span>
+                    <span className={style.name}>{order.orderStatus}</span>
+                    <span className={style.name}>{order.orderDate}</span>
+                    <dvi>
+                      <button
+                        className={style.icon}
+                        value={order.id}
+                        onClick={(e) => getProducts(e)}
+                      >
+                        +
+                      </button>
+                      <Modal
+                        class={style.modal}
+                        open={modalTwo}
+                        onClose={closeModal}
+                      >
+                        <ProductSelection
+                          products={productsOfOrder}
+                        ></ProductSelection>
+                      </Modal>
+                    </dvi>
                   </div>
                 );
               })
