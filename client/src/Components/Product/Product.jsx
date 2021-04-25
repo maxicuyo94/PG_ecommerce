@@ -15,9 +15,15 @@ import SwiperSlider from '../Home/Swiper/SwiperSlider'
 //import StarBorderIcon from '@material-ui/icons/StarBorder';
 //import StarHalfIcon from '@material-ui/icons/StarHalf';
 import StarIcon from '@material-ui/icons/Star';
+import { useLocalStorage } from  '../../LocalStorage/useLocalStorage'
+import { deleteReview } from "../../Redux/Reviews/reviewsActions";
+import { Link } from "react-router-dom";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
+
 const random = Math.round(Math.random() * 2);
+
+
 export const Product = (props) => {
   const dispatch = useDispatch();
   //const state = useSelector((state) => state);
@@ -30,6 +36,8 @@ export const Product = (props) => {
     (state) => state.productReducer.productByCategories
   );
 
+  const [deleting, setDeleting] = useState(null)
+
   const id = props.id;
   const [value, setValue] = useState(1);
   const [nav, setNav] = useState("details");
@@ -40,7 +48,12 @@ export const Product = (props) => {
   const handleRes = () => {
     value > 1 && setValue(value - 1);
   };
+
+  const [userLog] = useLocalStorage("supabase.auth.token")
+  const userId = userLog.currentSession.user.id
+
   useEffect(() => {
+
     const renderReviews = async () => {
       await dispatch(getReviewsOfProduct(id));
     };
@@ -59,7 +72,6 @@ export const Product = (props) => {
     };
     // eslint-disable-next-line
   }, [id]);
-
   /*   const ratingReviews = () => {
     let number =
       currentReviewsOfProduct.reduce(function (previous, current) {
@@ -232,6 +244,15 @@ export const Product = (props) => {
                         {Array.from(Array(review.rating).keys()).map(() => {
                   return <StarIcon style={{ fontSize: '1rem' }} />
                 })}
+                {(review.user_id === userId) ?
+                  <div>
+                  <Link to={`/modifyReview/:id${review.id}`}>
+                <span>edit review</span>
+                </Link>
+
+                <span onClick={setDeleting(true)}>delete review</span>
+                </div> : null
+                }
                 </span>
                 <hr />
               </>

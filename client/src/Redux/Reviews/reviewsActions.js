@@ -6,7 +6,7 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const createReview = (reviews) => {
-  return async () => {
+  return async (dispatch) => {
     // eslint-disable-next-line
     const { data, error } = await supabase
       .from("reviews")
@@ -33,6 +33,17 @@ export const getReviewsOfProduct = (id) => {
     });
   };
 };
+
+export const getReviewById = (id) => {
+  return async function (dispatch) {
+    const JSON = await supabase
+      .from("reviews")
+      .select("*")
+      .eq("id", id);
+    dispatch({ type: actionType.GET_REVIEW_BY_ID, payload: JSON.data});
+    console.log('ACAAAAAAA MARCOS',JSON.data)
+  };
+}
 
 export const updateReview = (id_review, id) => {
   return async function (dispatch) {

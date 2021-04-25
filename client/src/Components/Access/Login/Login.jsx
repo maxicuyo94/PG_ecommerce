@@ -26,7 +26,7 @@ export function Login() {
         // history.push("/")
       }
     }
-  }, [userRegistered, history, location.state.from])
+  }, [userRegistered])
 
   const handleState = (e) => {
     setUser({
@@ -89,15 +89,15 @@ export function Login() {
         <div className={style.containerGG}>
           <div className={style.githubButton}
             onClick={() =>
-              window.location.href = "https://zgycwtqkzgitgsycfdyk.supabase.co/auth/v1/authorize?provider=github"} 
+              window.location.href = "https://zgycwtqkzgitgsycfdyk.supabase.co/auth/v1/authorize?provider=github"}
           >
-            <img src="/images/GitHub-Mark-Light-32px.png" alt="We didn't find anything to show you here, we're sorry!"
+            <img src="/images/GitHub-Mark-Light-32px.png"
               className={style.googleButton} type="button"
             />
             <span>Sign in with GitHub</span>
           </div>
           <img
-            src="/images/btn_google_signin_dark_normal_web.png" alt="We didn't find anything to show you here, we're sorry!"
+            src="/images/btn_google_signin_dark_normal_web.png"
             className={style.googleButton}
             type="button"
             onClick={() =>

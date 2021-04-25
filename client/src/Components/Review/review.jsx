@@ -4,19 +4,14 @@ import { FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createReview } from "../../Redux/Reviews/reviewsActions";
 //import { cancelReview } from "./deleteReview";
+import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
 import swal from "sweetalert";
 
-export function Review({
-  id,
-  productId,
-  renderReviews,
-  currentReviewsOfProduct,
-}) {
-  // const [userLog] = useLocalStorage("supabase.auth.token")
-  // const userId = userLog.currentSession.user.id
+export function Review({ id, renderReviews, currentReviewsOfProduct }) {
+  const [userLog] = useLocalStorage("supabase.auth.token");
+  const userId = userLog.currentSession.user.id;
   const dispatch = useDispatch();
   const [setUserId] = useState();
-  const userId = "a89f265a-c5be-4de5-a961-a8e63fa204cd";
   const [review, setReview] = useState({
     rating: null,
     description: null,
@@ -55,7 +50,7 @@ export function Review({
     }
     if (!review.rating) return;
 
-    dispatch(createReview(productId, review)).then(() => renderReviews());
+    dispatch(createReview(review)).then(() => renderReviews());
     swal({ text: `The review has been sent successfully`, icon: "success" });
   };
 
