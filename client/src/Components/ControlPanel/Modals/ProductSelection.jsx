@@ -10,17 +10,19 @@ import style from "./productselection.module.scss";
 import { Link } from "react-router-dom";
 
 export function ProductSelection({ products }) {
-  console.log(products, "aca");
   return (
     <div className={style.div}>
-      <h3>Review selection</h3>
+      <h3>Reviews</h3>
       <ol>
         {products?.map((product) => {
           return (
             <div className={style.list}>
               <tr>{product.title}</tr>
-              <Link to={`/rate-product/${product.id}`}>
-                <button>Review</button>
+              <Link to={`/rate-product/${product.product_id}`}>
+                <button>Create review</button>
+              </Link>
+              <Link to={`/modifyReview/${product.product_id}`}>
+                <button>Modify review</button>
               </Link>
             </div>
           );

@@ -72,21 +72,6 @@ export const Product = (props) => {
     };
     // eslint-disable-next-line
   }, [id]);
-  /*   const ratingReviews = () => {
-    let number =
-      currentReviewsOfProduct.reduce(function (previous, current) {
-        return parseInt(current.rating) + previous;
-      }, 0) / currentReviewsOfProduct.length;
-    return number;
-  };
- */
-  /* const filterReview = () => {
-    return currentReviewsOfProduct.filter((review) => {
-      if (!!userActive && review.userId === userActive.id) return true;
-      if (!review.description) return false;
-      return true;
-    });
-  }; */
 
   const handleAddToCart = (details) => {
     //console.log('add to cart')
@@ -165,28 +150,6 @@ export const Product = (props) => {
                       .join(" ")}
                   </li>
                 )}
-                {/* {nav === "reviews" &&
-                  reviews.length === 0 ?
-                  <li>hola</li>
-                  :
-                  <li className={styles.review}>
-                    {reviews.map((review) => {
-                      return <>
-                        <span>Description: {review.description}</span>
-                        <span>User: {review.user_id}</span>
-                        <span>
-                          Rating:
-                        {Array.from(Array(review.rating).keys()).map(() => {
-                          return <StarIcon style={{ fontSize: '1rem' }} />
-                        })}
-                        </span>
-                        <hr />
-                      </>
-                    }
-                    )}
-                  </li>
-
-                } */}
               </ul>
             </div>
           </div>
@@ -244,15 +207,6 @@ export const Product = (props) => {
                         {Array.from(Array(review.rating).keys()).map(() => {
                   return <StarIcon style={{ fontSize: '1rem' }} />
                 })}
-                {(review.user_id === userId) ?
-                  <div>
-                  <Link to={`/modifyReview/:id${review.id}`}>
-                <span>edit review</span>
-                </Link>
-
-                <span onClick={setDeleting(true)}>delete review</span>
-                </div> : null
-                }
                 </span>
                 <hr />
               </>

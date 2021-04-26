@@ -3,13 +3,12 @@ import style from "./review.module.scss";
 import { FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createReview } from "../../Redux/Reviews/reviewsActions";
-//import { cancelReview } from "./deleteReview";
 import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
 import swal from "sweetalert";
 
 export function Review({ id, renderReviews, currentReviewsOfProduct }) {
   const [userLog] = useLocalStorage("supabase.auth.token");
-  const userId = userLog.currentSession.user.id;
+  const userId = userLog && userLog.currentSession.user.id;
   const dispatch = useDispatch();
   const [setUserId] = useState();
   const [review, setReview] = useState({
@@ -22,41 +21,23 @@ export function Review({ id, renderReviews, currentReviewsOfProduct }) {
 
   const [hover, setHover] = useState(null);
 
-  // eslint-disable-next-line
-  useEffect(() => {
-    const userActive = JSON.parse(localStorage.getItem("User"));
-    if (userActive) {
-      setUserId(userActive.id);
-      setReview({
-        ...review,
-        userId: userActive.id,
-      });
-    }
-  });
-
   const submitReview = (e) => {
     e.preventDefault();
 
-    const userPreviousReview = currentReviewsOfProduct.find(
-      (review) => review.userId === userId
-    );
-
-    if (userPreviousReview) {
-      swal({
-        text: `We're sorry! You can leave a single review`,
-        icon: "warning",
-      });
-      return;
-    }
-    if (!review.rating) return;
-
     dispatch(createReview(review)).then(() => renderReviews());
     swal({ text: `The review has been sent successfully`, icon: "success" });
+    setReview({
+      ...review,
+      rating: null,
+      description: null,
+      isRated: false,
+    })
   };
 
   return (
     <div className={style.containerReview}>
-      <span>Rate this product</span>
+      <h2>Your opinion is important</h2>
+      <h3>How was your experience with this product?</h3>
       <div>
         {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1;
@@ -93,7 +74,7 @@ export function Review({ id, renderReviews, currentReviewsOfProduct }) {
       <form className={style.formReview}>
         {review.isRated ? (
           <div>
-            <span>Would you like to give your opinion to others?</span>
+            <span>Would you like to say something?</span>
             <textarea
               name="description"
               rows="10"
@@ -109,7 +90,7 @@ export function Review({ id, renderReviews, currentReviewsOfProduct }) {
             ></textarea>
           </div>
         ) : null}
-        <input type="submit" value="Send" />
+        <input type="submit" value="Post review" />
       </form>
     </div>
   );

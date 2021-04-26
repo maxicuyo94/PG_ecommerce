@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import style from "./modifyreview.module.scss";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { updateReview } from "../../Redux/Reviews/reviewsActions";
+import { updateReview, deleteReview } from "../../Redux/Reviews/reviewsActions";
+import { cancelReview } from "./deleteReview";
 
 export function ModifyReview({ id }) {
   const [data, setData] = useState({
@@ -34,7 +35,9 @@ export function ModifyReview({ id }) {
 
   return (
     <div className={style.containerReview}>
-      <span>Rate this product</span>
+      <h2>You change your opinion?</h2>
+      <h3>Don't worry, you can fix it!</h3>
+      <h4>Set new rating</h4>
       <div>
         {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1;
@@ -69,7 +72,7 @@ export function ModifyReview({ id }) {
       <form className={style.formReview}>
         {data.isRated ? (
           <div>
-            <span>Would you like to give your opinion to others?</span>
+            <span>Tell us more:</span>
             <textarea
               name="description"
               rows="10"
@@ -85,7 +88,7 @@ export function ModifyReview({ id }) {
             ></textarea>
           </div>
         ) : null}
-        <input type="submit" value="Send" />
+        <input type="submit" value="Modify review" />
       </form>
     </div>
   );
