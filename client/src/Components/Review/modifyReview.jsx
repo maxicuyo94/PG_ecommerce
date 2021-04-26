@@ -8,20 +8,18 @@ import { cancelReview } from "./deleteReview";
 export function ModifyReview({ id }) {
   const [data, setData] = useState({
     description: "",
-    rating: "",
-   //id,
+    ranting: "",
+    id,
   });
 
   const [hover, setHover] = useState(null);
-
-  const dispatch = useDispatch();
 
   // const dispatch = useDispatch();
   // const reviews = useSelector((state) => state.reviewsReducer.reviews);
 
   const upReview = (upReview) => {
     upReview.preventDefault();
-    dispatch(updateReview(data, id));
+    updateReview(data, data.id);
   };
 
   // useEffect(() => {
@@ -71,7 +69,7 @@ export function ModifyReview({ id }) {
           );
         })}
       </div>
-      <form className={style.formReview} onSubmit={(e) => upReview(e)}>
+      <form className={style.formReview}>
         {data.isRated ? (
           <div>
             <span>Tell us more:</span>
@@ -86,6 +84,7 @@ export function ModifyReview({ id }) {
                   description: e.target.value,
                 });
               }}
+              onSubmit={upReview}
             ></textarea>
           </div>
         ) : null}

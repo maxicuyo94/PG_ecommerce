@@ -6,7 +6,7 @@ import { createReview } from "../../Redux/Reviews/reviewsActions";
 import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
 import swal from "sweetalert";
 
-export function Review({ id, currentReviewsOfProduct }) {
+export function Review({ id, renderReviews, currentReviewsOfProduct }) {
   const [userLog] = useLocalStorage("supabase.auth.token");
   const userId = userLog && userLog.currentSession.user.id;
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export function Review({ id, currentReviewsOfProduct }) {
   const submitReview = (e) => {
     e.preventDefault();
 
-    dispatch(createReview(review));
+    dispatch(createReview(review)).then(() => renderReviews());
     swal({ text: `The review has been sent successfully`, icon: "success" });
     setReview({
       ...review,
@@ -71,7 +71,7 @@ export function Review({ id, currentReviewsOfProduct }) {
           );
         })}
       </div>
-      <form className={style.formReview} onSubmit={(e) => submitReview(e)}>
+      <form className={style.formReview}>
         {review.isRated ? (
           <div>
             <span>Would you like to say something?</span>
@@ -86,6 +86,7 @@ export function Review({ id, currentReviewsOfProduct }) {
                   description: e.target.value,
                 });
               }}
+              onSubmit={submitReview}
             ></textarea>
           </div>
         ) : null}

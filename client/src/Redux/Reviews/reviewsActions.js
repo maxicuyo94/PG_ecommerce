@@ -44,12 +44,12 @@ export const updateReview = (id_review, id) => {
   return async function (dispatch) {
     //eslint-disable-next-line
     const JSON = await supabase
-      .from("reviews")
+      .from("review")
       .update({
         description: id_review.description,
         rating: id_review.rating,
       })
-      .eq("id", id);
+      .eq("id_review", id);
   };
 };
 
