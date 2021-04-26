@@ -1,4 +1,5 @@
 const server = require("express").Router()
+require("dotenv").config();
 // SDK
 const mercadopago = require ('mercadopago');
 // Credenciales
