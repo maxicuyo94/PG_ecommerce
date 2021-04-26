@@ -6,6 +6,7 @@ import { updateReview, deleteReview } from "../../Redux/Reviews/reviewsActions";
 import { cancelReview } from "./deleteReview";
 
 export function ModifyReview({ id }) {
+  const reviews = useSelector((state) => state.reviewsReducer.users);
   const [data, setData] = useState({
     description: "",
     ranting: "",
@@ -35,7 +36,7 @@ export function ModifyReview({ id }) {
 
   return (
     <div className={style.containerReview}>
-      <h2>You change your opinion?</h2>
+      <h2>You changed your opinion?</h2>
       <h3>Don't worry, you can fix it!</h3>
       <h4>Set new rating</h4>
       <div>

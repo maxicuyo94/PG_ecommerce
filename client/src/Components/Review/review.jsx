@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import style from "./review.module.scss";
 import { FaStar } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { createReview } from "../../Redux/Reviews/reviewsActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createReview,
+  getReviewsOfProduct,
+  getReviewById
+} from "../../Redux/Reviews/reviewsActions";
 import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
 import swal from "sweetalert";
 
-export function Review({ id, renderReviews, currentReviewsOfProduct }) {
+export function Review({ id }) {
+  const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const [userLog] = useLocalStorage("supabase.auth.token");
   const userId = userLog && userLog.currentSession.user.id;
   const dispatch = useDispatch();
@@ -16,22 +21,34 @@ export function Review({ id, renderReviews, currentReviewsOfProduct }) {
     description: null,
     userId,
     productId: id,
+    reviewId: null,
     isRated: null,
   });
+
+
+  const userReview = reviews.filter((f) => f.user_id === userId);
+  if (userReview.length > 0) {
+    setReview({
+      rating: userReview[0].rating,
+      description: userReview[0].description,
+      reviewId: userReview[0].reviewId,
+      isRated: true,
+    });
+  }
 
   const [hover, setHover] = useState(null);
 
   const submitReview = (e) => {
     e.preventDefault();
 
-    dispatch(createReview(review)).then(() => renderReviews());
+    dispatch(createReview(review));
     swal({ text: `The review has been sent successfully`, icon: "success" });
     setReview({
       ...review,
       rating: null,
       description: null,
       isRated: false,
-    })
+    });
   };
 
   return (
