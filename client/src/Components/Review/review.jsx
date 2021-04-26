@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import style from "./review.module.scss";
 import { FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { createReview } from "../../Redux/Reviews/reviewsActions";
-//import { cancelReview } from "./deleteReview";
+import {
+  createReview,
+  getReviewsOfProduct,
+} from "../../Redux/Reviews/reviewsActions";
+import { cancelReview } from "./deleteReview";
 import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
 import swal from "sweetalert";
 
-export function Review({ id, renderReviews, currentReviewsOfProduct }) {
+export function Review({ id, currentReviewsOfProduct }) {
   const [userLog] = useLocalStorage("supabase.auth.token");
   const userId = userLog.currentSession.user.id;
   const dispatch = useDispatch();
@@ -23,7 +26,7 @@ export function Review({ id, renderReviews, currentReviewsOfProduct }) {
   const [hover, setHover] = useState(null);
 
   // eslint-disable-next-line
-  useEffect(() => {
+  /*   useEffect(() => {
     const userActive = JSON.parse(localStorage.getItem("User"));
     if (userActive) {
       setUserId(userActive.id);
@@ -32,12 +35,16 @@ export function Review({ id, renderReviews, currentReviewsOfProduct }) {
         userId: userActive.id,
       });
     }
-  });
+  }); */
+
+  // const renderReviews = async () => {
+  //   await dispatch(getReviewsOfProduct(id));
+  // };
 
   const submitReview = (e) => {
     e.preventDefault();
-
-    const userPreviousReview = currentReviewsOfProduct.find(
+    
+    const userPreviousReview = currentReviewsOfProduct&&currentReviewsOfProduct.find(
       (review) => review.userId === userId
     );
 
@@ -50,13 +57,13 @@ export function Review({ id, renderReviews, currentReviewsOfProduct }) {
     }
     if (!review.rating) return;
 
-    dispatch(createReview(review)).then(() => renderReviews());
+    dispatch(createReview(review));
     swal({ text: `The review has been sent successfully`, icon: "success" });
   };
 
   return (
     <div className={style.containerReview}>
-      <span>Rate this product</span>
+      <h3>How was your experience with this product?</h3>
       <div>
         {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1;
@@ -90,7 +97,7 @@ export function Review({ id, renderReviews, currentReviewsOfProduct }) {
           );
         })}
       </div>
-      <form className={style.formReview}>
+      <form className={style.formReview} onSubmit={(e) => submitReview(e)}>
         {review.isRated ? (
           <div>
             <span>Would you like to give your opinion to others?</span>
@@ -105,7 +112,6 @@ export function Review({ id, renderReviews, currentReviewsOfProduct }) {
                   description: e.target.value,
                 });
               }}
-              onSubmit={submitReview}
             ></textarea>
           </div>
         ) : null}

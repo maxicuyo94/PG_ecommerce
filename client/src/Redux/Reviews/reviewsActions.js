@@ -12,11 +12,13 @@ export const createReview = (reviews) => {
       .from("reviews")
       .insert([
         {
+          user_id: reviews.userId,
           rating: reviews.rating,
           description: reviews.description,
+          product_id: reviews.productId
         },
       ])
-      .catch((err) => alert(`${err}`));
+     //.catch((err) => alert(`${err}`));
   };
 };
 
@@ -41,7 +43,6 @@ export const getReviewById = (id) => {
       .select("*")
       .eq("id", id);
     dispatch({ type: actionType.GET_REVIEW_BY_ID, payload: JSON.data});
-    console.log('ACAAAAAAA MARCOS',JSON.data)
   };
 }
 
@@ -49,12 +50,12 @@ export const updateReview = (id_review, id) => {
   return async function (dispatch) {
     //eslint-disable-next-line
     const JSON = await supabase
-      .from("review")
+      .from("reviews")
       .update({
         description: id_review.description,
         rating: id_review.rating,
       })
-      .eq("id_review", id);
+      .eq("id", id);
   };
 };
 
