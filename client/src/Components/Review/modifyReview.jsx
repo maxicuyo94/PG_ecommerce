@@ -2,37 +2,28 @@ import React, { useState, useEffect } from "react";
 import style from "./modifyreview.module.scss";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { updateReview, deleteReview } from "../../Redux/Reviews/reviewsActions";
-import { cancelReview } from "./deleteReview";
+import {
+  updateReview,
+  getReviewById,
+} from "../../Redux/Reviews/reviewsActions";
+import { deletingReview } from "./deleteReview";
 
 export function ModifyReview({ id }) {
+  const dispatch = useDispatch();
   const reviews = useSelector((state) => state.reviewsReducer.users);
   const [data, setData] = useState({
     description: "",
-    ranting: "",
+    rating: "",
     id,
   });
 
   const [hover, setHover] = useState(null);
-
-  // const dispatch = useDispatch();
-  // const reviews = useSelector((state) => state.reviewsReducer.reviews);
 
   const upReview = (upReview) => {
     upReview.preventDefault();
     updateReview(data, data.id);
   };
 
-  // useEffect(() => {
-  //     dispatch(getReviewById(data.id));
-  // }, [dispatch, id]);
-  //
-  // useEffect(() => {
-  //   setData({
-  //     description: reviews.description,
-  //     ranking: reviews.rating
-  //   });
-  // }, [reviews]);
 
   return (
     <div className={style.containerReview}>

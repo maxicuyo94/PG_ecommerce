@@ -69,7 +69,7 @@ export function CheckOut() {
       //     }
       //   })
       //------------------------------------------------//  
-      swal("UPS! You must be logged to checkout!",{
+      swal("Do you want to login to go to checkout?",{
         buttons: {
           button: "Go to Checkout",
           roll: {

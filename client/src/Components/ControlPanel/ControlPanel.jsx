@@ -40,7 +40,6 @@ export function ControlPanel() {
   const container = products.lenght;
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
-  const userOrders = orders.filter((order) => order.user_id === userLoged.id && order.orderStatus != 'inCart')
 
 
   const changeModal = async (id) => {

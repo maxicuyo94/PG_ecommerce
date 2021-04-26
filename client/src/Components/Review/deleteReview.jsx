@@ -1,7 +1,7 @@
 import React from "react";
 import { deleteReview } from "../../Redux/Reviews/reviewsActions";
 
-export default function cancelReview ({
+export function deletingReview ({
   description,
   idReview,
   idProduct,
@@ -9,7 +9,7 @@ export default function cancelReview ({
   renderReviews,
 }) {
   const functionDeleteReview = () => {
-    dispatch(deleteReview(idProduct, idReview)).then(() => renderReviews());
+    dispatch(deleteReview(idProduct, idReview))
   };
 
   return (
@@ -27,3 +27,5 @@ export default function cancelReview ({
     </div>
   );
 }
+
+export default deletingReview;
