@@ -26,8 +26,11 @@ import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
 //import { useLocalStorage } from "../../LocalStorage/useLocalStorage.js";
 import { ProductSelection } from "./Modals/ProductSelection";
+const mailgun = require("mailgun-js"); 
 
 export function ControlPanel() {
+  const DOMAIN = 'YOUR_DOMAIN_NAME'; 
+  const mg = mailgun({apiKey: 'b94fa5acae316a371a62877872375548-71b35d7e-8aae2afa', domain: 'sandbox84b5d0875e934c9fb174ce768ed09f49.mailgun.org'}); 
   const dispatch = useDispatch();
   const userLoged = useSelector((state) => state.usersReducer.userLoged);
   const products = useSelector((state) => state.productReducer.allproducts);
@@ -41,12 +44,16 @@ export function ControlPanel() {
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
 
-  console.log(userLoged.permission, 'state')
+  const handleEmail = (id) => {
+    dispatch()
+    const data = {from: 'Excited User <me@samples.mailgun.org>', to: 'pablomoronrey@gmail.com', subject: 'Hello', text: 'Testing some Mailgun awesomness!' }; 
+    mg.messages().send(data, function (error, body) {console.log(body); });
+
+  }
   
   const [tab, setTab] = useState(() => {
     return ((userLoged.permission === "customer" || !userLoged.permission) ? "purchasehistory" : "products");
   });
-  console.log(tab, 'tab')
   const [filter, setFilter] = useState()
 
 const handleFilter = (e) => {
@@ -266,7 +273,7 @@ useEffect(() => {
                     </span>
                     <span className={style.name}>{order.orderStatus}</span>
                     <span className={style.name}>{order.orderDate}</span>
-                    {order.orderStatus === 'approved'? <button>Send email</button> :  <button disabled >Send email</button>}
+                    {order.orderStatus === 'approved' ? <button onClick={() => handleEmail(order.id)}>Send email</button> :  <button disabled >Send email</button>}
                     <dvi>
                       <button
                         className={style.icon}
