@@ -1,7 +1,6 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 import { getProductsByCategories } from "../../Redux/Products/productActions";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 import styles from "./home.module.scss";
 import { useTranslation } from "react-i18next";
 import SwiperSlider from "./Swiper/SwiperSlider";

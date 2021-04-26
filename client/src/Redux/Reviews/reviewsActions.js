@@ -6,17 +6,16 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const createReview = (reviews) => {
-  return async () => {
+  return async (dispatch) => {
     // eslint-disable-next-line
-    const { data, error } = await supabase
-      .from("reviews")
-      .insert([
-        {
-          rating: reviews.rating,
-          description: reviews.description,
-        },
-      ])
-      .catch((err) => alert(`${err}`));
+    const { data, error } = await supabase.from("reviews").insert([
+      {
+        user_id: reviews.userId,
+        rating: reviews.rating,
+        description: reviews.description,
+        product_id: reviews.productId,
+      },
+    ]);
   };
 };
 
@@ -26,11 +25,18 @@ export const getReviewsOfProduct = (id) => {
       .from("reviews")
       .select("*")
       .eq("product_id", id);
-    console.log('Reviews: ', JSON.data)
     dispatch({
       type: actionType.GET_REVIEW_PRODUCT,
       payload: JSON.data,
     });
+  };
+};
+
+
+export const getReviewById = (id) => {
+  return async function (dispatch) {
+    const JSON = await supabase.from("reviews").select("*").eq("id", id);
+    dispatch({ type: actionType.GET_REVIEW_BY_ID, payload: JSON.data });
   };
 };
 

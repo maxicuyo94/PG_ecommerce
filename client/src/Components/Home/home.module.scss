@@ -9,8 +9,7 @@ $verde:#9abf15;
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 100%;
-
+    min-height: calc(100vh - 185px);
     .containerTitle {
         height: 10vh;
         display: flex;
@@ -53,6 +52,7 @@ $verde:#9abf15;
 
 
             .title {
+                z-index: 2;
                 min-width: 15%;
                 background-color: #485F69;
                 color: white;
@@ -61,7 +61,7 @@ $verde:#9abf15;
                 flex-direction: column;
                 justify-content: space-around;
                 align-items: center;
-
+                box-shadow: 2px 0px 10px 0px rgba(0, 0, 0, 0.25);
                 span {
                     font-size: 1.5rem;
                 }
@@ -110,11 +110,12 @@ $verde:#9abf15;
     @extend .container;
     background-color: $dark;
     color: #fff;
-    
+
     .containerP {
         .title {
-            color: $dark !important;
+            color: #fff !important;
             background-color: $verde !important;
+            box-shadow: 2px 0px 5px 0px rgba(255, 255, 255, 0.5) !important;
         }
     }
 }

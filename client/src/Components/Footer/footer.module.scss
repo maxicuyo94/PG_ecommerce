@@ -13,9 +13,7 @@
             display:flex;
             justify-content: center;
             align-items: center;
-            h4{
-                margin: 0;
-            }
+            
             .input {
                 height: 1.5rem;
                 width: 15rem;
@@ -28,7 +26,9 @@
             justify-content: space-around;
         }   
     }
-
+    h4{
+        margin: 0;
+    }
 }
 
 

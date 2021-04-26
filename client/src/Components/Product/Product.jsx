@@ -8,21 +8,27 @@ import styles from "./Product.module.scss";
 import swal from "sweetalert";
 import { addItemCart } from "../../Redux/Cart/cartActions";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import Slider from "./Slider/Slider";
+//import Slider from "./Slider/Slider";
 import Thumbs from "./Thumbs/Thumbs";
-import { Review } from "../Reviews/review";
-import { deleteReview } from "../Reviews/deleteReview";
-import { Rating } from "../Reviews/rating";
 import { getReviewsOfProduct } from "../../Redux/Reviews/reviewsActions";
 import SwiperSlider from '../Home/Swiper/SwiperSlider'
+//import StarBorderIcon from '@material-ui/icons/StarBorder';
+//import StarHalfIcon from '@material-ui/icons/StarHalf';
+import StarIcon from '@material-ui/icons/Star';
+import { useLocalStorage } from  '../../LocalStorage/useLocalStorage'
+import { deleteReview } from "../../Redux/Reviews/reviewsActions";
+import { Link } from "react-router-dom";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
+
 const random = Math.round(Math.random() * 2);
+
+
 export const Product = (props) => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  const { currentProduct, currentReviewsOfProduct } = state;
-  const [maxReviews, setMaxReviews] = useState(5);
+  //const state = useSelector((state) => state);
+  //const { currentProduct, currentReviewsOfProduct } = state;
+  //const [maxReviews, setMaxReviews] = useState(5);
 
   const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const details = useSelector((state) => state.productReducer.productDetail);
@@ -30,11 +36,11 @@ export const Product = (props) => {
     (state) => state.productReducer.productByCategories
   );
 
+  const [deleting, setDeleting] = useState(null)
 
   const id = props.id;
   const [value, setValue] = useState(1);
   const [nav, setNav] = useState("details");
-
 
   const handleSum = () => {
     value < details.stock && value < 10 && setValue(value + 1);
@@ -42,11 +48,16 @@ export const Product = (props) => {
   const handleRes = () => {
     value > 1 && setValue(value - 1);
   };
+
+  const [userLog] = useLocalStorage("supabase.auth.token")
+  const userId = userLog.currentSession.user.id
+
   useEffect(() => {
+
     const renderReviews = async () => {
-      await dispatch(getReviewsOfProduct(id))
+      await dispatch(getReviewsOfProduct(id));
     };
-    renderReviews()
+    renderReviews();
     const idDetails = async () => {
       await dispatch(productDetail(id));
     };
@@ -62,22 +73,6 @@ export const Product = (props) => {
     // eslint-disable-next-line
   }, [id]);
 
-  const ratingReviews = () => {
-    let number =
-      currentReviewsOfProduct.reduce(function (previous, current) {
-        return parseInt(current.rating) + previous;
-      }, 0) / currentReviewsOfProduct.length;
-    return number;
-  };
-
-  /* const filterReview = () => {
-    return currentReviewsOfProduct.filter((review) => {
-      if (!!userActive && review.userId === userActive.id) return true;
-      if (!review.description) return false;
-      return true;
-    });
-  }; */
-
   const handleAddToCart = (details) => {
     //console.log('add to cart')
     let cartItemModel = {
@@ -92,69 +87,6 @@ export const Product = (props) => {
     setValue(1);
     swal("Done!", "Added to cart", "success");
   };
-
-  //Para agregar en la descripción:
-  {
-    /*
-  Total Reviews: {currentReviewsOfProduct.length}
-  {currentReviewsOfProduct[0] && (
-    <Rating finalRating={ratingReviews()}></Rating>
-  )}
-</p> */
-  }
-
-  //Para renderizar reviews
-  {
-    /* <div className="reviewContainer">
-<div className="review">
-    <h2> Reviews </h2>
-  <div>
-    <div className="FlexReviewsProduct">
-      {filterReview()[0] &&
-        filterReview()
-          .reverse()
-          .slice(0, maxReviews)
-          .map((review) => {
-            return (
-              <deleteReview
-                rating={review.rating}
-                description={review.description}
-                idReview={
-                  !!userActive &&
-                  review.userId === userActive.id &&
-                  review.id
-                }
-                idProduct={id}
-                dispatch={dispatch}
-                renderReviews={renderReviews}
-              ></deleteReview>
-            );
-          })}
-    </div>
-    <div className="buttonSeeMoreContainer">
-      <div className="buttonSeeMore">
-        {filterReview().length > maxReviews && (
-          <button
-            className="button-see"
-            onClick={() => setMaxReviews(maxReviews + 5)}
-          >
-            <span className="text-button-see">{"Read more"}</span>
-          </button>
-        )}
-      </div>
-    </div>
-
-    <Review
-      productId={id}
-      renderReviews={renderReviews}
-      currentReviewsOfProduct={currentReviewsOfProduct}
-    ></Review>
-  </div>
-</div>
-</div>
-);
-} */
-  }
 
   return (
     <div className={props.dark ? styles.containerDark : styles.container}>
@@ -180,18 +112,13 @@ export const Product = (props) => {
         >
           Categories
         </li>
-        <li
-          onClick={() => {
-            setNav("reviews");
-          }}
-        >
-          Reviews
-        </li>
       </ul>
       <div className={styles.main}>
         <div className={styles.details}>
           <div className={styles.info}>
-            <span>{details.name?.split(" ").slice(0, 3).join(" ")}</span>
+            <div className={styles.name}>
+              <span>{details.name?.split(" ").slice(0, 3).join(" ")}</span>
+            </div>
             <div className={styles.desc}>
               <ul className={styles.values}>
                 {nav === "details" &&
@@ -199,8 +126,10 @@ export const Product = (props) => {
                   Object.entries(details.description).map(([key, value]) => {
                     return (
                       <li key={key}>
-                        <b>{key.split(/(?=[A-Z])/).join(" ")}</b>:{" "}
-                        {value.toString()}
+                        <p>
+                          <b>{key.split(/(?=[A-Z])/).join(" ")}</b>:{" "}
+                          {value.toString()}
+                        </p>
                       </li>
                     );
                   })}
@@ -221,11 +150,6 @@ export const Product = (props) => {
                       .join(" ")}
                   </li>
                 )}
-                {nav === "reviews" &&
-                  reviews?.map((review) => {
-                    return <li>Description: {review.description}</li>
-                  })
-                }
               </ul>
             </div>
           </div>
@@ -241,12 +165,13 @@ export const Product = (props) => {
             <div className={styles.cont}>
               <input type="text" value={value} disabled />
               <div className={styles.change}>
-                <button onClick={handleSum}>+</button>
-                <button onClick={handleRes}>-</button>
+                <button className={styles.add} onClick={handleSum}>+</button>
+                <button className={styles.add} onClick={handleRes}>-</button>
               </div>
             </div>
             {details.stock > 0 ? (
               <button
+                className={styles.addCart}
                 onClick={() => {
                   handleAddToCart(details);
                 }}
@@ -255,6 +180,7 @@ export const Product = (props) => {
               </button>
             ) : (
               <button
+                className={styles.addCart}
                 onClick={() => {
                   swal("Sorry!", "Come back in a few days", "error");
                 }}
@@ -265,9 +191,39 @@ export const Product = (props) => {
           </div>
         </div>
       </div>
+      <div className={styles.review}>
+        <div className={styles.reviewTitle}>
+          <span> Reviews</span>
+        </div>
 
+        {reviews.length > 0 ?
+          <div className={styles.reviews}>
+            {reviews.map((review) => {
+              return <>
+                <span>Description: {review.description}</span>
+                <span>User: {review.user_id}</span>
+                <span>
+                  Rating:
+                        {Array.from(Array(review.rating).keys()).map(() => {
+                  return <StarIcon style={{ fontSize: '1rem' }} />
+                })}
+                </span>
+                <hr />
+              </>
+            })
+            }
+          </div> :
+          <div className={styles.notReviews}>
+            <span>
+              This product has no reviews yet
+            </span>
+            <hr />
+          </div>
+        }
+
+      </div>
       <div className={styles.related}>
-        <div className={styles.title}>
+        <div className={styles.more}>
           <span>MORE PRODUCTS</span>
         </div>
         <div className={styles.slider}>

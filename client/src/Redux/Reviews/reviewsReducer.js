@@ -11,6 +11,16 @@ function reviewsReducer(state = InitialState, action) {
         ...state,
         reviews: action.payload,
       };
+    case actionType.GET_REVIEW_BY_ID:
+      return {
+        ...state,
+        reviews: action.payload,
+      }
+      case actionType.GET_USER_REVIEW:
+      return {
+        ...state,
+        reviews: action.payload,
+      }
     default:
       return state;
   }
