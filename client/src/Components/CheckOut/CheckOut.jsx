@@ -80,7 +80,7 @@ export function CheckOut() {
       }).then(resp => 
         { 
         if(resp === "signIn") {
-          history.push("/login");
+          history.push("/access");
         } else {
           history.push("/order/payment")
         }
