@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { SearchBar } from "../SearchBar/SearchBar"
+// import { Searchbar } from "../Searchbar/Searchbar"
 //import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
@@ -47,9 +47,9 @@ export function Nav({ priority, dark }) {
               <span>{t("navLink6.linkSix")}</span>
             </Link>
           </li>  }  
-          <li>
+          {/* <li>
             <SearchBar/>
-            </li>      
+            </li>       */}
           <li>
             <MiniShop />
           </li>

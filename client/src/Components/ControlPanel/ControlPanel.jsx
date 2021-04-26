@@ -7,11 +7,11 @@ import {
   deleteCategory,
 } from "../../Redux/Products/productActions.js";
 import { allUsers, deleteUser } from "../../Redux/Users/usersActions";
-import {
-  getAllOrders,
-  getOrderDetail,
+import { 
+  getAllOrders, 
+  getOrderDetail, 
   getProductsOfOrder,
-} from "../../Redux/Orders/orderActions";
+  getAllUserOrders } from "../../Redux/Orders/orderActions";
 import style from "./controlpanel.module.scss";
 import {
   Edit,
@@ -30,18 +30,17 @@ import { ProductSelection } from "./Modals/ProductSelection";
 export function ControlPanel() {
   const dispatch = useDispatch();
   const userLoged = useSelector((state) => state.usersReducer.userLoged);
-
   const products = useSelector((state) => state.productReducer.allproducts);
   const categories = useSelector((state) => state.productReducer.categories);
   const users = useSelector((state) => state.usersReducer.users);
   const orders = useSelector((state) => state.orderReducer.orders);
   const orderDetailId = useSelector((state) => state.orderReducer.orderDetail);
-  const productsOfOrder = useSelector(
-    (state) => state.orderReducer.orderProducts
-  );
+  const userOrders = useSelector((state) => state.orderReducer.userOrders);
+  const productsOfOrder = useSelector((state) => state.orderReducer.orderProducts);
   const container = products.lenght;
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
+  console.log(userOrders)
 
   const changeModal = async (id) => {
     await dispatch(getOrderDetail(id));
@@ -67,6 +66,7 @@ export function ControlPanel() {
     dispatch(getCategories(search));
     dispatch(allUsers(search));
     dispatch(getAllOrders());
+    dispatch(getAllUserOrders(userLoged.id))
   }, [dispatch, search, container]);
 
   const handleDelete = async (id) => {
@@ -114,9 +114,11 @@ export function ControlPanel() {
             Orders
           </button>
         )}
-        <button name="purchasehistory" onClick={(e) => handleTab(e)}>
+        {userLoged.permission === "customer" && (
+          <button name="purchasehistory" onClick={(e) => handleTab(e)}>
           Purchase History
         </button>
+        )}
         {userLoged.permission !== "customer" && (
           <button name="categories" onClick={(e) => handleTab(e)}>
             Categories
@@ -161,6 +163,53 @@ export function ControlPanel() {
           {tab === "orders" ? null : <h4>Delete</h4>}
         </div>
         <div className={style.containerList}>
+        {tab === "purchasehistory"
+            ? userOrders?.map((order) => {
+                return (
+                  <div className={style.list}>
+                    {checkbox ? (
+                      <CheckBox
+                        id={order.id}
+                        class={style.icon}
+                        onClick={() => checkPress(order.id)}
+                      />
+                    ) : (
+                      <CheckBoxOutlineBlank
+                        id={order.id}
+                        class={style.icon}
+                        onClick={() => checkPress(order.id)}
+                      />
+                    )}
+                    <span
+                      onClick={() => changeModal(order.id)}
+                      className={style.name}
+                    >
+                      {order.id}
+                    </span>
+                    <span className={style.name}>{order.orderStatus}</span>
+                    <span className={style.name}>{order.orderDate}</span>
+                    <dvi>
+                      <button
+                        className={style.icon}
+                        value={order.id}
+                        onClick={(e) => getProducts(e)}
+                      >
+                        +
+                      </button>
+                      <Modal
+                        class={style.modal}
+                        open={modalTwo}
+                        onClose={closeModal}
+                      >
+                        <ProductSelection
+                          products={productsOfOrder}
+                        ></ProductSelection>
+                      </Modal>
+                    </dvi>
+                  </div>
+                );
+              })
+            : null}
           {tab === "products"
             ? products?.map((product) => {
                 return (
