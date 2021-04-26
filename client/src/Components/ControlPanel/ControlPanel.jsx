@@ -70,6 +70,7 @@ useEffect(() => {
 },[filter])
 
 
+
   const changeModal = async (id) => {
     await dispatch(getOrderDetail(id));
     setModal(true);
@@ -125,6 +126,8 @@ useEffect(() => {
     dispatch(getAllUserOrders(userLoged.id))
   }, [search, container, tab, userLoged]);
 
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 10;
   const indexLastResult = currentPage * resultsPerPage;
@@ -170,6 +173,7 @@ useEffect(() => {
           </button>
         )}
         {(userLoged.permission !== "customer" && userLoged.permission) && (
+
           <Link to="/addproduct">
             <button>Add Product</button>
           </Link>

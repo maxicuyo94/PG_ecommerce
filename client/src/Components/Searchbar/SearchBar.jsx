@@ -96,10 +96,12 @@ export function SearchBar() {
                   {Products &&
                     Products.map((item) => (
                       <ProductCard
-                        title={item.name}
-                        price={item.price}
-                        images={item.images[0]?.url}
-                      />
+                      stock={item.stock}
+                      title={item.name}
+                      price={item.price}
+                      id={item.id}
+                      images={item.images[0]?.url}
+                    />
                     ))}
                 </div>
               );

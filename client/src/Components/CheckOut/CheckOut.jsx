@@ -8,9 +8,10 @@ import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./checkout.module.scss";
 import { ItemCart } from "./ItemCart";
-import { clearCart } from "../../Redux/Cart/cartActions";
+import { clearCart, amountTotal } from "../../Redux/Cart/cartActions";
 import swal from "sweetalert";
 import { useHistory } from "react-router";
+
 
 export function CheckOut() {
   const dispatch = useDispatch();
@@ -23,12 +24,14 @@ export function CheckOut() {
 
   useEffect(() => {
     if (cart) {
+      let amount =  cart.reduce((acc, product) => {
+        acc = acc + product.price * product.quantity;
+        return acc;
+      }, 0.0)
       setSubtotal(
-        cart.reduce((acc, product) => {
-          acc = acc + product.price * product.quantity;
-          return acc;
-        }, 0.0)
+        amount
       );
+      localStorage.setItem("amountTotal",JSON.stringify(amount))
     }
   }, [cart]);
 
@@ -36,17 +39,12 @@ export function CheckOut() {
     setTotal((subtotal - subtotal * (coupon / 100)).toFixed(2));
   }, [subtotal, coupon]);
 
-  // const handleClick = () => {
-  //     // dispatch(setDiscount(coupon));
-  //     history.push('/order/payment');
-  // }
-
   const handleClearCart = () => {
     swal("Are you sure you want to CLEAR your cart?", {
       dangerMode: true,
       buttons: true,
     }).then(resp => {
-      if(resp) {
+      if (resp) {
         dispatch(clearCart())
         history.push("/");
       }
@@ -54,10 +52,10 @@ export function CheckOut() {
   };
 
   const handleCheckOut = () => {
-    if(localStorage.getItem("supabase.auth.token")) {
+    if (localStorage.getItem("supabase.auth.token")) {
       swal("Proceed to payment", "", "success")
         .then(resp => {
-          if(resp){
+          if (resp) {
             history.push("/order/payment");
           }
         })
@@ -69,7 +67,7 @@ export function CheckOut() {
       //     }
       //   })
       //------------------------------------------------//  
-      swal("Do you want to login to go to checkout?",{
+      swal("Do you want to login to go to checkout?", {
         buttons: {
           button: "Go to Checkout",
           roll: {
@@ -77,9 +75,8 @@ export function CheckOut() {
             value: "signIn",
           },
         },
-      }).then(resp => 
-        { 
-        if(resp === "signIn") {
+      }).then(resp => {
+        if (resp === "signIn") {
           history.push("/access");
         } else {
           history.push("/order/payment")
@@ -87,7 +84,7 @@ export function CheckOut() {
       })
       //------------------------------------------------//  
     }
-    
+
   };
 
   return (

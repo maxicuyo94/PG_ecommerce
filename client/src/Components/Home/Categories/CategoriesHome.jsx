@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./CategoriesHome.module.scss";
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -16,6 +16,7 @@ import swal from 'sweetalert';
 import { addItemCart } from '../../../Redux/Cart/cartActions';
 import { useState } from "react";
 import notFound from './altimage.png'
+import { getReviewsOfProduct } from '../../../Redux/Reviews/reviewsActions'
 export const CategoriesHome = (props) => {
   const dispatch = useDispatch();
   const [fav, setFav] = useState(false)
@@ -24,7 +25,9 @@ export const CategoriesHome = (props) => {
   const handleFav = () => {
     setFav(!fav)
   }
+  //const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const dark = useSelector((state) => state.darkReducer.dark)
+  const average = Math.ceil(props.reviews.reduce((counter, obj) => obj.rating + counter, 0) / props.reviews.length)
   const handleAddToCart = (item) => {
     let cartItemModel = {
       title: item.title,
@@ -38,6 +41,12 @@ export const CategoriesHome = (props) => {
     dispatch(addItemCart(cartItemModel))
     swal("Done!", "Added to cart", "success");
   }
+  useEffect(() => {
+    const renderReviews = async () => {
+      await dispatch(getReviewsOfProduct(props.id));
+    };
+    renderReviews();
+  }, [])
   return (
     <div className={dark ? styles.containerDark : styles.container}>
       <div className={styles.card}>
@@ -63,14 +72,17 @@ export const CategoriesHome = (props) => {
           <p>{props.title}</p>
         </NavLink>
         <div className={styles.review}>
-          <div>
-            <StarIcon style={{ fontSize: '1rem' }} />
-            <StarIcon style={{ fontSize: '1rem' }} />
-            <StarIcon style={{ fontSize: '1rem' }} />
-            <StarIcon style={{ fontSize: '1rem' }} />
-            <StarHalfIcon style={{ fontSize: '1rem' }} />
-          </div>
-          <span>(5)</span>
+          {console.log(props.reviews.length > 0 ?
+            Math.ceil(props.reviews.reduce((counter, obj) => obj.rating + counter, 0) / props.reviews.length)
+            : false)}
+          {props.reviews.length > 0 ?
+            <span>
+              {[...Array(average)].map(() => {
+                return <StarIcon style={{ fontSize: '1rem' }} />
+              })} ({props.reviews.length})
+            </span>
+            : <span>No reviews yet</span>
+          }
         </div>
 
 

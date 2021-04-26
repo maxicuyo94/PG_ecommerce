@@ -83,7 +83,6 @@ export const orderPayment = (cart,infoUser) => {
   return async function () {
     try{
       let response = await axios.post("http://localhost:3001/mercadopago/checkout", {cart,infoUser})
-      console.log(response)
       return response.data.redirect
     } catch(e){
       alert(e)

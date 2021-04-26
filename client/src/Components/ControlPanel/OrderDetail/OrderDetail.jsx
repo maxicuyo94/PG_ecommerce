@@ -10,6 +10,7 @@ import style from "./orderdetail.module.scss";
 import { Link } from "react-router-dom";
 
 
+
 export const OrderDetail = ({ id, status, permission }) => {
   const order = useSelector((state) => state.orderReducer.orderDetail);
   const productsOfOrder = useSelector((state) => state.orderReducer.orderProducts);
