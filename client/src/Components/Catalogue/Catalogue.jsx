@@ -19,14 +19,14 @@ export function Catalogue() {
   const [Category, setCategory] = useState("");
   const [Prices, setPrices] = useState(["", ""]);
   const dispatch = useDispatch();
-  const [Input, setInput] = useState({ input: "" });
+  // const [Input, setInput] = useState({ input: "" });
   const stableDispatch = useCallback(dispatch, []);
+  const Input = useSelector(state => state.productReducer.Searchingg)
 
-
-  const handlechange = (e) => {
-    e.preventDefault();
-    setInput({ ...Input, [e.target.name]: e.target.value });
-  };
+  // const handlechange = (e) => {
+  //   e.preventDefault();
+  //   setInput({ ...Input, [e.target.name]: e.target.value });
+  // };
 
   useEffect(() => {
     setPages(0);
@@ -34,7 +34,7 @@ export function Catalogue() {
 
   useEffect(() => {
     stableDispatch(
-      allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input.input)
+      allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
     );
     dispatch(getCategories());
   }, [dispatch, stableDispatch, Pages, Category, Prices, Input]);
@@ -67,13 +67,13 @@ export function Catalogue() {
       <div name="filters" className={Style.filters}>
         <div name="categories" className={Style.categoriesPrice}>
           <div className={Style.searchFilter}>
-            <input
+            {/* <input
               className={Style.Input}
               placeholder={t("catalogue.textOne")}
               onChange={(e) => handlechange(e)}
               value={Input.input}
               name="input"
-            ></input>
+            ></input> */}
             <h4>{t("catalogue.textTwo")}</h4>
           </div>
           <h4>{t("catalogue.texThree")}</h4>

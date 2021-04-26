@@ -1,4 +1,6 @@
 export const SEARCH = "SEARCH";
+export const SEARCHING = "SEARCHING";
+
 export const SEARCHB = "SEARCHB";
 export const PRODUCTS = "PRODUCTS";
 export const POST_USER = "POST_USER";
