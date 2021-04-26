@@ -52,21 +52,14 @@ server.post('/checkout', async (req, res) => {
 
   try {
     let response = await mercadopago.preferences.create(preference)
-    console.log(response)
     res.json({redirect :response.body.init_point})
   } catch(err) {
     res.sendStatus(404)
   }
 })
 
-
-
 // server.get('/feedback', function(request, response) {
-//   console.log({
-//     Payment: request.query.payment_id,
-//     Status: request.query.status,
-//     MerchantOrder: request.query.merchant_order_id
-//   })
+//   console.log(response,request.res)
 //   return response.json({
 //    Payment: request.query.payment_id,
 //    Status: request.query.status,

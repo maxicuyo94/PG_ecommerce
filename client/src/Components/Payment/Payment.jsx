@@ -78,7 +78,6 @@ export function Payment() {
         }
     }
 
-
     let PayCart = async (e) => {
         e.preventDefault()
         let response = await dispatch(orderPayment(cart, infoUser))
