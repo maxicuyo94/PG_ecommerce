@@ -80,7 +80,6 @@ function cartReducer(state = InitialState, action) {
         ...state,
         cart: [],
       };
-
     default:
       return state;
   }

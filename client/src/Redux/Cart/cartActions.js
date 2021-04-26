@@ -189,22 +189,26 @@ export const clearCart = () => {
   };
 };
 
-export const checkout = (userId, status) => {
+export const checkout = (userId, status, amount) => {
   return async function (dispatch) {
     // eslint-disable-next-line
+    console.log(amount)
     if (!userId) {
       await supabase.from("order").insert([
         {
           guest: true,
           orderStatus: status,
-        },
+          amount:amount
+        }
       ]);
-    }
-    const { data, error } = await supabase
+    } else {
+      const { data, error } = await supabase
       .from("order")
-      .update({ orderStatus: status })
+      .update({ orderStatus: status,amount:amount})
       .eq("user_id", userId)
       .eq("orderStatus", "inCart");
+
+      console.log(data)
 
     await supabase.from("order").insert([
       {
@@ -212,7 +216,10 @@ export const checkout = (userId, status) => {
         orderStatus: "inCart",
       },
     ]);
+    }
     localStorage.setItem("cart", "[]");
     dispatch({ type: actionType.SET_CART, payload: [] });
   };
 };
+
+
