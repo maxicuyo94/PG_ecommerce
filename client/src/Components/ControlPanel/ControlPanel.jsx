@@ -41,6 +41,10 @@ export function ControlPanel() {
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
 
+  const [tab, setTab] = useState(() => {
+    return userLoged.permission === "customer" ? "purchasehistory" : "products";
+  });
+
 
   const changeModal = async (id) => {
     await dispatch(getOrderDetail(id));
@@ -60,14 +64,6 @@ export function ControlPanel() {
   const handleSearch = (e) => {
     setSearch(e);
   };
-
-  useEffect(() => {
-    dispatch(totalProducts(search));
-    dispatch(getCategories(search));
-    dispatch(allUsers(search));
-    dispatch(getAllOrders());
-    dispatch(getAllUserOrders(userLoged.id))
-  }, [dispatch, search, container]);
 
   const handleDelete = async (id) => {
     if (tab === "products") {
@@ -89,9 +85,6 @@ export function ControlPanel() {
     } else setCheckbox(false);
   };
 
-  const [tab, setTab] = useState(() => {
-    return userLoged.permission === "customer" ? "purchasehistory" : "products";
-  });
   const handleTab = (e) => {
     setTab(e.target.name);
   };
@@ -100,6 +93,29 @@ export function ControlPanel() {
     await dispatch(getProductsOfOrder(e.target.value));
     openModalSelector();
   };
+  useEffect(() => {
+    dispatch(totalProducts(search));
+    dispatch(getCategories(search));
+    dispatch(allUsers(search));
+    dispatch(getAllOrders());
+    dispatch(getAllUserOrders(userLoged.id))
+  }, [search, container, tab]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const resultsPerPage = 10;
+  const indexLastResult = currentPage * resultsPerPage;
+  const indexFirstResult = indexLastResult - resultsPerPage;
+  // const showedResults = state.allGames.slice(indexFirstResult, indexLastResult);
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const previousPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+
   return (
     <div className={style.container}>
       <h2>Control Panel</h2>
@@ -129,11 +145,11 @@ export function ControlPanel() {
             Users
           </button>
         )}
-        {tab === "products" ? (
+        {userLoged.permission !== "customer" && (
           <Link to="/addproduct">
             <button>Add Product</button>
           </Link>
-        ) : null}
+        )}
       </div>
       <div>
         <input
@@ -142,6 +158,9 @@ export function ControlPanel() {
           name="input"
           onChange={(e) => handleSearch(e.target.value)}
         ></input>
+           {tab === "orders" && (
+            <button className={style.buttonfilter}>Filter by state</button>
+        )}
       </div>
       <div className={style.containerList}>
         <div className={style.bar}>
@@ -399,6 +418,11 @@ export function ControlPanel() {
               })
             : null}
         </div>
+        <div className={style.paginate}>
+        <button className={style.buttonpage} onClick={() => previousPage()}>Prev</button>
+        <button className={style.currentpage}>{currentPage}</button>
+        <button className={style.buttonpage} onClick={() => nextPage()}>Next</button>
+      </div>
       </div>
       <Modal class={style.modal} open={modal} onClose={closeModal}>
         <OrderDetail id={orderDetailId.id} />

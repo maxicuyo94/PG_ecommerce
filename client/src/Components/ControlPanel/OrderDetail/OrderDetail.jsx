@@ -3,18 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getOrderDetail,
   //updateOrder,
+  getProductsOfOrder
 } from "../../../Redux/Orders/orderActions";
-import style from "./orderdetail.module.scss"
+import style from "./orderdetail.module.scss";
+import { Link } from "react-router-dom";
+
 
 export const OrderDetail = ({ id }) => {
   const order = useSelector((state) => state.orderReducer.orderDetail);
+  const productsOfOrder = useSelector((state) => state.orderReducer.orderProducts);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getOrderDetail(id));
+    dispatch(getProductsOfOrder(id));
   }, [dispatch, id]);
 
-  //console.log(order);
 
   return (
     <div className={style.div}>
@@ -42,6 +46,17 @@ export const OrderDetail = ({ id }) => {
                   <td>{detail.name}</td>
                   <td>{detail.price}</td>
                   <td>{detail.quantity}</td>
+                </tr>
+              );
+            })}
+            <br></br>
+            <span>Productos</span>
+            {productsOfOrder?.map(function (product) {
+              return (
+                <tr>
+                  <Link to={`/product/${product.product_id}`}>{product.title}</Link>
+                  <td></td>
+                  <td>{product.price}</td>
                 </tr>
               );
             })}

@@ -20,7 +20,6 @@ export const getAllOrders = () => {
 export const getAllUserOrders = (userId) => {
   return async function (dispatch) {
     let JSON = await supabase.from("order").select("*").eq("user_id", userId);
-    console.log(JSON);
     dispatch({
       type: actionType.GET_ALL_ORDERS_USER,
       payload: JSON.data,
