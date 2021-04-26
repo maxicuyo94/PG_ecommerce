@@ -1,7 +1,7 @@
 const { Router } = require("express");
-import all routers;
+//import all routers;
 
- const productRouter = require("./product.js");
+const productRouter = require("./product.js");
 
 const mercadopago = require('./mercadoPago')
 
