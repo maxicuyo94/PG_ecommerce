@@ -58,7 +58,12 @@ const SwiperSlider = (products) => {
               <SwiperSlide key={i}>
                 <CategoriesHome 
                   key={item.id}
-                  stock={item.stock} title={item.name} price={item.price} images={item.images[0]?.url} id={item.id}
+                  id={item.id}
+                  stock={item.stock}
+                  title={item.name}
+                  price={item.price}
+                  images={item.images[0]?.url}
+                  reviews={item.reviews}
                 />
               </SwiperSlide>
             );
