@@ -4,7 +4,8 @@ const InitialState = {
   orders: [],
   orderDetail: {},
   userOrder: [],
-  orderProducts: []
+  orderProducts: [],
+  userOrders: []
 };
 
 function Reducer(state = InitialState, action) {
@@ -18,7 +19,7 @@ function Reducer(state = InitialState, action) {
     case actionType.GET_ALL_ORDERS_USER:
       return {
         ...state,
-        orders: action.payload,
+        userOrders: action.payload,
       };
 
     case actionType.GET_ORDER_DETAIL:

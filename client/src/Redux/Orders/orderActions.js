@@ -16,8 +16,7 @@ export const getAllOrders = () => {
 };
 
 //Harcodeada para probar reviews
-export const getAllUserOrders = () => {
-  const userId = "a89f265a-c5be-4de5-a961-a8e63fa204cd";
+export const getAllUserOrders = (userId) => {
   return async function (dispatch) {
     let JSON = await supabase.from("order").select("*").eq("user_id", userId);
     console.log(JSON);

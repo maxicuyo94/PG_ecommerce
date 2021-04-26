@@ -7,7 +7,11 @@ import {
   deleteCategory,
 } from "../../Redux/Products/productActions.js";
 import { allUsers, deleteUser } from "../../Redux/Users/usersActions";
-import { getAllOrders, getOrderDetail, getProductsOfOrder } from "../../Redux/Orders/orderActions";
+import { 
+  getAllOrders, 
+  getOrderDetail, 
+  getProductsOfOrder,
+  getAllUserOrders } from "../../Redux/Orders/orderActions";
 import style from "./controlpanel.module.scss";
 import {
   Edit,
@@ -29,6 +33,9 @@ export function ControlPanel() {
   const orders = useSelector((state) => state.orderReducer.orders);
   const orderDetailId = useSelector((state) => state.orderReducer.orderDetail);
   const productsOfOrder = useSelector((state) => state.orderReducer.orderProducts);
+  const userOrders = useSelector((state) => state.orderReducer.userOrders);
+  const loggedUser = localStorage.getItem("supabase.auth.token");
+  console.log('aca', loggedUser)
   const container = products.lenght;
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
@@ -57,7 +64,8 @@ export function ControlPanel() {
     dispatch(getCategories(search));
     dispatch(allUsers(search));
     dispatch(getAllOrders());
-  }, [container]);
+    dispatch(getAllUserOrders(loggedUser))
+  }, [container, search]);
 
   const handleDelete = async (id) => {
     if (tab === "products") {
@@ -114,9 +122,7 @@ export function ControlPanel() {
         ) : null}
       </div>
       <div>
-        <input className={style.search} placeholder='Search...' name="input" onChange={(e) => handleSearch(e.target.value)}
-
-        ></input>
+        <input className={style.search} placeholder='Search...' name="input" onChange={(e) => handleSearch(e.target.value)}></input>
       </div>
       <div class={style.containerList}>
         <div class={style.bar}>
