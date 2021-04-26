@@ -201,7 +201,7 @@ export const Product = (props) => {
             {reviews.map((review) => {
               return <>
                 <span>Description: {review.description}</span>
-                <span>User: {review.user_id}</span>
+             {/*    <span>User: {review.user_id}</span> */}
                 <span>
                   Rating:
                         {Array.from(Array(review.rating).keys()).map(() => {

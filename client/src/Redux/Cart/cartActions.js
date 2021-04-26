@@ -192,6 +192,14 @@ export const clearCart = () => {
 export const checkout = (userId, status) => {
   return async function (dispatch) {
     // eslint-disable-next-line
+    if (!userId) {
+      await supabase.from("order").insert([
+        {
+          guest: true,
+          orderStatus: status,
+        },
+      ]);
+    }
     const { data, error } = await supabase
       .from("order")
       .update({ orderStatus: status })
