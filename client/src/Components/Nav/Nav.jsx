@@ -1,20 +1,25 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-//import { SearchBar } from "../SearchBar/SearchBar";
+// import { Searchbar } from "../Searchbar/Searchbar"
 //import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
 import MiniShop from "./MiniShop/MiniShop";
 import BtnLang from "./BtnLang/BtnLang";
 import BtnDark from './BtnDark/BtnDark'
-import { userLogOut } from "../../Redux/Users/usersActions";
+import Profile from './Profile/Profile'
+import { useSelector } from "react-redux";
 
-export function Nav({ priority }) {
+export function Nav({ priority, dark }) {
   // eslint-disable-next-line
+  const userLoged = useSelector(state =>  state.usersReducer.userLoged)
+    // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
+  //const history = useHistory();
 
   return (
-    <div className={style.container}>
+    <div className={dark ? style.containerDark : style.container}>
+      {}
       {/* <Header /> */}
       <div className={style.contents}>
         <div className={style.logo}>
@@ -37,30 +42,14 @@ export function Nav({ priority }) {
               <span>{t("navLink2.linkTwo")}</span>
             </Link>
           </li>
-          <li>
+          {userLoged?.id&&<li>
             <Link to="/controlpanel">
               <span>{t("navLink6.linkSix")}</span>
             </Link>
-          </li>
-          {/* {!localStorage.getItem('supabase.auth.token') ?  */}
-          <li>
-            <Link to="/login">
-              <span>{t("navLink4.linkFour")}</span>
-            </Link>
-          </li>
-          {/* : */}
-          <li>
-            <Link to="/home">
-              <span onClick={() => userLogOut()}>Log Out</span>
-            </Link>
-          </li>
-          {/* } */}
-          <li>
-            <Link to="/register">
-              <span>{t("navLink5.linkFive")}</span>
-            </Link>
-          </li>
-          
+          </li>  }  
+          {/* <li>
+            <SearchBar/>
+            </li>       */}
           <li>
             <MiniShop />
           </li>
@@ -70,6 +59,7 @@ export function Nav({ priority }) {
           <li>
             <BtnDark />
           </li>
+          <Profile/>
         </ul>
       </div>
     </div>

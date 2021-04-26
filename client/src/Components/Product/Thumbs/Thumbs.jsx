@@ -20,7 +20,7 @@ const Thumbs = (images) => {
   return (
     <Swiper
       spaceBetween={0}
-      navigation={true}
+      navigation={false}
       pagination={true}
       scrollbar={false}
       autoHeight={true}

@@ -1,17 +1,18 @@
 $minwidth: 600px;
 // $midwidth: 900px;
+$dark:#2C3A40;
 
-.containter {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  //height: 100vh;
+  //min-height: 100vh;
 
   main {
-    // min-height: calc(100vh - 203px);
+    min-height: calc(100vh - 183px);
     width: 100%;
-    height: min-content;
+    //height: min-content;
   }
 
   @media screen and (min-width: $minwidth) {
@@ -23,5 +24,12 @@ $minwidth: 600px;
       border-width: 1px;
       box-shadow: 0 6px 6px 0px black;
     }
+  }
+}
+.containerDark{
+  @extend .container;
+  background-color: $dark;
+  main{
+    border: 1px solid $dark;
   }
 }

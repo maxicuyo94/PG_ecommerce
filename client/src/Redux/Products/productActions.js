@@ -15,6 +15,14 @@ export const Search = (input) => {
   };
 };
 
+
+export const Searching = (payload) => {
+  return {
+    type: actionType.SEARCHING,
+    payload,
+  }
+};
+
 export const totalProducts = (product) => {
   return async function (dispatch) {
     if(!product) {
@@ -36,18 +44,19 @@ export const totalProducts = (product) => {
 };
 
 export const allProducts = (limit, offset, cate, price, input) => {
-  let nm = !cate ? "" : "categories.name";
-  let prg = !price[0] ? "" : "price";
-  let prl = !price[1] ? "" : "price";
+  let categoryName = !cate ? "" : "categories.name";
+  let lowestPrice = !price[0] ? "" : "price";
+  let highestPrice = !price[1] ? "" : "price";
   let name = !input ? "" : "name";
   return async function (dispatch) {
     let JSON = await supabase
       .from("product")
       .select("name,price,rating,id,stock,categories(name), images(url)")
       .ilike(name, `%${input}%`)
-      .eq(nm, cate)
-      .gt(prg, price[0])
-      .lt(prl, price[1]);
+      .eq(categoryName, cate)
+      .gt(lowestPrice, price[0])
+      .lt(highestPrice, price[1]);
+      console.log(JSON)
     dispatch({
       type: actionType.SEARCH,
       payload: JSON.data,

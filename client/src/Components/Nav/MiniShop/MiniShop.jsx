@@ -2,27 +2,32 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
+import Container from '@material-ui/core/Container';
 //import MenuItem from '@material-ui/core/MenuItem';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import styles from './MiniShop.module.scss'
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import MiniCard from './MiniCard'
+import { clearCart } from '../../../Redux/Cart/cartActions';
+import swal from "sweetalert";
+import { useHistory } from "react-router";
+
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
         backgroundColor: 'white',
         borderRadius: '10px',
-        width: '20vw',
-        height: '30vh',
+        width: '30vw',
+        height: '35vh',
         //overflowY: 'scroll'
     },
     list: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-
     }
 
 })((props) => (
@@ -83,6 +88,8 @@ const StyledGo = withStyles({
 })(Button);
 
 export default function CustomizedMenus() {
+    const dispatch = useDispatch()
+    const history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState(null);
     //const [cont, setCont] = React.useState(null);
     let cont = 0;
@@ -93,12 +100,24 @@ export default function CustomizedMenus() {
     // const shop = useSelector(state => state.productByCategories)
 
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+        cart.length && setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleClearCart = () => {
+        swal("Are you sure you want to CLEAR your cart?", {
+          dangerMode: true,
+          buttons: true,
+        }).then(resp => {
+          if(resp) {
+            dispatch(clearCart())
+            history.push("/");
+          }
+        })
+      };
 
     return (
         <div>
@@ -118,36 +137,26 @@ export default function CustomizedMenus() {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                className={styles.container}
             >
-                <div className={styles.products}>
-                    {
-                        cart && cart.map((item) => {
-                            // console.log('Item: ', item)
-                            cont += item.quantity * item.price;
-                            return (
-                                <div className={styles.container}>
-                                    <div className={styles.cant}>
-                                        <span>{item.quantity} X</span>
-                                        {item.image && <img src={item.image} alt={item.name} />}
-                                    </div>
-                                    <div className={styles.title}>
-
-                                        <NavLink to={`/product/${item.id}`}>
-                                            <span>{item.title?.split(" ").slice(0, 4).join(" ")}</span>
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                <span>US${cont.toFixed(2)}</span>
-                <StyledGo>
-                    <NavLink to={'/order'}>
-                        <span>Go to Checkout</span>
-
-                    </NavLink>
-                </StyledGo>
+                    <div className={styles.products}>
+                        {
+                            cart && cart.map((item) => {
+                                cont += item.quantity * item.price;
+                                return (
+                                    <MiniCard product={item} />
+                                )
+                            })
+                        }
+                    </div>
+                    <span>US${cont.toFixed(2)}</span>
+                    <button onClick={() => handleClearCart()} children="Clear"/>
+    
+                    <StyledGo>
+                        <NavLink to={'/order'}>
+                            <span>Checkout</span>
+                        </NavLink>
+                    </StyledGo>
             </StyledMenu>
         </div>
     );

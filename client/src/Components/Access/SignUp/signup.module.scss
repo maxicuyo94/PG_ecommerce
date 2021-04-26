@@ -37,20 +37,16 @@
         background-color: #B5E033;
     }
     .simpleButton {
-        outline: none;
-        height: 1.5rem;
+        outline:none;
         padding: 0;
         border-radius: 42px;
-        border-width: 1px;
         display: inline-block;
         cursor: pointer;
         color: #333333;
-        font-family: Arial;
         font-weight: 900;
-        padding: 0.3rem 1rem;
+        padding-right:0.5rem;
+        padding-left:0.5rem;
         text-decoration: none;
-        margin-top: 5px;
-        margin-bottom: 5px;
 
         &:hover {
             background-color: #abf5a1;

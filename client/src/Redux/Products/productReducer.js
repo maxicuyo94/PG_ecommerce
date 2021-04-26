@@ -6,6 +6,7 @@ const InitialState = {
   productDetail: {},
   categories: [],
   productByCategories: {},
+  Searchingg:'',
 };
 
 function productReducer(state = InitialState, action) {
@@ -15,7 +16,13 @@ function productReducer(state = InitialState, action) {
         ...state,
         allproducts: action.payload,
       };
+      case actionType.SEARCHING:
+        return {
+          ...state,
+          Searchingg: action.payload,
+        };
     case actionType.SEARCH:
+      console.log(action.payload)
       return {
         ...state,
         wantedProducts: action.payload
