@@ -26,8 +26,11 @@ import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
 //import { useLocalStorage } from "../../LocalStorage/useLocalStorage.js";
 import { ProductSelection } from "./Modals/ProductSelection";
+const mailgun = require("mailgun-js"); 
 
 export function ControlPanel() {
+  const DOMAIN = 'YOUR_DOMAIN_NAME'; 
+  const mg = mailgun({apiKey: 'b94fa5acae316a371a62877872375548-71b35d7e-8aae2afa', domain: 'sandbox84b5d0875e934c9fb174ce768ed09f49.mailgun.org'}); 
   const dispatch = useDispatch();
   const userLoged = useSelector((state) => state.usersReducer.userLoged);
   const products = useSelector((state) => state.productReducer.allproducts);
@@ -41,9 +44,31 @@ export function ControlPanel() {
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
 
+  const handleEmail = (id) => {
+    dispatch()
+    const data = {from: 'Excited User <me@samples.mailgun.org>', to: 'pablomoronrey@gmail.com', subject: 'Hello', text: 'Testing some Mailgun awesomness!' }; 
+    mg.messages().send(data, function (error, body) {console.log(body); });
+
+  }
+  
   const [tab, setTab] = useState(() => {
-    return userLoged.permission === "customer" ? "purchasehistory" : "products";
+    return ((userLoged.permission === "customer" || !userLoged.permission) ? "purchasehistory" : "products");
   });
+  const [filter, setFilter] = useState()
+
+const handleFilter = (e) => {
+  let selected = e.target.selectedOptions[0].value;
+  setFilter(selected);
+}
+
+useEffect(() => {
+  if(filter !== 'all') {
+    dispatch(getAllOrders(filter));
+  } else {
+    dispatch(getAllOrders());
+  }
+},[filter])
+
 
 
   const changeModal = async (id) => {
@@ -99,7 +124,9 @@ export function ControlPanel() {
     dispatch(allUsers(search));
     dispatch(getAllOrders());
     dispatch(getAllUserOrders(userLoged.id))
-  }, [search, container, tab]);
+  }, [search, container, tab, userLoged]);
+
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 10;
@@ -120,12 +147,12 @@ export function ControlPanel() {
     <div className={style.container}>
       <h2>Control Panel</h2>
       <div className={style.barButtons}>
-        {userLoged.permission !== "customer" && (
+        {(userLoged.permission !== "customer" && userLoged.permission)  && (
           <button name="products" onClick={(e) => handleTab(e)}>
             Products
           </button>
         )}
-        {userLoged.permission !== "customer" && (
+        {(userLoged.permission !== "customer" && userLoged.permission) && (
           <button name="orders" onClick={(e) => handleTab(e)}>
             Orders
           </button>
@@ -135,17 +162,18 @@ export function ControlPanel() {
           Purchase History
         </button>
         )}
-        {userLoged.permission !== "customer" && (
+        {(userLoged.permission !== "customer" && userLoged.permission) && (
           <button name="categories" onClick={(e) => handleTab(e)}>
             Categories
           </button>
         )}
-        {userLoged.permission !== "customer" && (
+        {(userLoged.permission !== "customer" && userLoged.permission) && (
           <button name="users" onClick={(e) => handleTab(e)}>
             Users
           </button>
         )}
-        {userLoged.permission !== "customer" && (
+        {(userLoged.permission !== "customer" && userLoged.permission) && (
+
           <Link to="/addproduct">
             <button>Add Product</button>
           </Link>
@@ -158,9 +186,16 @@ export function ControlPanel() {
           name="input"
           onChange={(e) => handleSearch(e.target.value)}
         ></input>
-           {tab === "orders" && (
-            <button className={style.buttonfilter}>Filter by state</button>
-        )}
+        {tab === 'orders' ? <span>Select filter</span> : null}
+          {tab === "orders" && (
+          <select className={style.buttonfilter} onClick={(e) => handleFilter(e)}>
+            <option value='all'>All</option>
+            <option value='approved'>Approved</option>
+            <option value='inCart'>In Cart</option>
+            <option value='pending'>Pending</option>
+            <option value='rejected'>Rejected</option>
+          </select>
+         )}
       </div>
       <div className={style.containerList}>
         <div className={style.bar}>
@@ -171,6 +206,8 @@ export function ControlPanel() {
           {tab === "orders" ? <h4 className={style.name}>Order ID</h4> : null}
           {tab === "orders" ? <h4 className={style.name}>Status</h4> : null}
           {tab === "orders" ? <h4 className={style.name}>Date</h4> : null}
+          {tab === "orders" ? <h4 className={style.name}>Confirmation email</h4> : null}
+
           {tab === "categories" ? (
             <h4 className={style.name}>Category</h4>
           ) : null}
@@ -181,54 +218,7 @@ export function ControlPanel() {
           <h4>Modify</h4>
           {tab === "orders" ? null : <h4>Delete</h4>}
         </div>
-        <div className={style.containerList}>
-        {tab === "purchasehistory"
-            ? userOrders?.map((order) => {
-                return (
-                  <div className={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    )}
-                    <span
-                      onClick={() => changeModal(order.id)}
-                      className={style.name}
-                    >
-                      {order.id}
-                    </span>
-                    <span className={style.name}>{order.orderStatus}</span>
-                    <span className={style.name}>{order.orderDate}</span>
-                    <dvi>
-                      <button
-                        className={style.icon}
-                        value={order.id}
-                        onClick={(e) => getProducts(e)}
-                      >
-                        +
-                      </button>
-                      <Modal
-                        class={style.modal}
-                        open={modalTwo}
-                        onClose={closeModal}
-                      >
-                        <ProductSelection
-                          products={productsOfOrder}
-                        ></ProductSelection>
-                      </Modal>
-                    </dvi>
-                  </div>
-                );
-              })
-            : null}
+        <div className={style.containerList}>         
           {tab === "products"
             ? products?.map((product) => {
                 return (
@@ -287,6 +277,7 @@ export function ControlPanel() {
                     </span>
                     <span className={style.name}>{order.orderStatus}</span>
                     <span className={style.name}>{order.orderDate}</span>
+                    {order.orderStatus === 'approved' ? <button onClick={() => handleEmail(order.id)}>Send email</button> :  <button disabled >Send email</button>}
                     <dvi>
                       <button
                         className={style.icon}
@@ -337,7 +328,7 @@ export function ControlPanel() {
               })
             : null}
           {tab === "purchasehistory"
-            ? userOrders.map((order) => {
+            ? userOrders?.map((order) => {
                 return (
                   <div className={style.list}>
                     {checkbox ? (
@@ -425,7 +416,7 @@ export function ControlPanel() {
       </div>
       </div>
       <Modal class={style.modal} open={modal} onClose={closeModal}>
-        <OrderDetail id={orderDetailId.id} />
+        <OrderDetail id={orderDetailId.id} status={filter} permission={userLoged.permission} />
       </Modal>
     </div>
   );
