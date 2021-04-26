@@ -16,9 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
 import { userStorage } from "./Redux/Users/usersActions";
 import { Reset } from "./Components/Access/ResetPassword/ResetPassword";
-import { Review } from "./Components/Review/review"
-import { Payment } from "./Components/Payment/Payment"
-import { ModifyReview } from './Components/Review/modifyReview';
+import { Review } from "./Components/Review/review";
+import { Payment } from "./Components/Payment/Payment";
+import { ModifyReview } from "./Components/Review/modifyReview";
 import { checkout } from "./Redux/Cart/cartActions";
 import swal from "sweetalert";
 
@@ -40,27 +40,46 @@ function App() {
   if (window.location.href.includes("approved")) {
     swal("Payment approved", "", "success").then((resp) => {
       if (resp) {
-        dispatch(
-          checkout(userLogedStorage.currentSession?.user.id, "approved")
-        );
+        if (!userLogedStorage.currentSession) {
+          dispatch(checkout(null, "approved"));
+        } else {
+          dispatch(
+            checkout(userLogedStorage.currentSession?.user.id, "approved")
+          );
+        }
         history.push("/");
       }
     });
   } else if (window.location.href.includes("pending")) {
     swal("Payment pending", "", "warning").then((resp) => {
-      if (resp) {
+      if (!userLogedStorage.currentSession) {
+        dispatch(checkout(null, "pending"));
+      } else {
         dispatch(checkout(userLogedStorage.currentSession?.user.id, "pending"));
-        history.push("/");
       }
+      history.push("/");
     });
   } else if (window.location.href.includes("rejected")) {
     swal("Payment rejected", "", "error").then((resp) => {
-      if (resp) {
+      if (!userLogedStorage.currentSession) {
+        dispatch(checkout(null, "rejected"));
+      } else {
         dispatch(
           checkout(userLogedStorage.currentSession?.user.id, "rejected")
         );
-        history.push("/");
       }
+      history.push("/");
+    });
+  } else if (window.location.href.includes("in_process")) {
+    swal("Payment in process", "", "error").then((resp) => {
+      if (!userLogedStorage.currentSession) {
+        dispatch(checkout(null, "in_process"));
+      } else {
+        dispatch(
+          checkout(userLogedStorage.currentSession?.user.id, "in_process")
+        );
+      }
+      history.push("/");
     });
   }
 
@@ -115,7 +134,6 @@ function App() {
       <ProtectedRoute
         exact
         path="/modifyReview/:id"
-        restringed="customer"
         component={({ match }) => (
           <ModifyReview id={match.params.id} dark={dark} />
         )}

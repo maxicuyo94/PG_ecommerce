@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-// import { Searchbar } from "../Searchbar/Searchbar"
+import { SearchBar } from "../Searchbar/SearchBar"
 //import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
@@ -23,7 +23,7 @@ export function Nav({ priority, dark }) {
       {/* <Header /> */}
       <div className={style.contents}>
         <div className={style.logo}>
-          <NavLink to={"/landing"}>
+          <NavLink to={"/"}>
             <img
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png"
@@ -47,9 +47,9 @@ export function Nav({ priority, dark }) {
               <span>{t("navLink6.linkSix")}</span>
             </Link>
           </li>  }  
-          {/* <li>
+            <li>
             <SearchBar/>
-            </li>       */}
+            </li>       
           <li>
             <MiniShop />
           </li>

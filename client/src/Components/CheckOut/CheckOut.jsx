@@ -69,7 +69,7 @@ export function CheckOut() {
       //     }
       //   })
       //------------------------------------------------//  
-      swal("UPS! You must be logged to checkout!",{
+      swal("Do you want to login to go to checkout?",{
         buttons: {
           button: "Go to Checkout",
           roll: {
@@ -80,7 +80,7 @@ export function CheckOut() {
       }).then(resp => 
         { 
         if(resp === "signIn") {
-          history.push("/login");
+          history.push("/access");
         } else {
           history.push("/order/payment")
         }
