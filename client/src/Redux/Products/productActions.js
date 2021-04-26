@@ -9,7 +9,7 @@ export const Search = (input) => {
   return async function (dispatch) {
     const JSON = await supabase
       .from("product")
-      .select("*, images(url)")
+      .select("*, images(url), reviews(*)")
       .ilike("name", `%${input}%`);
     dispatch({ type: actionType.SEARCHB, payload: JSON.data });
   };
@@ -28,7 +28,7 @@ export const totalProducts = (product) => {
     if(!product) {
       let JSON = await supabase
         .from("product")
-        .select("*, images(url)")
+        .select("*, images(url), reviews(*)")
       return dispatch({
         type: actionType.PRODUCTS,
         payload: JSON.data,
@@ -51,7 +51,7 @@ export const allProducts = (limit, offset, cate, price, input) => {
   return async function (dispatch) {
     let JSON = await supabase
       .from("product")
-      .select("name,price,rating,id,stock,categories(name), images(url)")
+      .select("name,price,rating,id,stock,categories(name), images(url), reviews(*)")
       .ilike(name, `%${input}%`)
       .eq(categoryName, cate)
       .gt(lowestPrice, price[0])
@@ -69,7 +69,7 @@ export const productDetail = (input) => {
   return async function (dispatch) {
     const JSON = await supabase
       .from("product")
-      .select("*, categories(id, name), images(url)")
+      .select("*, categories(id, name), images(url), reviews(*)")
       .eq("id", input);
     dispatch({ type: actionType.PRODUCT_DETAIL, payload: JSON.data[0] });
   };
@@ -110,7 +110,7 @@ export const getProductsByCategories = (input) => {
           arrProductbyCategory.data.map(async (objID) => {
             const product = await supabase
               .from("product")
-              .select("*, images(url)")
+              .select("*, images(url), reviews(*)")
               .eq("id", objID.product_id);
             return product.data[0];
           })
