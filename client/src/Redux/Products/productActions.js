@@ -15,6 +15,14 @@ export const Search = (input) => {
   };
 };
 
+
+export const Searching = (payload) => {
+  return {
+    type: actionType.SEARCHING,
+    payload,
+  }
+};
+
 export const totalProducts = (product) => {
   return async function (dispatch) {
     if(!product) {
