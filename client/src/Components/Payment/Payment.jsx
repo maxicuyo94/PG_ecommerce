@@ -7,14 +7,14 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-      display: 'flex',
-      justifyContent: 'center'
+    root: {
+        '& .MuiTextField-root': {
+            margin: theme.spacing(1),
+            width: '25ch',
+            display: 'flex',
+            justifyContent: 'center'
+        },
     },
-  },
 }));
 
 
@@ -23,34 +23,28 @@ export function Payment() {
     const user = useSelector((state) => state.usersReducer.userLoged);
     const cart = useSelector((state) => state.cartReducer.cart);
     const dispatch = useDispatch()
-
-    console.log(cart, user)
-
     const [input, setInput] = useState({
-        streetName: "lomita",
-        streetNumber: "lomitasss2",
-        postalCode: "22cc"
+        streetName: "",
+        streetNumber: "",
+        postalCode: ""
     })
-
     const [form, setform] = useState({
         name: '',
         surname: '',
         phone: '',
         email: '',
-        addres: {
-            streetName: '',
-            streetNumber: '',
-            postalCode: '',
-        },
+        streetName: '',
+        streetNumber: 0,
+        postalCode: '',
     })
 
-    
-
-    let handleAddress = () => {
+    const handleAddress = (e) => {
+        e.preventDefault()
+        let addresUser = user.address.find(item => item.address === e.target.value)
         setInput({
-            streetName: "lomita",
-            streetNumber: "lomitasss2",
-            postalCode: "22cc"
+            streetName: addresUser.address,
+            streetNumber: addresUser.streetNumber,
+            postalCode: addresUser.postal_code,
         })
     }
 
@@ -60,30 +54,30 @@ export function Payment() {
             ...form,
             [e.target.name]: e.target.value,
         })
-        console.log(form)
     }
 
-    // let infoUser = {
-    //     name: user.name,
-    //     surname: user.surname,
-    //     phone: user.phone,
-    //     email: user.email,
-    //     addres: input
-    // }
-
-    if(user.id){
+    if (user.id) {
         var infoUser = {
             name: user.name,
             surname: user.surname,
-            phone: user.phone,
+            phone: parseInt(user.phone),
             email: user.email,
             addres: input
         }
     } else {
-        var infoUser = form
+        var infoUser = {
+            name: form.name,
+            surname: form.surname,
+            phone: parseInt(form.phone),
+            email: form.email,
+            addres: {
+                streetName: form.streetName,
+                streetNumber: parseInt(form.streetNumber),
+                postalCode: form.postalCode,
+            }
+        }
     }
 
-    console.log(infoUser)
 
     let PayCart = async (e) => {
         e.preventDefault()
@@ -94,31 +88,28 @@ export function Payment() {
     return (
         <div>
             {cart.map(item => <ItemCart product={item} />)}
-            {user.id && <select>
+            {user.id && <select onChange={handleAddress}>
                 <option value="">Address</option>
                 {
-                    user.address && user.address.map(add => <option onChange={handleAddress} value={add}>{add.address}</option>)
+                    user.address && user.address.map((add, i) => <option key={i} value={add.address}>{add.address}</option>)
                 }
             </select>}
 
-            {!user.id ? 
-            <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="name" label="Name" variant="outlined" name="name" onChange={handleForm} />
-                <TextField id="surname" label="Surname" variant="outlined" name="surname" onChange={handleForm} />
-                <TextField id="phone" label="Phone" variant="outlined" name="phone" onChange={handleForm} />
-                <TextField id="email" label="Email" variant="outlined" name="email" onChange={handleForm} />
-                <TextField id="streetName" label="Street Name" variant="outlined" name="streetName" onChange={handleForm} />
-                <TextField id="streetNumbre" label="Street Number" variant="outlined" name="streetNumbre" onChange={handleForm} />
-                <TextField id="postalCode" label="Postal Code" variant="outlined" name="postalCode" onChange={handleForm} />
-            </form>
-            : 
-            null
-            }    
-            
+            {!user.id ?
+                <form className={classes.root} noValidate autoComplete="off">
+                    <TextField id="name" label="Name" variant="outlined" name="name" onChange={handleForm} />
+                    <TextField id="surname" label="Surname" variant="outlined" name="surname" onChange={handleForm} />
+                    <TextField id="phone" label="Phone" variant="outlined" name="phone" onChange={handleForm} />
+                    <TextField id="email" label="Email" variant="outlined" name="email" onChange={handleForm} />
+                    <TextField id="streetName" label="Street Name" variant="outlined" name="streetName" onChange={handleForm} />
+                    <TextField id="streetNumber" label="Street Number" variant="outlined" name="streetNumber" onChange={handleForm} />
+                    <TextField id="postalCode" label="Postal Code" variant="outlined" name="postalCode" onChange={handleForm} />
+                </form>
+                :
+                null
+            }
+
             <button onClick={(e) => PayCart(e)}>Pay</button>
-            {/* <Button variant="contained">
-                <a href={PayCart}>Pay</a>
-            </Button> */}
         </div>
     )
 }

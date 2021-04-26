@@ -23,7 +23,7 @@ export function Nav({ priority, dark }) {
       {/* <Header /> */}
       <div className={style.contents}>
         <div className={style.logo}>
-          <NavLink to={"/landing"}>
+          <NavLink to={"/"}>
             <img
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png"
