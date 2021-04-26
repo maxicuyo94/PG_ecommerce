@@ -82,18 +82,20 @@ export const CategoriesHome = (props) => {
         </div>
 
         {cart ?
-          <NavLink to={'/order'} className={styles.btnOff}
+          <button className={styles.btnOff}
+            onClick={() => { cart && handleAddToCart(props) }}
             onMouseEnter={() => setIsShown(true)}
             onMouseLeave={() => setIsShown(false)}
           >
-            <ShoppingCartIcon style={{ fontSize: '1.5rem' }} />
-            {
-              isShown ?
-                <span> Go to Cart?</span>
-                :
-                <span> In the Cart!</span>
-            }
-          </NavLink>
+            <><AddShoppingCartIcon style={{ fontSize: '1.5rem' }} />
+              {
+                isShown ?
+                  <span> Add one more?</span>
+                  :
+                  <span> In the Cart!</span>
+              }
+            </>
+          </button>
           :
           <button className={styles.btnOn}
             onClick={() => { !cart && handleAddToCart(props); setCart(true) }}
