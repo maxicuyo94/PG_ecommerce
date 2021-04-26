@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import swal from "sweetalert";
 import { ResetPassword } from "../../../Redux/Users/usersActions";
-
-export function Reset() {
+import styles from './ResetPassword.module.scss'
+export function Reset(props) {
   const history = useHistory()
   const dispatch = useDispatch();
   let token =
@@ -21,7 +21,7 @@ export function Reset() {
     ) {
       swal("Invalid password", "", "warning");
     } else if (document.getElementById("password").value !== document.getElementById("repeat").value) {
-      swal("Password doesn't match","","warning");
+      swal("Password doesn't match", "", "warning");
     } else {
       await dispatch(ResetPassword(token, document.getElementById("password").value));
       swal("Your password was successfully reset");
@@ -30,18 +30,25 @@ export function Reset() {
   };
 
   return (
-    <form className="form">
-      <div>
-        <label>New password</label>
-        <input type="password" id="password" placeholder="Password" />
+    <div className={props.dark ? styles.containerDark : styles.container}>
+      <div className={styles.reset}>
+        <div className={styles.title}>
+          <span>Reset Password</span>
+        </div>
+        <form className={styles.form}>
+          <div className={styles.password}>
+            <label>New password</label>
+            <input type="password" id="password" placeholder="Password" />
+          </div>
+          <div className={styles.repeat}>
+            <label>Repeat password</label>
+            <input type="password" id="repeat" placeholder="Password" />
+          </div>
+          <button type="submit" onClick={(e) => resetP(e)}>
+            Reset password
+            </button>
+        </form>
       </div>
-      <div>
-        <label>Repeat password</label>
-        <input type="password" id="repeat" placeholder="Password" />
-      </div>
-      <button type="submit" onClick={(e) => resetP(e)}>
-        Reset password
-      </button>
-    </form>
+    </div>
   );
 }

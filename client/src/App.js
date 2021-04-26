@@ -16,9 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
 import { userStorage } from "./Redux/Users/usersActions";
 import { Reset } from "./Components/Access/ResetPassword/ResetPassword";
-import { Review } from "./Components/Review/review";
-import { Payment } from "./Components/Payment/Payment";
-import { ModifyReview } from "./Components/Review/modifyReview";
+import { Review } from "./Components/Review/review"
+import { Payment } from "./Components/Payment/Payment"
+import { ModifyReview } from './Components/Review/modifyReview';
 import { checkout } from "./Redux/Cart/cartActions";
 import swal from "sweetalert";
 
@@ -75,7 +75,7 @@ function App() {
           <ModifyUser id={match.params.id} dark={dark} />
         )}
       />
-      <Route exact path="/resetPassword" component={Reset} dark={dark} />
+      <Route exact path="/resetPassword" render={() => <Reset dark={dark} />} />
       <Route
         exact
         path="/Product/:id"
