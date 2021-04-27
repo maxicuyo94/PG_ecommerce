@@ -16,7 +16,7 @@ import { useHistory } from "react-router";
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
-        backgroundColor: 'white',
+        backgroundColor: '#9abf15',
         borderRadius: '10px',
         width: '30vw',
         height: '35vh',
@@ -47,7 +47,7 @@ const StyledMenu = withStyles({
 ));
 const StyledButton = withStyles({
     root: {
-        background: 'white',
+        background: '#9abf15',
 
         border: 0,
         color: 'black',

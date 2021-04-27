@@ -21,6 +21,8 @@ import { Payment } from "./Components/Payment/Payment";
 import { ModifyReview } from "./Components/Review/modifyReview";
 import { checkout } from "./Redux/Cart/cartActions";
 import swal from "sweetalert";
+import {Banner} from './Components/Banner/Banner'
+
 
 function App() {
   // eslint-disable-next-line
