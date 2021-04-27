@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./home.module.scss";
 import { useTranslation } from "react-i18next";
 import SwiperSlider from "./Swiper/SwiperSlider";
-
 export function Home(props) {
   const dispatch = useDispatch();
   const productByCategories = useSelector(

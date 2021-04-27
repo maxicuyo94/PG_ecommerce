@@ -1,0 +1,34 @@
+.container {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:100%;
+    height:150px;
+    border:solid;
+    border-color:#9abf15;
+}
+
+.img {
+    width:100%;
+    height:100%;
+}
+
+.button {
+    color: transparent;
+    opacity: 0.2;
+    height:30%;
+    position:relative;
+    top:45px;
+    transition: 0.5s;
+    background-color: #fff;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    transition: 0.5s;
+}
+
+.button:hover {
+    opacity: 2;
+}
+
