@@ -1,5 +1,4 @@
 import * as actionType from "../action_types/actionTypes";
-
 import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
@@ -189,16 +188,17 @@ export const clearCart = () => {
   };
 };
 
-export const checkout = (userId, status, amount) => {
+export const checkout = (userId, status, amount, userEmail) => {
   return async function (dispatch) {
     // eslint-disable-next-line
-    console.log(amount)
+    console.log(amount,userId)
     if (!userId) {
       await supabase.from("order").insert([
         {
           guest: true,
           orderStatus: status,
-          amount:amount
+          amount:amount,
+          email:userEmail
         }
       ]);
     } else {
@@ -214,6 +214,7 @@ export const checkout = (userId, status, amount) => {
       {
         user_id: userId,
         orderStatus: "inCart",
+        email:userEmail
       },
     ]);
     }

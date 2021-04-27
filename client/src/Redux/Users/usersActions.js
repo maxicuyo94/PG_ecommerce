@@ -40,6 +40,7 @@ export const postUser = (users) => {
         {
           user_id: user.id,
           orderStatus: 'inCart',
+          email: user.email
         },
       ]);
       return user
@@ -82,12 +83,12 @@ export const updateUser = (users) => {
 
 export const allUsers = (user) => {
   return async function (dispatch) {
-    if(!user) {
-    let JSON = await supabase.from("users").select("*");
-    return dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
-  }
-  let JSON = await supabase.from("users").select("*").ilike("name", `%${user}%`);
-  dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
+    if (!user) {
+      let JSON = await supabase.from("users").select("*");
+      return dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
+    }
+    let JSON = await supabase.from("users").select("*").ilike("name", `%${user}%`);
+    dispatch({ type: actionType.ALL_USERS, payload: JSON.data });
   };
 };
 
@@ -110,12 +111,12 @@ export const userLogin = (users) => {
     } else {
       let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
       let guestCartAdded = previousStorage.map(item => addItemCart(item))
-      console.log( guestCartAdded )
+      console.log(guestCartAdded)
       dispatch({ type: actionType.USER_LOGIN, payload: user.user });
       const userLoged = await supabase
-      .from("users")
-      .select("*,address(*)")
-      .eq("email", users.email);
+        .from("users")
+        .select("*,address(*)")
+        .eq("email", users.email);
       dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
       setTimeout(() => {
         dispatch(setCart(user.user.id));
@@ -125,13 +126,13 @@ export const userLogin = (users) => {
 };
 
 export const userStorage = (id) => {
-  return async function (dispatch) {    
-    if(id) {
+  return async function (dispatch) {
+    if (id) {
       const userLoged = await supabase
         .from("users")
         .select("*,address(*)")
         .eq("id", id);
-      dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0]});
+      dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
     }
     // else {
     //   swal("no logged", "wanna log in?", "error");
@@ -169,9 +170,9 @@ export const userLogOut = () => {
     const { error } = supabase.auth.signOut()
     localStorage.setItem("cart", "[]")
 
-    if(error){
+    if (error) {
       return error
-    }else{
+    } else {
       dispatch({ type: actionType.SET_CART, payload: [] });
       dispatch({ type: actionType.USER_LOGOUT })
     }
@@ -179,12 +180,12 @@ export const userLogOut = () => {
 };
 
 export const changeUserPermission = (id, newPermission) => {
-  return async function (){
+  return async function () {
     await supabase
-    .from("users")
-    .update({
-      permission: newPermission,
-    })
-    .eq("id", id);
+      .from("users")
+      .update({
+        permission: newPermission,
+      })
+      .eq("id", id);
   }
 }

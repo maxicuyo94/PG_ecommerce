@@ -6,7 +6,6 @@ import { updateUser } from "../../../Redux/Users/usersActions";
 export function ModifyUser({ id, dark }) {
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.usersReducer.userLoged);
-  console.log(userLog);
   const [dataUser, setDataUser] = useState({
     id,
     userName: "",

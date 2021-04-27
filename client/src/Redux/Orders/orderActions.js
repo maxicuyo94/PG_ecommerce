@@ -89,3 +89,14 @@ export const orderPayment = (cart,infoUser) => {
     }
   }
 };
+
+export const orderEmail = (email) => {
+  return async function () {
+    try{
+      await axios.post(`http://localhost:3001/mercadopago/send/?email=${email}`)
+    } catch(e){
+      alert("Order pending")
+    }
+  }
+};
+

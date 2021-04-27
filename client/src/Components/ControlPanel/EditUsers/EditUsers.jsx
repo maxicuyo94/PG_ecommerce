@@ -71,7 +71,6 @@ export default function Profile(props) {
   };
 
   const configRender = () => {
-    //AGREGAR DEFAULT CASE
     // eslint-disable-next-line
     switch (userLoged.permission) {
       case "superadmin":

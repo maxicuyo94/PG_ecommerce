@@ -72,9 +72,9 @@ export const CategoriesHome = (props) => {
           <p>{props.title}</p>
         </NavLink>
         <div className={styles.review}>
-          {console.log(props.reviews.length > 0 ?
+          {props.reviews.length > 0 ?
             Math.ceil(props.reviews.reduce((counter, obj) => obj.rating + counter, 0) / props.reviews.length)
-            : false)}
+            : false}
           {props.reviews.length > 0 ?
             <span>
               {[...Array(average)].map(() => {
