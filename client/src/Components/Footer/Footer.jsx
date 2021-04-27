@@ -74,7 +74,7 @@ export function Footer() {
     fontColor="black"
     copyrightColor="darkgrey"
     backgroundColor='#485F69'
- />;
+ />
     </div>
   );
 }
