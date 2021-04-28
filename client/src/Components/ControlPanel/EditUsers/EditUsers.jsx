@@ -7,6 +7,7 @@ import { Edit } from "@material-ui/icons";
 import {
   changeUserPermission,
   allUsers,
+  //activate
 } from "../../../Redux/Users/usersActions";
 import style from "./editusers.module.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -69,6 +70,11 @@ export default function Profile(props) {
     );
     await dispatch(allUsers());
   };
+
+  // const active = (e) => {
+  //   e.preventDefault();
+  //   dispatch(activate(mandar id por aca del usuario activar));
+  // }
 
   const configRender = () => {
     // eslint-disable-next-line
@@ -138,6 +144,8 @@ export default function Profile(props) {
         }
     }
   };
+
+  //<button onclick={(e) => active(e)}
   return (
     <div>
       <Edit class={style.icon} onClick={handleClick} />

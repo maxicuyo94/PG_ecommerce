@@ -1,8 +1,8 @@
 import * as actionType from "../action_types/actionTypes";
-
 import { createClient } from "@supabase/supabase-js";
 import swal from "sweetalert";
 import { addItemCart, setCart } from "../Cart/cartActions";
+const axios = require('axios');
 const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
@@ -102,25 +102,35 @@ export const deleteUser = (id) => {
 
 export const userLogin = (users) => {
   return async function (dispatch) {
-    const { data: user, error } = await supabase.auth.signIn({
-      email: users.email,
-      password: users.password,
-    })
-    if (error) {
-      alert(error.message)
+
+    let actived = await supabase
+      .from("users")
+      .select("active")
+      .eq("email", users.email)
+
+    if (actived.data[0].active === true) {
+      const { data: user, error } = await supabase.auth.signIn({
+        email: users.email,
+        password: users.password,
+      })
+      if (error) {
+        alert(error.message)
+      } else {
+        let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
+        let guestCartAdded = previousStorage.map(item => addItemCart(item))
+        console.log(guestCartAdded)
+        dispatch({ type: actionType.USER_LOGIN, payload: user.user });
+        const userLoged = await supabase
+          .from("users")
+          .select("*,address(*)")
+          .eq("email", users.email);
+        dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
+        setTimeout(() => {
+          dispatch(setCart(user.user.id));
+        }, 2000);
+      }
     } else {
-      let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-      let guestCartAdded = previousStorage.map(item => addItemCart(item))
-      console.log(guestCartAdded)
-      dispatch({ type: actionType.USER_LOGIN, payload: user.user });
-      const userLoged = await supabase
-        .from("users")
-        .select("*,address(*)")
-        .eq("email", users.email);
-      dispatch({ type: actionType.USER_LOGIN, payload: userLoged.data[0] });
-      setTimeout(() => {
-        dispatch(setCart(user.user.id));
-      }, 2000);
+      swal("Oops", "account deactivated", "error");
     }
   }
 };
@@ -187,5 +197,52 @@ export const changeUserPermission = (id, newPermission) => {
         permission: newPermission,
       })
       .eq("id", id);
+  }
+}
+
+export const deactivate = (id) => {
+  return async function () {
+    try {
+      await supabase
+        .from("users")
+        .update({
+          active: false,
+        })
+        .eq("id", id);
+      swal("Oops", "account deactivated", "error");
+      userLogOut()
+      await axios.post(`http://localhost:3001/mercadopago/send?id=${id}`)
+    } catch (e) {
+
+    }
+  }
+}
+
+export const mailActivate = (id) => {
+  return async function () {
+    try {
+      swal("Oops", "Te llegara un mail cuando el jefe te acepte otra vez", "success");
+      await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&status='actived'`)
+    } catch (e) {
+
+    }
+  }
+}
+
+export const activate = (id) => {
+  return async function () {
+    try {
+      await supabase
+        .from("users")
+        .update({
+          active: true,
+        })
+        .eq("id", id);
+      swal("Oops", "Usuario activado", "success");
+      //necesito el email del usuario a activar para mandarlo por query
+      await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&status='actived'`)
+    } catch (e) {
+
+    }
   }
 }

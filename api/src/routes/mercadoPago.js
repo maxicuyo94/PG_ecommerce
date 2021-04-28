@@ -34,7 +34,7 @@ server.post('/checkout', async (req, res) => {
         street_number:infoUser.addres.streetNumber
       }
     },
-    external_reference : `${infoUser.email},${infoUser.id},${infoUser.name},${infoUser.surname}`,
+    external_reference : `${infoUser.email},${infoUser.id},${infoUser.addres.streetName},${infoUser.addres.streetNumber},${infoUser.addres.postalCode},${infoUser.name},${infoUser.surname}`,
 		items: cartMP,
 		back_urls: {
 			"success": "http://localhost:3000",
@@ -63,10 +63,8 @@ server.post('/checkout', async (req, res) => {
 })
 
 server.post('/send', (req,res)=>{
-    const {name, surname,email,orderId} = req.query
-    console.log(email)
-    userMail(email)
-
+    const user = req.query
+    userMail(user)
 })
 
 module.exports = server

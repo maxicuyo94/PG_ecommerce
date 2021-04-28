@@ -37,12 +37,12 @@ export function ControlPanel() {
   const orderDetailId = useSelector((state) => state.orderReducer.orderDetail);
   const userOrders = useSelector((state) => state.orderReducer.userOrders);
   const productsOfOrder = useSelector((state) => state.orderReducer.orderProducts);
-  const container = products.lenght;
+  const container = products && products.lenght;
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
 
-  const handleEmail = (email) => {
-    dispatch(orderEmail(email))
+  const handleEmail = (email,user_id,id,orderDate) => {
+    dispatch(orderEmail(email,user_id,id,orderDate))
   }
   
   const [tab, setTab] = useState(() => {
@@ -271,7 +271,7 @@ useEffect(() => {
                     </span>
                     <span className={style.name}>{order.orderStatus}</span>
                     <span className={style.name}>{order.orderDate}</span>
-                    {order.orderStatus === 'approved' ? <button onClick={() => handleEmail(order.email)}>Send email</button> :  <button disabled >Send email</button>}
+                    {order.orderStatus === 'approved' ? <button onClick={() => handleEmail(order.email,order.user_id,order.id,order.orderDate)}>Send email</button> :  <button disabled >Send email</button>}
                     <dvi>
                       <button
                         className={style.icon}
