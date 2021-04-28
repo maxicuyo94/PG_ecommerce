@@ -25,7 +25,12 @@ export function Home(props) {
       <div className={styles.products}>
         <div className={styles.containerP}>
           <div className={styles.title}>
-            <span>{t("home-cat1.processors")}</span>
+          <img style={{width:'45%'}}
+              src={
+                "https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png"
+              } alt="Ups, we don't found anything here. Try again tomorrow!"
+            />
+            <span className={styles.tag}>{t("home-cat1.processors")}</span>
           </div>
           <div className={styles.carousel}>
             {productByCategories[0] && (
@@ -35,7 +40,12 @@ export function Home(props) {
         </div>
         <div className={styles.containerP}>
           <div className={styles.title}>
-            <span>{t("home-cat2.laptops")}</span>
+          <img style={{width:'45%'}}
+              src={
+                "https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png"
+              } alt="Ups, we don't found anything here. Try again tomorrow!"
+            />
+            <span className={styles.tag}>{t("home-cat2.laptops")}</span>
           </div>
           <div className={styles.carousel}>
             {productByCategories[1] && (
@@ -45,7 +55,12 @@ export function Home(props) {
         </div>
         <div className={styles.containerP}>
           <div className={styles.title}>
-            <span>{t("home-cat3.keyboards")}</span>
+          <img style={{width:'45%'}}
+              src={
+                "https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png"
+              } alt="Ups, we don't found anything here. Try again tomorrow!"
+            />
+            <span className={styles.tag}>{t("home-cat3.keyboards")}</span>
           </div>
           <div className={styles.carousel}>
             {productByCategories[2] && (

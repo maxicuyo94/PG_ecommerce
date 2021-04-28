@@ -71,9 +71,10 @@ export function Footer() {
     copyright="black"
     iconColor="black"
     backgroundColor="bisque"
-    fontColor="black"
+    fontColor="white"
     copyrightColor="darkgrey"
-    backgroundColor='#485F69'
+    backgroundColor='rgba(0,0,0,0.1)'
+
  />;
     </div>
   );

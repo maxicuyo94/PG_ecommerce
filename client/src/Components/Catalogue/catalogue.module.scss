@@ -3,10 +3,15 @@
   min-height: calc(100vh - 185px);
     .filters {
     width: 25%;
-    background-color: #e9e9e9;
-    border-radius: 5%;
+    height: 450px;
+    position: relative;
+    top:75px;
+    background-color:black;
+    border-radius: 3%;
     padding-left: 1rem;
     padding-right: 1rem;
+    border:solid;
+    border-color:#9abf15;
 
     .searchFilter {
       display: flex;
@@ -77,4 +82,40 @@
       margin: 1rem;
     }
   }
+  .products2 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    div {
+      margin: 1rem;
+    }
+  }
+}
+
+
+
+.tag {
+  font-family: roboto;
+  color:bisque;
+  margin:15px;
+}
+.tagg {
+  font-family: roboto;
+  color:black;
+  margin:15px;
+}
+
+.select {
+  border-radius: 999px;
+  outline:none;
+
+}
+
+.button {
+  font-family: roboto;
+  border-radius: 5%;
+  background-color: black;
+  color:blanchedalmond;
 }
