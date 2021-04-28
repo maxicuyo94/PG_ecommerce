@@ -28,11 +28,12 @@ export const CategoriesHome = (props) => {
   const handleAddToCart = (item) => {
     let cartItemModel = {
       title: item.title,
-      image: item.images,
+      image: item.image,
       id: item.id,
       quantity: 1,
-      price: item.price,
-      stock: item.stock
+      price: (item.price * (1 - item.discount / 100)).toFixed(2),
+      stock: item.stock,
+      // discount: item.discount
     }
     dispatch(addItemCart(cartItemModel))
     swal("Done!", "Added to cart", "success");
@@ -62,7 +63,7 @@ export const CategoriesHome = (props) => {
 
         <div className={styles.image} >
           <NavLink to={`/product/${props.id}`}>
-            <img src={props.images || notFound} alt='.' />
+            <img src={props.image || notFound} alt='.' />
           </NavLink>
         </div>
         <NavLink className={styles.title} to={`/product/${props.id}`}>
