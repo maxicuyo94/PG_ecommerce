@@ -102,7 +102,7 @@ export function ItemCart({ product }) {
         </ListItemSecondaryAction>
         <ListItemText
           primary={`US$ ${(product.price * product.quantity).toFixed(2)}`}
-          secondary={`US$ ${product.price.toFixed(2)}`}
+          secondary={`US$ ${product.price}`}
         />
       </ListItem>
     </div>

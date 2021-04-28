@@ -29,7 +29,7 @@ export const Product = (props) => {
   //const state = useSelector((state) => state);
   //const { currentProduct, currentReviewsOfProduct } = state;
   //const [maxReviews, setMaxReviews] = useState(5);
-
+  const [ productsVisited, setProductsVisited ] = useLocalStorage("productVisited", [])
   const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const details = useSelector((state) => state.productReducer.productDetail);
   const productByCategories = useSelector(
@@ -51,6 +51,12 @@ export const Product = (props) => {
 
   const [userLog] = useLocalStorage("supabase.auth.token")
 
+  useEffect(()=> {
+    const findLastProduct = productsVisited.find(id => id === props.id)
+    if(!findLastProduct){
+      setProductsVisited(product=> [...product, props.id])
+    }
+  },[])
 
   useEffect(() => {
 
@@ -75,7 +81,7 @@ export const Product = (props) => {
       image: details.images[0].url,
       id: details.id,
       quantity: value,
-      price: details.price,
+      price: (details.price * (1 - details.discount / 100)).toFixed(2),
       stock: details.stock,
     };
     dispatch(addItemCart(cartItemModel));
