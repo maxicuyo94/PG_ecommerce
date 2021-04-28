@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { getProductsByCategories } from "../../Redux/Products/productActions";
+import { getProductsByCategories, getProductsVisited } from "../../Redux/Products/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./home.module.scss";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ export function Home(props) {
   const productByCategories = useSelector(
     (state) => state.productReducer.productByCategories
   );
+  const lastProducts = useSelector(state => state.productReducer.lastProducts)
   const stableDispatch = useCallback(dispatch, []);
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
@@ -52,7 +53,9 @@ export function Home(props) {
 
   useEffect(() => {
     stableDispatch(getProductsByCategories());
+    
   }, [stableDispatch]);
+
 
   return (
     <div className={props.dark ? styles.containerDark : styles.container}>
@@ -60,6 +63,16 @@ export function Home(props) {
         <span>{t("home.title")}</span>
       </div>
       <div className={styles.products}>
+      {lastProducts?.length > 0 && <div className={styles.containerP}>
+          <div className={styles.title}>
+            <span>¡This product has to be yours!</span>
+          </div>
+          <div className={styles.carousel}>
+            {lastProducts.length > 0 && (
+              <SwiperSlider products={lastProducts} />
+            )}
+          </div>
+        </div>}
         <div className={styles.containerP}>
           <div className={styles.title}>
             <span>{t("home-cat1.processors")}</span>

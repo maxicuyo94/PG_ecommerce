@@ -238,3 +238,18 @@ export const deleteCategory = (id) => {
     await supabase.from("categories").delete("*").match({ id: id });
   };
 };
+
+export const getProductsVisited = (products) => {
+  return async function (dispatch) {
+    const promiseProducts = await Promise.all(
+      products.map(async (id) => {
+        const product = await supabase
+          .from("product")
+          .select("*, images(url), reviews(*)")
+          .eq("id", id);
+        return product.data[0];
+      })
+    );
+    dispatch ({type: actionType.LAST_PRODUCT,  payload: promiseProducts})
+  }
+}

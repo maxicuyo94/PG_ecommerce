@@ -19,6 +19,11 @@ import { Reset } from "./Components/Access/ResetPassword/ResetPassword";
 import { Review } from "./Components/Review/review";
 import { Payment } from "./Components/Payment/Payment";
 import { ModifyReview } from "./Components/Review/modifyReview";
+import { checkout } from "./Redux/Cart/cartActions";
+import { getProductsVisited } from "./Redux/Products/productActions"
+import swal from "sweetalert";
+import {Banner} from './Components/Banner/Banner'
+
 
 function App() {
   // eslint-disable-next-line
@@ -26,15 +31,25 @@ function App() {
     "supabase.auth.token",
     ""
   );
+  const [ productsVisited, setProductsVisited ] = useLocalStorage("productVisited", [])
 
   const dark = useSelector((state) => state.darkReducer.dark);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (userLogedStorage)
-      dispatch(userStorage(userLogedStorage.currentSession.user.id));
+
+useEffect(() => {
+  if (userLogedStorage){
+    dispatch(userStorage(userLogedStorage.currentSession.user.id));
     dispatch(setCart(userLogedStorage.currentSession?.user.id));
-  }, [dispatch, userLogedStorage]);
+  }
+  const lastProducts = async () => {
+    if(productsVisited){
+      await dispatch(getProductsVisited(productsVisited))
+      setProductsVisited([], true)
+    }
+  }
+  lastProducts()
+}, [dispatch, userLogedStorage]);
 
   return (
     <Layout dark={dark}>

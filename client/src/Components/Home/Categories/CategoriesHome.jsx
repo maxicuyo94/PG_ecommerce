@@ -5,18 +5,16 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 //import WhatshotIcon from '@material-ui/icons/Whatshot';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import WhatshotOutlinedIcon from '@material-ui/icons/WhatshotOutlined';
 //import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import StarIcon from '@material-ui/icons/Star';
 //import StarBorderIcon from '@material-ui/icons/StarBorder';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import StarHalfIcon from '@material-ui/icons/StarHalf';
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { useDispatch, useSelector } from "react-redux";
 import swal from 'sweetalert';
 import { addItemCart } from '../../../Redux/Cart/cartActions';
 import { useState } from "react";
 import notFound from './altimage.png'
-import { getReviewsOfProduct } from '../../../Redux/Reviews/reviewsActions'
 export const CategoriesHome = (props) => {
   const dispatch = useDispatch();
   const [fav, setFav] = useState(false)
@@ -25,38 +23,38 @@ export const CategoriesHome = (props) => {
   const handleFav = () => {
     setFav(!fav)
   }
-  //const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const dark = useSelector((state) => state.darkReducer.dark)
   const average = Math.ceil(props.reviews.reduce((counter, obj) => obj.rating + counter, 0) / props.reviews.length)
   const handleAddToCart = (item) => {
     let cartItemModel = {
       title: item.title,
-      image: item.images,
+      image: item.image,
       id: item.id,
       quantity: 1,
-      price: item.price,
-      stock: item.stock
+      price: (item.price * (1 - item.discount / 100)).toFixed(2),
+      stock: item.stock,
+      // discount: item.discount
     }
-    // console.log('Images', cartItemModel.images)
     dispatch(addItemCart(cartItemModel))
     swal("Done!", "Added to cart", "success");
   }
-  useEffect(() => {
-    const renderReviews = async () => {
-      await dispatch(getReviewsOfProduct(props.id));
-    };
-    renderReviews();
-  }, [])
   return (
     <div className={dark ? styles.containerDark : styles.container}>
       <div className={styles.card}>
 
         <div className={styles.stock}>
           <div className={styles.icon}>
-            <CheckCircleIcon style={{ fontSize: '1rem' }} />
-            <span>
-              in stock
-          </span>
+            {props.discount > 0 ?
+              <>
+                <WhatshotOutlinedIcon style={{ fontSize: '1rem' }} />
+                <span> {props.discount}% off! </span>
+                <WhatshotOutlinedIcon style={{ fontSize: '1rem' }} />
+              </> :
+              <>
+                <CheckCircleIcon style={{ fontSize: '1rem' }} />
+                <span>in stock</span>
+              </>
+            }
           </div>
           <button className={styles.fav} onClick={handleFav}>
             {fav ? <FavoriteIcon style={{ fontSize: '1.5rem' }} /> : <FavoriteBorderIcon style={{ fontSize: '1.5rem' }} />}
@@ -65,7 +63,7 @@ export const CategoriesHome = (props) => {
 
         <div className={styles.image} >
           <NavLink to={`/product/${props.id}`}>
-            <img src={props.images || notFound} alt='.' />
+            <img src={props.image || notFound} alt='.' />
           </NavLink>
         </div>
         <NavLink className={styles.title} to={`/product/${props.id}`}>
@@ -84,43 +82,55 @@ export const CategoriesHome = (props) => {
             : <span>No reviews yet</span>
           }
         </div>
-
-
-        <div className={styles.offer}>
-          <span>US$<b>{(props.price * 1.1).toFixed(2)}</b></span>
-        </div>
-        <div className={styles.price}>
-          <span>US$<b>{props.price}</b></span>
+        <div className={styles.prices}>
+          {props.discount > 0 &&
+            <div className={styles.offer}>
+              <span>US$<b>{props.price}</b></span>
+            </div>
+          }
+          <div className={styles.price}>
+            <span>US$<b>{(props.price * (1 - props.discount / 100)).toFixed(2)}</b></span>
+          </div>
         </div>
 
         {cart ?
           <button className={styles.btnOff}
-            onClick={() => { cart && handleAddToCart(props) }}
+            onClick={() => {
+              cart && handleAddToCart(props);
+            }}
             onMouseEnter={() => setIsShown(true)}
             onMouseLeave={() => setIsShown(false)}
           >
-            <><AddShoppingCartIcon style={{ fontSize: '1.5rem' }} />
-              {
-                isShown ?
-                  <span> Add one more?</span>
-                  :
-                  <span> In the Cart!</span>
-              }
-            </>
+            {
+              isShown ? <>
+                <span> Add one more?</span>
+                <AddShoppingCartIcon style={{ fontSize: '1.5rem' }} />
+              </>
+                :
+                <>
+                  <span> Added!</span>
+                  <CheckCircleIcon style={{ fontSize: '1.25rem' }} />
+                </>
+            }
           </button>
           :
           <button className={styles.btnOn}
-            onClick={() => { !cart && handleAddToCart(props); setCart(true) }}
+            onClick={() => {
+              !cart && handleAddToCart(props);
+              setCart(true);
+              setTimeout(() => { setCart(false) }, 3000)
+            }}
             onMouseEnter={() => setIsShown(true)}
             onMouseLeave={() => setIsShown(false)}
           >
-            <><AddShoppingCartIcon style={{ fontSize: '1.5rem' }} />
+            <>
               {
                 isShown ?
                   <span> Add to Cart?</span>
                   :
                   <span> Add to Cart!</span>
               }
+              <AddShoppingCartIcon style={{ fontSize: '1.5rem' }} />
             </>
           </button>
         }
