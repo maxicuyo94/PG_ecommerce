@@ -42,7 +42,9 @@ $gris:#2C3A40;
             .address,
             .city,
             .postal,
-            .country {
+            .country,
+            .permission,
+            .email {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;

@@ -38,3 +38,7 @@ export const GET_USER_REVIEW = "GET_USER_REVIEW";
 //LocalStorage
 export const RESTORE_REDUX = "RESTORE_REDUX";
 export const USER_LOGOUT = "USER_LOGOUT";
+
+
+// User
+export const USER_CONFIG = "USER_CONFIG"

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./ModifyUser.module.scss";
-import { updateUser } from "../../../Redux/Users/usersActions";
+import { updateUser, getUser, sendMail } from "../../../Redux/Users/usersActions";
+import { EditUsers } from "./EditUsers/EditUsers"
 
 export function ModifyUser({ id, dark }) {
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.usersReducer.userLoged);
-  console.log(userLog);
+  const userConfig = useSelector((state) => state.usersReducer.userConfig)
   const [dataUser, setDataUser] = useState({
     id,
     userName: "",
@@ -25,17 +26,41 @@ export function ModifyUser({ id, dark }) {
   };
 
   useEffect(() => {
-    userLog &&
-      setDataUser({
-        id: userLog.id,
-        userName: userLog.user_name,
-        phone: userLog.phone,
-        address: userLog.address && userLog.address[0].address,
-        city: userLog.address && userLog.address[0].city,
-        postal_code: userLog.address && userLog.address[0].postal_code,
-        country: userLog.address && userLog.address[0].country,
-      });
+    if (id) {
+      console.log("Ingrese Config")
+      const gUser = async () => {
+        await dispatch(getUser(id))
+        setDataUser({
+          id: userConfig.id,
+          userName: userConfig.user_name,
+          phone: userConfig.phone,
+          address: userConfig.address && userConfig.address[0].address,
+          city: userConfig.address && userConfig.address[0].city,
+          postal_code: userConfig.address && userConfig.address[0].postal_code,
+          country: userConfig.address && userConfig.address[0].country,
+          permission: userConfig.permission,
+          email: userConfig.email
+        });
+      }
+      gUser()
+    } else {
+      userLog &&
+        setDataUser({
+          id: userLog.id,
+          userName: userLog.user_name,
+          phone: userLog.phone,
+          address: userLog.address && userLog.address[0].address,
+          city: userLog.address && userLog.address[0].city,
+          postal_code: userLog.address && userLog.address[0].postal_code,
+          country: userLog.address && userLog.address[0].country,
+        });
+    }
   }, [userLog]);
+
+  const resetPassword = () => {
+    dispatch(sendMail(dataUser.email));
+
+  }
 
   const modifyUser = (e) => {
     e.preventDefault();
@@ -103,6 +128,25 @@ export function ModifyUser({ id, dark }) {
               onChange={(e) => handleInputChange(e)}
             ></input>
           </div>
+          {
+            (userLog.permission === "superadmin" || userLog.permission === "admin") &&
+            (
+              <>
+                <div className={style.permission}>
+                  <label>Permission</label>
+                  <label>{dataUser.permission}</label>
+                  <EditUsers permission={dataUser.permission} id={dataUser.id} />
+                </div>
+                <div className={style.email}>
+                  <label>Reset Password</label>
+                  <label>{dataUser.email}</label>
+                  <button className={style.simpleButton} type="button" onClick={(e) => resetPassword(e)}>
+                    Reset Email
+                  </button>
+                </div>
+              </>
+            )
+          }
 
           {/* <Link to={`/controlpanel`}> */}
           <button type="submit" onClick={(e) => modifyUser(e)}>

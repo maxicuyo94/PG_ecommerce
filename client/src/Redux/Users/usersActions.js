@@ -189,3 +189,13 @@ export const changeUserPermission = (id, newPermission) => {
     .eq("id", id);
   }
 }
+
+export const getUser  = (id) => {
+  return async (dispatch) => {
+    const user = await supabase
+    .from("users")
+    .select("*,address(*)")
+    .eq("id", id);
+    dispatch({ type: actionType.USER_CONFIG, payload: user.data[0] });
+  }
+}
