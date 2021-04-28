@@ -10,18 +10,9 @@ import right from "../Catalogue/right-arrow.svg";
 import Style from "./catalogue.module.scss";
 import { useTranslation } from "react-i18next";
 
-const Stylish = {
-  fontFamily:'roboto',
 
-}
-const Stylish2 = {
-  fontFamily:'roboto',
-  border:'solid'
-
-}
 
 export function Catalogue() {
-  // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
   const Products = useSelector((state) => state.productReducer.wantedProducts);
   const Categories = useSelector((state) => state.productReducer.categories);
@@ -31,6 +22,7 @@ export function Catalogue() {
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
   const Input = useSelector(state => state.productReducer.Searchingg)
+  const [Count, setCount] = useState(true)
 
   
 
@@ -40,10 +32,10 @@ export function Catalogue() {
 
   useEffect(() => {
     stableDispatch(
-      allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
+      allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input, Count)
     );
     dispatch(getCategories());
-  }, [dispatch, stableDispatch, Pages, Category, Prices, Input]);
+  }, [dispatch, stableDispatch, Pages, Category, Prices, Input, Count]);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -76,61 +68,59 @@ export function Catalogue() {
       <div name="filters" className={Style.filters}>
         <div name="categories" className={Style.categoriesPrice}>
           <div className={Style.searchFilter}>
-            <h4>{t("catalogue.textTwo")}</h4>
+            <h4 className={Style.tag}>{t("catalogue.textTwo")}</h4>
           </div>
-          <h4>{t("catalogue.texThree")}</h4>
-          <select id='categories'
-            className={Style.categories}
+          <h4 className={Style.tag}>{t("catalogue.texThree")}</h4>
+          <select id='categories' 
+            className={Style.select}
             onChange={(e) => {
               handleInputChange(e);
             }}
           >
-            <option value="">{t("catalogue.textFour")}</option>
+            <option className={Style.tagg} value="">{t("catalogue.textFour")}</option>
             {Categories &&
               Categories.map((item, i) => (
-                <option key={i} value={item.name}>
+                <option className={Style.tagg} key={i} value={item.name}>
                   {item.name}
                 </option>
               ))}
           </select>
         </div>
         <div name="Price" className={Style.categoriesPrice}>
-          <h4>{t("catalogue.textFive")}</h4>
-          <select id='prices'
+          <h4 className={Style.tag}>{t("catalogue.textFive")}</h4>
+          <select id='prices' className={Style.select}
             onChange={(e) => {
               handleInputChangeP(e);
             }}
           >
-            <option value="">{t("catalogue.textSix")}</option>
-            <option value="0">0 - 200</option>
-            <option value="200">200 - 400</option>
-            <option value="400">400 - + </option>
+            <option className={Style.tagg} value="">{t("catalogue.textSix")}</option>
+            <option className={Style.tagg} value="0">0 - 200</option>
+            <option className={Style.tagg} value="200">200 - 400</option>
+            <option className={Style.tagg} value="400">400 - + </option>
           </select>
         </div>
+     
         <div>
-          <h4 className={Style.tags}>{t("catalogue.textSeven")}</h4>
-          <button>{t("catalogue.textEight")}</button>
-        </div>
-        <div>
-          <label style={Stylish}>Category: </label>
+          <label className={Style.tag}>Category: </label>
           {
             document.getElementById('categories') && (<div>
-            <h3 style={Stylish2}> 
+            <h3 className={Style.tag}> 
               {document.getElementById('categories').value}
-              {/* <button onClick={() => handleclick()}>X</button> */}
             </h3>
             </div>)
           }
-           <label style={Stylish}>Prices: </label>
+           <label className={Style.tag}>Prices from: </label>
              {
             document.getElementById('prices') && (<div>
-            <h3 style={Stylish2}> 
+            <h3 className={Style.tag}> 
               {document.getElementById('prices').value}
-              {/* <button>X</button> */}
             </h3> 
             </div>)
           }
         </div>
+        <button className={Style.button} onClick={() => Count === true ? setCount(false) : setCount(true)}>
+            Change view
+          </button>
       </div>
       <div className={Style.catalogue} name="showproducts">
         <div className={Style.keypad}>
@@ -142,6 +132,16 @@ export function Catalogue() {
             alt="img"
             onClick={(e) => changepage(e)}
           />
+          <div style={{display:'flex'}}>
+            <h4 className={Style.tagg}>Catalogue /</h4>
+
+          {
+           document.getElementById('categories') && <h4 className={Style.tagg}>{document.getElementById('categories').value}</h4> 
+          }
+          {
+           document.getElementById('categories') && <h4 className={Style.tagg}>{document.getElementById('prices').value}  </h4> 
+          }
+          </div>
           <img
             className={Style.upward}
             id="upward"
@@ -153,7 +153,7 @@ export function Catalogue() {
         </div>
 
         <div>
-          <div className={Style.products}>
+          <div className={Count === true ? Style.products : Style.products2}>
             {console.log(Products)}
             {Products &&
               Products.map((item) => (

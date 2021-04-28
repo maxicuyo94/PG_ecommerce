@@ -2,8 +2,7 @@ import React from "react";
 import Style from "./productcard.module.scss";
 import { NavLink } from "react-router-dom";
 import swal from "sweetalert";
-//import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-//import FavoriteIcon from "@material-ui/icons/Favorite";
+
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -13,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 export function ProductCard(props) {
-	  // eslint-disable-next-line
 	  const [t, i18n] = useTranslation("global");
 	  
   const dispatch = useDispatch();
