@@ -75,7 +75,7 @@ export const Product = (props) => {
       image: details.images[0].url,
       id: details.id,
       quantity: value,
-      price: details.price,
+      price: (details.price * (1 - details.discount / 100)).toFixed(2),
       stock: details.stock,
     };
     dispatch(addItemCart(cartItemModel));

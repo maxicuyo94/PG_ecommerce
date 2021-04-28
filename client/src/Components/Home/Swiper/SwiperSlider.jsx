@@ -62,7 +62,7 @@ const SwiperSlider = (products) => {
                   stock={item.stock}
                   title={item.name}
                   price={item.price}
-                  images={item.images[0]?.url}
+                  image={item.images[0]?.url}
                   discount={item.discount}
                   reviews={item.reviews}
                 />
