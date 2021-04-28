@@ -15,8 +15,14 @@ export function useLocalStorage ( key, initialValue ){
     const setValue = (value, boolean) => {
         try {
             if(!boolean){
-                setStoredValue(value)
-                window.localStorage.setItem(key, JSON.stringify(value))
+                if(Array.isArray(storedValue)){
+                    setStoredValue(value)
+                    const newValue = value(storedValue)
+                    window.localStorage.setItem(key, JSON.stringify(newValue))
+                }else{
+                    setStoredValue(value)
+                    window.localStorage.setItem(key, JSON.stringify(value))
+                }
             }else{
                 setStoredValue()
                 window.localStorage.removeItem(key);
@@ -29,7 +35,7 @@ export function useLocalStorage ( key, initialValue ){
     const getValue = () => {
         const item = window.localStorage.getItem(key)
         const result = item && JSON.parse(item)
-        setStoredValue(result)
+        return(result)
     }
 
     return [ storedValue, setValue, getValue]

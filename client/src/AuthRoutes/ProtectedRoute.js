@@ -6,7 +6,7 @@ import { useLocalStorage } from "../LocalStorage/useLocalStorage";
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
   const userLoged = useSelector((state) => state.usersReducer.userLoged);
   // eslint-disable-next-line
-  const [userLogedStorage, setUserLogedStorage] = useLocalStorage(
+  const [userLogedStorage, setUserLogedStorage, getUserLogedStorage] = useLocalStorage(
     "supabase.auth.token",
     ""
   );
@@ -15,7 +15,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (userLoged?.id || userLogedStorage) {
+        if (userLoged?.id || userLogedStorage || getUserLogedStorage) {
           if (rest.restringed && userLoged.permission === rest.restringed) {
             return (
               <Redirect
