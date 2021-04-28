@@ -15,7 +15,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (userLoged?.id || userLogedStorage || getUserLogedStorage) {
+        if (userLoged?.id || userLogedStorage ) {
           if (rest.restringed && userLoged.permission === rest.restringed) {
             return (
               <Redirect
