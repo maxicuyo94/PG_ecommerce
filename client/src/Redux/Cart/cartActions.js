@@ -1,6 +1,6 @@
 import * as actionType from "../action_types/actionTypes";
-
 import { createClient } from "@supabase/supabase-js";
+import { FaAddressBook } from "react-icons/fa";
 const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
@@ -189,31 +189,44 @@ export const clearCart = () => {
   };
 };
 
-export const checkout = (userId, status, amount) => {
+export const checkout = (userId, status, amount, userEmail,address,postalCode,hoy) => {
   return async function (dispatch) {
     // eslint-disable-next-line
-    console.log(amount)
+    console.log(userId, status, amount, userEmail,address,postalCode,hoy)
     if (!userId) {
       await supabase.from("order").insert([
         {
           guest: true,
           orderStatus: status,
-          amount:amount
+          amount:amount,
+          email:userEmail,
+          shipAddress:address,
+          postalCode:postalCode,
+          //orderDate:hoy
         }
       ]);
     } else {
       const { data, error } = await supabase
       .from("order")
-      .update({ orderStatus: status,amount:amount})
+      .update({ 
+        orderStatus: status,
+        amount:amount,
+        shipAddress:address,
+        postalCode:postalCode,
+        email:userEmail,
+        //orderDate:hoy,
+
+      })
       .eq("user_id", userId)
       .eq("orderStatus", "inCart");
 
-      console.log(data)
+      console.log('prueba',userId.replace(" ",""))
 
     await supabase.from("order").insert([
       {
         user_id: userId,
         orderStatus: "inCart",
+        email:userEmail,
       },
     ]);
     }

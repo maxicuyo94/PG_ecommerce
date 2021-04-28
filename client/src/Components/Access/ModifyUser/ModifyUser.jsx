@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./ModifyUser.module.scss";
-import { updateUser } from "../../../Redux/Users/usersActions";
+import { updateUser,deactivate,mailActivate } from "../../../Redux/Users/usersActions";
 
 export function ModifyUser({ id, dark }) {
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.usersReducer.userLoged);
-  console.log(userLog);
   const [dataUser, setDataUser] = useState({
     id,
     userName: "",
@@ -41,6 +40,16 @@ export function ModifyUser({ id, dark }) {
     e.preventDefault();
     dispatch(updateUser(dataUser));
   };
+
+  const deactivateUser = (e) => {
+    e.preventDefault();
+    dispatch(deactivate(dataUser.id));
+  }
+
+  const activateUser = (e) => {
+    e.preventDefault();
+    dispatch(mailActivate(dataUser.id));
+  }
 
   return (
     <div className={dark ? style.containerDark : style.container}>
@@ -107,6 +116,12 @@ export function ModifyUser({ id, dark }) {
           {/* <Link to={`/controlpanel`}> */}
           <button type="submit" onClick={(e) => modifyUser(e)}>
             Modify User
+        </button>
+          <button type="submit" onClick={(e) => deactivateUser(e)}>
+          Deactivate account
+        </button>
+        <button type="submit" onClick={(e) => activateUser(e)}>
+          Activate account
         </button>
           {/* </Link> */}
         </form>

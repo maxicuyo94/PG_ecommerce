@@ -25,7 +25,6 @@ export function ProductCard(props) {
       stock: item.stock,
       // discount: item.discount
     };
-    // console.log("Images", cartItemModel.images);
     dispatch(addItemCart(cartItemModel));
     swal("Done!", "Added to your cart", "success");
   };

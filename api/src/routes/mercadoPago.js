@@ -1,7 +1,11 @@
 const server = require("express").Router()
 require("dotenv").config();
-// SDK
+//const nodemailer = require('nodemailer');
+//const mg = require('nodemailer-mailgun-transport');
+//const { API_KEYMAILGUN, EMAIL_PRUEBA } = process.env;  
+
 const mercadopago = require ('mercadopago');
+const {userMail} = require ('../util/email')
 // Credenciales
 mercadopago.configure({
   access_token: process.env.MP_TOKEN
@@ -30,7 +34,7 @@ server.post('/checkout', async (req, res) => {
         street_number:infoUser.addres.streetNumber
       }
     },
-    external_reference : infoUser.email,
+    external_reference : `${infoUser.email},${infoUser.id},${infoUser.addres.streetName},${infoUser.addres.streetNumber},${infoUser.addres.postalCode},${infoUser.name},${infoUser.surname}`,
 		items: cartMP,
 		back_urls: {
 			"success": "http://localhost:3000",
@@ -58,13 +62,9 @@ server.post('/checkout', async (req, res) => {
   }
 })
 
-// server.get('/feedback', function(request, response) {
-//   console.log(response,request.res)
-//   return response.json({
-//    Payment: request.query.payment_id,
-//    Status: request.query.status,
-//    MerchantOrder: request.query.merchant_order_id
-//  })
-// });
+server.post('/send', (req,res)=>{
+    const user = req.query
+    userMail(user)
+})
 
 module.exports = server

@@ -58,6 +58,7 @@ export function Payment() {
 
     if (user.id) {
         var infoUser = {
+            id:user.id,
             name: user.name,
             surname: user.surname,
             phone: parseInt(user.phone),

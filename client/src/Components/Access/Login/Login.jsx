@@ -19,12 +19,8 @@ export function Login() {
   useEffect(() => {
     if (userRegistered?.id) {
       if (location.state.from) {
-        console.log("assssssssssssss")
         history.push(location.state.from)
-      } else {
-        console.log("porque?")
-        // history.push("/")
-      }
+      } 
     }
   }, [userRegistered])
 
@@ -42,9 +38,6 @@ export function Login() {
     userLog();
   };
 
-  // userId && history.push("/catalogue")
-
-  //No BORRAR!!!
   const resetPassword = () => {
     dispatch(sendMail(document.getElementById("email").value));
   };

@@ -8,7 +8,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const getAllOrders = (status) => {
   return async function (dispatch) {
-    if(status) {
+    if (status) {
       let JSON = await supabase.from("order").select("*").eq('orderStatus', status);
       dispatch({
         type: actionType.GET_ALL_ORDERS,
@@ -56,13 +56,13 @@ export const getOrderDetail = (id) => {
 export const updateOrder = (status, id) => {
   return async function (dispatch) {
     // eslint-disable-next-line
-    const {data, error} = await supabase
+    const { data, error } = await supabase
       .from("order")
       .update({
         orderStatus: status,
       })
       .eq("id", id);
-      return error
+    return error
   };
 };
 
@@ -79,13 +79,28 @@ export const getProductsOfOrder = (id) => {
   };
 };
 
-export const orderPayment = (cart,infoUser) => {
+export const orderPayment = (cart, infoUser) => {
   return async function () {
-    try{
-      let response = await axios.post("http://localhost:3001/mercadopago/checkout", {cart,infoUser})
+    try {
+      let response = await axios.post("http://localhost:3001/mercadopago/checkout", { cart, infoUser })
       return response.data.redirect
-    } catch(e){
+    } catch (e) {
       alert(e)
     }
   }
 };
+
+export const orderEmail = (email, user_id, id, orderDate) => {
+  return async function () {
+    try {
+      const data = await supabase
+        .from('users')
+        .select('name,surname')
+        .eq('id', user_id)
+      await axios.post(`http://localhost:3001/mercadopago/send/?email=${email}&name=${data.data[0].name}&surname=${data.data[0].surname}&orderId=${id}&orderDate=${orderDate}`)
+    } catch (e) {
+      
+    }
+  }
+};
+

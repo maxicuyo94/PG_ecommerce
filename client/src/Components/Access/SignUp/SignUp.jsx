@@ -67,7 +67,6 @@ export function SignUp() {
     }
     setSuccess(state);
     const confirmPost = await dispatch(postUser(user));
-    console.log(confirmPost);
     if (confirmPost.status !== 400) {
       swal(
         "Welcome to TechStore! Your user was created successfully, please check your email and verify it",

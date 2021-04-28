@@ -35,9 +35,6 @@ function App() {
 
   const dark = useSelector((state) => state.darkReducer.dark);
   const dispatch = useDispatch();
-  const history = useHistory();
-
-let amount = localStorage.getItem("amountTotal") && JSON.parse(localStorage.getItem("amountTotal"))
 
 
 useEffect(() => {
@@ -53,52 +50,6 @@ useEffect(() => {
   }
   lastProducts()
 }, [dispatch, userLogedStorage]);
-
-  if (window.location.href.includes("approved")) {
-    swal("Payment approved", "", "success").then((resp) => {
-      if (resp) {
-        if (!userLogedStorage.currentSession) {
-          dispatch(checkout(null, "approved", amount));
-        } else {
-          dispatch(
-            checkout(userLogedStorage.currentSession?.user.id, "approved",amount)
-          );
-        }
-        history.push("/");
-      }
-    });
-  } else if (window.location.href.includes("pending")) {
-    swal("Payment pending", "", "warning").then((resp) => {
-      if (!userLogedStorage.currentSession) {
-        dispatch(checkout(null, "pending",amount));
-      } else {
-        dispatch(checkout(userLogedStorage.currentSession?.user.id, "pending",amount));
-      }
-      history.push("/");
-    });
-  } else if (window.location.href.includes("rejected")) {
-    swal("Payment rejected", "", "error").then((resp) => {
-      if (!userLogedStorage.currentSession) {
-        dispatch(checkout(null, "rejected",amount));
-      } else {
-        dispatch(
-          checkout(userLogedStorage.currentSession?.user.id, "rejected",amount)
-        );
-      }
-      history.push("/");
-    });
-  } else if (window.location.href.includes("in_process")) {
-    swal("Payment in process", "", "error").then((resp) => {
-      if (!userLogedStorage.currentSession) {
-        dispatch(checkout(null, "in_process",amount));
-      } else {
-        dispatch(
-          checkout(userLogedStorage.currentSession?.user.id, "in_process",amount)
-        );
-      }
-      history.push("/");
-    });
-  }
 
   return (
     <Layout dark={dark}>
