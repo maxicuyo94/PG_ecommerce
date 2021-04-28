@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { SearchBar } from "../SearchBar/SearchBar"
-//import { Header } from "./Header/Header";
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
 import MiniShop from "./MiniShop/MiniShop";
@@ -19,8 +18,6 @@ export function Nav({ priority, dark }) {
 
   return (
     <div className={dark ? style.containerDark : style.container}>
-      {}
-      {/* <Header /> */}
       <div className={style.contents}>
         <div className={style.logo}>
           <NavLink to={"/"}>

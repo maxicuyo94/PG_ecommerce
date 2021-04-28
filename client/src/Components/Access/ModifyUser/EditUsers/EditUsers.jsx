@@ -7,6 +7,7 @@ import { Edit } from "@material-ui/icons";
 import {
   changeUserPermission,
   allUsers,
+  //activate
 } from "../../../../Redux/Users/usersActions";
 import style from "./editusers.module.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -70,8 +71,12 @@ export function EditUsers(props) {
     await dispatch(allUsers());
   };
 
+  // const active = (e) => {
+  //   e.preventDefault();
+  //   dispatch(activate(mandar id por aca del usuario activar));
+  // }
+
   const configRender = () => {
-    //AGREGAR DEFAULT CASE
     // eslint-disable-next-line
     switch (userLoged.permission) {
       case "superadmin":
@@ -139,6 +144,8 @@ export function EditUsers(props) {
         }
     }
   };
+
+  //<button onclick={(e) => active(e)}
   return (
     <div>
       <Edit class={style.icon} onClick={handleClick} />

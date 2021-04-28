@@ -60,13 +60,6 @@ export function CheckOut() {
           }
         })
     } else {
-      // swal("Proceed to payment", "", "success")
-      //   .then(resp => {
-      //     if(resp){
-      //       history.push("/order/payment");
-      //     }
-      //   })
-      //------------------------------------------------//  
       swal("Do you want to login to go to checkout?", {
         buttons: {
           button: "Go to Checkout",

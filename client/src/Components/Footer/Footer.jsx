@@ -70,13 +70,12 @@ export function Footer() {
     pinterest="fluffy_cats_collections"
     copyright="black"
     iconColor="black"
-    backgroundColor="bisque"
+    // backgroundColor="bisque"
     fontColor="white"
     copyrightColor="darkgrey"
 
-    backgroundColor='rgba(0,0,0,0.1)'
-
- />;
+    backgroundColor='#222'
+ />
     </div>
   );
 }

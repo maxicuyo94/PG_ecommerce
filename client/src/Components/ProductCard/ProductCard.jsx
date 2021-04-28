@@ -18,13 +18,13 @@ export function ProductCard(props) {
   const handleAddToCart = (item) => {
     let cartItemModel = {
       title: item.title,
-      image: item.images,
+      image: item.image,
       id: item.id,
       quantity: 1,
-      price: item.price,
+      price: (item.price * (1 - item.discount / 100)).toFixed(2),
       stock: item.stock,
+      // discount: item.discount
     };
-    console.log("Images", cartItemModel.images);
     dispatch(addItemCart(cartItemModel));
     swal("Done!", "Added to your cart", "success");
   };
@@ -46,7 +46,7 @@ export function ProductCard(props) {
         </div>
         <div className={Style.image}>
           <NavLink to={`/product/${props.id}`}>
-            <img src={props.images} alt="." />
+            <img src={props.image} alt="." />
           </NavLink>
         </div>
         {/* <div className={Style.review}>

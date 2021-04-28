@@ -11,12 +11,12 @@ import {
   getAllOrders, 
   getOrderDetail, 
   getProductsOfOrder,
-  getAllUserOrders } from "../../Redux/Orders/orderActions";
+  getAllUserOrders,
+  orderEmail } from "../../Redux/Orders/orderActions";
 import style from "./controlpanel.module.scss";
 import {
   Edit,
   Delete,
-  //MoreVert,
   CheckBoxOutlineBlank,
   CheckBox,
 } from "@material-ui/icons";
@@ -25,11 +25,8 @@ import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
 //import { useLocalStorage } from "../../LocalStorage/useLocalStorage.js";
 import { ProductSelection } from "./Modals/ProductSelection";
-const mailgun = require("mailgun-js"); 
 
 export function ControlPanel() {
-  const DOMAIN = 'YOUR_DOMAIN_NAME'; 
-  const mg = mailgun({apiKey: 'b94fa5acae316a371a62877872375548-71b35d7e-8aae2afa', domain: 'sandbox84b5d0875e934c9fb174ce768ed09f49.mailgun.org'}); 
   const dispatch = useDispatch();
   const userLoged = useSelector((state) => state.usersReducer.userLoged);
   const products = useSelector((state) => state.productReducer.allproducts);
@@ -39,15 +36,12 @@ export function ControlPanel() {
   const orderDetailId = useSelector((state) => state.orderReducer.orderDetail);
   const userOrders = useSelector((state) => state.orderReducer.userOrders);
   const productsOfOrder = useSelector((state) => state.orderReducer.orderProducts);
-  const container = products.lenght;
+  const container = products && products.lenght;
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
 
-  const handleEmail = (id) => {
-    dispatch()
-    const data = {from: 'Excited User <me@samples.mailgun.org>', to: 'pablomoronrey@gmail.com', subject: 'Hello', text: 'Testing some Mailgun awesomness!' }; 
-    mg.messages().send(data, function (error, body) {console.log(body); });
-
+  const handleEmail = (email,user_id,id,orderDate) => {
+    dispatch(orderEmail(email,user_id,id,orderDate))
   }
   
   const [tab, setTab] = useState(() => {
@@ -276,7 +270,7 @@ useEffect(() => {
                     </span>
                     <span className={style.name}>{order.orderStatus}</span>
                     <span className={style.name}>{order.orderDate}</span>
-                    {order.orderStatus === 'approved' ? <button onClick={() => handleEmail(order.id)}>Send email</button> :  <button disabled >Send email</button>}
+                    {order.orderStatus === 'approved' ? <button onClick={() => handleEmail(order.email,order.user_id,order.id,order.orderDate)}>Send email</button> :  <button disabled >Send email</button>}
                     <dvi>
                       <button
                         className={style.icon}

@@ -24,7 +24,6 @@ export const Cards = (props) => {
       price: item.price,
       stock: item.stock,
     };
-    console.log("Images", cartItemModel.images);
     dispatch(addItemCart(cartItemModel));
     swal("Done!", "Added to cart", "success");
   };
