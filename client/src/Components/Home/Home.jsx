@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./home.module.scss";
 import { useTranslation } from "react-i18next";
 import SwiperSlider from "./Swiper/SwiperSlider";
-
+import { Banner2 } from "../Banner/Banner";
 export function Home(props) {
   const dispatch = useDispatch();
   const productByCategories = useSelector(
@@ -20,6 +20,7 @@ export function Home(props) {
 
   return (
     <div className={props.dark ? styles.containerDark : styles.container}>
+    <Banner2></Banner2>
       <div className={styles.containerTitle}>
         <span>{t("home.title")}</span>
       </div>

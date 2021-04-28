@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5",
-    backgroundColor: "white",
+    backgroundColor: "#9abf15",
   },
 })((props) => (
   <Menu
@@ -30,7 +30,7 @@ const StyledMenu = withStyles({
 
 const StyledButton = withStyles((theme) => ({
   root: {
-    backgroundColor: "white",
+    backgroundColor: "#9abf15",
     color: "black",
     border: "1px solid black",
     height: 30,
