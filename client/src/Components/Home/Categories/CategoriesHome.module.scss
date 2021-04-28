@@ -120,30 +120,40 @@ $gris:#2C3A40;
 
     }
 
-    .price {
-        height: 10%;
-        color: #000;
-        width: 80%;
-        margin: 0 auto !important;
+    .prices {
+        min-height: 20%;
         display: flex;
-        justify-content: flex-start;
-        align-items: center;
+        flex-direction: column;
+        justify-content: space-around;
+        width:80%;
+        margin:0 auto;
 
-        span,
-        b {
-            font-size: 1.25rem;
+        .price {
+            color: #000;
+            width: 80%;
+            margin: 0 auto !important;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            span,
+            b {
+                font-size: 1.25rem;
+            }
         }
-    }
 
-    .offer {
-        @extend .price;
-        opacity: 0.8;
-        text-decoration: line-through;
+        .offer {
+            @extend .price;
+            opacity: 0.8;
+            text-decoration: line-through;
 
-        span,
-        b {
-            font-size: 1rem;
+            span,
+            b {
+                font-size: 1rem;
+            }
         }
+
+
     }
 
     .btnOn {
@@ -176,6 +186,8 @@ $gris:#2C3A40;
 
         span {
             font-size: 1rem;
+            margin: 0 0.5rem;
+            text-align: center;
 
             @media screen and (max-width: $tablet) {
                 font-size: 0.8rem;
@@ -229,6 +241,7 @@ $gris:#2C3A40;
         .btnOff {
             background-color: $gris;
             border: 3px solid #fff;
+
             &:hover {
                 border: 3px solid $verde;
                 background-color: transparent;

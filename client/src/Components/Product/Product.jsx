@@ -15,7 +15,7 @@ import SwiperSlider from '../Home/Swiper/SwiperSlider'
 //import StarBorderIcon from '@material-ui/icons/StarBorder';
 //import StarHalfIcon from '@material-ui/icons/StarHalf';
 import StarIcon from '@material-ui/icons/Star';
-import { useLocalStorage } from  '../../LocalStorage/useLocalStorage'
+import { useLocalStorage } from '../../LocalStorage/useLocalStorage'
 import { deleteReview } from "../../Redux/Reviews/reviewsActions";
 import { Link } from "react-router-dom";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
@@ -50,14 +50,10 @@ export const Product = (props) => {
   };
 
   const [userLog] = useLocalStorage("supabase.auth.token")
-  
+
 
   useEffect(() => {
 
-    const renderReviews = async () => {
-      await dispatch(getReviewsOfProduct(id));
-    };
-    renderReviews();
     const idDetails = async () => {
       await dispatch(productDetail(id));
     };
@@ -65,7 +61,6 @@ export const Product = (props) => {
     const Products = async () => {
       await dispatch(getProductsByCategories());
     };
-    renderReviews();
     Products();
     return () => {
       setNav("details");
@@ -195,16 +190,15 @@ export const Product = (props) => {
         <div className={styles.reviewTitle}>
           <span> Reviews</span>
         </div>
-
-        {reviews.length > 0 ?
+        {console.log(details)}
+        {details.reviews?.length > 0 ?
           <div className={styles.reviews}>
-            {reviews.map((review) => {
+            {details.reviews.map((review) => {
               return <>
                 <span>Description: {review.description}</span>
-             {/*    <span>User: {review.user_id}</span> */}
                 <span>
                   Rating:
-                        {Array.from(Array(review.rating).keys()).map(() => {
+                  {[...Array(review.rating)].map(() => {
                   return <StarIcon style={{ fontSize: '1rem' }} />
                 })}
                 </span>
