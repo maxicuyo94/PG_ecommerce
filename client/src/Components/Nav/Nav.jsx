@@ -1,11 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-<<<<<<< HEAD
 import { SearchBar } from "../SearchBar/SearchBar"
-=======
-import { SearchBar } from "../Searchbar/SearchBar"
-//import { Header } from "./Header/Header";
->>>>>>> develop
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
 import MiniShop from "./MiniShop/MiniShop";
