@@ -73,6 +73,7 @@ export function Footer() {
     backgroundColor="bisque"
     fontColor="white"
     copyrightColor="darkgrey"
+
     backgroundColor='rgba(0,0,0,0.1)'
 
  />;

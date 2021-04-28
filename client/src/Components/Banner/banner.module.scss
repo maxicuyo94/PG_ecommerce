@@ -1,11 +1,9 @@
 .container {
-    display:flex;
-    flex-direction: row;
+    height: 15rem;
+    margin-top: 1rem;
+    background-size: cover;
+    display: flex;
     justify-content: space-between;
-    width:100%;
-    height:150px;
-    border:solid;
-    border-color:#9abf15;
 }
 
 .img {
@@ -18,7 +16,7 @@
     opacity: 0.2;
     height:30%;
     position:relative;
-    top:45px;
+    top:35%;
     transition: 0.5s;
     background-color: #fff;
     height: 3rem;
@@ -26,9 +24,11 @@
     border-radius: 50%;
     box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
     transition: 0.5s;
+    margin: 0px 1rem 0px 1rem;
+    cursor: pointer;
 }
 
 .button:hover {
-    opacity: 2;
+    opacity: 0.6;
 }
 
