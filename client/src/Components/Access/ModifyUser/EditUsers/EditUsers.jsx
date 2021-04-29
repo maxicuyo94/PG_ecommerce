@@ -7,8 +7,7 @@ import { Edit } from "@material-ui/icons";
 import {
   changeUserPermission,
   allUsers,
-  //activate
-} from "../../../Redux/Users/usersActions";
+} from "../../../../Redux/Users/usersActions";
 import style from "./editusers.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { createClient } from "@supabase/supabase-js";
@@ -50,7 +49,7 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-export default function Profile(props) {
+export function EditUsers(props) {
   const userLoged = useSelector((state) => state.usersReducer.userLoged);
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");

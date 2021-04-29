@@ -20,8 +20,7 @@ export function Home(props) {
   const [t, i18n] = useTranslation("global");
   //const dark = useSelector((state) => state.darkReducer.dark)
   let amount = localStorage.getItem("amountTotal") && JSON.parse(localStorage.getItem("amountTotal"))
-  let lsemail = localStorage.getItem("supabase.auth.token") && JSON.parse(localStorage.getItem("supabase.auth.token").currentSession.user.email)
-  
+  let lsemail = localStorage.getItem("supabase.auth.token").currentSession && JSON.parse(localStorage.getItem("supabase.auth.token").currentSession.user.email)  
   const urlParams = new URLSearchParams(window.location.search);
   let idOrder = urlParams.get('merchant_order_id') && urlParams.get('merchant_order_id');
   let status = urlParams.get('status') && urlParams.get('status');

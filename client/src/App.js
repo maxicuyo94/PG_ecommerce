@@ -58,6 +58,14 @@ useEffect(() => {
       <ProtectedRoute
         exact
         path="/myprofile"
+        component={() => (
+          <ModifyUser dark={dark} />
+        )}
+      />
+      <ProtectedRoute
+        exact
+        path="/modifyUser/:id"
+        restringed = "customer"
         component={({ match }) => (
           <ModifyUser id={match.params.id} dark={dark} />
         )}

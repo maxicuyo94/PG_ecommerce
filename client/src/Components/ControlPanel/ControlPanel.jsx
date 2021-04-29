@@ -20,7 +20,6 @@ import {
   CheckBoxOutlineBlank,
   CheckBox,
 } from "@material-ui/icons";
-import EditUsers from "./EditUsers/EditUsers";
 import { Link } from "react-router-dom";
 import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
@@ -151,11 +150,11 @@ useEffect(() => {
             Orders
           </button>
         )}
-        {userLoged.permission === "customer" && (
+        {
           <button name="purchasehistory" onClick={(e) => handleTab(e)}>
           Purchase History
         </button>
-        )}
+        }
         {(userLoged.permission !== "customer" && userLoged.permission) && (
           <button name="categories" onClick={(e) => handleTab(e)}>
             Categories
@@ -247,7 +246,7 @@ useEffect(() => {
               })
             : null}
           {tab === "orders"
-            ? orders.map((order) => {
+            ? orders?.map((order) => {
                 return (
                   <div className={style.list}>
                     {checkbox ? (
@@ -346,7 +345,7 @@ useEffect(() => {
                     </span>
                     <span className={style.name}>{order.orderStatus}</span>
                     <span className={style.name}>{order.orderDate}</span>
-                    <dvi>
+                    <div>
                       <button
                         className={style.icon}
                         value={order.id}
@@ -363,7 +362,7 @@ useEffect(() => {
                           products={productsOfOrder}
                         ></ProductSelection>
                       </Modal>
-                    </dvi>
+                    </div>
                   </div>
                 );
               })
@@ -391,13 +390,23 @@ useEffect(() => {
                     <span className={style.name}>{user.permission}</span>
                     {user.permission === "superadmin" &&
                     userLoged.permission === "admin" ? null : (
-                      <EditUsers permission={user.permission} id={user.id} />
+                      <>
+                      <Link to={`/modifyUser/${user.id}`}>
+                        <Edit class={style.icon} alt="Force change data user"/>
+                      </Link>
+                      </>
                     )}
                     <Delete
                       class={style.icon}
                       id={user.id}
                       onClick={() => handleDelete(user.id)}
                     />
+                    <Modal
+                        class={style.modal}
+                        open={modalTwo}
+                        onClose={closeModal}
+                      >
+                      </Modal>
                   </div>
                 );
               })

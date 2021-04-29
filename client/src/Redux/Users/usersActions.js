@@ -230,7 +230,7 @@ export const mailActivate = (id) => {
   }
 }
 
-export const activate = (id) => {
+export const activate = (email) => {
   return async function () {
     try {
       await supabase
@@ -238,12 +238,22 @@ export const activate = (id) => {
         .update({
           active: true,
         })
-        .eq("id", id);
+        .eq("email", email);
       swal("Oops", "Usuario activado", "success");
       //necesito el email del usuario a activar para mandarlo por query
-      await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&status='actived'`)
+      await axios.post(`http://localhost:3001/mercadopago/send?email=${email}&status='actived'`)
     } catch (e) {
 
     }
+  }
+}
+
+export const getUser  = (id) => {
+  return async (dispatch) => {
+    const user = await supabase
+    .from("users")
+    .select("*,address(*)")
+    .eq("id", id);
+    dispatch({ type: actionType.USER_CONFIG, payload: user.data[0] });
   }
 }
