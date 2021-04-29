@@ -22,7 +22,8 @@ import { ModifyReview } from "./Components/Review/modifyReview";
 import { checkout } from "./Redux/Cart/cartActions";
 import { getProductsVisited } from "./Redux/Products/productActions"
 import swal from "sweetalert";
-import {Banner} from './Components/Banner/Banner'
+import { Banner } from './Components/Banner/Banner'
+import { ActiveUser } from './Components/ControlPanel/ActiveUser/ActiveUser'
 
 
 function App() {
@@ -31,25 +32,25 @@ function App() {
     "supabase.auth.token",
     ""
   );
-  const [ productsVisited, setProductsVisited ] = useLocalStorage("productVisited", [])
+  const [productsVisited, setProductsVisited] = useLocalStorage("productVisited", [])
 
   const dark = useSelector((state) => state.darkReducer.dark);
   const dispatch = useDispatch();
 
 
-useEffect(() => {
-  if (userLogedStorage){
-    dispatch(userStorage(userLogedStorage.currentSession.user.id));
-    dispatch(setCart(userLogedStorage.currentSession?.user.id));
-  }
-  const lastProducts = async () => {
-    if(productsVisited){
-      await dispatch(getProductsVisited(productsVisited))
-      setProductsVisited([], true)
+  useEffect(() => {
+    if (userLogedStorage) {
+      dispatch(userStorage(userLogedStorage.currentSession.user.id));
+      dispatch(setCart(userLogedStorage.currentSession?.user.id));
     }
-  }
-  lastProducts()
-}, [dispatch, userLogedStorage]);
+    const lastProducts = async () => {
+      if (productsVisited) {
+        await dispatch(getProductsVisited(productsVisited))
+        setProductsVisited([], true)
+      }
+    }
+    lastProducts()
+  }, [dispatch, userLogedStorage]);
 
   return (
     <Layout dark={dark}>
@@ -65,7 +66,7 @@ useEffect(() => {
       <ProtectedRoute
         exact
         path="/modifyUser/:id"
-        restringed = "customer"
+        restringed="customer"
         component={({ match }) => (
           <ModifyUser id={match.params.id} dark={dark} />
         )}
@@ -81,6 +82,13 @@ useEffect(() => {
         exact
         path="/AddProduct"
         render={() => <AddProduct dark={dark} />}
+      />
+      <Route
+        exact
+        path="/activedUser/:id"
+        component={({ match }) => (
+          <ActiveUser id={match.params.id} dark={dark} />
+        )}
       />
       <Route exact path="/Order" render={() => <CheckOut dark={dark} />} />
       <ProtectedRoute
