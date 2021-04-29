@@ -201,7 +201,7 @@ export const changeUserPermission = (id, newPermission) => {
   }
 }
 
-export const deactivate = (id) => {
+export const deactivate = (id,userName) => {
   return async function () {
     try {
       await supabase
@@ -211,19 +211,19 @@ export const deactivate = (id) => {
         })
         .eq("id", id);
       swal("Oops", "account deactivated", "error");
-      userLogOut()
-      await axios.post(`http://localhost:3001/mercadopago/send?id=${id}`)
+      await axios.post(`http://localhost:3001/mercadopago/send?userName=${userName}`)
     } catch (e) {
 
     }
   }
 }
 
-export const mailActivate = (id) => {
+export const mailActivate = (id,userName) => {
   return async function () {
     try {
+      console.log(userName)
       swal("Oops", "Te llegara un mail cuando el jefe te acepte otra vez", "success");
-      await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&status='actived'`)
+      await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&userName=${userName}&status='actived'`)
     } catch (e) {
 
     }
@@ -257,3 +257,27 @@ export const getUser  = (id) => {
     dispatch({ type: actionType.USER_CONFIG, payload: user.data[0] });
   }
 }
+
+export const activatedUser = (id,name) => {
+  return async function () {
+    try {
+
+      await supabase
+      .from("users")
+      .update({
+        active: true,
+      })
+      .eq("id", id);
+
+      const user = await supabase
+      .from("users")
+      .select("email")
+      .eq("id", id);
+      swal("Oops", "usuario activado", "success");
+      await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&name=${name}&email=${user.data[0].email}`)
+    } catch (e) {
+
+    }
+  }
+}
+

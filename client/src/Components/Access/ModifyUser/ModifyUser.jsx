@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./ModifyUser.module.scss";
-import { updateUser, getUser, sendMail, deactivate, mailActivate, activate } from "../../../Redux/Users/usersActions";
+import { updateUser, getUser, sendMail, deactivate, mailActivate, activate, userLogOut } from "../../../Redux/Users/usersActions";
 import { EditUsers } from "./EditUsers/EditUsers"
 
 export function ModifyUser({ id, dark }) {
@@ -25,31 +25,33 @@ export function ModifyUser({ id, dark }) {
     });
   };
 
-  useEffect(()=> {
+  console.log(id)
+
+  useEffect(() => {
     if (id) {
       const gUser = async () => {
         await dispatch(getUser(id))
       }
       gUser()
     }
-  },[])
+  }, [])
 
 
 
   useEffect(() => {
     if (id) {
-        setDataUser({
-          id: userConfig.id,
-          userName: userConfig.user_name,
-          phone: userConfig.phone,
-          address: userConfig.address && userConfig.address[0].address,
-          city: userConfig.address && userConfig.address[0].city,
-          postal_code: userConfig.address && userConfig.address[0].postal_code,
-          country: userConfig.address && userConfig.address[0].country,
-          permission: userConfig.permission,
-          email: userConfig.email,
-          active: userConfig.active
-        });
+      setDataUser({
+        id: userConfig.id,
+        userName: userConfig.user_name,
+        phone: userConfig.phone,
+        address: userConfig.address && userConfig.address[0].address,
+        city: userConfig.address && userConfig.address[0].city,
+        postal_code: userConfig.address && userConfig.address[0].postal_code,
+        country: userConfig.address && userConfig.address[0].country,
+        permission: userConfig.permission,
+        email: userConfig.email,
+        active: userConfig.active
+      });
     } else {
       userLog &&
         setDataUser({
@@ -77,12 +79,16 @@ export function ModifyUser({ id, dark }) {
 
   const deactivateUser = (e) => {
     e.preventDefault();
-    dispatch(deactivate(dataUser.id));
+    dispatch(deactivate(dataUser.id,dataUser.userName));
+    //hay que poner el boton para un usuario pueda querer activar la cuenta, en algun lugar
+    //donde pueda acceder, porque cuando aprete este deactiveuser, se va a desloguear
+    //y no va a volver a poder entrar a su perfil.
+    //dispatch(userLogOut())
   }
 
   const activateUser = (e) => {
     e.preventDefault();
-    dispatch(mailActivate(dataUser.id));
+    dispatch(mailActivate(dataUser.id,dataUser.userName));
   }
 
   const activateUserFromAdmin = () => {
@@ -153,7 +159,7 @@ export function ModifyUser({ id, dark }) {
             ></input>
           </div>
           {
-            (userLog.permission === "superadmin" || userLog.permission === "admin") && (dataUser.id !== userLog.id)  &&
+            (userLog.permission === "superadmin" || userLog.permission === "admin") && (dataUser.id !== userLog.id) &&
             (
               <>
                 <div className={style.permission}>
@@ -177,22 +183,22 @@ export function ModifyUser({ id, dark }) {
             Modify User
           </button>
           {
-            (dataUser.id !== userLog.id && 
-            (userLog.permission === "superadmin" || userLog.permission === "admin") &&
-            !dataUser.active
-            ) 
-            ?
-          <button type="submit" onClick={(e) => activateUserFromAdmin(e)}>
-            Activate account from admin
-          </button>:
-          null,
-          !id && (dataUser.active ?
-          <button type="submit" onClick={(e) => deactivateUser(e)}>
-              Deactivate account
+            (dataUser.id !== userLog.id &&
+              (userLog.permission === "superadmin" || userLog.permission === "admin") &&
+              !dataUser.active
+            )
+              ?
+              <button type="submit" onClick={(e) => activateUserFromAdmin(e)}>
+                Activate account from admin
+          </button> :
+              null,
+            !id && (dataUser.active ?
+              <button type="submit" onClick={(e) => deactivateUser(e)}>
+                Deactivate account
             </button>
-            :
-            <button type="submit" onClick={(e) => activateUser(e)}>
-              Activate account
+              :
+              <button type="submit" onClick={(e) => activateUser(e)}>
+                Activate account
             </button>)
           }
           {/* </Link> */}
