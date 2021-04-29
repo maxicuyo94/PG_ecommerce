@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./ModifyUser.module.scss";
-import { updateUser, getUser, sendMail, deactivate,mailActivate  } from "../../../Redux/Users/usersActions";
+import { updateUser, getUser, sendMail, deactivate, mailActivate, activate } from "../../../Redux/Users/usersActions";
 import { EditUsers } from "./EditUsers/EditUsers"
 
 export function ModifyUser({ id, dark }) {
@@ -25,11 +25,19 @@ export function ModifyUser({ id, dark }) {
     });
   };
 
-  useEffect(() => {
+  useEffect(()=> {
     if (id) {
-      console.log("Ingrese Config")
       const gUser = async () => {
         await dispatch(getUser(id))
+      }
+      gUser()
+    }
+  },[])
+
+
+
+  useEffect(() => {
+    if (id) {
         setDataUser({
           id: userConfig.id,
           userName: userConfig.user_name,
@@ -39,10 +47,9 @@ export function ModifyUser({ id, dark }) {
           postal_code: userConfig.address && userConfig.address[0].postal_code,
           country: userConfig.address && userConfig.address[0].country,
           permission: userConfig.permission,
-          email: userConfig.email
+          email: userConfig.email,
+          active: userConfig.active
         });
-      }
-      gUser()
     } else {
       userLog &&
         setDataUser({
@@ -53,9 +60,10 @@ export function ModifyUser({ id, dark }) {
           city: userLog.address && userLog.address[0].city,
           postal_code: userLog.address && userLog.address[0].postal_code,
           country: userLog.address && userLog.address[0].country,
+          active: userLog.active
         });
     }
-  }, [userLog]);
+  }, [userLog, userConfig]);
 
   const resetPassword = () => {
     dispatch(sendMail(dataUser.email));
@@ -76,6 +84,12 @@ export function ModifyUser({ id, dark }) {
     e.preventDefault();
     dispatch(mailActivate(dataUser.id));
   }
+
+  const activateUserFromAdmin = () => {
+    dispatch(activate(dataUser.id))
+  }
+
+  console.log(dataUser.active)
 
   return (
     <div className={dark ? style.containerDark : style.container}>
@@ -139,7 +153,7 @@ export function ModifyUser({ id, dark }) {
             ></input>
           </div>
           {
-            (userLog.permission === "superadmin" || userLog.permission === "admin") &&
+            (userLog.permission === "superadmin" || userLog.permission === "admin") && (dataUser.id !== userLog.id)  &&
             (
               <>
                 <div className={style.permission}>
@@ -161,13 +175,26 @@ export function ModifyUser({ id, dark }) {
           {/* <Link to={`/controlpanel`}> */}
           <button type="submit" onClick={(e) => modifyUser(e)}>
             Modify User
-        </button>
+          </button>
+          {
+            (dataUser.id !== userLog.id && 
+            (userLog.permission === "superadmin" || userLog.permission === "admin") &&
+            !dataUser.active
+            ) 
+            ?
+          <button type="submit" onClick={(e) => activateUserFromAdmin(e)}>
+            Activate account from admin
+          </button>:
+          null,
+          !id && (dataUser.active ?
           <button type="submit" onClick={(e) => deactivateUser(e)}>
-          Deactivate account
-        </button>
-        <button type="submit" onClick={(e) => activateUser(e)}>
-          Activate account
-        </button>
+              Deactivate account
+            </button>
+            :
+            <button type="submit" onClick={(e) => activateUser(e)}>
+              Activate account
+            </button>)
+          }
           {/* </Link> */}
         </form>
       </div>

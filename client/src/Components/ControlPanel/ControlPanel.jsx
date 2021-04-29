@@ -345,7 +345,7 @@ useEffect(() => {
                     </span>
                     <span className={style.name}>{order.orderStatus}</span>
                     <span className={style.name}>{order.orderDate}</span>
-                    <dvi>
+                    <div>
                       <button
                         className={style.icon}
                         value={order.id}
@@ -362,7 +362,7 @@ useEffect(() => {
                           products={productsOfOrder}
                         ></ProductSelection>
                       </Modal>
-                    </dvi>
+                    </div>
                   </div>
                 );
               })

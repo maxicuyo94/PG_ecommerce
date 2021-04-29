@@ -7,7 +7,6 @@ import { Edit } from "@material-ui/icons";
 import {
   changeUserPermission,
   allUsers,
-  //activate
 } from "../../../../Redux/Users/usersActions";
 import style from "./editusers.module.scss";
 import { useDispatch, useSelector } from "react-redux";
