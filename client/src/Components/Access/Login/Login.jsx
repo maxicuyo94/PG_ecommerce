@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLogin, sendMail } from "../../../Redux/Users/usersActions";
 import { useHistory, useLocation } from "react-router-dom";
 import style from "./login.module.scss";
+import MultifactorAuth from "../MultifactorAuth/MultifactorAuth";
+import { createClient } from '@supabase/supabase-js';
+import axios from 'axios';
 //import { useLocalStorage } from "../../../LocalStorage/useLocalStorage";
 
 export function Login() {
@@ -10,7 +13,11 @@ export function Login() {
   const userRegistered = useSelector(state => state.usersReducer.userLoged)
   const location = useLocation()
   const history = useHistory();
-
+ 
+  const SUPABASE_URL = "https://zgycwtqkzgitgsycfdyk.supabase.co"
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNzczMDk4NCwiZXhwIjoxOTMzMzA2OTg0fQ.v7M4hQhgNYxkXa3zwDLs5dAWR_1egDuCASySblcNgSA'
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+   
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -20,7 +27,7 @@ export function Login() {
     if (userRegistered?.id) {
       if (location.state.from) {
         history.push(location.state.from)
-      } 
+      }
     }
   }, [userRegistered])
 
@@ -40,6 +47,20 @@ export function Login() {
 
   const resetPassword = () => {
     dispatch(sendMail(document.getElementById("email").value));
+  };
+
+  const createPin = async (e) => {
+    e.preventdefault()
+    //must have an email
+    // generate pin
+    let newPin = Math.round(Math.random() * 9999);
+    //save pin in supabase
+    await supabase
+      .from('users')
+      .update({ pin: `${newPin}` })
+      .eq('email', `${user.email}`)
+    //send pin by email (ask marian)
+    await axios.post(`http://localhost:3001/mercadopago/send?pin=${newPin}&email=${user.email}`)
   };
 
   return (
@@ -73,6 +94,7 @@ export function Login() {
         >
           LogIn
           </button>
+        <MultifactorAuth  prueba="hola" email={user.email} onLogin={ loginUsers}/>
         <div>
           <input type="text" id="email" placeholder="Email" />
         </div>
