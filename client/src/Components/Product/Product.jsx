@@ -4,9 +4,12 @@ import {
   productDetail,
   getProductsByCategories,
 } from "../../Redux/Products/productActions";
+import { QRCode } from 'react-qrcode'
 import styles from "./Product.module.scss";
 import swal from "sweetalert";
 import { addItemCart } from "../../Redux/Cart/cartActions";
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 //import Slider from "./Slider/Slider";
 import Thumbs from "./Thumbs/Thumbs";
@@ -21,27 +24,27 @@ import { Link } from "react-router-dom";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 
-const random = Math.round(Math.random() * 2);
 
 
+let random = Math.round(Math.random() * 2);
 export const Product = (props) => {
   const dispatch = useDispatch();
   //const state = useSelector((state) => state);
   //const { currentProduct, currentReviewsOfProduct } = state;
   //const [maxReviews, setMaxReviews] = useState(5);
-  const [ productsVisited, setProductsVisited ] = useLocalStorage("productVisited", [])
-  const reviews = useSelector((state) => state.reviewsReducer.reviews);
+  //const reviews = useSelector((state) => state.reviewsReducer.reviews);
+  const [productsVisited, setProductsVisited] = useLocalStorage("productVisited", [])
   const details = useSelector((state) => state.productReducer.productDetail);
+  const id = props.id;
   const productByCategories = useSelector(
     (state) => state.productReducer.productByCategories
   );
+  const Link = `http://192.168.100.4:3000/product/${id}`
 
   const [deleting, setDeleting] = useState(null)
 
-  const id = props.id;
   const [value, setValue] = useState(1);
   const [nav, setNav] = useState("details");
-
   const handleSum = () => {
     value < details.stock && value < 10 && setValue(value + 1);
   };
@@ -51,12 +54,12 @@ export const Product = (props) => {
 
   const [userLog] = useLocalStorage("supabase.auth.token")
 
-  useEffect(()=> {
+  useEffect(() => {
     const findLastProduct = productsVisited.find(id => id === props.id)
-    if(!findLastProduct){
-      setProductsVisited(product=> [...product, props.id])
+    if (!findLastProduct) {
+      setProductsVisited(product => [...product, props.id])
     }
-  },[])
+  }, [])
 
   useEffect(() => {
 
@@ -70,12 +73,13 @@ export const Product = (props) => {
     Products();
     return () => {
       setNav("details");
+      random = Math.round(Math.random() * 2);
     };
     // eslint-disable-next-line
   }, [id]);
 
   const handleAddToCart = (details) => {
-    //console.log('add to cart')
+
     let cartItemModel = {
       title: details.name,
       image: details.images[0].url,
@@ -87,6 +91,7 @@ export const Product = (props) => {
     dispatch(addItemCart(cartItemModel));
     setValue(1);
     swal("Done!", "Added to cart", "success");
+
   };
 
   return (
@@ -94,10 +99,11 @@ export const Product = (props) => {
       <ul className={styles.nav}>
         <li
           onClick={() => {
-            setNav("about");
+            setNav("full");
           }}
+          className={styles.full}
         >
-          About Product
+          Full name
         </li>
         <li
           onClick={() => {
@@ -113,12 +119,19 @@ export const Product = (props) => {
         >
           Categories
         </li>
+        <li
+          onClick={() => {
+            setNav("qr");
+          }}
+        >
+          Code QR
+        </li>
       </ul>
       <div className={styles.main}>
         <div className={styles.details}>
           <div className={styles.info}>
             <div className={styles.name}>
-              <span>{details.name?.split(" ").slice(0, 3).join(" ")}</span>
+              <span>{details.name}</span>
             </div>
             <div className={styles.desc}>
               <ul className={styles.values}>
@@ -143,12 +156,21 @@ export const Product = (props) => {
                       </li>
                     );
                   })}
-                {nav === "about" && details.name && (
-                  <li>
-                    {details.name
-                      ?.split(" ")
-                      .slice(3, details.name.length)
-                      .join(" ")}
+                {nav === "full" && details.name && (
+                  <li>{details.name}</li>
+                )}
+                {nav === "qr" && (
+                  <li className={styles.qr}>
+                    <QRCode
+                      value={Link}
+                      color={
+                        {
+                          dark: '#2C3A40',
+                          light: '#9abf15'
+                        }
+                      }
+                      scale={5}
+                    />
                   </li>
                 )}
               </ul>
@@ -161,14 +183,28 @@ export const Product = (props) => {
           </div>
           <div className={styles.buy}>
             <label>
-              On sale from <b>${(details.price * value).toFixed(2)}</b>
+
+              On sale from
+              <b>${
+                (details.price * (1 - details.discount / 100) * value)
+                  .toFixed(2)
+              }</b>
             </label>
-            <div className={styles.cont}>
-              <input type="text" value={value} disabled />
-              <div className={styles.change}>
-                <button className={styles.add} onClick={handleSum}>+</button>
-                <button className={styles.add} onClick={handleRes}>-</button>
+            <div className={styles.change}>
+              <button
+                className={styles.add}
+                onClick={handleRes}>
+                <RemoveIcon style={{ fontSize: '1rem' }} />
+              </button>
+              <div className={styles.cont}>
+                <input type="text" value={value} disabled />
               </div>
+              <button
+                className={styles.add}
+                onClick={handleSum}
+              >
+                <AddIcon style={{ fontSize: '1rem' }} />
+              </button>
             </div>
             {details.stock > 0 ? (
               <button
