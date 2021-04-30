@@ -1,5 +1,5 @@
-let activateEmail = (id,status) => {
-    return status?`<html lang="en">
+let activateEmail = (userName,id) => {
+    return id?`<html lang="en">
     <head>
         <meta charset='utf-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
@@ -12,8 +12,8 @@ let activateEmail = (id,status) => {
                 <img src="https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png" style="width:100px"   />
                 <h1 style="color: #000000;margin: .2em; font-size: 2em; font-weight: 100;">Tech Store</h1>
                 <p style="color: #ffffff;font-weight: 800;font-size:3rem;background-color: #507b00;margin-bottom: 0;padding:1em;">
-                    El usuario ${id} quiere recuperar su cuenta! </p>
-                <a href='http://localhost:3000/controlpanel'>Activar usuario</a>
+                    El usuario ${userName} quiere recuperar su cuenta! </p>
+                <a href='http://localhost:3000/activedUser/${id}'>Activar usuario</a>
                 <p> Thanks for choosing us!</p>
                 <p> Tech Store Team </p>
             </div>
@@ -34,7 +34,7 @@ let activateEmail = (id,status) => {
                 <img src="https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png" style="width:100px"  />
                 <h1 style="color: #000000;margin: .2em; font-size: 2em; font-weight: 100;">Tech Store</h1>
                 <p style="color: #ffffff;font-weight: 800;font-size:3rem;background-color: #507b00;margin-bottom: 0;padding:1em;">
-                    El usuario ${id} ha desactivado su cuenta! </p>
+                    El usuario ${userName} ha desactivado su cuenta! </p>
                 <p> Thanks for choosing us!</p>
                 <p> Tech Store Team </p>
             </div>
