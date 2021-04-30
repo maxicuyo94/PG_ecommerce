@@ -40,9 +40,11 @@ $gris:#2C3A40;
       display: flex;
       flex-direction: row;
       align-items: center;
+      transition: 0.5s;
 
       &:hover {
-        color: #9abf15
+        color: #9abf15;
+        text-decoration: underline;
       }
 
       @media screen and (max-width: $tablet) {
@@ -50,6 +52,13 @@ $gris:#2C3A40;
           text-decoration: underline #9abf15;
         }
       }
+    }
+    .full{
+      @media screen and (max-width: $tablet) {
+        display:none;
+        visibility: hidden;
+      }
+
     }
   }
 
@@ -97,6 +106,18 @@ $gris:#2C3A40;
           width: 80%;
           display: flex;
           align-items: center;
+          text-align:left;
+
+          span {
+            
+            @media screen and (min-width: $tablet) {
+              margin: 0 auto;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              
+            }
+          }
         }
 
         .desc {
@@ -115,6 +136,12 @@ $gris:#2C3A40;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+
+            .qr {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
 
             li {
               margin: 1vh 0;
@@ -214,85 +241,63 @@ $gris:#2C3A40;
           width: 90%;
         }
 
-        .cont {
-          background-color: #e9e9e9;
-          outline: none;
-          border: none;
-          border-radius: 1vh;
+        .change {
           display: flex;
+          justify-content: space-between;
           align-items: center;
+          outline: none;
 
-          input {
-            margin: 0;
-          }
-
-          @media screen and (max-width: $tablet) {
-            order: 1;
-          }
-
-          .change {
+          .cont {
+            background-color: #e9e9e9;
+            border: none;
+            border-radius: 1vh;
             display: flex;
-            flex-direction: column;
+            align-items: center;
 
-            button {
-              padding: 0;
-              margin: 0.1vh;
-              width: 18px;
-              height: 18px;
+            input {
+              border: none;
+              outline: none;
               text-align: center;
               font-weight: bold;
-              font-size: 1rem;
-              transition: 0.5s;
+              font-size: 1.2rem;
+              width: 40px;
+              height: 30px;
+              background-color: transparent;
+            }
 
+            /* @media screen and (max-width: $tablet) {
+              order: 1;
+            } */
+          }
 
-              &:hover {
-                background-color: #000000;
-                color: white;
-              }
+          button {
+            display: flex;
+            height: 1.5rem;
+            width: 1.5rem;
+            border: none;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem;
+            outline: none;
+            background-color: $verde;
+            transition: 0.3s;
+            color: white;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px 0px rgba(0, 0, 0);
+            border: 2px solid $verde;
+
+            &:hover {
+              box-shadow: none;
+              transform: translate(2px, 2px);
+              background-color: #fff;
+              color: black;
+              border: 2px solid $verde;
             }
           }
-
-          input {
-            border: none;
-            outline: none;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            width: 40px;
-            height: 30px;
-            background-color: transparent;
-          }
         }
 
-        .add {
-
-          padding: 1vh;
-          border: none;
-          outline: none;
-          border-radius: 20px;
-          background-color: #9abf15;
-          color: white;
-          font-weight: bold;
-          transition: 0.5s;
-          margin: 0;
-          width: 30%;
-          font-family: 'Poppins' !important;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          @media screen and (max-width: $tablet) {
-            width: 70%;
-            order: 2;
-          }
-
-          &:hover {
-            background-color: #fff;
-            color: black;
-            border: 1px solid #9abf15;
-          } 
-        }
-        .addCart{
+        .addCart {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -305,16 +310,18 @@ $gris:#2C3A40;
           outline: none;
           border: 3px solid $verde;
           border-radius: 30px;
-          //box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
           color: #fff;
           background-color: $verde;
-          transition: 0.5s;
+          transition: 0.3s;
           font-family: -apple-system, Roboto, sans-serif;
+
+          @media screen and (max-width: $tablet) {
+            width: 40%;
+          }
 
           &:hover {
             background-color: transparent;
             color: $verde;
-            //transform: translate(0, 5px);
             box-shadow: none;
           }
 
