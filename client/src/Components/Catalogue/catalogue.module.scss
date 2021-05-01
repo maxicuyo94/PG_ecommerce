@@ -3,15 +3,12 @@
   min-height: calc(100vh - 185px);
     .filters {
     width: 25%;
-    height: 450px;
     position: relative;
     top:75px;
-    background-color:black;
-    border-radius: 3%;
+    background-color:#E9E9E9;
     padding-left: 1rem;
     padding-right: 1rem;
-    border:solid;
-    border-color:#9abf15;
+    height: 35rem;
 
     .searchFilter {
       display: flex;
@@ -37,14 +34,25 @@
     width: 75%;
     .keypad {
       display:flex;
-      justify-content: center;
-      height: 2rem;
+      justify-content: flex-end;
+      height: 3rem;
 
       .backward,
       .upward {
-        height: 1.5rem;
-        width: 1.5rem;
+        border: 2px solid;
+        border: 2px solid;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 100%;
+        padding: 5px;
       }
+      .backward:hover, .upward:hover{
+        background-color: #ddd;
+        filter: invert(100%);
+        cursor: pointer
+
+      }
+
     }
 
   }
@@ -96,26 +104,49 @@
 
 
 
-.tag {
-  font-family: roboto;
-  color:bisque;
-  margin:15px;
-}
-.tagg {
-  font-family: roboto;
-  color:black;
+.tag{
+  font-family: Poppins;
+  color: #222;
   margin:15px;
 }
 
+.title{
+  font-family: Poppins;
+  color: #222;
+  margin:15px;
+  font-size: 30px
+}
+
+.tagg {
+  font-family: Poppins;
+  color:black;
+  margin:15px;
+  font-size: 16px;
+}
+
 .select {
-  border-radius: 999px;
+  font-size: 16px;
+  padding: 3px;
+  width: 100%;
   outline:none;
 
 }
 
 .button {
-  font-family: roboto;
-  border-radius: 5%;
-  background-color: black;
-  color:blanchedalmond;
+  // font-family: Poppins;
+  // border-radius: 5%;
+  // background-color: black;
+  // color:blanchedalmond;
+  border: 2px solid #9ABF15;
+  background-color: #9ABF15;
+  height: 3rem;
+  width: fit-content;
+  font-weight: 700;
+  border-radius: 2rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color:white;
+
+  &:hover{
+    cursor: pointer
+  }
 }
