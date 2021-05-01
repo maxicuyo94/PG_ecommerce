@@ -64,7 +64,7 @@ server.post('/checkout', async (req, res) => {
 
 server.post('/send', (req,res)=>{
     const user = req.query
-    userMail(user)
+      userMail(user)
 })
 
 module.exports = server
