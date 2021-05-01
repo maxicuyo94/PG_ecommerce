@@ -134,7 +134,7 @@ export function Catalogue() {
             alt="img"
             onClick={(e) => changepage(e)}
           />
-          <img 
+          <img
             className={Style.upward}
             id="upward"
             type="image"
