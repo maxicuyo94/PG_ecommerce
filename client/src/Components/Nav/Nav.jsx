@@ -19,15 +19,14 @@ export function Nav({ priority, dark }) {
   return (
     <div className={dark ? style.containerDark : style.container}>
       <div className={style.contents}>
-        <div className={style.logo}>
-          <NavLink to={"/"}>
+        
+          <NavLink to={"/"} className={style.logo}>
             <img
               src={
-                "https://res.cloudinary.com/techstore/image/upload/v1618082875/edobvt8ghwyblnagtkoj.png"
+                "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
               } alt="Ups, we don't found anything here. Try again tomorrow!"
             />
           </NavLink>
-        </div>
         <ul>
           <li>
             <Link to="/">
@@ -43,10 +42,10 @@ export function Nav({ priority, dark }) {
             <Link to="/controlpanel">
               <span>{t("navLink6.linkSix")}</span>
             </Link>
-          </li>  }  
+          </li>  }
             <li>
             <SearchBar/>
-            </li>       
+            </li>
           <li>
             <MiniShop />
           </li>
