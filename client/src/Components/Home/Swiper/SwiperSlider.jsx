@@ -7,13 +7,14 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/components/lazy/lazy.scss'
-import './SwiperSlider.scss'
+//import './SwiperSlider.scss'
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, EffectFade])
 
 const SwiperSlider = (products) => {
   return (
     <Swiper
       navigation
+      style={{ '--swiper-navigation-color': '#9abf15' }}
       pagination={false}
       scrollbar={false}
       autoHeight={false}
@@ -62,7 +63,7 @@ const SwiperSlider = (products) => {
                   stock={item.stock}
                   title={item.name}
                   price={item.price}
-                  image={item.images[0]?.url}
+                  image={item.images}
                   discount={item.discount}
                   reviews={item.reviews}
                 />
