@@ -24,8 +24,6 @@ export function Catalogue() {
   const Input = useSelector(state => state.productReducer.Searchingg)
   const [Count, setCount] = useState(true)
 
-  
-
   useEffect(() => {
     setPages(0);
   }, [Category, Prices]);
@@ -154,7 +152,6 @@ export function Catalogue() {
 
         <div>
           <div className={Count === true ? Style.products : Style.products2}>
-            {console.log(Products)}
             {Products &&
               Products.map((item) => (
                 <ProductCard

@@ -15,7 +15,7 @@ export function ModifyUser({ id, dark }) {
     address: "",
     city: "",
     postal_code: "",
-    country: "",
+    country: ""
   });
 
   const handleInputChange = (e) => {
@@ -24,8 +24,6 @@ export function ModifyUser({ id, dark }) {
       [e.target.name]: e.target.value,
     });
   };
-
-  console.log(id)
 
   useEffect(() => {
     if (id) {
@@ -79,7 +77,7 @@ export function ModifyUser({ id, dark }) {
 
   const deactivateUser = (e) => {
     e.preventDefault();
-    dispatch(deactivate(dataUser.id,dataUser.userName));
+    dispatch(deactivate(dataUser.id, dataUser.userName));
     //hay que poner el boton para un usuario pueda querer activar la cuenta, en algun lugar
     //donde pueda acceder, porque cuando aprete este deactiveuser, se va a desloguear
     //y no va a volver a poder entrar a su perfil.
@@ -88,7 +86,7 @@ export function ModifyUser({ id, dark }) {
 
   const activateUser = (e) => {
     e.preventDefault();
-    dispatch(mailActivate(dataUser.id,dataUser.userName));
+    dispatch(mailActivate(dataUser.id, dataUser.userName));
   }
 
   const activateUserFromAdmin = () => {
@@ -157,6 +155,10 @@ export function ModifyUser({ id, dark }) {
               value={dataUser.country}
               onChange={(e) => handleInputChange(e)}
             ></input>
+          </div>
+          <div className={style.country}>
+            <label>Tech Points</label>
+            <h3>{userLog.points}</h3>
           </div>
           {
             (userLog.permission === "superadmin" || userLog.permission === "admin") && (dataUser.id !== userLog.id) &&
