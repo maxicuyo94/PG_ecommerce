@@ -1,0 +1,119 @@
+.container {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 80vh;
+}
+
+.gameboard {
+  height: 100vh;
+  width: 100vh;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  max-height: 60vh;
+  max-width: 60vh;
+}
+
+.color {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: left;
+}
+
+.celeste {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: left;
+  border-radius: 15px;
+  background: #22a6b3;
+}
+
+.celeste_light {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: left;
+  border-radius: 15px;
+  background: #7ed6df;
+}
+
+.violeta {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: right;
+  border-radius: 15px;
+  background: #be2edd;
+}
+
+.violeta_light {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: right;
+  border-radius: 15px;
+  background: #e056fd;
+}
+
+.naranja {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: left;
+  border-radius: 15px;
+  background: #f0932b;
+}
+
+.naranja_light {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: left;
+  border-radius: 15px;
+  background: #ffbe76;
+}
+
+.verde {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: right;
+  border-radius: 15px;
+  background: #6ab04c;
+}
+
+.verde_light {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: right;
+  border-radius: 15px;
+  background: #badc58;
+}
+
+.btn_start {
+  width: 200px;
+  height: 70px;
+  background: #444;
+  color: #fff;
+  font-size: 1.5rem;
+  position: absolute;
+  top: calc(57% - 50px);
+  left: calc(58% - 200px);
+  border-radius: 40px;
+  border: none;
+}
+
+.hide {
+  display: none;
+}
