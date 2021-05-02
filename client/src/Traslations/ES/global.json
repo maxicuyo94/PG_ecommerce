@@ -38,7 +38,7 @@
   "navLink5": {
     "linkFive": "Registrarse"
   },
-  
+
   "navLink6": {
     "linkSix": "Panel de Control"
   },
@@ -70,7 +70,10 @@
     "textFive": "Precios",
     "textSix": "Todos",
     "textSeven": "Marcas",
-    "textEight": "Todas"
+    "textEight": "Todas",
+    "category": "Categoría",
+    "prices": "Rango de precios",
+    "view": "Cambiar vista"
   },
 
   "modifyProduct":{
