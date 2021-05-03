@@ -29,14 +29,17 @@ export function MyChatbot(props){
     botFontColor: '#fff',
     userBubbleColor: '#fff',
     userFontColor: '#4a4a4a',
-
   };
 
   const config = {
      width: "300px",
      height: "400px",
      floating: true,
-     headerTitle: 'Toni Bot'
+     headerTitle: 'Toni Bot',
+     floatingStyle: {
+       width: '50px',
+       height: '50px'
+     }
    };
 
   const steps=[
