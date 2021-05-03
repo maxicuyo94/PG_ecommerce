@@ -291,3 +291,18 @@ export const searchPoints = (id) => {
   }
 }
 
+export const addPoints = (userData, points) => {
+  return async dispatch => {
+    const user = await supabase
+      .from('users')
+      .select('points')
+      .eq('id', userData)
+
+    await supabase
+      .from('users')
+      .update({points: user.data[0].points + points})
+      .eq('id', userData)
+    
+    dispatch({type: actionType.ADD_POINTS , payload: points})
+  }
+}
