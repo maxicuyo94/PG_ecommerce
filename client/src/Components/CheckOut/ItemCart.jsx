@@ -71,7 +71,7 @@ export function ItemCart({ product }) {
 
   const handleQuantityChange = async (amount) => {
     const newValue = product.quantity + amount;
-    if (newValue <= product.stock && newValue >= 1 && newValue <= 10) {
+    if (newValue <= product.stock && newValue >= 1) {
       let productToDispatch = {
         id: product.id,
         image: product.image,
@@ -126,18 +126,15 @@ export function ItemCart({ product }) {
         </div>
 
         <div className={classes.quantity}>
-          {product.quantity > 1 && (
-            <Button color="secondary" aria-label="remove" ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}>
-              {/* <button ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}> */}
-              <RemoveIcon />
-              {/* </button> */}
-            </Button>
-
-          )}
+          <Button color="secondary" aria-label="remove" ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}>
+            {/* <button ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}> */}
+            <RemoveIcon />
+            {/* </button> */}
+          </Button>
 
           <ListItemText className={classes.unity}>{product.quantity}</ListItemText>
 
-          {product.quantity < 10 && product.quantity < product.stock && (
+          {product.quantity < product.stock && (
             <Button color="primary" aria-label="add" ref={btnRefADD} onClick={() => handleQuantityChange(+1)}>
               {/* <button ref={btnRefADD} onClick={() => handleQuantityChange(+1)}> */}
               <AddIcon />
