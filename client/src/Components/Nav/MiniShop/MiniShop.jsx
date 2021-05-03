@@ -2,8 +2,6 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
-import Container from '@material-ui/core/Container';
-//import MenuItem from '@material-ui/core/MenuItem';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import styles from './MiniShop.module.scss'
 import { NavLink } from 'react-router-dom';
@@ -20,7 +18,6 @@ const StyledMenu = withStyles({
         borderRadius: '10px',
         width: '30vw',
         height: '35vh',
-        //overflowY: 'scroll'
     },
     list: {
         height: '100%',
@@ -95,7 +92,7 @@ export default function CustomizedMenus() {
     let cont = 0;
 
     const cart = useSelector(state => state.cartReducer.cart)
-
+    
 
     // const shop = useSelector(state => state.productByCategories)
 

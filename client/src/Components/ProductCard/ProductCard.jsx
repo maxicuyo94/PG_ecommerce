@@ -13,9 +13,10 @@ import { useTranslation } from "react-i18next";
 
 export function ProductCard(props) {
 	  const [t, i18n] = useTranslation("global");
-	  
+	  console.log(props)
   const dispatch = useDispatch();
   const handleAddToCart = (item) => {
+    console.log(item.image)
     let cartItemModel = {
       title: item.title,
       image: item.image,
@@ -23,7 +24,6 @@ export function ProductCard(props) {
       quantity: 1,
       price: (item.price * (1 - item.discount / 100)).toFixed(2),
       stock: item.stock,
-      // discount: item.discount
     };
     dispatch(addItemCart(cartItemModel));
     swal("Done!", "Added to your cart", "success");
