@@ -39,7 +39,6 @@ export const CategoriesHome = (props) => {
       quantity: 1,
       price: (item.price * (1 - item.discount / 100)).toFixed(2),
       stock: item.stock,
-      // discount: item.discount
     }
     dispatch(addItemCart(cartItemModel))
     swal("Done!", "Added to cart", "success");
