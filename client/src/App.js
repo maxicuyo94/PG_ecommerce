@@ -124,7 +124,7 @@ function App() {
           <ModifyReview id={match.params.id} dark={dark} />
         )}
       />
-      <Route exact path='/videogame' component={SimonSays} />
+      <ProtectedRoute exact path='/videogame' component={SimonSays} />
     </Layout>
   );
 }

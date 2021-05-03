@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import timeout from './utils/util'
 import styles from './SimonSays.module.scss'
 import swal from "sweetalert";
+import { addPoints } from '../../Redux/Users/usersActions';
 
 const SimonSays = () => {
   const [start, setStart] = useState(false)
   const [lightColor, setLightColor] = useState('')
+  const user = useSelector(state => state.usersReducer.userLoged)
+  const dispatch = useDispatch()
 
   const colorList = ['blue', 'purple', 'orange', 'green']
 
@@ -51,6 +55,9 @@ const SimonSays = () => {
     if(start && !play.isDisplay && !play.userPlay && play.score) {
       console.log('entre')
       swal('Oops!', 'You lost the game', 'error')
+        .then(() => {
+          return dispatch(addPoints(user.id, play.score * 10))
+        })
     }
   }, [start, play.isDisplay, play.userPlay, play.score])
 
@@ -116,7 +123,7 @@ const SimonSays = () => {
         <div onClick={(e) => handleClick(e.target.id)} className={lightColor === 'green' ? styles.verde_light : styles.verde} id='green'></div>
         {start && !play.isDisplay && !play.userPlay && play.score && (
           <div className="lost">
-            <div className={styles.final_score}>Points:{play.score * 100}</div>
+            <div className={styles.final_score}>Points:{play.score * 10}</div>
             <button onClick={endGame} className={styles.btn_start}>Close</button>
           </div>
         )}

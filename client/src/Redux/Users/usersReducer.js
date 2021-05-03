@@ -42,6 +42,14 @@ function usersReducer(state = InitialState, action) {
         ...state,
         userConfig: action.payload
       }
+    case actionType.ADD_POINTS:
+      return {
+        ...state,
+        userLoged: {
+          ...state.userLoged,
+          points: state.userLoged.points + action.payload
+        }
+      }
     default:
       return state;
   }
