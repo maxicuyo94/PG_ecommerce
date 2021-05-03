@@ -1,45 +1,154 @@
 import React, { useEffect, useState } from 'react'
+import timeout from './utils/util'
 import styles from './SimonSays.module.scss'
+import swal from "sweetalert";
 
 const SimonSays = () => {
   const [start, setStart] = useState(false)
-  const [sequence, setSequence] = useState([])
-  const [level, setLevel] = useState(1)
-  const [color, setColor] = useState('')
+  const [lightColor, setLightColor] = useState('')
 
-  const colorsByNum = {
-    0: 'celeste',
-    1: 'violeta',
-    2: 'naranja',
-    3: 'verde'
+  const colorList = ['blue', 'purple', 'orange', 'green']
+
+  const initPlay = {
+    isDisplay: false,
+    colors: [],
+    score: 0,
+    userPlay: false,
+    userColors: []
   }
-  // const secuenceGenerator = () => {
-  //   const secuence = new Array(10).fill(0).map(n => Math.floor(Math.random() * 4))
-  // }
-  const startGame = e => {
-    e.preventDefault()
-    const randomArr = new Array(10).fill(0).map(n => Math.floor(Math.random() * 4))
-    setSequence([...sequence, ...randomArr])
+
+  const [play, setPlay] = useState(initPlay)
+
+  const startGame = () => {
     setStart(true)
   }
 
-  const lightButton = e => {
-    
+  useEffect(() => {
+    if(start) {
+      setPlay({...initPlay, isDisplay: true})
+    } else {
+      setPlay(initPlay)
+    }
+  }, [start])
+
+  useEffect(() => {
+    if(start && play.isDisplay) {
+      let newColor = colorList[Math.floor(Math.random() * 4)]
+
+      const colorsCopy = [...play.colors]
+      colorsCopy.push(newColor)
+      setPlay({...play, colors: colorsCopy})
+    }
+  }, [start, play.isDisplay])
+
+  useEffect(() => {
+    if(start && play.isDisplay && play.colors.length) {
+      displayColors()
+    }
+  }, [start, play.isDisplay, play.colors.length])
+
+  useEffect(() => {
+    if(start && !play.isDisplay && !play.userPlay && play.score) {
+      console.log('entre')
+      swal('Oops!', 'You lost the game', 'error')
+    }
+  }, [start, play.isDisplay, play.userPlay, play.score])
+
+  const displayColors = async () => {
+    await timeout(1000)
+    for(let i = 0; i < play.colors.length; i++) {
+      setLightColor(play.colors[i])
+      await timeout(500)
+      setLightColor('')
+      await timeout(500)
+
+      if(i === play.colors.length - 1) {
+        const colorsCopy = [...play.colors]
+
+        setPlay({
+          ...play,
+          isDisplay: false,
+          userPlay: true,
+          userColors: colorsCopy.reverse()
+        })
+      }
+    }
+  }
+
+  const handleClick = async color => {
+    if(!play.isDisplay && play.userPlay) {
+      const userColorsCopy = [...play.userColors]
+      const lastColor = userColorsCopy.pop()
+      setLightColor(color)
+
+      if(color === lastColor) {
+        if(userColorsCopy.length) {
+          setPlay({...play, userColors: userColorsCopy})
+        } else {
+          await timeout(500)
+          setPlay({
+            ...play,
+            isDisplay: true,
+            userPlay: false,
+            score: play.colors.length,
+            userColors: []
+          })
+        }
+      } else {
+        await timeout(500)
+        setPlay({...initPlay, score: play.colors.length})
+      }
+      await timeout(500)
+      setLightColor('')
+    }
+  }
+
+  const endGame = () => {
+    setStart(false)
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.gameboard}>
-        <div id="celeste" className={color === 'celeste' ? styles.celeste_light : styles.celeste} data-color="celeste"></div>
-        <div id="violeta" className={color === 'violeta' ? styles.violeta_light : styles.violeta} data-color="violeta"></div>
-        <div id="naranja" className={color === 'naranja' ? styles.naranja_light : styles.naranja} data-color="naranja"></div>
-        <div id="verde" className={color === 'verde' ? styles.verde_light : styles.verde} data-color="verde"></div>
-        {
-          !start && <button onClick={e => {startGame(e); lightButton()}} id="btnEmpezar" className={styles.btn_start}>Empezar a jugar!</button>
-        }
+        <div onClick={(e) => handleClick(e.target.id)} className={lightColor === 'blue' ? styles.celeste_light : styles.celeste} id='blue'></div>
+        <div onClick={(e) => handleClick(e.target.id)} className={lightColor === 'purple' ? styles.violeta_light : styles.violeta} id='purple'></div>
+        <div onClick={(e) => handleClick(e.target.id)} className={lightColor === 'orange' ? styles.naranja_light : styles.naranja} id='orange'></div>
+        <div onClick={(e) => handleClick(e.target.id)} className={lightColor === 'green' ? styles.verde_light : styles.verde} id='green'></div>
+        {start && !play.isDisplay && !play.userPlay && play.score && (
+          <div className="lost">
+            <div className={styles.final_score}>Points:{play.score * 100}</div>
+            <button onClick={endGame} className={styles.btn_start}>Close</button>
+          </div>
+        )}
+        {!start && !play.score && (
+          <button onClick={startGame} className={styles.btn_start}>Start!</button>
+        )}
+        {start && (play.isDisplay || play.userPlay) && (
+          <div className={styles.score}>{play.score}</div>
+        )}
       </div>
     </div>
   )
 }
 
 export default SimonSays
+
+
+  // const [start, setStart] = useState(false)
+  // const [sequence, setSequence] = useState([])
+  // const [level, setLevel] = useState(1)
+  // const [color, setColor] = useState('')
+
+  // const colorsByNum = {
+  //   0: 'celeste',
+  //   1: 'violeta',
+  //   2: 'naranja',
+  //   3: 'verde'
+  // }
+
+  // const startGame = e => {
+  //   e.preventDefault()
+  //   const randomArr = new Array(10).fill(0).map(n => Math.floor(Math.random() * 4))
+  //   setSequence([...sequence, ...randomArr])
+  //   setStart(true)
+  // }
