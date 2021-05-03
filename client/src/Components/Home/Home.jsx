@@ -8,6 +8,7 @@ import SwiperSlider from "./Swiper/SwiperSlider";
 import { checkout } from "../../Redux/Cart/cartActions";
 import swal from "sweetalert";
 import queryString from 'query-string';
+import {Banner2} from '../Banner/Banner'
 import axios from 'axios';
 
 export function Home(props) {
@@ -69,6 +70,7 @@ export function Home(props) {
 
   return (
     <div className={props.dark ? styles.containerDark : styles.container}>
+    <Banner2/>
       <div className={styles.containerTitle}>
         <span>{t("home.title")}</span>
       </div>

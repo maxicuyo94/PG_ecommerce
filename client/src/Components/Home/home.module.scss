@@ -14,7 +14,7 @@ $verde:#9abf15;
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 185px);
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
 
     @media screen and (max-width: $tablet) {
