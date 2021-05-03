@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductCard } from "../ProductCard/ProductCard";
+import { useLocation, useHistory } from 'react-router-dom'
 import {
   allProducts,
   getCategories,
@@ -24,6 +25,14 @@ export function Catalogue() {
   const Input = useSelector(state => state.productReducer.Searchingg)
   const [Count, setCount] = useState(true)
 
+  const location = useLocation()
+    const history = useHistory()
+
+    function useQuery() {
+        return new URLSearchParams(location.search);
+    }
+    let query = useQuery();
+
 
 
   useEffect(() => {
@@ -31,11 +40,19 @@ export function Catalogue() {
   }, [Category, Prices]);
 
   useEffect(() => {
+    if(query.has('category')) {
+      const selectQuery = query.get('category')
+      stableDispatch(
+        allProducts(Pages * 4, Pages * 4 + 4, selectQuery, Prices, Input)
+      );
+    } else {
     stableDispatch(
-      allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input, Count)
+      allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
     );
+  }
+
     dispatch(getCategories());
-  }, [dispatch, stableDispatch, Pages, Category, Prices, Input, Count]);
+  }, [dispatch, stableDispatch, Pages, Category, Prices, Input, Count,  history.location.pathname, history.location.search]);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -43,6 +60,8 @@ export function Catalogue() {
   };
   const handleclick = () => {
     setCategory("");
+    query.delete('categories');
+    history.push(`?{query}`)
   }
 
   const handleInputChangeP = (e) => {
