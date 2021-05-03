@@ -6,8 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar/Avatar';
-// import Button from '@material-ui/core/Button';
-// import DeleteIcon from '@material-ui/icons/Delete';
 import swal from "sweetalert";
 import { addItemCart, deleteItemCart } from '../../../Redux/Cart/cartActions';
 
@@ -90,14 +88,13 @@ export default function MiniCard({ product }) {
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item xs={2}>
-            <Avatar className={classes.img} src={product.image} />
+            <Avatar className={classes.img} src={product.image && product.image} />
+            {product && console.log(product)}
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="row" spacing={2}>
               <Grid item>
-                {/* <Typography gutterBottom variant="subtitle1">
-                  {product.title}
-                </Typography> */}
+      
                 <Typography variant="body2" gutterBottom>
                   {product.title.slice(0, 30)}...
                 </Typography>

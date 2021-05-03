@@ -34,7 +34,7 @@ export const CategoriesHome = (props) => {
   const handleAddToCart = (item) => {
     let cartItemModel = {
       title: item.title,
-      image: item.image,
+      image: item.image[0].url,
       id: item.id,
       quantity: 1,
       price: (item.price * (1 - item.discount / 100)).toFixed(2),
@@ -68,29 +68,6 @@ export const CategoriesHome = (props) => {
 
       <div className={styles.image} >
         <img src={props.image[0]?.url || notFound} alt='' />
-
-        {/* <Swiper
-          navigation={false}
-          pagination={false}
-          autoHeight={false}
-          loop={true}
-          //effect={'fade'}
-          autoplay={{ "delay": 2500, "disableOnInteraction": false }}
-          grabCursor={true}
-
-        >
-          {
-            props.image.map((img, i) => {
-              console.log('Url: ', i, img.url)
-              return (
-                <SwiperSlide key={i} >
-                  <img src={img.url || notFound} alt='' />
-                </SwiperSlide>
-              );
-            })
-          }
-        </Swiper> */}
-
       </div>
 
 
@@ -98,9 +75,6 @@ export const CategoriesHome = (props) => {
         <p>{props.title}</p>
       </NavLink>
       <div className={styles.review}>
-        {/* {props.reviews.length > 0 ?
-          Math.ceil(props.reviews.reduce((counter, obj) => obj.rating + counter, 0) / props.reviews.length)
-          : false} */}
         {props.reviews.length > 0 ?
           <>
             <span>
