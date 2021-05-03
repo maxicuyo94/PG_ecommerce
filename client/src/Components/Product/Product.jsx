@@ -15,7 +15,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import Thumbs from "./Thumbs/Thumbs";
 import { getReviewsOfProduct } from "../../Redux/Reviews/reviewsActions";
 import SwiperSlider from '../Home/Swiper/SwiperSlider'
-//import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 //import StarHalfIcon from '@material-ui/icons/StarHalf';
 import StarIcon from '@material-ui/icons/Star';
 import { useLocalStorage } from '../../LocalStorage/useLocalStorage'
@@ -243,6 +243,9 @@ export const Product = (props) => {
                   {[...Array(review.rating)].map(() => {
                   return <StarIcon style={{ fontSize: '1rem' }} />
                 })}
+                  {[...Array(5 - review.rating)].map(() => {
+                    return <StarBorderIcon style={{ fontSize: '1rem' }} />
+                  })}
                 </span>
                 <hr />
               </>

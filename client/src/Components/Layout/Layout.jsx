@@ -13,7 +13,7 @@ function Layout({ children, priority, dark }) {
       <main>
         {/* <Header></Header> */}
         <Nav priority={priority} dark={dark}/>
-        <Banner2></Banner2>
+        {/* <Banner2></Banner2> */}
         {children}
         <Footer priority={priority}  dark={dark} />
       </main>
