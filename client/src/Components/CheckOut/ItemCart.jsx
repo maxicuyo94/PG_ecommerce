@@ -67,7 +67,6 @@ export function ItemCart({ product }) {
             alt="product-avatar"
             src={product.image && product.image[0].url}
           />
-            {console.log(product.image)}
         </ListItemAvatar>
         <Link to={`product/${product.id}`}>
           <ListItemText

@@ -138,7 +138,6 @@ export function Catalogue() {
             type="image"
             src={right}
             alt="img"
-            onClick={(e) => changepage(e)}
           />
           </div>
         </div>
