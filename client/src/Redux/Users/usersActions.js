@@ -24,7 +24,8 @@ export const postUser = (users) => {
           surname: users.surname,
           email: user.email,
           user_name: users.userName,
-          phone: users.phone
+          phone: users.phone,
+          recommended: users.recommended && users.recommended
         },
       ]);
       await supabase.from("address").insert([
@@ -165,7 +166,6 @@ export const sendMail = (email) => {
 export const ResetPassword = (access_token, new_password) => {
   return async function () {
     try {
-      console.log(access_token, new_password);
       // eslint-disable-next-line
       const { error, data } = await supabase.auth.api.updateUser(access_token, {
         password: new_password,
@@ -201,7 +201,7 @@ export const changeUserPermission = (id, newPermission) => {
   }
 }
 
-export const deactivate = (id,userName) => {
+export const deactivate = (id, userName) => {
   return async function () {
     try {
       await supabase
@@ -218,10 +218,9 @@ export const deactivate = (id,userName) => {
   }
 }
 
-export const mailActivate = (id,userName) => {
+export const mailActivate = (id, userName) => {
   return async function () {
     try {
-      console.log(userName)
       swal("Oops", "Te llegara un mail cuando el jefe te acepte otra vez", "success");
       await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&userName=${userName}&status='actived'`)
     } catch (e) {
@@ -248,31 +247,31 @@ export const activate = (email) => {
   }
 }
 
-export const getUser  = (id) => {
+export const getUser = (id) => {
   return async (dispatch) => {
     const user = await supabase
-    .from("users")
-    .select("*,address(*)")
-    .eq("id", id);
+      .from("users")
+      .select("*,address(*)")
+      .eq("id", id);
     dispatch({ type: actionType.USER_CONFIG, payload: user.data[0] });
   }
 }
 
-export const activatedUser = (id,name) => {
+export const activatedUser = (id, name) => {
   return async function () {
     try {
 
       await supabase
-      .from("users")
-      .update({
-        active: true,
-      })
-      .eq("id", id);
+        .from("users")
+        .update({
+          active: true,
+        })
+        .eq("id", id);
 
       const user = await supabase
-      .from("users")
-      .select("email")
-      .eq("id", id);
+        .from("users")
+        .select("email")
+        .eq("id", id);
       swal("Oops", "usuario activado", "success");
       await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&name=${name}&email=${user.data[0].email}`)
     } catch (e) {
@@ -281,3 +280,29 @@ export const activatedUser = (id,name) => {
   }
 }
 
+export const searchPoints = (id) => {
+  return async function () {
+    let response = await supabase
+      .from("users")
+      .select("points")
+      .eq("id", id)
+
+    return response.data[0].points
+  }
+}
+
+export const addPoints = (userData, points) => {
+  return async dispatch => {
+    const user = await supabase
+      .from('users')
+      .select('points')
+      .eq('id', userData)
+
+    await supabase
+      .from('users')
+      .update({points: user.data[0].points + points})
+      .eq('id', userData)
+    
+    dispatch({type: actionType.ADD_POINTS , payload: points})
+  }
+}

@@ -24,7 +24,6 @@ export function ItemCart({ product }) {
   const handleQuantityChange = async (amount) => {
     const newValue = product.quantity + amount;
     if (newValue <= product.stock && newValue >= 1 && newValue <= 10) {
-      // let productToDispatch = { ...product };
       let productToDispatch = {
         id: product.id,
         image: product.image,
@@ -44,11 +43,6 @@ export function ItemCart({ product }) {
           if(btnRefDELETE.current) btnRefDELETE.current.removeAttribute("disabled");
         }, 1000);
       }
-      
-      // if(btnRef.current){
-      //   btnRef.current.setAttribute("disabled", "disabled");
-      // }
-      // swal("Quantity modify!", "", "success")
     }
   };
 
@@ -71,7 +65,7 @@ export function ItemCart({ product }) {
           <Avatar
             variant="square"
             alt="product-avatar"
-            src={`${product.image}`}
+            src={product.image && product.image[0].url}
           />
         </ListItemAvatar>
         <Link to={`product/${product.id}`}>

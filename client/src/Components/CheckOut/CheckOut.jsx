@@ -19,7 +19,6 @@ export function CheckOut() {
   const history = useHistory();
   const [total, setTotal] = useState(0.0);
   const [subtotal, setSubtotal] = useState(0.0);
-  // eslint-disable-next-line
   const [coupon, setCoupon] = useState(0);
 
   useEffect(() => {

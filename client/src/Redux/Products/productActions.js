@@ -51,8 +51,8 @@ export const allProducts = (limit, offset, cate, price, input) => {
   return async function (dispatch) {
     let JSON = await supabase
       .from("product")
-      .select("name,price,rating,id,stock,categories(name), images(url), reviews(*)")
-      .ilike(name, `%${input}%`)
+      .select("name,price,rating,id,stock,discount,categories(name), images(url), reviews(*)")
+      .ilike(name, `${input}%`)
       .eq(categoryName, cate)
       .gt(lowestPrice, price[0])
       .lt(highestPrice, price[1]);
@@ -234,7 +234,6 @@ export const deleteProduct = (id) => {
 
 export const deleteCategory = (id) => {
   return async () => {
-    console.log(id);
     await supabase.from("categories").delete("*").match({ id: id });
   };
 };

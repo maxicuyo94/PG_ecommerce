@@ -20,15 +20,15 @@ export function setCart(user_id) {
       if (error) console.log(error.message);
       var cartDB = data.length
         ? data[0].order_detail.map((item) => {
-            return {
-              id: item.product_id,
-              title: item.title,
-              image: item.image,
-              quantity: item.quantity,
-              price: item.price,
-              stock: item.stock,
-            };
-          })
+          return {
+            id: item.product_id,
+            title: item.title,
+            image: item.image,
+            quantity: item.quantity,
+            price: item.price,
+            stock: item.stock,
+          };
+        })
         : [];
 
       // localStorage.setItem("cart", JSON.stringify(cartDB));
@@ -173,7 +173,6 @@ export const clearCart = () => {
         .from("order")
         .select("id")
         .eq("user_id", userId);
-      console.log(idOrder);
 
       supabase
         .from("order_detail")
@@ -189,50 +188,102 @@ export const clearCart = () => {
   };
 };
 
-export const checkout = (userId, status, amount, userEmail,address,postalCode,hoy) => {
+export const checkout = (userId, status, amount, userEmail, address, postalCode, hoy, discountPoints, products) => {
   return async function (dispatch) {
     // eslint-disable-next-line
-    console.log(userId, status, amount, userEmail,address,postalCode,hoy)
-    if (!userId) {
-      await supabase.from("order").insert([
-        {
-          guest: true,
-          orderStatus: status,
-          amount:amount,
-          email:userEmail,
-          shipAddress:address,
-          postalCode:postalCode,
-          //orderDate:hoy
+    if (status === "approved") {
+      if (userId) {
+        let pointsMainUser = await supabase
+          .from("users")
+          .select("points,recommended")
+          .eq("id", userId)
+
+        supabase
+          .from("users")
+          .update({
+            points: pointsMainUser.data[0].points + amount
+          })
+          .eq("id", userId)
+
+        if (pointsMainUser.data[0].recommended) {
+
+          let pointsRecoUser = await supabase
+            .from("users")
+            .select("points")
+            .eq("email", pointsMainUser.data[0].recommended)
+
+          await supabase
+            .from("users")
+            .update({
+              points: pointsRecoUser.data[0].points + amount / 2
+            })
+            .eq("email", pointsMainUser.data[0].recommended)
         }
-      ]);
+
+        if (discountPoints) {
+          await supabase
+            .from("users")
+            .update({
+              points: (pointsMainUser.data[0].points - discountPoints) <= 0 ? 0 : pointsMainUser.data[0].points - discountPoints
+            })
+            .eq("id", userId)
+        }
+      }
     } else {
-      const { data, error } = await supabase
-      .from("order")
-      .update({ 
+      products.map(async prod => {
+
+        let stock = await supabase
+          .from("product")
+          .select("stock")
+          .eq("id", prod.id)
+
+        await supabase
+          .from("product")
+          .update({
+            stock: stock + prod.quantity
+      })
+        .eq("id", prod.id)
+    })
+  }
+
+  if (!userId) {
+    await supabase.from("order").insert([
+      {
+        guest: true,
         orderStatus: status,
-        amount:amount,
-        shipAddress:address,
-        postalCode:postalCode,
-        email:userEmail,
+        amount: amount,
+        email: userEmail,
+        shipAddress: address,
+        postalCode: postalCode,
+        //orderDate:hoy
+      }
+    ]);
+  } else {
+    const { data, error } = await supabase
+      .from("order")
+      .update({
+        orderStatus: status,
+        amount: amount,
+        shipAddress: address,
+        postalCode: postalCode,
+        email: userEmail,
         //orderDate:hoy,
 
       })
       .eq("user_id", userId)
       .eq("orderStatus", "inCart");
 
-      console.log('prueba',userId.replace(" ",""))
-
     await supabase.from("order").insert([
       {
         user_id: userId,
         orderStatus: "inCart",
-        email:userEmail,
+        email: userEmail,
       },
     ]);
-    }
-    localStorage.setItem("cart", "[]");
-    dispatch({ type: actionType.SET_CART, payload: [] });
-  };
+  }
+  localStorage.setItem("cart", "[]");
+  dispatch({ type: actionType.SET_CART, payload: [] });
+};
 };
 
 

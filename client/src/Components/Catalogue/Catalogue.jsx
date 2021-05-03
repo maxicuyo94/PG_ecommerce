@@ -10,7 +10,8 @@ import left from "../../Assets/static/arrow-back.svg";
 import right from "../../Assets/static/arrow-next.svg";
 import Style from "./catalogue.module.scss";
 import { useTranslation } from "react-i18next";
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import {CategoriesHome} from '../Home/Categories/CategoriesHome'
 
 
 export function Catalogue() {
@@ -25,6 +26,7 @@ export function Catalogue() {
   const Input = useSelector(state => state.productReducer.Searchingg)
   const [Count, setCount] = useState(true)
 
+
   const location = useLocation()
     const history = useHistory()
 
@@ -32,7 +34,6 @@ export function Catalogue() {
         return new URLSearchParams(location.search);
     }
     let query = useQuery();
-
 
 
   useEffect(() => {
@@ -52,7 +53,9 @@ export function Catalogue() {
   }
 
     dispatch(getCategories());
+    
   }, [dispatch, stableDispatch, Pages, Category, Prices, Input, Count,  history.location.pathname, history.location.search]);
+
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -159,7 +162,6 @@ export function Catalogue() {
             type="image"
             src={right}
             alt="img"
-            onClick={(e) => changepage(e)}
           />
           </div>
         </div>
@@ -168,14 +170,26 @@ export function Catalogue() {
           <div className={Count === true ? Style.products : Style.products2}>
             {Products &&
               Products.map((item) => (
-                <ProductCard
+                // <ProductCard
+                //   stock={item.stock}
+                //   title={item.name}
+                //   price={item.price}
+                //   image={item.images[0]?.url}
+                //   id={item.id}
+                //   discount={item.discount}
+                // />
+                <SwiperSlide style={{height:'30rem', width:'20rem', margin:'2.6rem'}}>
+                <CategoriesHome 
+                  key={item.id}
+                  id={item.id}
                   stock={item.stock}
                   title={item.name}
                   price={item.price}
-                  image={item.images[0]?.url}
-                  id={item.id}
+                  image={item.images}
                   discount={item.discount}
+                  reviews={item.reviews}
                 />
+              </SwiperSlide>
               ))}
           </div>
         </div>
