@@ -52,7 +52,7 @@ export const allProducts = (limit, offset, cate, price, input) => {
     let JSON = await supabase
       .from("product")
       .select("name,price,rating,id,stock,discount,categories(name), images(url), reviews(*)")
-      .ilike(name, `%${input}%`)
+      .ilike(name, `${input}%`)
       .eq(categoryName, cate)
       .gt(lowestPrice, price[0])
       .lt(highestPrice, price[1]);
