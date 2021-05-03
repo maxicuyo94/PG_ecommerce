@@ -21,6 +21,7 @@ export function SignUp() {
     city: "",
     postal_code: "",
     country: "",
+    recommended: ""
   });
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(true);
@@ -210,6 +211,22 @@ export function SignUp() {
           name="country"
           placeholder="Country"
           value={user.country}
+          onChange={handleState}
+        />
+      </div>
+      <div>
+        <label
+          className={errors.userName && success === false ? style.danger : ""}
+          htmlFor="recommended"
+        >
+          User recommended
+        </label>
+        <input
+          className={errors.userName && success === false ? style.danger : ""}
+          type="text"
+          name="recommended"
+          placeholder="User recommended"
+          value={user.recommended}
           onChange={handleState}
         />
       </div>

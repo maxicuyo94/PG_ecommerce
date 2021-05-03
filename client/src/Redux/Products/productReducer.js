@@ -23,7 +23,6 @@ function productReducer(state = InitialState, action) {
           Searchingg: action.payload,
         };
     case actionType.SEARCH:
-      console.log(action.payload)
       return {
         ...state,
         wantedProducts: action.payload

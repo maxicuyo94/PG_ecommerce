@@ -79,10 +79,20 @@ export const getProductsOfOrder = (id) => {
   };
 };
 
-export const orderPayment = (cart, infoUser) => {
+export const orderPayment = (cart, infoUser, discount) => {
   return async function () {
     try {
-      let response = await axios.post("http://localhost:3001/mercadopago/checkout", { cart, infoUser })
+
+      cart.map(async prod => {
+        await supabase
+          .from("product")  
+          .update({
+            stock: (prod.stock - prod.quantity)
+          })
+          .eq("id", prod.id)
+      })
+
+      let response = await axios.post("http://localhost:3001/mercadopago/checkout", { cart, infoUser, discount })
       return response.data.redirect
     } catch (e) {
       alert(e)
