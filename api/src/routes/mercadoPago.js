@@ -1,8 +1,5 @@
 const server = require("express").Router()
 require("dotenv").config();
-//const nodemailer = require('nodemailer');
-//const mg = require('nodemailer-mailgun-transport');
-//const { API_KEYMAILGUN, EMAIL_PRUEBA } = process.env;  
 
 const mercadopago = require ('mercadopago');
 const {userMail} = require ('../util/email')
