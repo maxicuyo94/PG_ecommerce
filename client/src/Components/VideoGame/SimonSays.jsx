@@ -54,7 +54,7 @@ const SimonSays = () => {
   useEffect(() => {
     if(start && !play.isDisplay && !play.userPlay && play.score) {
       console.log('entre')
-      swal('Oops!', 'You lost the game', 'error')
+      swal('Congrats!', `You earned ${play.score * 10} points`, 'success')
         .then(() => {
           return dispatch(addPoints(user.id, play.score * 10))
         })
@@ -123,7 +123,7 @@ const SimonSays = () => {
         <div onClick={(e) => handleClick(e.target.id)} className={lightColor === 'green' ? styles.verde_light : styles.verde} id='green'></div>
         {start && !play.isDisplay && !play.userPlay && play.score && (
           <div className="lost">
-            <div className={styles.final_score}>Points:{play.score * 10}</div>
+            {/* <div className={styles.final_score}>Points:{play.score * 10}</div> */}
             <button onClick={endGame} className={styles.btn_start}>Close</button>
           </div>
         )}
