@@ -25,12 +25,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: "center",
+    flexWrap: 'wrap',
     // border: '3px solid red',
     padding: '1rem',
     margin: '1rem',
-  },
-  price: {
-    padding: '1rem'
   },
   button: {
     backgroundColor: 'blue',
@@ -54,7 +52,8 @@ const useStyles = makeStyles((theme) => ({
   price: {
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    padding: '1rem 2rem',
   },
   unity: {
     padding: '1rem'

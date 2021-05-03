@@ -1,5 +1,3 @@
-//2
-
 import React, { useEffect, useState } from "react";
 import { makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -9,7 +7,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
-import style from "./checkout.module.scss";
+// import style from "./checkout.module.scss";
 import { ItemCart } from "./ItemCart";
 import { clearCart } from "../../Redux/Cart/cartActions";
 import swal from "sweetalert";
@@ -22,10 +20,11 @@ const useStyles = makeStyles((theme) => ({
     width: 'auto',
     display: 'flex',
     justifyContent: 'center',
+    flexWrap: 'wrap',
     padding: '2rem'
   },
   paper: {
-    width: '80vw',
+    width: '70vw',
     display: 'flex',
     padding: '2rem',
   },
@@ -36,12 +35,12 @@ const useStyles = makeStyles((theme) => ({
   },
   total: {
     fontSize: '3rem',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     flexDirection: 'column',
     paddingRight: '4rem'
   },
   buttons: {
-    width: '15rem',
+    width: '50vw',
     margin: '.5rem'
   },
   list: {
@@ -127,10 +126,7 @@ export function CheckOut() {
       {/* <CssBaseline /> */}
       <main className={classes.layout}>
         <Paper className={classes.paper} elevation={3}>
-
-
-          <div>
-            <Grid container direction="column" className={style.orderList}>
+            <Grid container direction="column">
               <Typography variant="h6">Order Details</Typography>
               <List className={classes.list}>
                 {cart &&
@@ -146,7 +142,7 @@ export function CheckOut() {
 
               <div className={classes.checkout}>
                 <ListItem className={classes.total}>
-                  <Typography style={{fontSize: '2rem'}}>{`Total: ${total}`}</Typography>
+                  <Typography style={{fontSize: '2rem'}}>{`Total: us$ ${total}`}</Typography>
                 </ListItem>
                 <Button
                   className={classes.buttons}
@@ -166,8 +162,6 @@ export function CheckOut() {
               </div>
 
             </Grid>
-          </div>
-
         </Paper>
       </main>
     </>
