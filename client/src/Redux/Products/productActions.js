@@ -51,7 +51,7 @@ export const allProducts = (limit, offset, cate, price, input) => {
   return async function (dispatch) {
     let JSON = await supabase
       .from("product")
-      .select("name,price,rating,id,stock,categories(name), images(url), reviews(*)")
+      .select("name,price,rating,id,stock,categories(name), images(url), reviews(*), discount")
       .ilike(name, `%${input}%`)
       .eq(categoryName, cate)
       .gt(lowestPrice, price[0])
