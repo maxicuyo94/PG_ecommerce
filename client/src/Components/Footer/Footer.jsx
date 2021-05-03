@@ -70,10 +70,8 @@ export function Footer() {
     pinterest="fluffy_cats_collections"
     copyright="black"
     iconColor="black"
-    // backgroundColor="bisque"
     fontColor="white"
     copyrightColor="darkgrey"
-
     backgroundColor='#222'
  />
     </div>

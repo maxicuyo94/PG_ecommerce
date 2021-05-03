@@ -234,7 +234,6 @@ export const deleteProduct = (id) => {
 
 export const deleteCategory = (id) => {
   return async () => {
-    console.log(id);
     await supabase.from("categories").delete("*").match({ id: id });
   };
 };
