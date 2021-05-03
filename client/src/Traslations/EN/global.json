@@ -70,9 +70,12 @@
     "textFive": "Prices",
     "textSix": "All",
     "textSeven": "All Brands",
-    "textEight": "All"
+    "textEight": "All",
+    "category": "Category",
+    "prices": "Price range",
+    "view": "Change View"
   },
-  
+
   "modifyProduct":{
     "title":"Modify Product",
     "title1":"Title",

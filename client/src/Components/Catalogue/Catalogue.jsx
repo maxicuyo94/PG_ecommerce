@@ -5,8 +5,8 @@ import {
   allProducts,
   getCategories,
 } from "../../Redux/Products/productActions";
-import left from "../Catalogue/left-arrow.svg";
-import right from "../Catalogue/right-arrow.svg";
+import left from "../../Assets/static/arrow-back.svg";
+import right from "../../Assets/static/arrow-next.svg";
 import Style from "./catalogue.module.scss";
 import { useTranslation } from "react-i18next";
 
@@ -66,10 +66,10 @@ export function Catalogue() {
       <div name="filters" className={Style.filters}>
         <div name="categories" className={Style.categoriesPrice}>
           <div className={Style.searchFilter}>
-            <h4 className={Style.tag}>{t("catalogue.textTwo")}</h4>
+            <h4 className={Style.title}>{t("catalogue.textTwo")}</h4>
           </div>
-          <h4 className={Style.tag}>{t("catalogue.texThree")}</h4>
-          <select id='categories' 
+          <h3 className={Style.tag}>{t("catalogue.texThree")}</h3>
+          <select id='categories'
             className={Style.select}
             onChange={(e) => {
               handleInputChange(e);
@@ -85,43 +85,45 @@ export function Catalogue() {
           </select>
         </div>
         <div name="Price" className={Style.categoriesPrice}>
-          <h4 className={Style.tag}>{t("catalogue.textFive")}</h4>
+          <h3 className={Style.tag}>{t("catalogue.textFive")}</h3>
           <select id='prices' className={Style.select}
             onChange={(e) => {
               handleInputChangeP(e);
             }}
           >
             <option className={Style.tagg} value="">{t("catalogue.textSix")}</option>
-            <option className={Style.tagg} value="0">0 - 200</option>
+            <option className={Style.tagg} name="0 - 200" value="0">0 - 200</option>
             <option className={Style.tagg} value="200">200 - 400</option>
             <option className={Style.tagg} value="400">400 - + </option>
           </select>
         </div>
-     
+
         <div>
-          <label className={Style.tag}>Category: </label>
+          <h3 className={Style.tag}>{t("catalogue.category")}:</h3>
           {
             document.getElementById('categories') && (<div>
-            <h3 className={Style.tag}> 
+            <label className={Style.tag}>
               {document.getElementById('categories').value}
-            </h3>
+            </label>
             </div>)
           }
-           <label className={Style.tag}>Prices from: </label>
+           <h3 className={Style.tag}>{t("catalogue.prices")}:</h3>
              {
             document.getElementById('prices') && (<div>
-            <h3 className={Style.tag}> 
+            <label className={Style.tag}>
               {document.getElementById('prices').value}
-            </h3> 
+            </label>
             </div>)
           }
         </div>
-        <button className={Style.button} onClick={() => Count === true ? setCount(false) : setCount(true)}>
-            Change view
-          </button>
       </div>
       <div className={Style.catalogue} name="showproducts">
+      <div style={{width:"56rem"}}>
         <div className={Style.keypad}>
+        <button className={Style.button} onClick={() => Count === true ? setCount(false) : setCount(true)}>
+            {t("catalogue.view")}
+          </button>
+          <div>
           <img
             className={Style.backward}
             id="backward"
@@ -130,16 +132,6 @@ export function Catalogue() {
             alt="img"
             onClick={(e) => changepage(e)}
           />
-          <div style={{display:'flex'}}>
-            <h4 className={Style.tagg}>Catalogue /</h4>
-
-          {
-           document.getElementById('categories') && <h4 className={Style.tagg}>{document.getElementById('categories').value}</h4> 
-          }
-          {
-           document.getElementById('categories') && <h4 className={Style.tagg}>{document.getElementById('prices').value}  </h4> 
-          }
-          </div>
           <img
             className={Style.upward}
             id="upward"
@@ -148,8 +140,9 @@ export function Catalogue() {
             alt="img"
             onClick={(e) => changepage(e)}
           />
+          </div>
         </div>
-
+      </div>
         <div>
           <div className={Count === true ? Style.products : Style.products2}>
             {Products &&
