@@ -25,7 +25,7 @@ import swal from "sweetalert";
 import { Banner } from './Components/Banner/Banner'
 import { ActiveUser } from './Components/ControlPanel/ActiveUser/ActiveUser'
 import SimonSays from "./Components/VideoGame/SimonSays";
-
+import {Points} from './Components/Points/Points'
 
 function App() {
   // eslint-disable-next-line
@@ -42,8 +42,8 @@ function App() {
   useEffect(() => {
     if (userLogedStorage) {
       dispatch(userStorage(userLogedStorage.currentSession.user.id));
-      dispatch(setCart(userLogedStorage.currentSession?.user.id));
     }
+    dispatch(setCart(userLogedStorage.currentSession?.user.id));
     const lastProducts = async () => {
       if (productsVisited) {
         await dispatch(getProductsVisited(productsVisited))
@@ -92,6 +92,7 @@ function App() {
         )}
       />
       <Route exact path="/Order" render={() => <CheckOut dark={dark} />} />
+      <Route exact path="/points" render={() => <Points dark={dark} />} />
       <ProtectedRoute
         exact
         path="/modifyProduct/:id"

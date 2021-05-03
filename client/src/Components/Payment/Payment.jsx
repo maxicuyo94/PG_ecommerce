@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ItemCart } from '../CheckOut/ItemCart';
 import { orderPayment } from "../../Redux/Orders/orderActions"
 import TextField from '@material-ui/core/TextField';
-
+import { searchPoints } from '../../Redux/Users/usersActions'
 import { makeStyles } from '@material-ui/core/styles';
+import { Card } from "@material-ui/core";
+import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,8 +23,10 @@ const useStyles = makeStyles((theme) => ({
 export function Payment() {
     const classes = useStyles();
     const user = useSelector((state) => state.usersReducer.userLoged);
-    const cart = useSelector((state) => state.cartReducer.cart);
+    let cart = useSelector((state) => state.cartReducer.cart);
     const dispatch = useDispatch()
+    const [discount, setDiscount] = useState(0)
+    const [Carts, setCarts] = useState()
     const [input, setInput] = useState({
         streetName: "",
         streetNumber: "",
@@ -58,7 +62,7 @@ export function Payment() {
 
     if (user.id) {
         var infoUser = {
-            id:user.id,
+            id: user.id,
             name: user.name,
             surname: user.surname,
             phone: parseInt(user.phone),
@@ -79,15 +83,42 @@ export function Payment() {
         }
     }
 
+    let applyDiscount = async (e) => {
+        e.persist()
+        e.preventDefault()
+        let response = await dispatch(searchPoints(user.id))
+        if (response > (e.target.value * Math.pow(10, 4))) {
+            setDiscount(e.target.value)
+        } else {
+            swal("Oops", "You don't have enough Tech Points", "error");
+        }
+    }
+
+
+
+
     let PayCart = async (e) => {
         e.preventDefault()
-        let response = await dispatch(orderPayment(cart, infoUser))
-        response && window.location.replace(response)
+        let cartstock = cart.filter(product => {
+        return product.stock - product.quantity<0
+        })
+        if(cartstock.length){
+            swal("Oops", "Haven't stock", "error");
+        } else {
+            let response = await dispatch(orderPayment(cart, infoUser, discount))
+            response && window.location.replace(response)
+        }
     }
 
     return (
         <div>
-            {cart.map(item => <ItemCart product={item} />)}
+            {cart.map(item => (
+                <>
+                    <img style={{ width: "50px" }} src={item.image} />
+                    <h4>{item.title}</h4>
+                    <p>US${item.price}</p>
+                </>
+            ))}
             {user.id && <select onChange={handleAddress}>
                 <option value="">Address</option>
                 {
@@ -110,6 +141,15 @@ export function Payment() {
             }
 
             <button onClick={(e) => PayCart(e)}>Pay</button>
+            {user.id &&
+                <select onChange={(e) => applyDiscount(e)}>
+                    <option value="0">Apply your discount</option>
+                    <option value="0.1" >Discount 10% cost 1000 Tech Points</option>
+                    <option value="0.2" >Discount 20% cost 2000 Tech Points</option>
+                    <option value="0.4" >Discount 40% cost 10000 Tech Points</option>
+                </select>
+            }
+
         </div>
     )
 }
