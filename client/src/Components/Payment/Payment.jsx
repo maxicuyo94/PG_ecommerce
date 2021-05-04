@@ -86,8 +86,10 @@ export function Payment() {
     let applyDiscount = async (e) => {
         e.persist()
         e.preventDefault()
+        
         let response = await dispatch(searchPoints(user.id))
-        if (response > (e.target.value * Math.pow(10, 4))) {
+        console.log(response,(e.target.value*2) * Math.pow(10, 4))
+        if (response > (e.target.value*2) * Math.pow(10, 4)) {
             setDiscount(e.target.value)
         } else {
             swal("Oops", "You don't have enough Tech Points", "error");
@@ -144,9 +146,9 @@ export function Payment() {
             {user.id &&
                 <select onChange={(e) => applyDiscount(e)}>
                     <option value="0">Apply your discount</option>
-                    <option value="0.1" >Discount 10% cost 1000 Tech Points</option>
-                    <option value="0.2" >Discount 20% cost 2000 Tech Points</option>
-                    <option value="0.4" >Discount 40% cost 10000 Tech Points</option>
+                    <option value="0.1" >Get 10% off for 1000 Tech Points</option>
+                    <option value="0.2" >Get 10% off for 2000 Tech Points</option>
+                    <option value="0.4" >Get 10% off for 8000 Tech Points</option>
                 </select>
             }
 
