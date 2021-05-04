@@ -71,12 +71,12 @@ export function Home(props) {
     <div className={props.dark ? styles.containerDark : styles.container}>
       <Banner2 />
       <div className={styles.containerTitle}>
-        <span>{t("home.title")}</span>
+        <span className={styles.tag}>{t("home.title")}</span>
       </div>
       <div className={styles.products}>
         {lastProducts?.length > 0 && <div className={styles.containerP}>
           <div className={styles.title}>
-            <span>¡This product has to be yours!</span>
+            <span className={styles.tag}>¡This product has to be yours!</span>
           </div>
           <div className={styles.carousel}>
             {lastProducts.length > 0 && (
@@ -86,7 +86,12 @@ export function Home(props) {
         </div>}
         <div className={styles.containerP}>
           <div className={styles.title}>
-            <span>{t("home-cat1.processors")}</span>
+          <img className={styles.img}
+              src={
+                "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
+              } alt="Ups, we don't found anything here. Try again tomorrow!"
+            />
+            <span className={styles.tag}>{t("home-cat1.processors")}</span>
           </div>
           <div className={styles.carousel}>
             {productByCategories[0] && (
@@ -96,7 +101,12 @@ export function Home(props) {
         </div>
         <div className={styles.containerP}>
           <div className={styles.title}>
-            <span>{t("home-cat2.laptops")}</span>
+          <img className={styles.img}
+              src={
+                "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
+              } alt="Ups, we don't found anything here. Try again tomorrow!"
+            />
+            <span className={styles.tag}>{t("home-cat2.laptops")}</span>
           </div>
           <div className={styles.carousel}>
             {productByCategories[1] && (
@@ -106,7 +116,12 @@ export function Home(props) {
         </div>
         <div className={styles.containerP}>
           <div className={styles.title}>
-            <span>{t("home-cat3.keyboards")}</span>
+          <img className={styles.img}
+              src={
+                "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
+              } alt="Ups, we don't found anything here. Try again tomorrow!"
+            />
+            <span className={styles.tag}>{t("home-cat3.keyboards")}</span>
           </div>
           <div className={styles.carousel}>
             {productByCategories[2] && (
