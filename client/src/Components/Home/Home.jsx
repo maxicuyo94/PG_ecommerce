@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./home.module.scss";
 import { useTranslation } from "react-i18next";
 import SwiperSlider from "./Swiper/SwiperSlider";
-import { checkout } from "../../Redux/Cart/cartActions";
+import { checkout, checkstock } from "../../Redux/Cart/cartActions";
 import swal from "sweetalert";
 import queryString from 'query-string';
-import {Banner2} from '../Banner/Banner'
+import { Banner2 } from '../Banner/Banner'
 import axios from 'axios';
 
 export function Home(props) {
@@ -20,7 +20,7 @@ export function Home(props) {
   const lastProducts = useSelector(state => state.productReducer.lastProducts)
   const stableDispatch = useCallback(dispatch, []);
   // eslint-disable-next-line
-  const [t, i18n] = useTranslation("global");
+  const [t] = useTranslation("global");
   //const dark = useSelector((state) => state.darkReducer.dark)
 
   const queryParams = queryString.parse(window.location.search);
@@ -40,7 +40,7 @@ export function Home(props) {
   let discount = external && external.split(',')[7];
   let address = `${streetName} ${streetNumber}`
   let userEmail = lsemail ? lsemail : mpEmail;
-  let discountPoints = discount == 0.1?1000:discount == 0.2?2000:discount == 0.4?10000:null;
+  let discountPoints = discount == 0.1 ? 1000 : discount == 0.2 ? 2000 : discount == 0.4 ? 10000 : null;
 
   const fecha = new Date();
   const hoy = `${fecha.getFullYear()}-${fecha.getMonth() + 1}-${fecha.getDate()}`;
@@ -51,15 +51,14 @@ export function Home(props) {
     swal(`Payment ${status}`, "", responseStatus)
 
     if (userId !== 'undefined') {
-      dispatch(
-        checkout(userId, status, (amount*(1-discount)), userEmail, address, postalCode, hoy, discountPoints,products)
-      );
+      const response = dispatch(checkstock(userId, status, (amount * (1 - discount)), discountPoints, products))
+      response && dispatch(checkout(userId, status, amount, userEmail, address, postalCode))
     } else {
-      dispatch(checkout(null, status, (amount*(1-discount)), userEmail, address, postalCode, hoy, discountPoints,products));
+      const produc = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"))
+      const response = dispatch(checkstock(null, status, (amount * (1 - discount)), discountPoints, produc))
+      response && dispatch(checkout(null, status, amount, userEmail, address, postalCode))
     }
-    setTimeout(() => {
-      history.push("/");
-    }, 1000); 
+    history.push("/");
   };
 
   useEffect(() => {
@@ -70,7 +69,7 @@ export function Home(props) {
 
   return (
     <div className={props.dark ? styles.containerDark : styles.container}>
-    <Banner2/>
+      <Banner2 />
       <div className={styles.containerTitle}>
         <span className={styles.tag}>{t("home.title")}</span>
       </div>

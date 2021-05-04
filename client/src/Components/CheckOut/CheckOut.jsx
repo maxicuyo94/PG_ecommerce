@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./checkout.module.scss";
 import { ItemCart } from "./ItemCart";
-import { clearCart, amountTotal } from "../../Redux/Cart/cartActions";
+import { clearCart } from "../../Redux/Cart/cartActions";
 import swal from "sweetalert";
 import { useHistory } from "react-router";
 

@@ -7,7 +7,6 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 //Cart actions
-
 export function setCart(user_id) {
   return async function (dispatch) {
     if (user_id) {
@@ -178,7 +177,7 @@ export const clearCart = () => {
         .from("order_detail")
         .delete()
         .eq("order_id", idOrder.data[0].id)
-        .then((res) => console.log(res));
+
     };
     clearDbCart(userData.id);
   }
@@ -188,7 +187,7 @@ export const clearCart = () => {
   };
 };
 
-export const checkout = (userId, status, amount, userEmail, address, postalCode, hoy, discountPoints, products) => {
+export const checkstock = (userId, status, amount, discountPoints, products) => {
   return async function (dispatch) {
     // eslint-disable-next-line
     if (status === "approved") {
@@ -198,7 +197,7 @@ export const checkout = (userId, status, amount, userEmail, address, postalCode,
           .select("points,recommended")
           .eq("id", userId)
 
-        supabase
+        await supabase
           .from("users")
           .update({
             points: pointsMainUser.data[0].points + amount
@@ -215,7 +214,7 @@ export const checkout = (userId, status, amount, userEmail, address, postalCode,
           await supabase
             .from("users")
             .update({
-              points: pointsRecoUser.data[0].points + amount / 2
+              points: pointsRecoUser.data[0].points + amount * 0.2
             })
             .eq("email", pointsMainUser.data[0].recommended)
         }
@@ -224,66 +223,97 @@ export const checkout = (userId, status, amount, userEmail, address, postalCode,
           await supabase
             .from("users")
             .update({
-              points: (pointsMainUser.data[0].points - discountPoints) <= 0 ? 0 : pointsMainUser.data[0].points - discountPoints
+              points: pointsMainUser.data[0].points - discountPoints
             })
             .eq("id", userId)
         }
+        dispatch({type: actionType.ADD_POINTS , payload: amount})
       }
     } else {
-      products.map(async prod => {
+      if (userId) {
+        let cartuser = await supabase
+          .from("order")
+          .select("order_detail(*)")
+          .eq("user_id", userId)
+          .eq("orderStatus", "inCart")
+          .then(res => products = res)
 
-        let stock = await supabase
-          .from("product")
-          .select("stock")
-          .eq("id", prod.id)
+        console.log(products.data[0].order_detail)
+        products.data[0].order_detail.map(async product => {
 
-        await supabase
-          .from("product")
-          .update({
-            stock: stock + prod.quantity
-      })
-        .eq("id", prod.id)
-    })
-  }
+          let stock = await supabase
+            .from("product")
+            .select("stock")
+            .eq("id", product.product_id)
 
-  if (!userId) {
-    await supabase.from("order").insert([
-      {
-        guest: true,
-        orderStatus: status,
-        amount: amount,
-        email: userEmail,
-        shipAddress: address,
-        postalCode: postalCode,
-        //orderDate:hoy
+          await supabase
+            .from("product")
+            .update({
+              stock: stock.data[0]?.stock + product.quantity
+            })
+            .eq("id", product.product_id)
+        })
+      } else {
+        products.map(async product => {
+
+          let stock = await supabase
+            .from("product")
+            .select("stock")
+            .eq("id", product.id)
+
+          await supabase
+            .from("product")
+            .update({
+              stock: stock.data[0].stock + product.quantity
+            })
+            .eq("id", product.id)
+        })
       }
-    ]);
-  } else {
-    const { data, error } = await supabase
-      .from("order")
-      .update({
-        orderStatus: status,
-        amount: amount,
-        shipAddress: address,
-        postalCode: postalCode,
-        email: userEmail,
-        //orderDate:hoy,
 
-      })
-      .eq("user_id", userId)
-      .eq("orderStatus", "inCart");
+    }
+  };
+};
 
-    await supabase.from("order").insert([
-      {
-        user_id: userId,
-        orderStatus: "inCart",
-        email: userEmail,
-      },
-    ]);
+export const checkout = (userId, status, amount, userEmail, address, postalCode) => {
+  return async function (dispatch) {
+    if (!userId) {
+      await supabase.from("order").insert([
+        {
+          guest: true,
+          orderStatus: status,
+          amount: amount,
+          email: userEmail,
+          shipAddress: address,
+          postalCode: postalCode,
+          //orderDate:hoy
+        }
+      ]);
+    } else {
+      const { data, error } = await supabase
+        .from("order")
+        .update({
+          orderStatus: status,
+          amount: amount,
+          shipAddress: address,
+          postalCode: postalCode,
+          email: userEmail,
+          //orderDate:hoy,
+
+        })
+        .eq("user_id", userId)
+        .eq("orderStatus", "inCart");
+
+      await supabase.from("order").insert([
+        {
+          user_id: userId,
+          orderStatus: "inCart",
+          email: userEmail,
+        },
+      ]);
+    }
+    localStorage.setItem("cart", "[]");
+    dispatch({ type: actionType.SET_CART, payload: [] });
   }
-  localStorage.setItem("cart", "[]");
-  dispatch({ type: actionType.SET_CART, payload: [] });
-};
-};
+}
 
 
