@@ -26,6 +26,7 @@ import { Banner } from './Components/Banner/Banner'
 import { ActiveUser } from './Components/ControlPanel/ActiveUser/ActiveUser'
 import SimonSays from "./Components/VideoGame/SimonSays";
 import {Points} from './Components/Points/Points'
+import { DaySelector } from "./Components/AppointmentsSelector/DaySelector/DaySelector";
 
 function App() {
   // eslint-disable-next-line
@@ -125,6 +126,8 @@ function App() {
         )}
       />
       <ProtectedRoute exact path='/videogame' component={SimonSays} />
+      <ProtectedRoute exact path='/appointment' component={DaySelector} />
+
     </Layout>
   );
 }
