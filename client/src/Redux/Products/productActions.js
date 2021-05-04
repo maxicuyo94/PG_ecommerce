@@ -133,7 +133,7 @@ export const postProduct = (product) => {
         brand: product.brand,
         stock: product.stock,
         model: product.model,
-        ranking: product.ranking,
+        rating: product.ranking,
         storage: product.storage,
         status: product.status,
       },
