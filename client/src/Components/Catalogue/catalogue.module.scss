@@ -1,35 +1,28 @@
 .container {
   display: flex;
   min-height: calc(100vh - 185px);
-    .filters {
-    width: 25%;
-    position: relative;
-    top:75px;
-    background-color:#E9E9E9;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    height: 35rem;
-
+  
+   
     .searchFilter {
       display: flex;
       flex-direction: column;
       align-items: center;
+      background-color:black;
 
       div {
         width: 100%;
+
       }
 
       div>input {
         width: 100%;
       }
-    }
   }
 
   .catalogue {
     display: flex;
 
     min-height: calc(100vh - 203px);
-    // overflow-x: auto;
     flex-direction: column;
     width: 75%;
     .keypad {
@@ -105,20 +98,20 @@
 
 
 .tag{
-  font-family: Poppins;
+  font-family: roboto;
   color: #222;
   margin:15px;
 }
 
 .title{
-  font-family: Poppins;
+  font-family: roboto;
   color: #222;
   margin:15px;
   font-size: 30px
 }
 
 .tagg {
-  font-family: Poppins;
+  font-family: roboto;
   color:black;
   margin:15px;
   font-size: 16px;
@@ -133,10 +126,6 @@
 }
 
 .button {
-  // font-family: Poppins;
-  // border-radius: 5%;
-  // background-color: black;
-  // color:blanchedalmond;
   border: 2px solid #9ABF15;
   background-color: #9ABF15;
   height: 3rem;
@@ -159,6 +148,201 @@
      padding:1rem
     }
 
-    // .card:hover {
-    //   box-shadow: 2px 0px 10px 0px rgba(0, 0, 0, 0.25);
-    // }
+
+
+    .container {
+  display: flex;
+  min-height: calc(100vh - 185px);
+
+    .filters {
+    width: 25%;
+    position: relative;
+    top:75px;
+    background-color:black;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 35rem;
+    border-radius: 10px;
+    .searchFilter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      div {
+        width: 100%;
+      }
+
+      div>input {
+        width: 100%;
+      }
+    }
+  }
+
+  .catalogue {
+    display: flex;
+
+    min-height: calc(100vh - 203px);
+    flex-direction: column;
+    width: 75%;
+    .keypad {
+      display:flex;
+      justify-content: flex-end;
+      height: 3rem;
+
+      .backward,
+      .upward {
+        border: 2px solid;
+        border: 2px solid;
+        width: 0.2rem;
+        height: 0.2rem;
+        border-radius: 100%;
+        padding: 5px;
+      }
+      .backward:hover, .upward:hover{
+        background-color: #ddd;
+        filter: invert(100%);
+        cursor: pointer
+
+      }
+
+    }
+
+  }
+
+
+  .catalogue::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .catalogue::-webkit-scrollbar-track {
+    background-color: #ccc;
+  }
+
+  .catalogue::-webkit-scrollbar-thumb {
+    background-color: #777;
+    border-radius: 4px;
+  }
+
+  .catalogue::-webkit-scrollbar-thumb:hover {
+    background-color: #777;
+    border: 1px solid #333333;
+  }
+
+  .catalogue::-webkit-scrollbar-thumb:active {
+    background-color: #666;
+    border: 1px solid #333333;
+  }
+
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    div {
+      margin: 1rem;
+    }
+  }
+  .products2 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    div {
+      margin: 1rem;
+    }
+  }
+}
+
+
+
+.tag{
+  font-family: roboto;
+  color: whitesmoke;
+  margin:15px;
+}
+
+.title{
+  font-family: roboto;
+  color: whitesmoke;
+  margin:15px;
+  font-size: 30px
+}
+
+.tagg {
+  font-family: roboto;
+  color:black;
+  margin:15px;
+  font-size: 16px;
+}
+
+.select {
+  font-size: 16px;
+  padding: 3px;
+  width: 100%;
+  outline:none;
+
+}
+
+.button {
+  border: 2px solid #9ABF15;
+  background-color: black;
+  height: 3rem;
+  width: fit-content;
+  font-weight: 700;
+  border-radius: 2rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color:white;
+
+  &:hover{
+    cursor: pointer;
+    background-color:grey
+  }
+}
+
+
+.card{
+  height:20rem;
+   width:20rem;
+    margin:2rem;
+     padding:1rem
+    }
+
+
+
+
+
+
+    
+
+    .filters2 {
+      width: 25%;
+      position: relative;
+      top:75px;
+      background-color:#9abf15;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      height: 35rem;
+      border-radius: 10px;
+      .searchFilter {
+        display: flex;
+        flex-direction: column;
+        background-color:#9abf15;
+
+        align-items: center;
+      }
+    }
+
+
+    .tag2{
+      font-family: roboto;
+      color: black;
+      margin:15px;
+    }
+    
+    .title2{
+      font-family: roboto;
+      color: black;
+      margin:15px;
+      font-size: 30px
+    }

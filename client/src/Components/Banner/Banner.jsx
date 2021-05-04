@@ -29,7 +29,6 @@ export function Banner2() {
       }, 3000);
     }
   }, [Img]) 
->>>>>>> 55ef30274e8137ec98c09bf5ef8a957b038d8ff5
 
   return (
     <div>
