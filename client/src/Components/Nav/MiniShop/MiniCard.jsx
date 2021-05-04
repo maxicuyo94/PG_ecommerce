@@ -25,11 +25,13 @@ import { addItemCart, deleteItemCart } from "../../../Redux/Cart/cartActions";
 const useStyles = makeStyles((theme) => ({
   item: {
     display: 'flex',
-    justifyContent: 'space-around',
+    flexDirection: 'column',
+    alignItems: 'space-around',
+    // justifyContent: 'space-around',
     alignItems: "center",
     flexWrap: 'wrap',
     // border: '3px solid red',
-    padding: '',
+    padding: '.5rem',
     margin: '0',
   },
 
@@ -55,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MiniCard({ product }) {
+  console.log(product)
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -70,7 +73,6 @@ export default function MiniCard({ product }) {
         image: product.image,
         quantity: amount,
         stock: product.stock,
-
       };
       dispatch(addItemCart(productToDispatch))
       if (amount > 0) {
@@ -105,7 +107,6 @@ export default function MiniCard({ product }) {
         <div className={classes.title}>
           <ListItemAvatar>
             <Avatar
-              variant="square"
               alt="product-avatar"
               src={product.image && product.image}
             />
@@ -113,7 +114,6 @@ export default function MiniCard({ product }) {
           <Link to={`product/${product.id}`}>
             <ListItemText
               primary={product.title.slice(0, 20) + '...'}
-              secondary={product.stock > 0 ? `In Stock` : `NO Stock`}
             />
           </Link>
         </div>
@@ -127,13 +127,13 @@ export default function MiniCard({ product }) {
 
           <ListItemText className={classes.unity}>{product.quantity}</ListItemText>
 
-          {product.quantity < product.stock && (
+          
             <Button color="primary" aria-label="add" ref={btnRefADD} onClick={() => handleQuantityChange(+1)}>
               {/* <button ref={btnRefADD} onClick={() => handleQuantityChange(+1)}> */}
               <AddIcon />
               {/* </button> */}
             </Button>
-          )}
+          
 
 
           <Button edge="end" aria-label="delete" onClick={() => handleDeleteItem(product.id)}>
@@ -143,13 +143,6 @@ export default function MiniCard({ product }) {
           </Button>
         </div>
 
-
-        {/* <div className={classes.price}>
-          <ListItemText
-            primary={`US$ ${(product.price * product.quantity).toFixed(2)}`}
-            secondary={`US$ ${product.price}`}
-          />
-        </div> */}
       </List>
       
     </ThemeProvider>

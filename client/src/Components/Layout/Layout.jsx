@@ -6,6 +6,7 @@ import {MyChatbot} from '../ChatBot/ChatBot';
 import styles from "./layout.module.scss";
 import {Banner2} from '../Banner/Banner'
 import {Header} from '../Header/Header'
+import AppBar from '../Nav/AppBar'
 
 function Layout({ children, priority, dark }) {
   return (
@@ -15,6 +16,7 @@ function Layout({ children, priority, dark }) {
       <main>
         {/* <Header></Header> */}
         <Nav priority={priority} dark={dark}/>
+        {/* <AppBar priority={priority} dark={dark}/> */}
         {/* <Banner2></Banner2> */}
         {children}
         <Footer priority={priority}  dark={dark} />
