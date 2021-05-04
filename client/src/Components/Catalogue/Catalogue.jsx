@@ -12,9 +12,9 @@ import Style from "./catalogue.module.scss";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {CategoriesHome} from '../Home/Categories/CategoriesHome'
+import {Banner2} from '../Banner/Banner'
 
-
-export function Catalogue() {
+export function Catalogue({dark}) {
   const [t, i18n] = useTranslation("global");
   const Products = useSelector((state) => state.productReducer.wantedProducts);
   const Categories = useSelector((state) => state.productReducer.categories);
@@ -61,11 +61,7 @@ export function Catalogue() {
     e.preventDefault();
     setCategory(e.target.value);
   };
-  const handleclick = () => {
-    setCategory("");
-    query.delete('categories');
-    history.push(`?{query}`)
-  }
+
 
   const handleInputChangeP = (e) => {
     e.preventDefault();
@@ -87,12 +83,12 @@ export function Catalogue() {
 
   return (
     <div className={Style.container}>
-      <div name="filters" className={Style.filters}>
+      <div name="filters" className={dark ? Style.filters2 : Style.filters}>
         <div name="categories" className={Style.categoriesPrice}>
           <div className={Style.searchFilter}>
-            <h4 className={Style.title}>{t("catalogue.textTwo")}</h4>
+            <h4 className={dark ? Style.title2 : Style.title}>{t("catalogue.textTwo")}</h4>
           </div>
-          <h3 className={Style.tag}>{t("catalogue.texThree")}</h3>
+          <h3 className={dark ? Style.tag2 : Style.tag}>{t("catalogue.texThree")}</h3>
           <select id='categories'
             className={Style.select}
             onChange={(e) => {
@@ -109,7 +105,7 @@ export function Catalogue() {
           </select>
         </div>
         <div name="Price" className={Style.categoriesPrice}>
-          <h3 className={Style.tag}>{t("catalogue.textFive")}</h3>
+          <h3 className={dark ? Style.tag2 : Style.tag}>{t("catalogue.textFive")}</h3>
           <select id='prices' className={Style.select}
             onChange={(e) => {
               handleInputChangeP(e);
@@ -123,7 +119,7 @@ export function Catalogue() {
         </div>
 
         <div>
-          <h3 className={Style.tag}>{t("catalogue.category")}:</h3>
+          <h3 className={dark ? Style.tag2 : Style.tag}>{t("catalogue.category")}:</h3>
           {
             document.getElementById('categories') && (<div>
             <label className={Style.tag}>
@@ -131,7 +127,7 @@ export function Catalogue() {
             </label>
             </div>)
           }
-           <h3 className={Style.tag}>{t("catalogue.prices")}:</h3>
+           <h3 className={dark ? Style.tag2 : Style.tag}>{t("catalogue.prices")}:</h3>
              {
             document.getElementById('prices') && (<div>
             <label className={Style.tag}>
@@ -148,36 +144,14 @@ export function Catalogue() {
             {t("catalogue.view")}
           </button>
           <div>
-          <img
-            className={Style.backward}
-            id="backward"
-            type="image"
-            src={left}
-            alt="img"
-            onClick={(e) => changepage(e)}
-          />
-          <img
-            className={Style.upward}
-            id="upward"
-            type="image"
-            src={right}
-            alt="img"
-          />
           </div>
         </div>
       </div>
+   
         <div>
           <div className={Count === true ? Style.products : Style.products2}>
             {Products &&
               Products.map((item) => (
-                // <ProductCard
-                //   stock={item.stock}
-                //   title={item.name}
-                //   price={item.price}
-                //   image={item.images[0]?.url}
-                //   id={item.id}
-                //   discount={item.discount}
-                // />
                 <SwiperSlide style={{height:'30rem', width:'20rem', margin:'2.6rem'}}>
                 <CategoriesHome 
                   key={item.id}
@@ -193,7 +167,22 @@ export function Catalogue() {
               ))}
           </div>
         </div>
+        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
+        <button   className={Style.button}
+            onClick={(e) => changepage(e)}
+            className={Style.button}>
+           ᐊᐊᐊ
+          </button>
+      
+          <button   className={Style.button}
+          onClick={(e) => changepage(e)}
+          className={Style.button}>
+           ᐅᐅᐅ
+          </button>
+
+          </div>
       </div>
+
     </div>
   );
 }
