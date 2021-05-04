@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { postAppointment } from '../../../Redux/Appointments/appointments'
 import style from './appointment.module.scss'
 
 const Hours = [
@@ -37,45 +38,49 @@ const Hours = [
     }
 ]
 
-const dateAppointment = [
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-    {
-        id: 1
-    },
-
-]
+const dateAppointment = {
+    date: "16/5/2021",
+    hours:[
+        {
+            id: 1
+        },
+        {
+            id: 1
+        },
+        {
+            id: 2
+        },
+        {
+            id: 3
+        },
+        {
+            id: 1
+        },
+        {
+            id: 1
+        },
+        {
+            id: 1
+        },
+        {
+            id: 1
+        },
+        {
+            id: 1
+        },
+        {
+            id: 1
+        },
+        {
+            id: 1
+        },
+        {
+            id: 1
+        },
+    
+    ]
+    
+}
 
 
 
@@ -84,7 +89,7 @@ export function Appointments () {
     const dispatch = useDispatch()
 
     const handleReserve = (idHour) => {
-        dispatch(postAppointment(idHour, dateAppointment.date, userLoged.id))
+        dispatch(postAppointment(idHour, dateAppointment.date, "01792ab0-ee79-41a7-ad79-a7bb6a279edc"))
     }
 
     return (
@@ -106,8 +111,8 @@ export function Appointments () {
                 </div>
                 <div>
                 {Hours.map((hour)=>{
-                    let count = 0 
-                    dateAppointment.map((hR)=>{
+                    let count = 0
+                    dateAppointment.hours.map((hR)=>{
                         hour.id === hR.id && count++
                     })   
                 return(
@@ -123,7 +128,7 @@ export function Appointments () {
                                 <button
                                     onClick={()=> handleReserve(hour.id)}
                                     className={style.button}
-                                    disabled={count < 10 || count === "undefined" ? "" : "disabled"}
+                                    disabled={(count < 10 || count === "undefined") ? "" : "disabled"}
                                 >
                                     Reserve
                                 </button>
