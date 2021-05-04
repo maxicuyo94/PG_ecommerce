@@ -116,7 +116,7 @@ export default function SimpleMenu() {
       swal("Proceed to payment", "", "success")
         .then(resp => {
           if (resp) {
-            history.push("/order/payment");
+            history.push("/order/");
           }
         })
     } else {
@@ -132,13 +132,14 @@ export default function SimpleMenu() {
         if (resp === "signIn") {
           history.push("/access");
         } else {
-          history.push("/order/payment")
+          history.push("/order/")
         }
       })
     }
   };
 
   const handleClick = (event) => {
+    if(cart.length === 0) return
     let intViewportWidth = window.innerWidth;
     if( intViewportWidth > 720 ) {
       setAnchorEl(event.currentTarget);

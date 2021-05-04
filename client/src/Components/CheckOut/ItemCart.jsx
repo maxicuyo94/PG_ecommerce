@@ -23,14 +23,13 @@ import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   item: {
-    width: '70vw',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: "center",
     flexWrap: 'wrap',
     // border: '3px solid red',
-    padding: '0',
-    margin: '0',
+    padding: '1rem',
+    margin: '1rem',
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       padding: '1rem',
       margin: '1rem',
@@ -132,26 +131,17 @@ export function ItemCart({ product }) {
 
         <div className={classes.quantity}>
           <Button color="secondary" aria-label="remove" ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}>
-            {/* <button ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}> */}
             <RemoveIcon />
-            {/* </button> */}
           </Button>
 
           <ListItemText className={classes.unity}>{product.quantity}</ListItemText>
 
-          {product.quantity < product.stock && (
-            <Button color="primary" aria-label="add" ref={btnRefADD} onClick={() => handleQuantityChange(+1)}>
-              {/* <button ref={btnRefADD} onClick={() => handleQuantityChange(+1)}> */}
-              <AddIcon />
-              {/* </button> */}
-            </Button>
-          )}
-
+          <Button color="primary" aria-label="add" ref={btnRefADD} onClick={() => handleQuantityChange(+1)}>
+            <AddIcon />
+          </Button>
 
           <Button edge="end" aria-label="delete" onClick={() => handleDeleteItem(product.id)}>
-            {/* <button onClick={() => handleDeleteItem(product.id)}> */}
             <DeleteIcon />
-            {/* </button> */}
           </Button>
         </div>
 
