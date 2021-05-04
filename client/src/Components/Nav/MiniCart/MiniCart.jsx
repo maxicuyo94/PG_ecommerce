@@ -139,7 +139,12 @@ export default function SimpleMenu() {
   };
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    let intViewportWidth = window.innerWidth;
+    if( intViewportWidth > 720 ) {
+      setAnchorEl(event.currentTarget);
+    } else {
+      history.push('/order')
+    }
   };
 
   const handleClose = () => {
@@ -180,14 +185,10 @@ export default function SimpleMenu() {
           })
         }
         <div className={classes.checkout} >
-
-
-
           <ListItem className={classes.totalAmount} >
             <Typography variant='h5'>{`Total: `}</Typography>
             <Typography variant='h5'>{`us$ ${total}`}</Typography>
           </ListItem>
-
           <Button
             className={classes.buttons}
             variant="contained"
@@ -196,14 +197,12 @@ export default function SimpleMenu() {
           >
             Check Out
                 </Button>
-
           <Button
             className={classes.clearButton}
             variant="outlined"
             onClick={handleClearCart}>
             Clear cart
                 </Button>
-
         </div>
       </Menu>
     </ThemeProvider>

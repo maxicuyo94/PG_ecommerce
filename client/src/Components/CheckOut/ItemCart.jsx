@@ -124,8 +124,8 @@ export function ItemCart({ product }) {
           </ListItemAvatar>
           <Link to={`product/${product.id}`}>
             <ListItemText
-              primary={product.title.slice(0, 40) + '...'}
-              secondary={product.stock > 0 ? `In Stock` : `NO Stock`}
+              primary={product.title.slice(0, 50) + '...'}
+              // secondary={product.stock > 0 ? `In Stock` : `NO Stock`}
             />
           </Link>
         </div>

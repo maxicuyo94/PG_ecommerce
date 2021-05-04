@@ -3,14 +3,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 //import style from "./checkout.module.scss";
 import { makeStyles } from '@material-ui/core/styles';
-
-import { useRef } from 'react';
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 //import Icon from "@material-ui/core/Icon";
-
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Link } from "react-router-dom";
@@ -57,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MiniCard({ product }) {
-  console.log(product)
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
