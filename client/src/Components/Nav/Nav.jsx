@@ -10,11 +10,8 @@ import Profile from './Profile/Profile'
 import { useSelector } from "react-redux";
 
 export function Nav({ priority, dark }) {
-  // eslint-disable-next-line
   const userLoged = useSelector(state =>  state.usersReducer.userLoged)
-    // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-  //const history = useHistory();
 
   return (
     <div className={dark ? style.containerDark : style.container}>
