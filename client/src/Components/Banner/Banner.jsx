@@ -20,6 +20,10 @@ useEffect(() => {
     setTimeout(() => {
       setImg(WhatsAppImage)
     }, 5000)
+  } else {
+    setTimeout(() => {
+      setImg('https://www.neobyte.es/modules/simpleslideshow/slides/5f294c70602e96ab0303b6caebd3bde5.jpg')
+    }, 5000);
   }
 }, [Img]) 
 
