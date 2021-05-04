@@ -7,8 +7,6 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 export function MyChatbot(props){
-
-  const userLoged = useSelector(state =>  state.usersReducer.userLoged)
   const location = useLocation()
   const history = useHistory()
   const [t, i18n] = useTranslation("global");

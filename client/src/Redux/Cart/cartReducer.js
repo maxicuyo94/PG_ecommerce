@@ -11,7 +11,6 @@ function cartReducer(state = InitialState, action) {
   switch (action.type) {
 
     case actionType.SET_CART:
-      console.log("SETCART")
       return {
         ...state,
         cart: action.payload,

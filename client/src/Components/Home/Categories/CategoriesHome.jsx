@@ -34,7 +34,7 @@ export const CategoriesHome = (props) => {
   const handleAddToCart = (item) => {
     let cartItemModel = {
       title: item.title,
-      image: item.image[0].url,
+      image: item.image[0]?.url,
       id: item.id,
       quantity: 1,
       price: (item.price * (1 - item.discount / 100)).toFixed(2),
@@ -77,11 +77,11 @@ export const CategoriesHome = (props) => {
         {props.reviews.length > 0 ?
           <>
             <span>
-              {[...Array(average)].map(() => {
-                return <StarIcon style={{ fontSize: '1rem' }} />
+              {[...Array(average)].map((i) => {
+                return <StarIcon key={i} style={{ fontSize: '1rem' }} />
               })}
-              {[...Array(5 - average)].map(() => {
-                return <StarBorderIcon style={{ fontSize: '1rem' }} />
+              {[...Array(5 - average)].map((ii) => {
+                return <StarBorderIcon key={ii} style={{ fontSize: '1rem' }} />
               })}
             </span>
             <span>

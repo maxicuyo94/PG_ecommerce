@@ -13,10 +13,14 @@ export function ModifyUser({ id, dark }) {
     userName: "",
     phone: "",
     address: "",
+    streetNumber: "",
     city: "",
     postal_code: "",
-    country: ""
+    country: "",
+    points:""
   });
+
+  console.log(userLog)
 
   const handleInputChange = (e) => {
     setDataUser({
@@ -43,6 +47,7 @@ export function ModifyUser({ id, dark }) {
         userName: userConfig.user_name,
         phone: userConfig.phone,
         address: userConfig.address && userConfig.address[0].address,
+        streetNumber: userConfig.streetNumber && userConfig.address[0].streetNumber,
         city: userConfig.address && userConfig.address[0].city,
         postal_code: userConfig.address && userConfig.address[0].postal_code,
         country: userConfig.address && userConfig.address[0].country,
@@ -57,10 +62,12 @@ export function ModifyUser({ id, dark }) {
           userName: userLog.user_name,
           phone: userLog.phone,
           address: userLog.address && userLog.address[0].address,
+          streetNumber: userLog.address && userLog.address[0].streetNumber,
           city: userLog.address && userLog.address[0].city,
           postal_code: userLog.address && userLog.address[0].postal_code,
           country: userLog.address && userLog.address[0].country,
-          active: userLog.active
+          active: userLog.active,
+          points: userLog.points
         });
     }
   }, [userLog, userConfig]);
@@ -78,10 +85,7 @@ export function ModifyUser({ id, dark }) {
   const deactivateUser = (e) => {
     e.preventDefault();
     dispatch(deactivate(dataUser.id, dataUser.userName));
-    //hay que poner el boton para un usuario pueda querer activar la cuenta, en algun lugar
-    //donde pueda acceder, porque cuando aprete este deactiveuser, se va a desloguear
-    //y no va a volver a poder entrar a su perfil.
-    //dispatch(userLogOut())
+    dispatch(userLogOut())
   }
 
   const activateUser = (e) => {
@@ -92,8 +96,6 @@ export function ModifyUser({ id, dark }) {
   const activateUserFromAdmin = () => {
     dispatch(activate(dataUser.id))
   }
-
-  console.log(dataUser.active)
 
   return (
     <div className={dark ? style.containerDark : style.container}>
@@ -129,6 +131,15 @@ export function ModifyUser({ id, dark }) {
             ></input>
           </div>
 
+          <div className={style.address}>
+            <label>Street number</label>
+            <input
+              name="streetNumber"
+              value={dataUser.streetNumber}
+              onChange={(e) => handleInputChange(e)}
+            ></input>
+          </div>
+
           <div className={style.city}>
             <label>City</label>
             <input
@@ -158,7 +169,7 @@ export function ModifyUser({ id, dark }) {
           </div>
           <div className={style.country}>
             <label>Tech Points</label>
-            <h3>{userLog.points}</h3>
+            <h3>{dataUser.points}</h3>
           </div>
           {
             (userLog.permission === "superadmin" || userLog.permission === "admin") && (dataUser.id !== userLog.id) &&

@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 export function ProductCard(props) {
-	  const [t, i18n] = useTranslation("global");
+	  const [t] = useTranslation("global");
 	  console.log(props)
   const dispatch = useDispatch();
   const handleAddToCart = (item) => {

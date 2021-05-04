@@ -89,7 +89,6 @@ export default function MiniCard({ product }) {
         <Grid container spacing={2}>
           <Grid item xs={2}>
             <Avatar className={classes.img} src={product.image && product.image} />
-            {product && console.log(product)}
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="row" spacing={2}>
