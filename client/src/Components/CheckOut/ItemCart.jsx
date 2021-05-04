@@ -15,8 +15,10 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Link } from "react-router-dom";
 import ListItemText from "@material-ui/core/ListItemText";
-import { List } from "@material-ui/core";
+import { List, ThemeProvider } from "@material-ui/core";
 import swal from "sweetalert";
+import { useTheme } from '@material-ui/core/styles';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,8 +29,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexWrap: 'wrap',
     // border: '3px solid red',
-    padding: '1rem',
-    margin: '1rem',
+    padding: '0',
+    margin: '0',
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      padding: '1rem',
+      margin: '1rem',
+    },
   },
   button: {
     backgroundColor: 'blue',
@@ -62,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function ItemCart({ product }) {
   const classes = useStyles();
-
+  const theme = useTheme();
   const dispatch = useDispatch();
   let btnRefDELETE = useRef();
   let btnRefADD = useRef();
@@ -106,7 +112,7 @@ export function ItemCart({ product }) {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <List className={classes.item}>
         <div className={classes.title}>
           <ListItemAvatar>
@@ -157,6 +163,6 @@ export function ItemCart({ product }) {
           />
         </div>
       </List>
-    </>
+    </ThemeProvider>
   );
 }

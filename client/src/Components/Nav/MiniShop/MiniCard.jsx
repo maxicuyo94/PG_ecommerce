@@ -1,70 +1,85 @@
-import React, { useRef } from 'react';
+//1
+import React from "react";
 import { useDispatch } from "react-redux";
-
+//import style from "./checkout.module.scss";
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar/Avatar';
+
+import { useRef } from 'react';
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+//import Icon from "@material-ui/core/Icon";
+
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import { Link } from "react-router-dom";
+import ListItemText from "@material-ui/core/ListItemText";
+import { List, ThemeProvider } from "@material-ui/core";
 import swal from "sweetalert";
-import { addItemCart, deleteItemCart } from '../../../Redux/Cart/cartActions';
+import { useTheme } from '@material-ui/core/styles';
+import { addItemCart, deleteItemCart } from "../../../Redux/Cart/cartActions";
+
+
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-    display: 'flex'
+  item: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: "center",
+    flexWrap: 'wrap',
+    // border: '3px solid red',
+    padding: '',
+    margin: '0',
   },
-  paper: {
-    // padding: theme.spacing(2),
-    // margin: 'auto',
-    maxWidth: 700,
+
+  title: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingRight: '2rem',
   },
-  image: {
-    width: 128,
-    height: 128,
+  quantity: {
+    // border: '2px solid red',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+  price: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  unity: {
+    padding: '1rem'
   },
 }));
 
-
-
-
-//Component 
 export default function MiniCard({ product }) {
   const classes = useStyles();
-  const dispatch = useDispatch()
-
-
-  // Handlers ----------------------------------------*
+  const theme = useTheme();
+  const dispatch = useDispatch();
   let btnRefDELETE = useRef();
   let btnRefADD = useRef();
 
+
   const handleQuantityChange = async (amount) => {
     const newValue = product.quantity + amount;
-    if (newValue <= product.stock && newValue >= 1 && newValue <= 10) {
-      // let productToDispatch = { ...product };
+    if (newValue <= product.stock && newValue >= 1) {
       let productToDispatch = {
         id: product.id,
         image: product.image,
         quantity: amount,
         stock: product.stock,
+
       };
       dispatch(addItemCart(productToDispatch))
       if (amount > 0) {
-        btnRefADD.current.setAttribute("disabled", "");
+        btnRefADD.current.setAttribute("disabled", "disabled");
         setTimeout(() => {
           if (btnRefADD.current) btnRefADD.current.removeAttribute("disabled");
         }, 1000);
       } else {
-        btnRefDELETE.current.setAttribute("disabled", "");
+        btnRefDELETE.current.setAttribute("disabled", "disabled");
         setTimeout(() => {
           if (btnRefDELETE.current) btnRefDELETE.current.removeAttribute("disabled");
         }, 1000);
@@ -72,7 +87,7 @@ export default function MiniCard({ product }) {
     }
   };
 
-  const handleDeleteItem = (product) => {
+  const handleDeleteItem = () => {
     swal("Delete item?", {
       dangerMode: true,
       buttons: true,
@@ -81,38 +96,62 @@ export default function MiniCard({ product }) {
         dispatch(deleteItemCart(product));
       }
     })
+
   };
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Grid container spacing={2}>
-          <Grid item xs={2}>
-            <Avatar className={classes.img} src={product.image && product.image} />
-            {product && console.log(product)}
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="row" spacing={2}>
-              <Grid item>
-      
-                <Typography variant="body2" gutterBottom>
-                  {product.title.slice(0, 30)}...
-                </Typography>
-                <Grid item>
-                  <Typography variant="subtitle1">$ {product.price}</Typography>
-                </Grid>
-              </Grid>
-              <Grid item>
-              <button onClick={() => handleQuantityChange(-1)} ref={btnRefDELETE} children='-' variant="contained" size="small" />
-                {product.quantity}
-                <button onClick={() => handleQuantityChange(1)} ref={btnRefADD} children='+' variant="contained" size="small" />
+    <ThemeProvider theme={theme}>
+      <List className={classes.item}>
+        <div className={classes.title}>
+          <ListItemAvatar>
+            <Avatar
+              variant="square"
+              alt="product-avatar"
+              src={product.image && product.image}
+            />
+          </ListItemAvatar>
+          <Link to={`product/${product.id}`}>
+            <ListItemText
+              primary={product.title.slice(0, 20) + '...'}
+              secondary={product.stock > 0 ? `In Stock` : `NO Stock`}
+            />
+          </Link>
+        </div>
 
-                <button onClick={() => handleDeleteItem(product)} children='Remove item'/>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
-    </div>
+        <div className={classes.quantity}>
+          <Button color="secondary" aria-label="remove" ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}>
+            {/* <button ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}> */}
+            <RemoveIcon />
+            {/* </button> */}
+          </Button>
+
+          <ListItemText className={classes.unity}>{product.quantity}</ListItemText>
+
+          {product.quantity < product.stock && (
+            <Button color="primary" aria-label="add" ref={btnRefADD} onClick={() => handleQuantityChange(+1)}>
+              {/* <button ref={btnRefADD} onClick={() => handleQuantityChange(+1)}> */}
+              <AddIcon />
+              {/* </button> */}
+            </Button>
+          )}
+
+
+          <Button edge="end" aria-label="delete" onClick={() => handleDeleteItem(product.id)}>
+            {/* <button onClick={() => handleDeleteItem(product.id)}> */}
+            <DeleteIcon />
+            {/* </button> */}
+          </Button>
+        </div>
+
+
+        {/* <div className={classes.price}>
+          <ListItemText
+            primary={`US$ ${(product.price * product.quantity).toFixed(2)}`}
+            secondary={`US$ ${product.price}`}
+          />
+        </div> */}
+      </List>
+      
+    </ThemeProvider>
   );
 }

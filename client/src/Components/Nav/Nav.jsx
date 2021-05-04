@@ -3,7 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 import { SearchBar } from "../SearchBar/SearchBar"
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
-import MiniShop from "./MiniShop/MiniShop";
+// import MiniShop from "./MiniShop/MiniShop";
+import MiniCart from "./MiniCart/MiniCart";
 import BtnLang from "./BtnLang/BtnLang";
 import BtnDark from './BtnDark/BtnDark'
 import Profile from './Profile/Profile'
@@ -47,7 +48,8 @@ export function Nav({ priority, dark }) {
             <SearchBar/>
             </li>
           <li>
-            <MiniShop />
+            {/* <MiniShop /> */}
+            <MiniCart />
           </li>
           <li>
             <BtnLang />

@@ -12,7 +12,9 @@ import { ItemCart } from "./ItemCart";
 import { clearCart } from "../../Redux/Cart/cartActions";
 import swal from "sweetalert";
 import { useHistory } from "react-router";
-import { Divider } from "@material-ui/core";
+import { Divider, ThemeProvider } from "@material-ui/core";
+import { useTheme } from '@material-ui/core/styles';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,15 +35,20 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
   },
-  total: {
-    fontSize: '3rem',
+  totalAmount: {
     alignItems: 'center',
     flexDirection: 'column',
-    paddingRight: '4rem'
+    paddingRight: '2rem',
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      padding: theme.spacing(3),
+    },
   },
   buttons: {
     width: '50vw',
-    margin: '.5rem'
+    margin: '.5rem',
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      width: '20vw',
+    },
   },
   list: {
     display: 'flex',
@@ -51,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function CheckOut() {
+  const theme = useTheme();
   const classes = useStyles();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer.cart);
@@ -112,13 +120,11 @@ export function CheckOut() {
           history.push("/order/payment")
         }
       })
-      //------------------------------------------------//  
     }
-
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <script
         src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
         data-preference-id="<%= global.id %>"
@@ -141,8 +147,8 @@ export function CheckOut() {
               </List>
 
               <div className={classes.checkout}>
-                <ListItem className={classes.total}>
-                  <Typography style={{fontSize: '2rem'}}>{`Total: us$ ${total}`}</Typography>
+                <ListItem className={classes.totalAmount}>
+                  <Typography style={{fontSize: '1.2rem'}}>{`Total: us$ ${total}`}</Typography>
                 </ListItem>
                 <Button
                   className={classes.buttons}
@@ -164,6 +170,6 @@ export function CheckOut() {
             </Grid>
         </Paper>
       </main>
-    </>
+    </ThemeProvider>
   );
 }
