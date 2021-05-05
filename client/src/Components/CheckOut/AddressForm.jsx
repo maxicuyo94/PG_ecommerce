@@ -64,7 +64,7 @@ export default function AddressForm({setInfoUser, discount, setDiscount}) {
     e.persist()
     e.preventDefault()
     let response = await dispatch(searchPoints(user.id))
-    if (response > (e.target.value * Math.pow(10, 4))) {
+    if (response > ((e.target.value*2) * Math.pow(10, 4))) {
       setDiscount(e.target.value)
     } else {
       swal("Oops", "You don't have enough Tech Points", "error");
@@ -76,9 +76,9 @@ export default function AddressForm({setInfoUser, discount, setDiscount}) {
     let addresUser = user.address.find(item => item.address === e.target.value)
     console.log(addresUser)
     setInputAddress({
-        streetName: addresUser.address,
-        streetNumber: addresUser.streetNumber,
-        postalCode: addresUser.postal_code,
+        streetName: addresUser?.address,
+        streetNumber: addresUser?.streetNumber,
+        postalCode: addresUser?.postal_code,
     })
   }
 
@@ -123,13 +123,12 @@ export default function AddressForm({setInfoUser, discount, setDiscount}) {
         <FormControl required className={classes.formControl}>
           <InputLabel>Address</InputLabel>
           <Select
-            value={form}
-            onChange={handleAddress}
+            onChange={e => handleAddress(e)}
             className={classes.selectEmpty}
           >
             <MenuItem value="">None</MenuItem>
             {user.address.map((item) => {
-              return <MenuItem value={item.address}> {item.address} {item.streetNumber} </MenuItem>
+              return <MenuItem value={item.address}>{item.address} {item.streetNumber} </MenuItem>
             })}
           </Select>
       </FormControl>
@@ -141,9 +140,9 @@ export default function AddressForm({setInfoUser, discount, setDiscount}) {
             className={classes.selectEmpty}
           >
             <MenuItem value="">None</MenuItem>
-            <MenuItem value="0.1">Discount 10% cost 1000 Tech Points</MenuItem>
-            <MenuItem value="0.2">Discount 20% cost 2000 Tech Points</MenuItem>
-            <MenuItem value="0.4">Discount 40% cost 10000 Tech Points</MenuItem>
+            <MenuItem value="0.1">Discount 10% cost 2000 Tech Points</MenuItem>
+            <MenuItem value="0.2">Discount 20% cost 4000 Tech Points</MenuItem>
+            <MenuItem value="0.4">Discount 40% cost 8000 Tech Points</MenuItem>
           </Select>
       </FormControl>
       
