@@ -81,7 +81,9 @@ export function AddProduct() {
   }, [dispatch]);
 
   const createProd = (data) => {
-    dispatch(postProduct(data));
+    upload().then(
+    dispatch(postProduct(data))
+    )
   };
 
   const changeModal = () => {
@@ -193,14 +195,6 @@ export function AddProduct() {
             accept="image/png, image/jpeg"
             multiple
           />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              upload();
-            }}
-          >
-            {t("addProduct.title11")}
-          </button>
         </div>
         <Link to={`/controlpanel`}>
           <button

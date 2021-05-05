@@ -212,6 +212,12 @@ export default function NavBar({ priority, dark }) {
 
       <BtnLang />
 
+      <MenuItem>
+        <IconButton color="primary">
+          <BtnDark/>
+        </IconButton>
+      </MenuItem>
+
       {user?.id ?
         <MenuItem onClick={handleProfileMenuOpen}>
           <IconButton
