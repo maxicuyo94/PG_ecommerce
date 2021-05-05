@@ -1,9 +1,16 @@
+$tablet:768px;
+
 .container {
     height: 22rem;
     background-size: cover;
     display: flex;
     justify-content: space-between;
     margin-top: 4rem;
+
+    @media screen and (max-width: $tablet) {
+        display: none;
+    }
+    
 }
 
 .img {
