@@ -95,12 +95,7 @@ export default function SimpleMenu() {
 
   const handleCheckOut = () => {
     if (localStorage.getItem("supabase.auth.token")) {
-      swal("Proceed to payment", "", "success")
-        .then(resp => {
-          if (resp) {
-            history.push("/order/");
-          }
-        })
+      history.push("/order/")
     } else {
       swal("Do you want to login to go to checkout?", {
         buttons: {
