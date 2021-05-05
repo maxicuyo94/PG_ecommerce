@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./footer.module.scss";
+//import style from "./footer.module.scss";
 import { useTranslation } from "react-i18next";
 import SimpleReactFooter from "simple-react-footer";
 import { PinDropSharp } from "@material-ui/icons";
@@ -58,7 +58,7 @@ export function Footer({dark}) {
     }
  ];
   return (
-    <div className={ dark ? style.containerDark : style.container}>
+    <div >
 <SimpleReactFooter 
     description={description} 
     title={title}
