@@ -22,7 +22,7 @@ import { ModifyReview } from "./Components/Review/modifyReview";
 import { checkout } from "./Redux/Cart/cartActions";
 import { getProductsVisited } from "./Redux/Products/productActions"
 import swal from "sweetalert";
-import { Banner } from './Components/Banner/Banner'
+import { Banner, Banner2 } from './Components/Banner/Banner'
 import { ActiveUser } from './Components/ControlPanel/ActiveUser/ActiveUser'
 import SimonSays from "./Components/VideoGame/SimonSays";
 import {Points} from './Components/Points/Points'
@@ -54,9 +54,10 @@ function App() {
     }
     lastProducts()
   }, [dispatch, userLogedStorage]);
-
+  
   return (
     <Layout dark={dark}>
+      <Route exact path='/' component={Banner2}/>
       <Route exact path="/" render={() => <Home dark={dark} />} />
       <ProtectedRoute exact path="/Access" component={() => <Access />} />
       <ProtectedRoute
