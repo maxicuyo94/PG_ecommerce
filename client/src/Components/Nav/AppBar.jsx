@@ -107,11 +107,14 @@ export default function NavBar({ priority, dark }) {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleProfileMenuClose = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-
-  
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -124,17 +127,6 @@ export default function NavBar({ priority, dark }) {
   };
   const handleToCart = (event) => {
     history.push('/order')
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-  const handleToMiniCart = (event) => {
-    if(cart.length === 0) return
-    let intViewportWidth = window.innerWidth;
-    if( intViewportWidth > 720 ) {
-      setAnchorEl(event.currentTarget);
-    } else {
-      history.push('/order')
-    }
     setAnchorEl(null);
     handleMobileMenuClose();
   };
@@ -155,22 +147,16 @@ export default function NavBar({ priority, dark }) {
     handleMobileMenuClose();
   };
 
-
-
   const handleMenuProfile = (e) => {
     if( e.target.id === 'account') {
       history.push('/controlpanel')
-      setAnchorEl(null);
-      handleMobileMenuClose();
     } else if( e.target.id === 'profile') {
       history.push('/myProfile')
-      setAnchorEl(null);
-      handleMobileMenuClose();
     } else if( e.target.id === 'logOut') {
       handleLogOut()
-      setAnchorEl(null);
-      handleMobileMenuClose();
     }
+    setAnchorEl(null);
+      handleMobileMenuClose();
   };
   
 

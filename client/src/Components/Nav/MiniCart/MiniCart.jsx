@@ -10,24 +10,6 @@ import { useHistory } from 'react-router';
 import swal from "sweetalert";
 import { clearCart } from '../../../Redux/Cart/cartActions';
 
-const StyledButton = withStyles({
-  root: {
-    background: '#9abf15',
-
-    border: 0,
-    color: 'black',
-    height: 30,
-    width: 20,
-    padding: 10,
-    '&:hover': {
-      backgroundColor: '#9abf15',
-      boxShadow: 'none',
-    }
-  },
-  label: {
-    textTransform: 'capitalize',
-  },
-})(Button);
 
 const useStyles = makeStyles((theme) => ({
   // miniCart: {
