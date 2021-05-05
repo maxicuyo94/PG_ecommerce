@@ -7,12 +7,14 @@ import {
   deleteCategory,
 } from "../../Redux/Products/productActions.js";
 import { allUsers, deleteUser } from "../../Redux/Users/usersActions";
-import { 
-  getAllOrders, 
-  getOrderDetail, 
+import {
+  getAllOrders,
+  getOrderDetail,
   getProductsOfOrder,
   getAllUserOrders,
-  orderEmail } from "../../Redux/Orders/orderActions";
+  orderEmail,
+} from "../../Redux/Orders/orderActions";
+import { getUserReviews, deleteReview } from "../../Redux/Reviews/reviewsActions";
 import style from "./controlpanel.module.scss";
 import {
   Edit,
@@ -35,34 +37,37 @@ export function ControlPanel() {
   const orders = useSelector((state) => state.orderReducer.orders);
   const orderDetailId = useSelector((state) => state.orderReducer.orderDetail);
   const userOrders = useSelector((state) => state.orderReducer.userOrders);
-  const productsOfOrder = useSelector((state) => state.orderReducer.orderProducts);
+  const userReviews = useSelector((state) => state.reviewsReducer.reviews);
+  const productsOfOrder = useSelector(
+    (state) => state.orderReducer.orderProducts
+  );
   const container = products && products.lenght;
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
 
-  const handleEmail = (email,user_id,id,orderDate) => {
-    dispatch(orderEmail(email,user_id,id,orderDate))
-  }
-  
+  const handleEmail = (email, user_id, id, orderDate) => {
+    dispatch(orderEmail(email, user_id, id, orderDate));
+  };
+
   const [tab, setTab] = useState(() => {
-    return ((userLoged.permission === "customer" || !userLoged.permission) ? "purchasehistory" : "products");
+    return userLoged.permission === "customer" || !userLoged.permission
+      ? "purchasehistory"
+      : "products";
   });
-  const [filter, setFilter] = useState()
+  const [filter, setFilter] = useState();
 
-const handleFilter = (e) => {
-  let selected = e.target.selectedOptions[0].value;
-  setFilter(selected);
-}
+  const handleFilter = (e) => {
+    let selected = e.target.selectedOptions[0].value;
+    setFilter(selected);
+  };
 
-useEffect(() => {
-  if(filter !== 'all') {
-    dispatch(getAllOrders(filter));
-  } else {
-    dispatch(getAllOrders());
-  }
-},[filter])
-
-
+  useEffect(() => {
+    if (filter !== "all") {
+      dispatch(getAllOrders(filter));
+    } else {
+      dispatch(getAllOrders());
+    }
+  }, [filter]);
 
   const changeModal = async (id) => {
     await dispatch(getOrderDetail(id));
@@ -116,10 +121,9 @@ useEffect(() => {
     dispatch(getCategories(search));
     dispatch(allUsers(search));
     dispatch(getAllOrders());
-    dispatch(getAllUserOrders(userLoged.id))
+    dispatch(getAllUserOrders(userLoged.id));
+    dispatch(getUserReviews(userLoged.id));
   }, [search, container, tab, userLoged]);
-
-
 
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 10;
@@ -140,38 +144,37 @@ useEffect(() => {
     <div className={style.container}>
       <h2>Control Panel</h2>
       <div className={style.barButtons}>
-        {(userLoged.permission !== "customer" && userLoged.permission)  && (
+        {userLoged.permission !== "customer" && userLoged.permission && (
           <button name="products" onClick={(e) => handleTab(e)}>
             Products
           </button>
         )}
-        {(userLoged.permission !== "customer" && userLoged.permission) && (
+        {userLoged.permission !== "customer" && userLoged.permission && (
           <button name="orders" onClick={(e) => handleTab(e)}>
             Orders
           </button>
         )}
         {
           <button name="purchasehistory" onClick={(e) => handleTab(e)}>
-          Purchase History
-        </button>
+            Purchase History
+          </button>
         }
-         {
+        {
           <button name="reviews" onClick={(e) => handleTab(e)}>
-         Reviews
-        </button>
+            Reviews
+          </button>
         }
-        {(userLoged.permission !== "customer" && userLoged.permission) && (
+        {userLoged.permission !== "customer" && userLoged.permission && (
           <button name="categories" onClick={(e) => handleTab(e)}>
             Categories
           </button>
         )}
-        {(userLoged.permission !== "customer" && userLoged.permission) && (
+        {userLoged.permission !== "customer" && userLoged.permission && (
           <button name="users" onClick={(e) => handleTab(e)}>
             Users
           </button>
         )}
-        {(userLoged.permission !== "customer" && userLoged.permission) && (
-
+        {userLoged.permission !== "customer" && userLoged.permission && (
           <Link to="/addproduct">
             <button>Add Product</button>
           </Link>
@@ -184,16 +187,19 @@ useEffect(() => {
           name="input"
           onChange={(e) => handleSearch(e.target.value)}
         ></input>
-        {tab === 'orders' ? <span>Select filter</span> : null}
-          {tab === "orders" && (
-          <select className={style.buttonfilter} onClick={(e) => handleFilter(e)}>
-            <option value='all'>All</option>
-            <option value='approved'>Approved</option>
-            <option value='inCart'>In Cart</option>
-            <option value='pending'>Pending</option>
-            <option value='rejected'>Rejected</option>
+        {tab === "orders" ? <span>Select filter</span> : null}
+        {tab === "orders" && (
+          <select
+            className={style.buttonfilter}
+            onClick={(e) => handleFilter(e)}
+          >
+            <option value="all">All</option>
+            <option value="approved">Approved</option>
+            <option value="inCart">In Cart</option>
+            <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
           </select>
-         )}
+        )}
       </div>
       <div className={style.containerList}>
         <div className={style.bar}>
@@ -204,7 +210,9 @@ useEffect(() => {
           {tab === "orders" ? <h4 className={style.name}>Order ID</h4> : null}
           {tab === "orders" ? <h4 className={style.name}>Status</h4> : null}
           {tab === "orders" ? <h4 className={style.name}>Date</h4> : null}
-          {tab === "orders" ? <h4 className={style.name}>Confirmation email</h4> : null}
+          {tab === "orders" ? (
+            <h4 className={style.name}>Confirmation email</h4>
+          ) : null}
 
           {tab === "categories" ? (
             <h4 className={style.name}>Category</h4>
@@ -216,7 +224,7 @@ useEffect(() => {
           <h4>Modify</h4>
           {tab === "orders" ? null : <h4>Delete</h4>}
         </div>
-        <div className={style.containerList}>         
+        <div className={style.containerList}>
           {tab === "products"
             ? products?.map((product) => {
                 return (
@@ -275,7 +283,22 @@ useEffect(() => {
                     </span>
                     <span className={style.name}>{order.orderStatus}</span>
                     <span className={style.name}>{order.orderDate}</span>
-                    {order.orderStatus === 'approved' ? <button onClick={() => handleEmail(order.email,order.user_id,order.id,order.orderDate)}>Send email</button> :  <button disabled >Send email</button>}
+                    {order.orderStatus === "approved" ? (
+                      <button
+                        onClick={() =>
+                          handleEmail(
+                            order.email,
+                            order.user_id,
+                            order.id,
+                            order.orderDate
+                          )
+                        }
+                      >
+                        Send email
+                      </button>
+                    ) : (
+                      <button disabled>Send email</button>
+                    )}
                     <dvi>
                       <button
                         className={style.icon}
@@ -372,49 +395,27 @@ useEffect(() => {
                 );
               })
             : null}
-            {/* Renderizar todas las reviews del usuario para que pueda verlas, modificarlas y borrarlas */}
-              {tab === "reviews"
-            ? userOrders?.map((order) => {
+          {tab === "reviews"
+            ? userReviews?.map((reviews) => {
                 return (
                   <div className={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    )}
-                    <span
-                      onClick={() => changeModal(order.id)}
-                      className={style.name}
-                    >
-                      {order.id}
+                    <span className={style.name}>
+                      <Link to={`/product/${reviews.product_id}`}>
+                        {reviews.product.name}
+                      </Link>
                     </span>
-                    <span className={style.name}>{order.orderStatus}</span>
-                    <span className={style.name}>{order.orderDate}</span>
+                    <span className={style.name}>{reviews.rating}</span>
+                    <span className={style.name}>{reviews.description}</span>
                     <div>
+                      <Link to={`/modifyReview/${reviews.id}`}>
+                        <button>Modify</button>
+                      </Link>
                       <button
-                        className={style.icon}
-                        value={order.id}
-                        onClick={(e) => getProducts(e)}
+                        className="delete_review"
+                    //    onClick={functionDeleteReview(reviews.id)}
                       >
-                        +
+                        Delete
                       </button>
-                      <Modal
-                        class={style.modal}
-                        open={modalTwo}
-                        onClose={closeModal}
-                      >
-                        <ProductSelection
-                          products={productsOfOrder}
-                        ></ProductSelection>
-                      </Modal>
                     </div>
                   </div>
                 );
@@ -444,9 +445,12 @@ useEffect(() => {
                     {user.permission === "superadmin" &&
                     userLoged.permission === "admin" ? null : (
                       <>
-                      <Link to={`/modifyUser/${user.id}`}>
-                        <Edit class={style.icon} alt="Force change data user"/>
-                      </Link>
+                        <Link to={`/modifyUser/${user.id}`}>
+                          <Edit
+                            class={style.icon}
+                            alt="Force change data user"
+                          />
+                        </Link>
                       </>
                     )}
                     <Delete
@@ -455,24 +459,31 @@ useEffect(() => {
                       onClick={() => handleDelete(user.id)}
                     />
                     <Modal
-                        class={style.modal}
-                        open={modalTwo}
-                        onClose={closeModal}
-                      >
-                      </Modal>
+                      class={style.modal}
+                      open={modalTwo}
+                      onClose={closeModal}
+                    ></Modal>
                   </div>
                 );
               })
             : null}
         </div>
         <div className={style.paginate}>
-        <button className={style.buttonpage} onClick={() => previousPage()}>Prev</button>
-        <button className={style.currentpage}>{currentPage}</button>
-        <button className={style.buttonpage} onClick={() => nextPage()}>Next</button>
-      </div>
+          <button className={style.buttonpage} onClick={() => previousPage()}>
+            Prev
+          </button>
+          <button className={style.currentpage}>{currentPage}</button>
+          <button className={style.buttonpage} onClick={() => nextPage()}>
+            Next
+          </button>
+        </div>
       </div>
       <Modal class={style.modal} open={modal} onClose={closeModal}>
-        <OrderDetail id={orderDetailId.id} status={filter} permission={userLoged.permission} />
+        <OrderDetail
+          id={orderDetailId.id}
+          status={filter}
+          permission={userLoged.permission}
+        />
       </Modal>
     </div>
   );

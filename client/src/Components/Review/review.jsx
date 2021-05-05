@@ -8,7 +8,7 @@ import {
   getReviewById
 } from "../../Redux/Reviews/reviewsActions";
 import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import swal from "sweetalert";
 
 export function Review({ id }) {
@@ -27,23 +27,20 @@ export function Review({ id }) {
     isRated: null,
   });
 
-
-  const userReview = reviews.filter((f) => f.user_id === userId);
-  if (userReview.length > 0) {
-    setReview({
-      rating: userReview[0].rating,
-      description: userReview[0].description,
-      reviewId: userReview[0].reviewId,
-      isRated: true,
-    });
-  }
+  // const userReview = reviews.filter((f) => f.user_id === userId);
+  // if (userReview.length > 0) {
+  //   setReview({
+  //     rating: userReview[0].rating,
+  //     description: userReview[0].description,
+  //     reviewId: userReview[0].reviewId,
+  //     isRated: true,
+  //   });
+  // }
 
   const [hover, setHover] = useState(null);
 
-
   const submitReview = (e) => {
     e.preventDefault();
-
 
   dispatch(createReview(review));
       swal(
@@ -55,8 +52,7 @@ export function Review({ id }) {
             icon: "success"
         },
       ).then((resp) => {
-        resp && history.push("/controlpanel");
-        //debería redireccionar al product para ver la review
+        resp && history.push(`/product/${id}`);
       });
   };  
 
