@@ -1,9 +1,8 @@
 //1
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 //import style from "./checkout.module.scss";
 import { makeStyles } from '@material-ui/core/styles';
-
 import { useRef } from 'react';
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
@@ -69,8 +68,8 @@ export function ItemCart({ product }) {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
-  let btnRefDELETE = useRef();
-  let btnRefADD = useRef();
+  const [disable, setDisable] = useState(false)
+
 
 
   const handleQuantityChange = async (amount) => {
@@ -82,19 +81,12 @@ export function ItemCart({ product }) {
         quantity: amount,
         stock: product.stock,
 
-      };
-      dispatch(addItemCart(productToDispatch))
-      if (amount > 0) {
-        btnRefADD.current.setAttribute("disabled", "disabled");
-        setTimeout(() => {
-          if (btnRefADD.current) btnRefADD.current.removeAttribute("disabled");
-        }, 1000);
-      } else {
-        btnRefDELETE.current.setAttribute("disabled", "disabled");
-        setTimeout(() => {
-          if (btnRefDELETE.current) btnRefDELETE.current.removeAttribute("disabled");
-        }, 1000);
       }
+      dispatch(addItemCart(productToDispatch))
+      setDisable(true)
+      setTimeout(() => {
+        setDisable(false)
+      }, 1000);
     }
   };
 
@@ -130,16 +122,16 @@ export function ItemCart({ product }) {
         </div>
 
         <div className={classes.quantity}>
-          <Button color="secondary" aria-label="remove" ref={btnRefDELETE} onClick={() => handleQuantityChange(-1)}>
+          <Button color="secondary" aria-label="remove" disabled={disable} onClick={() => handleQuantityChange(-1)}>
             <RemoveIcon />
           </Button>
 
           <ListItemText className={classes.unity}>{product.quantity}</ListItemText>
 
-          <Button color="primary" aria-label="add" ref={btnRefADD} onClick={() => handleQuantityChange(+1)}>
+          <Button color="primary" aria-label="add" disabled={disable} onClick={() => handleQuantityChange(+1)}>
             <AddIcon />
           </Button>
-
+          
           <Button edge="end" aria-label="delete" onClick={() => handleDeleteItem(product.id)}>
             <DeleteIcon />
           </Button>
