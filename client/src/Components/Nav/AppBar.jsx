@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -11,16 +11,15 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import LanguageIcon from "@material-ui/icons/Language";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { useDispatch, useSelector } from "react-redux";
-import style from "./nav.module.scss";
 import { NavLink, useHistory } from "react-router-dom";
 import BtnLang from "./BtnLang/BtnLang";
 import { userLogOut } from "../../Redux/Users/usersActions";
 import swal from "sweetalert";
 import MiniCart from "./MiniCart/MiniCart";
 import BtnDark from "./BtnDark/BtnDark";
+import { Search } from "../../Redux/Products/productActions";
 
 
 
@@ -48,10 +47,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "100%"
-    }
+    // [theme.breakpoints.up("sm")]: {
+    //   marginLeft: theme.spacing(3),
+    //   width: "100%"
+    // }
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -71,9 +70,9 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "10ch",
-    [theme.breakpoints.up("md")]: {
-      width: "25ch"
-    }
+    // [theme.breakpoints.up("md")]: {
+    //   width: "25ch"
+    // }
   },
   sectionDesktop: {
     display: "none",
@@ -90,6 +89,11 @@ const useStyles = makeStyles((theme) => ({
   navBar: {
     position: 'fixed',
   },
+  Logo: {
+    height: '8vh',
+    display: 'flex',
+    alignItems: 'center'
+  },
 }));
 
 export default function NavBar({ priority, dark }) {
@@ -102,6 +106,8 @@ export default function NavBar({ priority, dark }) {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [search, setSearch] = useState("");
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -153,7 +159,22 @@ export default function NavBar({ priority, dark }) {
     setAnchorEl(null);
       handleMobileMenuClose();
   };
+
+  //Search
+  const handleInputChange = function (e) {
+    setSearch(e.target.value);
+  };
   
+  const handleSubmitSearch = (e) => {
+    e.preventDefault()
+    if (search !== "") {
+      dispatch(Search(search))
+      history.push('/catalogue')
+      setSearch("");
+    } else {
+      alert('Enter to input to search!')
+    }
+  }
 
 
   //Menu Profile -------------------------------------------------//
@@ -252,7 +273,7 @@ export default function NavBar({ priority, dark }) {
     <div className={classes.grow} >
       <AppBar className={classes.navBar} color='secondary'>
         <Toolbar className={classes.toolBar}>
-          <NavLink to={"/"}>
+          <NavLink to={"/"} className={classes.Logo}>
             <img
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
@@ -262,14 +283,13 @@ export default function NavBar({ priority, dark }) {
               height="50"
             />
           </NavLink>
-          {/* <Typography className={classes.title} variant="h6" noWrap>
-            Tech Store
-          </Typography> */}
-          <div className={classes.search}>
+          <form className={classes.search} onSubmit={(e) => handleSubmitSearch(e)}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
+              value={search}
+              onChange={handleInputChange}
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
@@ -277,7 +297,7 @@ export default function NavBar({ priority, dark }) {
               }}
               inputProps={{ "aria-label": "search" }}
             />
-          </div>
+          </form>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <MenuItem onClick={handleCatalogue}>
