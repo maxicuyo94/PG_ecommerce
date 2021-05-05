@@ -57,9 +57,9 @@ export function SearchBar() {
     }
   };
 
-   useEffect(() => {
-    dispatch(Searching(Input.input));
-  }, [Input]);
+  //  useEffect(() => {
+  //   dispatch(Search(Input.input));
+  // }, [Input]);
 
   const handleClick = (e) => {
     e.preventDefault()

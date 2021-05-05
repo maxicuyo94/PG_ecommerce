@@ -1,3 +1,5 @@
+//4
+
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -11,6 +13,8 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import i18next from "i18next";
 import global_es from "./Traslations/ES/global.json";
 import global_en from "./Traslations/EN/global.json";
+import { ThemeProvider } from "@material-ui/styles";
+import theme from "./theme";
 
 i18next.init({
   interpolation: { escapeValue: false },
@@ -27,11 +31,13 @@ i18next.init({
 
 ReactDOM.render(
   <I18nextProvider i18n={i18next}>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   </I18nextProvider>,
   document.getElementById("root")
 );
