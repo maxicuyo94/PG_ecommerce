@@ -8,25 +8,17 @@ import { PowerInputSharp } from "@material-ui/icons";
 
 
 export function Banner2() {
-  const [Img, setImg] = useState('https://www.neobyte.es/modules/simpleslideshow/slides/5f294c70602e96ab0303b6caebd3bde5.jpg')
+  const [Img, setImg] = useState(points)
 
   useEffect(() => {
-    if(Img === 'https://www.neobyte.es/modules/simpleslideshow/slides/5f294c70602e96ab0303b6caebd3bde5.jpg' ){
-      setTimeout(() => {
-        setImg('https://www.neobyte.es/modules/simpleslideshow/slides/c4adceb0c96ae8c931d13c5d20027462.jpg')
-      }, 3000);
-    }  else if(Img === 'https://www.neobyte.es/modules/simpleslideshow/slides/c4adceb0c96ae8c931d13c5d20027462.jpg') {
-      setTimeout(() => {
-        setImg(points)
-      }, 3000);
-    } else if(Img === points) {
+    if(Img === points ){
       setTimeout(() => {
         setImg(simonImage)
-      }, 3000)
+      }, 4000);
     } else {
       setTimeout(() => {
-        setImg('https://www.neobyte.es/modules/simpleslideshow/slides/5f294c70602e96ab0303b6caebd3bde5.jpg')
-      }, 3000);
+        setImg(points)
+      }, 4000)
     }
   }, [Img]) 
 
