@@ -47,3 +47,7 @@ export const ADD_POINTS = "ADD_POINTS"
 // Appointments
 export const APPOINTMENTS = "APPOINTMENTS"
 
+//Wishlist
+export const ADD_ITEM_WISHLIST = "ADD_ITEM_WISHLIST"
+export const DELETE_ITEM_WISHLIST = "DELETE_ITEM_WISHLIST"
+
