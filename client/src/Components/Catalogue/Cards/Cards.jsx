@@ -66,7 +66,8 @@ export const Cards = (props) => {
                 <div className={styles.image} >
                     <img src={props.image[0]?.url || notFound} alt='' />
                 </div>
-                <NavLink className={styles.title} to={`/product/${props.id}`}><p>{props.title}</p></NavLink>
+                <NavLink className={styles.title} to={`/product/${props.id}`}>
+                    <p className={styles.name}>{props.title}</p></NavLink>
                 <div className={styles.review}>
                     {props.reviews.length > 0 ? <>
                         <span>{[...Array(average)].map((i) => {
@@ -111,36 +112,21 @@ export const Cards = (props) => {
             <div className={dark ? styles.containerListDark : styles.containerList}>
                 <div className={styles.image} >
                     <img src={props.image[0]?.url || notFound} alt='' />
-                </div>
-                <div className={styles.details}>
-                    <div className={styles.stock}>
-                        <div className={styles.icon}>
-                            {props.stock === 0 ?
-                                <><RemoveShoppingCartOutlinedIcon style={{ fontSize: '1rem' }} />
-                                    <span>Out stock</span></>
-                                : props.discount > 0 ? <><WhatshotOutlinedIcon style={{ fontSize: '1rem' }} />
-                                    <span> {props.discount}% off! </span>
-                                    <WhatshotOutlinedIcon style={{ fontSize: '1rem' }} /></>
-                                    : <><CheckCircleIcon style={{ fontSize: '1rem' }} />
-                                        <span>in stock</span></>}</div>
-                        <button className={styles.fav} onClick={handleFav}>
-                            {fav ? <FavoriteIcon style={{ fontSize: '1.5rem' }} /> :
-                                <FavoriteBorderIcon style={{ fontSize: '1.5rem' }} />}
-                        </button>
-                    </div>
-                    <NavLink className={styles.title}
-                        to={`/product/${props.id}`}>
-                        <p>{props.title}</p>
-                    </NavLink>
                     <div className={styles.review}>
                         {props.reviews.length > 0 ? <>
                             <span>{[...Array(average)].map((i) => {
                                 return <StarIcon key={i} style={{ fontSize: '1rem' }} />
                             })}{[...Array(5 - average)].map((ii) => {
                                 return <StarBorderIcon key={ii} style={{ fontSize: '1rem' }} />
-                            })}</span><span>({props.reviews.length})</span></>
-                            : <span>No reviews yet</span>}
+                            })}</span><p> Reviews ({props.reviews.length})</p></>
+                            : <span className={styles.reviews}>No reviews yet</span>}
                     </div>
+                </div>
+                <div className={styles.details}>
+                    <NavLink className={styles.title}
+                        to={`/product/${props.id}`}>
+                        <p>{props.title}</p>
+                    </NavLink>
                     <div className={styles.prices}>
                         {props.discount > 0 &&
                             <div className={styles.offer}><span>US$<b>{props.price}</b></span></div>}
@@ -168,6 +154,21 @@ export const Cards = (props) => {
                             <>{isShown ? <span> Add to Cart?</span> : <span> Add to Cart!</span>}
                                 <AddShoppingCartIcon style={{ fontSize: '1.5rem', margin: '0 0.25rem' }} /></>
                         </button>}
+                </div>
+                <div className={styles.stock}>
+                    <div className={styles.icon}>
+                        {props.stock === 0 ?
+                            <><RemoveShoppingCartOutlinedIcon style={{ fontSize: '1rem' }} />
+                                <span>Out stock</span></>
+                            : props.discount > 0 ? <><WhatshotOutlinedIcon style={{ fontSize: '1rem' }} />
+                                <span> {props.discount}% off! </span>
+                                <WhatshotOutlinedIcon style={{ fontSize: '1rem' }} /></>
+                                : <><CheckCircleIcon style={{ fontSize: '1rem' }} />
+                                    <span>in stock</span></>}</div>
+                    <button className={styles.fav} onClick={handleFav}>
+                        {fav ? <FavoriteIcon style={{ fontSize: '1.5rem' }} /> :
+                            <FavoriteBorderIcon style={{ fontSize: '1.5rem' }} />}
+                    </button>
                 </div>
             </div>
         );
