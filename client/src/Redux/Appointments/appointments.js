@@ -16,3 +16,19 @@ export const postAppointment = (idHour, dateAppointments, order) => {
         }])
     }  
 }
+
+export const allAppointments = (date, order) => {
+    return async (dispatch) => {
+        const data = await supabase
+        .from('appointments')
+        .select('*')
+        .eq('date', date);
+        dispatch({ type: actionType.APPOINTMENTS, payload: 
+            { 
+                hours: data.data,
+                order: order,
+                date: date
+        } 
+    })
+    }
+}
