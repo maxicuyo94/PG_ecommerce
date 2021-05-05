@@ -15,8 +15,8 @@ function Layout({ children, priority, dark }) {
       <MyChatbot/>
       <main>
         {/* <Header></Header> */}
-        <Nav priority={priority} dark={dark}/>
-        {/* <AppBar priority={priority} dark={dark}/> */}
+        {/* <Nav priority={priority} dark={dark}/> */}
+        <AppBar priority={priority} dark={dark}/>
         {/* <Banner2></Banner2> */}
         {children}
         <Footer priority={priority}  dark={dark} />

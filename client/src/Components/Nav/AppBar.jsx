@@ -13,9 +13,12 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import LanguageIcon from "@material-ui/icons/Language";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./nav.module.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+import BtnLang from "./BtnLang/BtnLang";
+import { userLogOut } from "../../Redux/Users/usersActions";
+import swal from "sweetalert";
 
 
 
@@ -88,8 +91,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavBar({ priority, dark }) {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const cart = useSelector(state => state.cartReducer.cart)
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -103,15 +107,63 @@ export default function NavBar({ priority, dark }) {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
+  
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleCatalogue = (event) => {
+    history.push('/catalogue')
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+  const handleToCart = (event) => {
+    history.push('/order')
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleLogOut = () => {
+    const error = dispatch(userLogOut());
+    if (error) {
+      swal(error);
+    } else {
+      history.go(0);
+    }
+  };
+
+
+  const handleMenuProfile = (e) => {
+    e.preventDefault()
+    // switch (e.target.id) {
+    //   case 'account':
+    //     return history.push('/controlpanel')
+    //   case 'profile': 
+    //     return history.push('/myProfile'); 
+    //   case 'logOut':
+    //   default:
+    //     break
+    // }
+    if( e.target.id === 'account') {
+      history.push('/controlpanel')
+      setAnchorEl(null);
+      handleMobileMenuClose();
+    } else if( e.target.id === 'profile') {
+      history.push('/myProfile')
+      setAnchorEl(null);
+      handleMobileMenuClose();
+    } else if( e.target.id === 'logOut') {
+      handleLogOut()
+      setAnchorEl(null);
+      handleMobileMenuClose();
+    }
+    
+  };
+  
+
+
+  //Menu Profile -------------------------------------------------//
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -121,13 +173,17 @@ export default function NavBar({ priority, dark }) {
       keepMounted
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
+      onClose={handleMenuProfile}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem id='account' onClick={(e) => handleMenuProfile(e)}>Account</MenuItem>
+      <MenuItem id='profile' onClick={(e) => handleMenuProfile(e)}>Profile</MenuItem>
+      <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem>
     </Menu>
   );
+  //--------------------------------------------------------------//
 
+
+  //Menu Mobile -------------------------------------------------//
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -139,20 +195,23 @@ export default function NavBar({ priority, dark }) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={cart.length} color="secondary">
+      <MenuItem onClick={handleCatalogue}>
+        <IconButton color="primary">
+          <MenuIcon />
+        </IconButton>
+        <p>Catalogue</p>
+      </MenuItem>
+      <MenuItem onClick={handleToCart}>
+        <IconButton color="secondary">
+          <Badge badgeContent={cart.length} color="primary">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
         <p>Cart</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <LanguageIcon />
-        </IconButton>
-        <p>Language</p>
-      </MenuItem>
+
+      <BtnLang />
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -166,6 +225,8 @@ export default function NavBar({ priority, dark }) {
       </MenuItem>
     </Menu>
   );
+  //--------------------------------------------------------------//
+
 
   return (
     <div className={classes.grow} >

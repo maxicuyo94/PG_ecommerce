@@ -6,6 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import LanguageIcon from "@material-ui/icons/Language";
 import { useTranslation } from "react-i18next";
+import { IconButton } from "@material-ui/core";
 
 const StyledMenu = withStyles({
   paper: {
@@ -71,9 +72,13 @@ export default function BtnLang() {
 
   return (
     <div>
-      <StyledButton onClick={handleClick}>
-        <LanguageIcon />
-      </StyledButton>
+      <MenuItem onClick={handleClick}>
+        <IconButton color="primary" >
+          <LanguageIcon />
+        </IconButton>
+        <p>Language</p>
+      </MenuItem>
+
 
       <StyledMenu
         id="customized-menu"
