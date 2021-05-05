@@ -226,7 +226,10 @@ export const checkstock = (userId, status, amount, discountPoints, products) => 
               points: pointsMainUser.data[0].points - discountPoints
             })
             .eq("id", userId)
+
+            amount = -discountPoints;
         }
+        console.log(amount)
         dispatch({type: actionType.ADD_POINTS , payload: amount})
       }
     } else {
@@ -238,7 +241,6 @@ export const checkstock = (userId, status, amount, discountPoints, products) => 
           .eq("orderStatus", "inCart")
           .then(res => products = res)
 
-        console.log(products.data[0].order_detail)
         products.data[0].order_detail.map(async product => {
 
           let stock = await supabase

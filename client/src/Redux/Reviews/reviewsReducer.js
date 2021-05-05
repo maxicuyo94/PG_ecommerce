@@ -16,7 +16,7 @@ function reviewsReducer(state = InitialState, action) {
         ...state,
         reviews: action.payload,
       }
-      case actionType.GET_USER_REVIEW:
+      case actionType.GET_USER_REVIEWS:
       return {
         ...state,
         reviews: action.payload,

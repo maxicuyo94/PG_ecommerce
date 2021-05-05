@@ -40,7 +40,8 @@ export function Home(props) {
   let discount = external && external.split(',')[7];
   let address = `${streetName} ${streetNumber}`
   let userEmail = lsemail ? lsemail : mpEmail;
-  let discountPoints = discount == 0.1 ? 1000 : discount == 0.2 ? 2000 : discount == 0.4 ? 10000 : null;
+  console.log(discount)
+  let discountPoints = discount == 0.1 ? 2000 : discount == 0.2 ? 4000 : discount == 0.4 ? 8000 : null;
 
   const fecha = new Date();
   const hoy = `${fecha.getFullYear()}-${fecha.getMonth() + 1}-${fecha.getDate()}`;
@@ -69,7 +70,7 @@ export function Home(props) {
 
   return (
     <div className={props.dark ? styles.containerDark : styles.container}>
-      <Banner2 />
+      {/* <Banner2 /> */}
       <div className={styles.containerTitle}>
         <span className={styles.tag}>{t("home.title")}</span>
       </div>
@@ -86,11 +87,11 @@ export function Home(props) {
         </div>}
         <div className={styles.containerP}>
           <div className={styles.title}>
-          <img className={styles.img}
+          {/* <img className={styles.img}
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
               } alt="Ups, we don't found anything here. Try again tomorrow!"
-            />
+            /> */}
             <span className={styles.tag}>{t("home-cat1.processors")}</span>
           </div>
           <div className={styles.carousel}>
@@ -101,11 +102,11 @@ export function Home(props) {
         </div>
         <div className={styles.containerP}>
           <div className={styles.title}>
-          <img className={styles.img}
+          {/* <img className={styles.img}
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
               } alt="Ups, we don't found anything here. Try again tomorrow!"
-            />
+            /> */}
             <span className={styles.tag}>{t("home-cat2.laptops")}</span>
           </div>
           <div className={styles.carousel}>
@@ -116,11 +117,11 @@ export function Home(props) {
         </div>
         <div className={styles.containerP}>
           <div className={styles.title}>
-          <img className={styles.img}
+          {/* <img className={styles.img}
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
               } alt="Ups, we don't found anything here. Try again tomorrow!"
-            />
+            /> */}
             <span className={styles.tag}>{t("home-cat3.keyboards")}</span>
           </div>
           <div className={styles.carousel}>

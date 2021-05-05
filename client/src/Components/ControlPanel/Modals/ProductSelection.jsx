@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 export function ProductSelection({ products }) {
   return (
     <div className={style.div}>
+      <br/>
       <h3>Reviews</h3>
       <ol>
         {products?.map((product) => {
@@ -19,10 +20,7 @@ export function ProductSelection({ products }) {
             <div className={style.list}>
               <tr>{product.title}</tr>
               <Link to={`/rate-product/${product.product_id}`}>
-                <button>Create review</button>
-              </Link>
-              <Link to={`/modifyReview/${product.product_id}`}>
-                <button>Modify review</button>
+                <button>Leave review</button>
               </Link>
             </div>
           );

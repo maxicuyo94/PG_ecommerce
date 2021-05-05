@@ -32,6 +32,19 @@ export const getReviewsOfProduct = (id) => {
   };
 };
 
+export const getUserReviews = (id) => {
+  return async function (dispatch) {
+    const JSON = await supabase
+      .from("reviews")
+      .select("*, product (name)")
+      .eq("user_id", id);
+    dispatch({
+      type: actionType.GET_USER_REVIEWS,
+      payload: JSON.data,
+    });
+  };
+};
+
 
 export const getReviewById = (id) => {
   return async function (dispatch) {
@@ -40,21 +53,21 @@ export const getReviewById = (id) => {
   };
 };
 
-export const updateReview = (id_review, id) => {
+export const updateReview = (review) => {
   return async function (dispatch) {
     //eslint-disable-next-line
     const JSON = await supabase
-      .from("review")
+      .from("reviews")
       .update({
-        description: id_review.description,
-        rating: id_review.rating,
+        description: review.description,
+        rating: review.rating,
       })
-      .eq("id_review", id);
+      .eq("id", review.id);
   };
 };
 
-export const deleteReview = (id, id_review) => {
+export const deleteReview = (id) => {
   return async () => {
-    await supabase.from("reviews").delete().eq("id_review", id);
+    await supabase.from("reviews").delete().eq("id", id);
   };
 };
