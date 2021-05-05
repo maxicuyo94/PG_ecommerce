@@ -8,10 +8,12 @@ import {
   getReviewById
 } from "../../Redux/Reviews/reviewsActions";
 import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
+import { useHistory } from "react-router-dom";
 import swal from "sweetalert";
 
 export function Review({ id }) {
   const reviews = useSelector((state) => state.reviewsReducer.reviews);
+  const history = useHistory();
   const [userLog] = useLocalStorage("supabase.auth.token");
   const userId = userLog && userLog.currentSession.user.id;
   const dispatch = useDispatch();
@@ -38,23 +40,32 @@ export function Review({ id }) {
 
   const [hover, setHover] = useState(null);
 
+
   const submitReview = (e) => {
     e.preventDefault();
 
-    dispatch(createReview(review));
-    swal({ text: `The review has been sent successfully`, icon: "success" });
-    setReview({
-      ...review,
-      rating: null,
-      description: null,
-      isRated: false,
-    });
-  };
+
+  dispatch(createReview(review));
+      swal(
+        "Thank you for the feedback!",
+        {
+          buttons: {
+            button: "Ok",
+          },
+            icon: "success"
+        },
+      ).then((resp) => {
+        resp && history.push("/controlpanel");
+        //debería redireccionar al product para ver la review
+      });
+  };  
+
 
   return (
     <div className={style.containerReview}>
-      <h2>Your opinion is important</h2>
-      <h3>How was your experience with this product?</h3>
+      <h2>Create review</h2>
+      <br/>
+      <h3>Rating</h3>
       <div>
         {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1;
@@ -91,24 +102,26 @@ export function Review({ id }) {
       <form className={style.formReview}>
         {review.isRated ? (
           <div>
-            <span>Would you like to say something?</span>
+            <span>Please tell us your experience:</span>
             <textarea
               name="description"
               rows="10"
               cols="50"
-              placeHolder="Write here..."
+              placeHolder="How is the quality? Was it what you expected? Would you change something?"
               onChange={(e) => {
                 setReview({
                   ...review,
                   description: e.target.value,
                 });
               }}
-              onSubmit={submitReview}
             ></textarea>
           </div>
         ) : null}
-        <input type="submit" value="Post review" />
+         <div className={style.button}>
+        <input type="submit" value="Post review"  onClick={submitReview}/>
+        </div>
       </form>
     </div>
+    
   );
 }

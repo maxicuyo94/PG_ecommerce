@@ -155,6 +155,11 @@ useEffect(() => {
           Purchase History
         </button>
         }
+         {
+          <button name="reviews" onClick={(e) => handleTab(e)}>
+         Reviews
+        </button>
+        }
         {(userLoged.permission !== "customer" && userLoged.permission) && (
           <button name="categories" onClick={(e) => handleTab(e)}>
             Categories
@@ -321,6 +326,54 @@ useEffect(() => {
               })
             : null}
           {tab === "purchasehistory"
+            ? userOrders?.map((order) => {
+                return (
+                  <div className={style.list}>
+                    {checkbox ? (
+                      <CheckBox
+                        id={order.id}
+                        class={style.icon}
+                        onClick={() => checkPress(order.id)}
+                      />
+                    ) : (
+                      <CheckBoxOutlineBlank
+                        id={order.id}
+                        class={style.icon}
+                        onClick={() => checkPress(order.id)}
+                      />
+                    )}
+                    <span
+                      onClick={() => changeModal(order.id)}
+                      className={style.name}
+                    >
+                      {order.id}
+                    </span>
+                    <span className={style.name}>{order.orderStatus}</span>
+                    <span className={style.name}>{order.orderDate}</span>
+                    <div>
+                      <button
+                        className={style.icon}
+                        value={order.id}
+                        onClick={(e) => getProducts(e)}
+                      >
+                        +
+                      </button>
+                      <Modal
+                        class={style.modal}
+                        open={modalTwo}
+                        onClose={closeModal}
+                      >
+                        <ProductSelection
+                          products={productsOfOrder}
+                        ></ProductSelection>
+                      </Modal>
+                    </div>
+                  </div>
+                );
+              })
+            : null}
+            {/* Renderizar todas las reviews del usuario para que pueda verlas, modificarlas y borrarlas */}
+              {tab === "reviews"
             ? userOrders?.map((order) => {
                 return (
                   <div className={style.list}>
