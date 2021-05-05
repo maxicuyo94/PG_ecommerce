@@ -5,7 +5,7 @@ import Menu from '@material-ui/core/Menu';
 import MiniCard from '../MiniShop/MiniCard';
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useDispatch, useSelector } from 'react-redux';
-import { Badge, Divider, ListItem, makeStyles, ThemeProvider, Typography, useTheme, withStyles } from '@material-ui/core';
+import { Badge, Divider, IconButton, ListItem, makeStyles, MenuItem, ThemeProvider, Typography, useTheme, withStyles } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import swal from "sweetalert";
 import { clearCart } from '../../../Redux/Cart/cartActions';
@@ -136,6 +136,7 @@ export default function SimpleMenu() {
         }
       })
     }
+    setAnchorEl(null);
   };
 
   const handleClick = (event) => {
@@ -154,18 +155,22 @@ export default function SimpleMenu() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledButton
-        aria-controls="customized-menu"
-        aria-haspopup="true"
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-      >
-        <Badge badgeContent={cart.length} color="error">
-          <ShoppingCartIcon />
-        </Badge>
-        {/* {cart && cart.length} */}
-      </StyledButton>
+      <MenuItem onClick={handleClick}>
+        <IconButton
+          aria-controls="customized-menu"
+          aria-haspopup="true"
+          variant="contained"
+          color="primary"
+          
+        >
+          <Badge badgeContent={cart.length} color="error">
+            <ShoppingCartIcon />
+          </Badge>
+          {/* {cart && cart.length} */}
+        </IconButton>
+        <p>Cart</p>
+      </MenuItem>
+
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}

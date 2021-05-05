@@ -19,6 +19,9 @@ import { NavLink, useHistory } from "react-router-dom";
 import BtnLang from "./BtnLang/BtnLang";
 import { userLogOut } from "../../Redux/Users/usersActions";
 import swal from "sweetalert";
+import MiniCart from "./MiniCart/MiniCart";
+import BtnDark from "./BtnDark/BtnDark";
+
 
 
 
@@ -94,6 +97,7 @@ export default function NavBar({ priority, dark }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cartReducer.cart)
+  const user = useSelector(state =>  state.usersReducer.userLoged)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -123,6 +127,18 @@ export default function NavBar({ priority, dark }) {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+  const handleToMiniCart = (event) => {
+    if(cart.length === 0) return
+    let intViewportWidth = window.innerWidth;
+    if( intViewportWidth > 720 ) {
+      setAnchorEl(event.currentTarget);
+    } else {
+      history.push('/order')
+    }
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+  
 
   const handleLogOut = () => {
     const error = dispatch(userLogOut());
@@ -133,18 +149,15 @@ export default function NavBar({ priority, dark }) {
     }
   };
 
+  const handleLogin = () => {
+    history.push('/access')
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+
 
   const handleMenuProfile = (e) => {
-    e.preventDefault()
-    // switch (e.target.id) {
-    //   case 'account':
-    //     return history.push('/controlpanel')
-    //   case 'profile': 
-    //     return history.push('/myProfile'); 
-    //   case 'logOut':
-    //   default:
-    //     break
-    // }
     if( e.target.id === 'account') {
       history.push('/controlpanel')
       setAnchorEl(null);
@@ -158,7 +171,6 @@ export default function NavBar({ priority, dark }) {
       setAnchorEl(null);
       handleMobileMenuClose();
     }
-    
   };
   
 
@@ -168,16 +180,22 @@ export default function NavBar({ priority, dark }) {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuProfile}
     >
       <MenuItem id='account' onClick={(e) => handleMenuProfile(e)}>Account</MenuItem>
       <MenuItem id='profile' onClick={(e) => handleMenuProfile(e)}>Profile</MenuItem>
-      <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem>
+      <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem> 
     </Menu>
   );
   //--------------------------------------------------------------//
@@ -201,10 +219,11 @@ export default function NavBar({ priority, dark }) {
         </IconButton>
         <p>Catalogue</p>
       </MenuItem>
+
       <MenuItem onClick={handleToCart}>
-        <IconButton color="secondary">
-          <Badge badgeContent={cart.length} color="primary">
-            <ShoppingCartIcon />
+        <IconButton >
+          <Badge badgeContent={cart.length} color="error">
+            <ShoppingCartIcon color="primary"/>
           </Badge>
         </IconButton>
         <p>Cart</p>
@@ -212,17 +231,31 @@ export default function NavBar({ priority, dark }) {
 
       <BtnLang />
 
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      {user?.id ?
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="primary"
+          >
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>
+      :
+        <MenuItem onClick={handleLogin}>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            color="primary"
+          >
+            <AccountCircle />
+          </IconButton>
+          <p>Login</p>
+        </MenuItem>
+      }
+
     </Menu>
   );
   //--------------------------------------------------------------//
@@ -230,7 +263,7 @@ export default function NavBar({ priority, dark }) {
 
   return (
     <div className={classes.grow} >
-      <AppBar className={classes.navBar}>
+      <AppBar className={classes.navBar} color='secondary'>
         <Toolbar>
           <NavLink to={"/"}>
             <img
@@ -260,23 +293,54 @@ export default function NavBar({ priority, dark }) {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
-              <Badge badgeContent={cart.length} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-            <IconButton color="inherit">
-              <LanguageIcon />
-            </IconButton>
-            <IconButton
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <MenuItem onClick={handleCatalogue}>
+              <IconButton color="primary">
+                <MenuIcon />
+              </IconButton>
+              <p>Catalogue</p>
+            </MenuItem>
+            
+            <MenuItem>
+              <MiniCart />
+            </MenuItem>
+
+            {user?.id ?
+              <MenuItem onClick={handleProfileMenuOpen}>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="primary-search-account-menu"
+                  aria-haspopup="true"
+                  color="primary"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <p>Profile</p>
+              </MenuItem>
+            :
+              <MenuItem onClick={handleLogin}>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="primary-search-account-menu"
+                  color="primary"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <p>Login</p>
+              </MenuItem>
+            }
+            
+            <MenuItem>
+              <BtnLang />
+            </MenuItem>
+
+            <MenuItem>
+              <IconButton color="primary">
+                <BtnDark/>
+              </IconButton>
+            </MenuItem>
+
           </div>
+          
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
