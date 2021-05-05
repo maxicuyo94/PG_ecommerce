@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
-      width: "auto"
+      width: "100%"
     }
   },
   searchIcon: {
@@ -70,20 +70,20 @@ const useStyles = makeStyles((theme) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
-    width: "100%",
+    width: "10ch",
     [theme.breakpoints.up("md")]: {
-      width: "30ch"
+      width: "25ch"
     }
   },
   sectionDesktop: {
     display: "none",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "flex"
     },
   },
   sectionMobile: {
     display: "flex",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "none"
     }
   },
@@ -251,7 +251,7 @@ export default function NavBar({ priority, dark }) {
   return (
     <div className={classes.grow} >
       <AppBar className={classes.navBar} color='secondary'>
-        <Toolbar>
+        <Toolbar className={classes.toolBar}>
           <NavLink to={"/"}>
             <img
               src={
