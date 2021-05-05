@@ -166,28 +166,6 @@ $gris:#2C3A40;
     }
   }
 
-  .products::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .products::-webkit-scrollbar-track {
-    background-color: #ccc;
-  }
-
-  .products::-webkit-scrollbar-thumb {
-    background-color: #777;
-    border-radius: 4px;
-  }
-
-  .products::-webkit-scrollbar-thumb:hover {
-    background-color: #777;
-    border: 1px solid #333333;
-  }
-
-  .products::-webkit-scrollbar-thumb:active {
-    background-color: #666;
-    border: 1px solid #333333;
-  }
 }
 
 .containerDark {
