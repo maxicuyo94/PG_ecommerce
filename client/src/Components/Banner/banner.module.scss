@@ -5,6 +5,7 @@ $tablet:768px;
     background-size: cover;
     display: flex;
     justify-content: space-between;
+    margin-top: -1.1rem;
 
     @media screen and (max-width: $tablet) {
         display: none;
