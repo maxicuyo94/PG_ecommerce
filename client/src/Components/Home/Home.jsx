@@ -40,7 +40,6 @@ export function Home(props) {
   let discount = external && external.split(',')[7];
   let address = `${streetName} ${streetNumber}`
   let userEmail = lsemail ? lsemail : mpEmail;
-  console.log(discount)
   let discountPoints = discount == 0.1 ? 2000 : discount == 0.2 ? 4000 : discount == 0.4 ? 8000 : null;
 
   const fecha = new Date();
