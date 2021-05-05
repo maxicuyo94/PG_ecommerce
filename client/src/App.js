@@ -11,7 +11,7 @@ import { Access } from "./Components/Access/Access";
 import { ModifyUser } from "./Components/Access/ModifyUser/ModifyUser";
 import { ModifyProduct } from "./Components/ModifyProduct/ModifyProduct.jsx";
 import { ControlPanel } from "./Components/ControlPanel/ControlPanel.jsx";
-import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
+import CheckOut from "./Components/CheckOut/CheckOut.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
 import { userStorage } from "./Redux/Users/usersActions";
@@ -27,6 +27,7 @@ import { ActiveUser } from './Components/ControlPanel/ActiveUser/ActiveUser'
 import SimonSays from "./Components/VideoGame/SimonSays";
 import {Points} from './Components/Points/Points'
 import { DaySelector } from "./Components/AppointmentsSelector/DaySelector/DaySelector";
+import { Appointments } from "./Components/AppointmentsSelector/Appointments/Appointments";
 
 function App() {
   // eslint-disable-next-line
@@ -126,8 +127,8 @@ function App() {
         )}
       />
       <ProtectedRoute exact path='/videogame' component={SimonSays} />
-      <ProtectedRoute exact path='/appointment' component={DaySelector} />
-
+      <ProtectedRoute exact path='/dayselect' component={DaySelector} />
+      <ProtectedRoute exact path='/appointments' component={Appointments} />
     </Layout>
   );
 }

@@ -7,6 +7,7 @@ import { searchPoints } from '../../Redux/Users/usersActions'
 import { makeStyles } from '@material-ui/core/styles';
 import { Card } from "@material-ui/core";
 import swal from "sweetalert";
+import CheckOut from '../CheckOut/CheckOut'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -114,13 +115,14 @@ export function Payment() {
 
     return (
         <div>
-            {cart.map(item => (
+            {/* {cart.map(item => (
                 <>
                     <img style={{ width: "50px" }} src={item.image} />
                     <h4>{item.title}</h4>
                     <p>US${item.price}</p>
                 </>
-            ))}
+            ))} */}
+            <CheckOut />
             {user.id && <select onChange={handleAddress}>
                 <option value="">Address</option>
                 {

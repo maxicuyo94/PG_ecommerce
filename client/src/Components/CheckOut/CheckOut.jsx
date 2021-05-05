@@ -1,116 +1,178 @@
-import React, { useEffect, useState } from "react";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Button from "@material-ui/core/Button";
-import { useDispatch, useSelector } from "react-redux";
-import style from "./checkout.module.scss";
-import { ItemCart } from "./ItemCart";
-import { clearCart } from "../../Redux/Cart/cartActions";
-import swal from "sweetalert";
-import { useHistory } from "react-router";
+import React, { useState } from 'react';
+import { makeStyles, ThemeProvider, useTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import AddressForm from './AddressForm';
+import Review from './OrderList';
+import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import swal from 'sweetalert';
+import { orderPayment } from '../../Redux/Orders/orderActions';
 
 
-export function CheckOut() {
-  const dispatch = useDispatch();
+const useStyles = makeStyles((theme) => ({
+  layout: {
+    width: 'auto',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'center',
+    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+      width: 600,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    width: 360,
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      width: 720,
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3),
+    },
+  },
+  stepper: {
+    padding: theme.spacing(3, 0, 5),
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+    borderRadius: 3,
+  },
+}));
+
+export default function CheckOut() {
+  const theme = useTheme()
+  const classes = useStyles();
+  const history = useHistory()
+  const dispatch = useDispatch()
+
+  const [activeStep, setActiveStep] = React.useState(0);
   const cart = useSelector((state) => state.cartReducer.cart);
-  const history = useHistory();
-  const [total, setTotal] = useState(0.0);
-  const [subtotal, setSubtotal] = useState(0.0);
-  const [coupon, setCoupon] = useState(0);
 
-  useEffect(() => {
-    if (cart) {
-      let amount =  cart.reduce((acc, product) => {
-        acc = acc + product.price * product.quantity;
-        return acc;
-      }, 0.0)
-      setSubtotal(
-        amount
-      );
-      localStorage.setItem("amountTotal",JSON.stringify(amount))
+  const [infoUser, setInfoUser] = useState({})
+  const [discount, setDiscount] = useState('')
+  
+
+  const steps = ['Review your order', 'Shipping address'/*, 'Payment details'*/];
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <Review />;      
+      case 1:
+        return <AddressForm setInfoUser={setInfoUser} setDiscount={setDiscount} discount={discount}/>;
+      // case 2:
+      //   return <PaymentForm />;
+      default:
+        throw new Error('Unknown step');
     }
-  }, [cart]);
+  }
 
-  useEffect(() => {
-    setTotal((subtotal - subtotal * (coupon / 100)).toFixed(2));
-  }, [subtotal, coupon]);
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
 
-  const handleClearCart = () => {
-    swal("Are you sure you want to CLEAR your cart?", {
-      dangerMode: true,
-      buttons: true,
-    }).then(resp => {
-      if (resp) {
-        dispatch(clearCart())
-        history.push("/");
-      }
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
+  const handleGoShopping = () => {
+    history.push('/catalogue');
+  };
+
+  let handlePayment = async (e) => {
+    e.preventDefault()
+    let cartstock = cart.filter(product => {
+    return product.stock - product.quantity<0
     })
-  };
-
-  const handleCheckOut = () => {
-    if (localStorage.getItem("supabase.auth.token")) {
-      swal("Proceed to payment", "", "success")
-        .then(resp => {
-          if (resp) {
-            history.push("/order/payment");
-          }
-        })
+    if(cartstock.length){
+        swal("Oops", "Haven't stock", "error");
     } else {
-      swal("Do you want to login to go to checkout?", {
-        buttons: {
-          button: "Go to Checkout",
-          roll: {
-            text: "Sign In!",
-            value: "signIn",
-          },
-        },
-      }).then(resp => {
-        if (resp === "signIn") {
-          history.push("/access");
-        } else {
-          history.push("/order/payment")
-        }
-      })
-      //------------------------------------------------//  
+        let response = await dispatch(orderPayment(cart, infoUser, discount))
+        response && window.location.replace(response)
     }
+  }
+  
 
-  };
 
   return (
-    <div>
-      <script
-        src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
-        data-preference-id="<%= global.id %>"
-      ></script>
-      <div>
-        <Grid container direction="column" className={style.orderList}>
-          <Typography variant="h6">Order Details</Typography>
-          <List>
-            {cart &&
-              cart.map((product) => {
-                return <ItemCart product={product} />;
-              })}
-          </List>
-          <ListItem>
-            <ListItemText>{`Total: ${total}`}</ListItemText>
-          </ListItem>
-          <Button
-            variant="contained"
-            onClick={handleCheckOut}
-          >
-            Check Out
-          </Button>
-          <Button variant="contained" onClick={handleClearCart}>
-            Clear cart
-          </Button>
-        </Grid>
-      </div>
-      {/* <div className="">
-
-            </div> */}
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>
+          <Typography component="h1" variant="h4" align="center">
+            Checkout
+          </Typography>
+          <Stepper activeStep={activeStep} className={classes.stepper}>
+            {steps.map((label) => (
+              <Step key={label} >
+                <StepLabel className={classes.step}>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant="h5" gutterBottom>
+                  Thank you for your order.
+                </Typography>
+                <Typography variant="subtitle1">
+                  Your order number is #2001539. We have emailed your order confirmation, and will
+                  send you an update when your order has shipped.
+                </Typography>
+              </React.Fragment>
+            ) : (
+              <>
+                {getStepContent(activeStep)}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 ? (
+                    <Button onClick={handleBack} className={classes.button}>
+                      Back
+                    </Button>
+                  ) : (
+                    <Button onClick={handleGoShopping} className={classes.button}>
+                      Continue shopping
+                    </Button>
+                  )}
+                  {activeStep === steps.length - 1 ?
+                  (<Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handlePayment}
+                    className={classes.button}
+                  >
+                    Go to payment
+                  </Button>)
+                  :
+                  (<Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    Next
+                  </Button>)
+                  }
+                </div>
+              </>
+            )}
+          </>
+        </Paper>
+      </main>
+    </ThemeProvider>
   );
 }

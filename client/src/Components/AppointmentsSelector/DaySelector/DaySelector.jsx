@@ -1,30 +1,39 @@
 import React, { useState } from "react";
 import style from "./dayselector.module.scss";
 import { Link } from "react-router-dom";
-import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
-
+import DayPicker from "react-day-picker";
+import "react-day-picker/lib/style.css";
+import { useDispatch } from "react-redux";
+import {allAppointments} from '../../../Redux/Appointments/appointments'
 export function DaySelector() {
-    const [value, setValue] = useState();
-    const [date, setDate] = useState();
+  const order = '01792ab0-ee79-41a7-ad79-a7bb6a279edc'
+  const dispatch = useDispatch();
+  const [value, setValue] = useState();
+  const [date, setDate] = useState();
 
-    const handleChange = (day) => {
-        setValue(day)
-        setDate(day.toLocaleDateString('en-GB'))
-    }
+  const handleChange = (day) => {
+    setValue(day);
+    setDate(day.toLocaleDateString("en-GB"));
+  };
 
-    console.log(date)
+  const sendData = () => {
+    dispatch(allAppointments(date, order));
+  };
+
   return (
     <div className={style.div}>
       <h3>Select a day to pick your order</h3>
-      <DayPicker 
-      className={style.daypicker} 
-      onDayClick={handleChange}
-      selectedDays={value}
+      <DayPicker
+        className={style.daypicker}
+        onDayClick={handleChange}
+        selectedDays={value}
       />
-    {date ? <p>You've selected {date}</p>: null}
-    {date ? <button>Continue</button>: null}
-
+      {date ? <p>You've selected {date}</p> : null}
+      {date ? 
+      <Link to='/appointments'>
+      <button onClick={sendData}>Continue</button>
+      </Link> 
+      : null}
     </div>
   );
 }
