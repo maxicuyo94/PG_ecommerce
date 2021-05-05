@@ -43,3 +43,7 @@ export const USER_LOGOUT = "USER_LOGOUT";
 // User
 export const USER_CONFIG = "USER_CONFIG"
 export const ADD_POINTS = "ADD_POINTS"
+
+// Appointments
+export const APPOINTMENTS = "APPOINTMENTS"
+
