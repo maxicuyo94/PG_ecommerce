@@ -1,20 +1,21 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductCard } from "../ProductCard/ProductCard";
+//import { ProductCard } from "../ProductCard/ProductCard";
 import { useLocation, useHistory } from 'react-router-dom'
-import {
-  allProducts,
-  getCategories,
-} from "../../Redux/Products/productActions";
-import left from "../../Assets/static/arrow-back.svg";
-import right from "../../Assets/static/arrow-next.svg";
-import Style from "./catalogue.module.scss";
+import { allProducts, getCategories, } from "../../Redux/Products/productActions";
+//import left from "../../Assets/static/arrow-back.svg";
+//import right from "../../Assets/static/arrow-next.svg";
+import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
+import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
+import styles from "./catalogue.module.scss";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import {CategoriesHome} from '../Home/Categories/CategoriesHome'
-import {Banner2} from '../Banner/Banner'
-
-export function Catalogue({dark}) {
+import { CategoriesHome } from '../Home/Categories/CategoriesHome'
+import { Banner2 } from '../Banner/Banner'
+import ViewModuleOutlinedIcon from '@material-ui/icons/ViewModuleOutlined';
+import ViewListOutlinedIcon from '@material-ui/icons/ViewListOutlined';
+import Cards from './Cards/Cards'
+export function Catalogue({ dark }) {
   const [t, i18n] = useTranslation("global");
   const Products = useSelector((state) => state.productReducer.wantedProducts);
   const Categories = useSelector((state) => state.productReducer.categories);
@@ -24,16 +25,16 @@ export function Catalogue({dark}) {
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
   const Input = useSelector(state => state.productReducer.Searchingg)
-  const [Count, setCount] = useState(true)
+  const [view, setView] = useState(false)
 
 
   const location = useLocation()
-    const history = useHistory()
+  const history = useHistory()
 
-    function useQuery() {
-        return new URLSearchParams(location.search);
-    }
-    let query = useQuery();
+  function useQuery() {
+    return new URLSearchParams(location.search);
+  }
+  let query = useQuery();
 
 
   useEffect(() => {
@@ -41,20 +42,20 @@ export function Catalogue({dark}) {
   }, [Category, Prices]);
 
   useEffect(() => {
-    if(query.has('category')) {
+    if (query.has('category')) {
       const selectQuery = query.get('category')
       stableDispatch(
         allProducts(Pages * 4, Pages * 4 + 4, selectQuery, Prices, Input)
       );
     } else {
-    stableDispatch(
-      allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
-    );
-  }
+      stableDispatch(
+        allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
+      );
+    }
 
     dispatch(getCategories());
-    
-  }, [dispatch, stableDispatch, Pages, Category, Prices, Input, Count,  history.location.pathname, history.location.search]);
+
+  }, [dispatch, stableDispatch, Pages, Category, Prices, Input, history.location.pathname, history.location.search]);
 
 
   const handleInputChange = (e) => {
@@ -68,121 +69,106 @@ export function Catalogue({dark}) {
     e.target.value === ""
       ? setPrices(["", ""])
       : e.target.value === "400"
-      ? setPrices([e.target.value, ""])
-      : setPrices([e.target.value, 200 + parseInt(e.target.value)]);
+        ? setPrices([e.target.value, ""])
+        : setPrices([e.target.value, 200 + parseInt(e.target.value)]);
   };
 
-  function changepage(e) {
-    if (e.target.id === "backward" && Pages > 0) {
-      setPages(Pages - 1);
-    }
-    if (e.target.id === "upward" && Products.length) {
-      setPages(Pages + 1);
-    }
+  const prevPage = () => {
+
+    Pages > 0 && setPages(Pages - 1);
+  }
+  const nextPage = () => {
+    Products.length > 3 && setPages(Pages + 1);
   }
 
   return (
-    <div className={Style.container}>
-      <div name="filters" className={dark ? Style.filters2 : Style.filters}>
-        <div name="categories" className={Style.categoriesPrice}>
-          <div className={Style.searchFilter}>
-            <h4 className={dark ? Style.title2 : Style.title}>{t("catalogue.textTwo")}</h4>
-          </div>
-          <h3 className={dark ? Style.tag2 : Style.tag}>{t("catalogue.texThree")}</h3>
-          <select id='categories'
-            className={Style.select}
-            onChange={(e) => {
-              handleInputChange(e);
-            }}
-          >
-            <option className={Style.tagg} value="">{t("catalogue.textFour")}</option>
-            {Categories &&
-              Categories.map((item, i) => (
-                <option className={Style.tagg} key={i} value={item.name}>
-                  {item.name}
-                </option>
-              ))}
+    <div
+      className={
+        dark && view ?
+          styles.containerDark :
+          dark && !view ?
+            styles.containerListDark :
+            !dark && view ? styles.container : styles.containerList
+      }>
+      <div className={styles.filter}>
+        <div className={styles.title}>
+          <span>{t("catalogue.textTwo")}</span>
+        </div>
+        <div className={styles.categories}>
+
+          <span>{t("catalogue.texThree")}</span>
+          <select onChange={handleInputChange}>
+            <option value="">{t("catalogue.textFour")}</option>
+            {Categories?.map((category, i) => (
+              <option value={category.name}>{category.name}</option>
+            ))}
           </select>
         </div>
-        <div name="Price" className={Style.categoriesPrice}>
-          <h3 className={dark ? Style.tag2 : Style.tag}>{t("catalogue.textFive")}</h3>
-          <select id='prices' className={Style.select}
-            onChange={(e) => {
-              handleInputChangeP(e);
-            }}
-          >
-            <option className={Style.tagg} value="">{t("catalogue.textSix")}</option>
-            <option className={Style.tagg} name="0 - 200" value="0">0 - 200</option>
-            <option className={Style.tagg} value="200">200 - 400</option>
-            <option className={Style.tagg} value="400">400 - + </option>
+        <div className={styles.price}>
+          <span>{t("catalogue.textFive")}</span>
+          <select onChange={handleInputChangeP}>
+            <option value="">{t("catalogue.textSix")}</option>
+            <option value="0">0 - 200</option>
+            <option value="200">200 - 400</option>
+            <option value="400">400 - + </option>
           </select>
         </div>
+        <div className={styles.view}>
+          <span>{t("catalogue.view")} </span>
+          <button onClick={() => { setView(!view) }}>
+            {!view ?
+              <ViewModuleOutlinedIcon />
+              : <ViewListOutlinedIcon />}
+          </button>
+        </div>
+        <div className={styles.pagination}>
+          <button onClick={prevPage}>
+            <ArrowBackIosOutlinedIcon style={{ fontSize: '1rem' }} />
+          </button>
+          <input type='text' value={Pages + 1} disabled />
+          <button onClick={nextPage}>
+            <ArrowForwardIosOutlinedIcon style={{ fontSize: '1rem' }} />
+          </button>
+        </div>
+      </div>
+      <div className={styles.products}>
 
-        <div>
-          <h3 className={dark ? Style.tag2 : Style.tag}>{t("catalogue.category")}:</h3>
-          {
-            document.getElementById('categories') && (<div>
-            <label className={Style.tag}>
-              {document.getElementById('categories').value}
-            </label>
-            </div>)
+        <div className={styles.searched}>
+          {Products?.map((item) => (
+            <Cards
+              key={item.id}
+              id={item.id}
+              stock={item.stock}
+              title={item.name}
+              price={item.price}
+              image={item.images}
+              discount={item.discount}
+              reviews={item.reviews}
+              view={view}
+            />
+          ))
           }
-           <h3 className={dark ? Style.tag2 : Style.tag}>{t("catalogue.prices")}:</h3>
-             {
-            document.getElementById('prices') && (<div>
-            <label className={Style.tag}>
-              {document.getElementById('prices').value}
-            </label>
-            </div>)
-          }
         </div>
       </div>
-      <div className={Style.catalogue} name="showproducts">
-      <div style={{width:"56rem"}}>
-        <div className={Style.keypad}>
-        <button className={Style.button} onClick={() => Count === true ? setCount(false) : setCount(true)}>
-            {t("catalogue.view")}
-          </button>
-          <div>
-          </div>
-        </div>
-      </div>
-   
-        <div>
-          <div className={Count === true ? Style.products : Style.products2}>
-            {Products &&
-              Products.map((item) => (
-                <SwiperSlide style={{height:'30rem', width:'20rem', margin:'2.6rem'}}>
-                <CategoriesHome 
-                  key={item.id}
-                  id={item.id}
-                  stock={item.stock}
-                  title={item.name}
-                  price={item.price}
-                  image={item.images}
-                  discount={item.discount}
-                  reviews={item.reviews}
-                />
-              </SwiperSlide>
-              ))}
-          </div>
-        </div>
-        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
-        <button   className={Style.button}
-            onClick={(e) => changepage(e)}
-            className={Style.button}>
-           ᐊᐊᐊ
-          </button>
-      
-          <button   className={Style.button}
-          onClick={(e) => changepage(e)}
-          className={Style.button}>
-           ᐅᐅᐅ
-          </button>
-
-          </div>
-      </div>
-
     </div>
   );
 }
+
+/* <div>
+          <h3>{t("catalogue.category")}:</h3>
+          {
+            document.getElementById('categories') && (<div>
+              <label className={styles.tag}>
+                {document.getElementById('categories').value}
+              </label>
+            </div>)
+          }
+          <h3>{t("catalogue.prices")}:</h3>
+          {
+            document.getElementById('prices') && (<div>
+              <label className={styles.tag}>
+                {document.getElementById('prices').value}
+              </label>
+            </div>)
+          }
+        </div> */
