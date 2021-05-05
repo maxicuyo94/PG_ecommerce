@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -20,6 +20,7 @@ import swal from "sweetalert";
 import MiniCart from "./MiniCart/MiniCart";
 import BtnDark from "./BtnDark/BtnDark";
 import { Search } from "../../Redux/Products/productActions";
+import logo from "../../Assets/static/simbolo-verde.png"
 
 
 
@@ -46,11 +47,11 @@ const useStyles = makeStyles((theme) => ({
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: "100%",
-    // [theme.breakpoints.up("sm")]: {
-    //   marginLeft: theme.spacing(3),
-    //   width: "100%"
-    // }
+    width: "50vw",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(3),
+      width: "100%"
+    }
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -70,9 +71,9 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "10ch",
-    // [theme.breakpoints.up("md")]: {
-    //   width: "25ch"
-    // }
+    [theme.breakpoints.up("md")]: {
+      width: "25ch"
+    }
   },
   sectionDesktop: {
     display: "none",
@@ -92,7 +93,8 @@ const useStyles = makeStyles((theme) => ({
   Logo: {
     height: '8vh',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding:'1rem'
   },
 }));
 
@@ -107,7 +109,14 @@ export default function NavBar({ priority, dark }) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [search, setSearch] = useState("");
+  const [width, setWidth] = React.useState(window.innerWidth);
+  // const breakPoint = 1450;
 
+  useEffect(() => {
+    const handleWindowResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+   },[width]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -274,14 +283,22 @@ export default function NavBar({ priority, dark }) {
       <AppBar className={classes.navBar} color='secondary'>
         <Toolbar className={classes.toolBar}>
           <NavLink to={"/"} className={classes.Logo}>
+            {
+            width > 720 ?
             <img
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
               } 
               alt="Ups, we don't found anything here. Try again tomorrow!"
-              width="220"
               height="50"
             />
+            :
+            <img
+              src={logo}
+              alt="Ups, we don't found anything here. Try again tomorrow!"
+              height="62"
+            />
+            }
           </NavLink>
           <form className={classes.search} onSubmit={(e) => handleSubmitSearch(e)}>
             <div className={classes.searchIcon}>
