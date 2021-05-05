@@ -117,6 +117,7 @@ export function ModifyUser({ id, dark }) {
           <div className={style.phone}>
             <label>Phone</label>
             <input
+              name="phone"
               value={dataUser.phone}
               onChange={(e) => handleInputChange(e)}
             ></input>
