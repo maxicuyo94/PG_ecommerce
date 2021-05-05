@@ -38,7 +38,7 @@ const Hours = [
     }
 ]
 
-const dateAppointment = {
+/* const dateAppointment = {
     date: "16/5/2021",
     hours:[
         {
@@ -80,12 +80,14 @@ const dateAppointment = {
     
     ]
     
-}
+} */
 
 
 
 export function Appointments () {
-    const userLoged = useSelector(state => state.usersReducer.userLoged)
+    const userLoged = useSelector(state => state.usersReducer.userLoged);
+    const dateAppointment = useSelector(state => state.appointmentReducer)
+    console.log(dateAppointment, 'aca')
     const dispatch = useDispatch()
 
     const handleReserve = (idHour) => {
