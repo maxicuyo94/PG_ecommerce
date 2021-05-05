@@ -169,7 +169,7 @@ export function ModifyUser({ id, dark }) {
           </div>
           <div className={style.country}>
             <label>Tech Points</label>
-            <h3>{dataUser.points}</h3>
+            <h3>{Math.floor(dataUser.points)}</h3>
           </div>
           {
             (userLog.permission === "superadmin" || userLog.permission === "admin") && (dataUser.id !== userLog.id) &&
