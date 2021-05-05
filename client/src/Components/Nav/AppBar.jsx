@@ -107,11 +107,6 @@ export default function NavBar({ priority, dark }) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleProfileMenuClose = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
