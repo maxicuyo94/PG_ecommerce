@@ -3,10 +3,10 @@ $minwidth: 600px;
 $dark:#2C3A40;
 
 .container {
-  padding-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 6rem;
 
   //min-height: 100vh;
 

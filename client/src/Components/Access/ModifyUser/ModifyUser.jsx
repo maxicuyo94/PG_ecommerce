@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom'
 import style from "./ModifyUser.module.scss";
-import { updateUser, getUser, sendMail, deactivate, mailActivate, activate, userLogOut } from "../../../Redux/Users/usersActions";
+import { updateUser, getUser, sendMail, deactivate, mailActivate, activate, userLogOut, userStorage } from "../../../Redux/Users/usersActions";
 import { EditUsers } from "./EditUsers/EditUsers"
+import swal from "sweetalert";
 
 export function ModifyUser({ id, dark }) {
   const dispatch = useDispatch();
+  const history = useHistory()
   const userLog = useSelector((state) => state.usersReducer.userLoged);
   const userConfig = useSelector((state) => state.usersReducer.userConfig)
   const [dataUser, setDataUser] = useState({
@@ -77,9 +80,14 @@ export function ModifyUser({ id, dark }) {
 
   }
 
-  const modifyUser = (e) => {
+  const modifyUser = async (e) => {
     e.preventDefault();
-    dispatch(updateUser(dataUser));
+    await dispatch(updateUser(dataUser));
+    dispatch(userStorage(dataUser.id))
+    swal('Your data was modified correctly', '', 'success')
+      .then(() => {
+        history.push('/')
+      })
   };
 
   const deactivateUser = (e) => {
@@ -117,6 +125,7 @@ export function ModifyUser({ id, dark }) {
           <div className={style.phone}>
             <label>Phone</label>
             <input
+              name="phone"
               value={dataUser.phone}
               onChange={(e) => handleInputChange(e)}
             ></input>
@@ -169,7 +178,7 @@ export function ModifyUser({ id, dark }) {
           </div>
           <div className={style.country}>
             <label>Tech Points</label>
-            <h3>{dataUser.points}</h3>
+            <h3>{Math.floor(dataUser.points)}</h3>
           </div>
           {
             (userLog.permission === "superadmin" || userLog.permission === "admin") && (dataUser.id !== userLog.id) &&

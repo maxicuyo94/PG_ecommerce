@@ -36,7 +36,7 @@ export const getUserReviews = (id) => {
   return async function (dispatch) {
     const JSON = await supabase
       .from("reviews")
-      .select("*, product (name)")
+      .select("*, product (name), users (name, surname)")
       .eq("user_id", id);
     dispatch({
       type: actionType.GET_USER_REVIEWS,

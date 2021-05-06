@@ -13,14 +13,12 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 //import Slider from "./Slider/Slider";
 import Thumbs from "./Thumbs/Thumbs";
-import { getReviewsOfProduct } from "../../Redux/Reviews/reviewsActions";
 import SwiperSlider from '../Home/Swiper/SwiperSlider'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 //import StarHalfIcon from '@material-ui/icons/StarHalf';
 import StarIcon from '@material-ui/icons/Star';
 import { useLocalStorage } from '../../LocalStorage/useLocalStorage'
-import { deleteReview } from "../../Redux/Reviews/reviewsActions";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 
@@ -266,8 +264,8 @@ export const Product = (props) => {
           <span>MORE PRODUCTS</span>
         </div>
         <div className={styles.slider}>
-          {productByCategories[random] && (
-            <SwiperSlider products={productByCategories[random].data} />
+          {productByCategories.length > 0 && (
+            <SwiperSlider products={productByCategories[1].product_categories} />
           )}
         </div>
       </div>
