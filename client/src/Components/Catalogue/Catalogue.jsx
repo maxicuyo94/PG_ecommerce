@@ -17,6 +17,7 @@ import Cards from "./Cards/Cards";
 export function Catalogue({ dark }) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
+  
   const wantedProducts = useSelector(
     (state) => state.productReducer.wantedProducts
   );
@@ -27,8 +28,9 @@ export function Catalogue({ dark }) {
   const [Prices, setPrices] = useState(["", ""]);
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
-  const Input = useSelector((state) => state.productReducer.Searchingg);
+  const Input = useSelector((state) => state.productReducer.Searching);
   const [view, setView] = useState(false);
+
   const [renderItems, setRenderItems] = useState([]);
 
   const location = useLocation();
@@ -54,7 +56,6 @@ export function Catalogue({ dark }) {
         getAllProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
       );
     }
-
     dispatch(getCategories());
     // eslint-disable-next-line
   }, [
@@ -105,7 +106,7 @@ export function Catalogue({ dark }) {
     Pages > 0 && setPages(Pages - 1);
   };
   const nextPage = () => {
-    renderItems.length > 3 && setPages(Pages + 1);
+    allProducts.length > 3 && setPages(Pages + 1);
   };
 
   return (
@@ -124,7 +125,7 @@ export function Catalogue({ dark }) {
         <div className={styles.title}>
           <span>{t("catalogue.textTwo")}</span>
         </div>
-        <button onClick={() => handleClearSearch()}>Clear Search</button>
+
         <div className={styles.categories}>
           <span>{t("catalogue.texThree")}</span>
           <select onChange={handleInputChange}>
@@ -165,7 +166,7 @@ export function Catalogue({ dark }) {
       </div>
       <div className={styles.products}>
         <div className={styles.searched}>
-          {renderItems?.map((item) => (
+          {allProducts?.map((item) => (
             <Cards
               key={item.id}
               id={item.id}
