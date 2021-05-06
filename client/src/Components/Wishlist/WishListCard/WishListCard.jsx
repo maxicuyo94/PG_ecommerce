@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { addToWishlist, getUserWishlist } from "../../../Redux/Wishlist/wishlistActions";
-import { useLocalStorage } from "../../../LocalStorage/useLocalStorage";
-import React, { useEffect }  from "react";
+import { useDispatch } from "react-redux";
+import { addToWishlist } from "../../../Redux/Wishlist/wishlistActions";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -39,21 +38,21 @@ const useStyles = makeStyles((theme) => ({
     transition: "500ms",
     "&:hover": {
       transition: "500ms",
-      color: "#9abf15"
-    }
+      color: "#9abf15",
+    },
   },
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
     borderRadius: 3,
-    color: '#fff'
+    color: "#fff",
   },
 }));
 
 export default function WishListCard({ props, userId }) {
   const classes = useStyles();
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const product = {
     id: props.id,
@@ -61,30 +60,33 @@ export default function WishListCard({ props, userId }) {
     quantity: 1,
     title: props.name,
     image: props.images[0]?.url,
-    stock: props.stock
-  }
+    stock: props.stock,
+  };
 
-  const addItemToCart = e => {
-    e.preventDefault()
-    dispatch(addItemCart(product))
-  }
+  const addItemToCart = (e) => {
+    e.preventDefault();
+    dispatch(addItemCart(product));
+  };
 
-  const toProductDetail = e => {
-    e.preventDefault()
-    history.push(`/product/${props.id}`)
-  }
+  const toProductDetail = (e) => {
+    e.preventDefault();
+    history.push(`/product/${props.id}`);
+  };
 
-  const removeFromFav = e => {
-    e.preventDefault()
-    dispatch(addToWishlist({id: props.id, fav: false, userId }))
-  }
+  const removeFromFav = (e) => {
+    e.preventDefault();
+    dispatch(addToWishlist({ id: props.id, fav: false, userId }));
+  };
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>
-            <ButtonBase onClick={e => toProductDetail(e)} className={classes.image}>
+            <ButtonBase
+              onClick={(e) => toProductDetail(e)}
+              className={classes.image}
+            >
               <img
                 className={classes.img}
                 alt="complex"
@@ -95,33 +97,32 @@ export default function WishListCard({ props, userId }) {
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <Typography onClick={e => toProductDetail(e)} className={classes.type} gutterBottom variant="subtitle1">
+                <Typography
+                  onClick={(e) => toProductDetail(e)}
+                  className={classes.type}
+                  gutterBottom
+                  variant="subtitle1"
+                >
                   {props.name}
                 </Typography>
-                {/* <Typography variant="body2" gutterBottom>
-                  Full resolution 1920x1080 • JPEG
-                </Typography> */}
-                {/* <Typography variant="body2" color="textSecondary">
-                  ID: 1030114
-                </Typography> */}
               </Grid>
               <Grid item>
-              <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={(e) => addItemToCart(e)}
-                  >
-                    Add To Cart
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={(e) => removeFromFav(e)}
-                  >
-                    Remove
-                  </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={(e) => addItemToCart(e)}
+                >
+                  Add To Cart
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={(e) => removeFromFav(e)}
+                >
+                  Remove
+                </Button>
               </Grid>
             </Grid>
             <Grid item>

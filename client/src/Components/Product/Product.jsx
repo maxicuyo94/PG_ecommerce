@@ -4,42 +4,35 @@ import {
   productDetail,
   getProductsByCategories,
 } from "../../Redux/Products/productActions";
-import { QRCode } from 'react-qrcode'
+import { QRCode } from "react-qrcode";
 import styles from "./Product.module.scss";
 import swal from "sweetalert";
 import { addItemCart } from "../../Redux/Cart/cartActions";
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-//import Slider from "./Slider/Slider";
 import Thumbs from "./Thumbs/Thumbs";
-import SwiperSlider from '../Home/Swiper/SwiperSlider'
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-//import StarHalfIcon from '@material-ui/icons/StarHalf';
-import StarIcon from '@material-ui/icons/Star';
-import { useLocalStorage } from '../../LocalStorage/useLocalStorage'
-//import { Link } from "react-router-dom";
+import SwiperSlider from "../Home/Swiper/SwiperSlider";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
+import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
-
-
-
 
 let random = Math.round(Math.random() * 2);
 export const Product = (props) => {
   const dispatch = useDispatch();
-  //const state = useSelector((state) => state);
-  //const { currentProduct, currentReviewsOfProduct } = state;
-  //const [maxReviews, setMaxReviews] = useState(5);
-  //const reviews = useSelector((state) => state.reviewsReducer.reviews);
-  const [productsVisited, setProductsVisited] = useLocalStorage("productVisited", [])
+  const [productsVisited, setProductsVisited] = useLocalStorage(
+    "productVisited",
+    []
+  );
   const details = useSelector((state) => state.productReducer.productDetail);
   const id = props.id;
   const productByCategories = useSelector(
     (state) => state.productReducer.productByCategories
   );
-  const Link = `http://192.168.100.4:3000/product/${id}`
+  const Link = `http://192.168.100.4:3000/product/${id}`;
 
-  const [deleting, setDeleting] = useState(null)
+  const [deleting, setDeleting] = useState(null);
 
   const [value, setValue] = useState(1);
   const [nav, setNav] = useState("details");
@@ -50,17 +43,16 @@ export const Product = (props) => {
     value > 1 && setValue(value - 1);
   };
 
-  const [userLog] = useLocalStorage("supabase.auth.token")
+  const [userLog] = useLocalStorage("supabase.auth.token");
 
   useEffect(() => {
-    const findLastProduct = productsVisited.find(id => id === props.id)
+    const findLastProduct = productsVisited.find((id) => id === props.id);
     if (!findLastProduct) {
-      setProductsVisited(product => [...product, props.id])
+      setProductsVisited((product) => [...product, props.id]);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-
     const idDetails = async () => {
       await dispatch(productDetail(id));
     };
@@ -77,7 +69,6 @@ export const Product = (props) => {
   }, [id]);
 
   const handleAddToCart = (details) => {
-
     let cartItemModel = {
       title: details.name,
       image: details.images[0].url,
@@ -89,7 +80,6 @@ export const Product = (props) => {
     dispatch(addItemCart(cartItemModel));
     setValue(1);
     swal("Done!", "Added to cart", "success");
-
   };
 
   return (
@@ -154,19 +144,15 @@ export const Product = (props) => {
                       </li>
                     );
                   })}
-                {nav === "full" && details.name && (
-                  <li>{details.name}</li>
-                )}
+                {nav === "full" && details.name && <li>{details.name}</li>}
                 {nav === "qr" && (
                   <li className={styles.qr}>
                     <QRCode
                       value={Link}
-                      color={
-                        {
-                          dark: '#2C3A40',
-                          light: '#9abf15'
-                        }
-                      }
+                      color={{
+                        dark: "#2C3A40",
+                        light: "#9abf15",
+                      }}
                       scale={5}
                     />
                   </li>
@@ -181,27 +167,23 @@ export const Product = (props) => {
           </div>
           <div className={styles.buy}>
             <label>
-
               On sale from
-              <b>${
-                (details.price * (1 - details.discount / 100) * value)
-                  .toFixed(2)
-              }</b>
+              <b>
+                $
+                {(details.price * (1 - details.discount / 100) * value).toFixed(
+                  2
+                )}
+              </b>
             </label>
             <div className={styles.change}>
-              <button
-                className={styles.add}
-                onClick={handleRes}>
-                <RemoveIcon style={{ fontSize: '1rem' }} />
+              <button className={styles.add} onClick={handleRes}>
+                <RemoveIcon style={{ fontSize: "1rem" }} />
               </button>
               <div className={styles.cont}>
                 <input type="text" value={value} disabled />
               </div>
-              <button
-                className={styles.add}
-                onClick={handleSum}
-              >
-                <AddIcon style={{ fontSize: '1rem' }} />
+              <button className={styles.add} onClick={handleSum}>
+                <AddIcon style={{ fontSize: "1rem" }} />
               </button>
             </div>
             {details.stock > 0 ? (
@@ -230,34 +212,32 @@ export const Product = (props) => {
         <div className={styles.reviewTitle}>
           <span> Reviews</span>
         </div>
-        {console.log(details)}
-        {details.reviews?.length > 0 ?
+        {details.reviews?.length > 0 ? (
           <div className={styles.reviews}>
             {details.reviews.map((review) => {
-              return <>
-                <span>Description: {review.description}</span>
-                <span>
-                  Rating:
-                  {[...Array(review.rating)].map(() => {
-                  return <StarIcon style={{ fontSize: '1rem' }} />
-                })}
-                  {[...Array(5 - review.rating)].map(() => {
-                    return <StarBorderIcon style={{ fontSize: '1rem' }} />
-                  })}
-                </span>
-                <hr />
-              </>
-            })
-            }
-          </div> :
+              return (
+                <>
+                  <span>Description: {review.description}</span>
+                  <span>
+                    Rating:
+                    {[...Array(review.rating)].map(() => {
+                      return <StarIcon style={{ fontSize: "1rem" }} />;
+                    })}
+                    {[...Array(5 - review.rating)].map(() => {
+                      return <StarBorderIcon style={{ fontSize: "1rem" }} />;
+                    })}
+                  </span>
+                  <hr />
+                </>
+              );
+            })}
+          </div>
+        ) : (
           <div className={styles.notReviews}>
-            <span>
-              This product has no reviews yet
-            </span>
+            <span>This product has no reviews yet</span>
             <hr />
           </div>
-        }
-
+        )}
       </div>
       <div className={styles.related}>
         <div className={styles.more}>
@@ -265,7 +245,9 @@ export const Product = (props) => {
         </div>
         <div className={styles.slider}>
           {productByCategories.length > 0 && (
-            <SwiperSlider products={productByCategories[1].product_categories} />
+            <SwiperSlider
+              products={productByCategories[1].product_categories}
+            />
           )}
         </div>
       </div>

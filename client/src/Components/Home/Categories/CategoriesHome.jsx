@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import styles from "./CategoriesHome.module.scss";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -11,10 +11,8 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import { addItemCart } from "../../../Redux/Cart/cartActions";
-import { addToWishlist, deleteWishlist } from "../../../Redux/Wishlist/wishlistActions";
-import { useState } from "react";
+import { addToWishlist } from "../../../Redux/Wishlist/wishlistActions";
 import notFound from "./altimage.png";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { useLocalStorage } from "../../../LocalStorage/useLocalStorage";
 import SwiperCore, {
   Navigation,
@@ -38,7 +36,6 @@ export const CategoriesHome = (props) => {
   const history = useHistory()
 
   const handleFav = () => {
-    //agregar alerta si no estás logueado
     if(!userId) {
       swal("You have to be logged to add items to your wishlist", {
         buttons: {
@@ -58,7 +55,7 @@ export const CategoriesHome = (props) => {
       setFav(!fav);
     }
   };
-  console.log(props)
+  
   const dark = useSelector((state) => state.darkReducer.dark);
   const average = Math.ceil(
     props.reviews.reduce((counter, obj) => obj.rating + counter, 0) /
