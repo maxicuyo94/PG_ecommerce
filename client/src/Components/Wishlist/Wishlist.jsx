@@ -18,11 +18,18 @@ const Wishlist = () => {
   return (
     <div className="container">
       <h2>Wishlist</h2>
-      <div className="productsWishlist">
-        {wishlist?.map((product) => (
-          <WishListCard props={product.product} userId={userId} />
-        ))}
-      </div>
+      {wishlist.length > 0 ? (
+        <div className="productsWishlist">
+          {wishlist?.map((product) => (
+            <WishListCard props={product.product} userId={userId} />
+          ))}
+        </div>
+      ) : (
+        <div className="emptyWishlist">
+          <span>You don't got any favorites yet</span>
+          setTimeout( function() {(window.location.href = "/")}, 3000 )
+        </div>
+      )}
     </div>
   );
 };
