@@ -15,6 +15,7 @@ export function Review({ id }) {
   const userId = userLog && userLog.currentSession.user.id;
   // eslint-disable-next-line
   const dispatch = useDispatch();
+  // eslint-disable-next-line
   const [setUserId] = useState();
   const [review, setReview] = useState({
     rating: null,

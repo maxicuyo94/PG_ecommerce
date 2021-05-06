@@ -6,6 +6,7 @@ import { updateReview } from "../../Redux/Reviews/reviewsActions";
 
 export function ModifyReview({ id }) {
   const dispatch = useDispatch();
+  // eslint-disable-next-line
   const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const [data, setData] = useState({
     description: "",
