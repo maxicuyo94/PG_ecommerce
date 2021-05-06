@@ -78,7 +78,6 @@ export default function SimpleMenu() {
     }
     if (!cart.length) {
       setAnchorEl(null);
-      history.push("/")
     }
   }, [cart]);
 
