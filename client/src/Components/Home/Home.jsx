@@ -69,8 +69,6 @@ export function Home(props) {
 
   return (
     <div className={props.dark ? styles.containerDark : styles.container}>
-      {/* {productByCategories[0] && console.log('Categoria 1:', productByCategories[0].name, ' Productos:', productByCategories[0].product_categories)
-      } */}
       <div className={styles.containerTitle}>
         <span className={styles.tag}>{t("home.title")}</span>
       </div>
@@ -78,26 +76,24 @@ export function Home(props) {
         {
           lastProducts?.length > 0 && <div className={styles.containerP}>
             <div className={styles.title}>
-              <span className={styles.tag}>¡This product has to be yours!</span>
+              <span>¡This product has to be yours!</span>
             </div>
             <div className={styles.carousel}>
               {lastProducts.length > 0 && (
-                <SwiperSlider products={lastProducts} />
+              <SwiperSlider products={lastProducts} />
               )}
             </div>
           </div>
         }
         {
-          productByCategories?.length > 0 && productByCategories?.map((categories, i) => {
+          productByCategories?.length > 0 && productByCategories.map((categories) => {
             return (
               <div className={styles.containerP} key={categories.name}>
                 <div className={styles.title}>
-                  <span className={styles.tag}>{categories.name}</span>
-                  {/* <span className={styles.tag}>{t("home-cat2.laptops")}</span> */}
+                  <span>{categories.name}</span>
                 </div>
                 <div className={styles.carousel}>
                   <SwiperSlider products={categories.product_categories} />
-                  {/* {console.log('Home Category: ', categories.product_categories)} */}
                 </div>
               </div>
             )

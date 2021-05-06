@@ -48,7 +48,7 @@ $gris:#2C3A40;
             border: none;
             outline: none;
             background: none;
-            opacity: 0;
+            //opacity: 0;
 
             &:hover {
                 cursor: pointer;
@@ -81,7 +81,8 @@ $gris:#2C3A40;
         height: 10%;
         justify-content: center;
         align-items: center;
-        span{
+
+        span {
             margin: 0 0.25rem;
             display: flex;
         }
@@ -131,7 +132,7 @@ $gris:#2C3A40;
             width: 80%;
             margin: 0 auto !important;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
 
             span,
@@ -183,7 +184,7 @@ $gris:#2C3A40;
         transition: 0.5s;
         font-family: -apple-system, Roboto, sans-serif;
 
-        opacity: 0;
+        //opacity: 0;
         @media screen and (max-width: $tablet) {
             width: 90%;
         }
