@@ -58,7 +58,7 @@ const SwiperSlider = ({products}) => {
       }
     >
       {
-        category?.filter(item => item.stock > 0).map((item, i) => {
+        category?.filter(item => item?.stock > 0).map((item, i) => {
           return (
             <SwiperSlide key={i}>
               <CategoriesHome

@@ -22,9 +22,9 @@ import { ModifyReview } from "./Components/Review/modifyReview";
 import { checkout } from "./Redux/Cart/cartActions";
 import { getProductsVisited } from "./Redux/Products/productActions";
 import swal from "sweetalert";
-import { ActiveUser } from './Components/ControlPanel/ActiveUser/ActiveUser'
 import { Banner, Banner2 } from "./Components/Banner/Banner";
 import { ActiveUser } from "./Components/ControlPanel/ActiveUser/ActiveUser";
+import AboutUs from "./Components/AboutUs/AboutUs"
 import SimonSays from "./Components/VideoGame/SimonSays";
 import { Points } from "./Components/Points/Points";
 import { DaySelector } from "./Components/AppointmentsSelector/DaySelector/DaySelector";

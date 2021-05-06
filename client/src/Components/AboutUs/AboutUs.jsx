@@ -7,7 +7,7 @@ import Fondo from './img/fondo.jpg'
 import Linkedin from '../../Assets/static/linkedin-logo.svg'
 import Github from '../../Assets/static/github-logo.svg'
 
-export function AboutUs(){
+export default function AboutUs(){
 
   return(
 
