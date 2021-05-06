@@ -48,7 +48,6 @@
   }
 
   .logo:hover{
-    box-shadow: 5px 5px #6a863b;
     transform: scale(1.2);
     cursor: pointer;
   }
@@ -65,7 +64,7 @@
     justify-content: space-around;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    
+
 
 
   }
@@ -91,11 +90,11 @@
     margin-top: 10px;
     font-size: 24px;
     font-weight: 600;
-    background-color: darkolivegreen;
+    // background-color: darkolivegreen;
     border-radius: 5px;
     padding-left: 3px;
     padding-right: 3px;
-    box-shadow: 5px 5px #6a863b;
+    text-shadow:0px 0px 15px black;
 }
 
 .tdescription{
@@ -117,8 +116,8 @@
     width: fit-content;
     padding: 5px;
     border-radius: 5px;
-    background-color: darkolivegreen;
-    box-shadow: 5px 5px #6a863b;
+    // background-color: darkolivegreen;
+    filter: drop-shadow(0px 0px 10px black);
     // -webkit-filter: drop-shadow(2px 2px 0 darkolivegreen)
     //             drop-shadow(-2px 2px 0 darkolivegreene)
     //             drop-shadow(2px -2px 0 darkolivegreen)
