@@ -24,7 +24,7 @@ import { getProductsVisited } from "./Redux/Products/productActions"
 import swal from "sweetalert";
 import { Banner } from './Components/Banner/Banner'
 import { ActiveUser } from './Components/ControlPanel/ActiveUser/ActiveUser'
-
+import {AboutUs} from './Components/AboutUs/AboutUs.jsx'
 
 function App() {
   // eslint-disable-next-line
@@ -91,6 +91,7 @@ function App() {
         )}
       />
       <Route exact path="/Order" render={() => <CheckOut dark={dark} />} />
+      <Route exact path="/About" render={() => <AboutUs/>} />
       <ProtectedRoute
         exact
         path="/modifyProduct/:id"
