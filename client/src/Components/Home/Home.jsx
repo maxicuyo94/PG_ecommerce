@@ -118,21 +118,21 @@ export function Home(props) {
         {lastProducts?.length > 0 && (
           <div className={styles.containerP}>
             <div className={styles.title}>
-              <span className={styles.tag}>¡This product has to be yours!</span>
+              <span>¡This product has to be yours!</span>
             </div>
             <div className={styles.carousel}>
               {lastProducts.length > 0 && (
-                <SwiperSlider products={lastProducts} />
+              <SwiperSlider products={lastProducts} />
               )}
             </div>
           </div>
-        )}
-        {productByCategories?.length > 0 &&
-          productByCategories?.map((categories, i) => {
+        }
+        {
+          productByCategories?.length > 0 && productByCategories.map((categories) => {
             return (
               <div className={styles.containerP} key={categories.name}>
                 <div className={styles.title}>
-                  <span className={styles.tag}>{categories.name}</span>
+                  <span>{categories.name}</span>
                 </div>
                 <div className={styles.carousel}>
                   <SwiperSlider products={categories.product_categories} />
