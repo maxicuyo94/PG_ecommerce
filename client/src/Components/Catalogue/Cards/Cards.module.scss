@@ -10,11 +10,16 @@ $gris:#2C3A40;
 .container {
     display: flex;
     flex-direction: column;
-    height: 25rem;
-    width: 20rem;
-    margin: 1rem 3rem;
+    height: 22.5rem;
+    width: 25%;
+    margin: auto 5%;
     padding: 0.5rem 0.25rem;
     transition: 0.5s;
+
+    @media screen and (max-width: $tablet) {
+        width: 50%;
+        margin: auto;
+    }
 
     &:hover {
         box-shadow: 2px 0px 10px 0px rgba(0, 0, 0, 0.25);
