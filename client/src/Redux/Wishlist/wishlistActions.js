@@ -9,7 +9,7 @@ export const getUserWishlist = (id) => {
   return async function (dispatch) {
     const JSON = await supabase
       .from("wishlist")
-      .select("*, product (*)")
+      .select("*, product(*, images(*))")
       .eq("user_id", id);
     dispatch({
       type: actionType.GET_USER_WISHLIST,
@@ -37,6 +37,7 @@ export const addToWishlist = (payload2) => {
             product_id: payload.id,
             user_id: payload.userId,
           });
+          dispatch({ type: actionType.DELETE_ITEM_WISHLIST, payload: payload.id})
       };
   };
 };

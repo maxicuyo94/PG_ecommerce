@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import styles from "./CategoriesHome.module.scss";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -35,12 +35,30 @@ export const CategoriesHome = (props) => {
   const [fav, setFav] = useState(false);
   const [cart, setCart] = useState(false);
   const [isShown, setIsShown] = useState(false);
+  const history = useHistory()
+
   const handleFav = () => {
     //agregar alerta si no estás logueado
-    dispatch(addToWishlist({id: props.id, fav: !fav, userId}));
-    setFav(!fav);
+    if(!userId) {
+      swal("You have to be logged to add items to your wishlist", {
+        buttons: {
+          button: "Ok",
+          roll: {
+            text: "Sign In!",
+            value: "signIn",
+          },
+        },
+      }).then(resp => {
+        if (resp === "signIn") {
+          history.push("/access");
+        }
+      })
+    } else {
+      dispatch(addToWishlist({id: props.id, fav: !fav, userId}));
+      setFav(!fav);
+    }
   };
-
+  console.log(props)
   const dark = useSelector((state) => state.darkReducer.dark);
   const average = Math.ceil(
     props.reviews.reduce((counter, obj) => obj.rating + counter, 0) /

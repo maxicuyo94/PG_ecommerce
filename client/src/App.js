@@ -28,7 +28,7 @@ import SimonSays from "./Components/VideoGame/SimonSays";
 import { Points } from "./Components/Points/Points";
 import { DaySelector } from "./Components/AppointmentsSelector/DaySelector/DaySelector";
 import { Appointments } from "./Components/AppointmentsSelector/Appointments/Appointments";
-import { Wishlist } from "./Components/Wishlist/Wishlist";
+import Wishlist from "./Components/Wishlist/Wishlist";
 
 function App() {
   // eslint-disable-next-line

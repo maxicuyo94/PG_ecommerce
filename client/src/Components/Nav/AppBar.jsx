@@ -164,6 +164,8 @@ export default function NavBar({ priority, dark }) {
       history.push('/myProfile')
     } else if( e.target.id === 'logOut') {
       handleLogOut()
+    } else if( e.target.id === 'wishlist') {
+      history.push('/wishlist')
     }
     setAnchorEl(null);
       handleMobileMenuClose();
@@ -206,7 +208,8 @@ export default function NavBar({ priority, dark }) {
     >
       <MenuItem id='account' onClick={(e) => handleMenuProfile(e)}>Account</MenuItem>
       <MenuItem id='profile' onClick={(e) => handleMenuProfile(e)}>Profile</MenuItem>
-      <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem> 
+      <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem>
+      <MenuItem id='wishlist' onClick={(e) => handleMenuProfile(e)}>Wishlist</MenuItem>
     </Menu>
   );
   //--------------------------------------------------------------//
