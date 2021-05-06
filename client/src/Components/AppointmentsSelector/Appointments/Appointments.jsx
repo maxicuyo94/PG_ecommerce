@@ -1,7 +1,9 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { postAppointment } from '../../../Redux/Appointments/appointments'
-import style from './appointment.module.scss'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { postAppointment } from '../../../Redux/Appointments/appointments';
+import style from './appointment.module.scss';
+import { Link } from "react-router-dom";
+
 
 const Hours = [
     {
@@ -38,52 +40,6 @@ const Hours = [
     }
 ]
 
-/* const dateAppointment = {
-    date: "16/5/2021",
-    hours:[
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 2
-        },
-        {
-            id: 3
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-        {
-            id: 1
-        },
-    
-    ]
-    
-} */
-
-
-
 export function Appointments () {
     const userLoged = useSelector(state => state.usersReducer.userLoged);
     const dateAppointment = useSelector(state => state.appointmentReducer)
@@ -97,17 +53,17 @@ export function Appointments () {
     return (
         <div className={style.container}>
             <div className={style.contents}>
-                <h1>Appointmen</h1>
+                <h1>Appointments</h1>
                 <div >
                     <ul className={style.titles}>
                         <li>
-                            <h4>Hour</h4>
+                            <h3>Hour</h3>
                         </li>
                         <li>
-                            <h4>Availability</h4>
+                            <h3>Availability</h3>
                         </li>
                         <li>
-                            <h4>Reserve</h4>
+                            <h3>Reserve</h3>
                         </li>
                     </ul>
                 </div>
@@ -127,6 +83,7 @@ export function Appointments () {
                                 {(count < 10 || count === "undefined") ? "Available" : "Not Available"}
                             </li>
                             <li>
+                                <Link to='/controlpanel'>
                                 <button
                                     onClick={()=> handleReserve(hour.id)}
                                     className={style.button}
@@ -134,6 +91,7 @@ export function Appointments () {
                                 >
                                     Reserve
                                 </button>
+                                </Link>
                             </li>
                         </ul>
                     </div>

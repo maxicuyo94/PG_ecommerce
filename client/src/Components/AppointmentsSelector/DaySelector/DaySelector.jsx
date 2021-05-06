@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
 import { useDispatch } from "react-redux";
-import {allAppointments} from '../../../Redux/Appointments/appointments'
+import {allAppointments} from '../../../Redux/Appointments/appointments';
+import { ArrowBack } from "@material-ui/icons";
+
+
 export function DaySelector() {
   const order = '01792ab0-ee79-41a7-ad79-a7bb6a279edc'
   const dispatch = useDispatch();
@@ -22,6 +25,9 @@ export function DaySelector() {
 
   return (
     <div className={style.div}>
+      <Link to={`/controlpanel`}>
+        <ArrowBack class={style.button3}>Back</ArrowBack>
+      </Link>
       <h3>Select a day to pick your order</h3>
       <DayPicker
         className={style.daypicker}

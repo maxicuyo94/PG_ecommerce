@@ -14,18 +14,15 @@ import {
   getAllUserOrders,
   orderEmail,
 } from "../../Redux/Orders/orderActions";
-import { getUserReviews, deleteReview } from "../../Redux/Reviews/reviewsActions";
-import style from "./controlpanel.module.scss";
 import {
-  Edit,
-  Delete,
-  CheckBoxOutlineBlank,
-  CheckBox,
-} from "@material-ui/icons";
+  getUserReviews,
+  deleteReview,
+} from "../../Redux/Reviews/reviewsActions";
+import style from "./controlpanel.module.scss";
+import { Edit, Delete } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
-//import { useLocalStorage } from "../../LocalStorage/useLocalStorage.js";
 import { ProductSelection } from "./Modals/ProductSelection";
 
 export function ControlPanel() {
@@ -101,13 +98,6 @@ export function ControlPanel() {
     }
   };
 
-  const [checkbox, setCheckbox] = useState(false);
-  const checkPress = (id) => {
-    if (checkbox === false) {
-      setCheckbox(true);
-    } else setCheckbox(false);
-  };
-
   const handleTab = (e) => {
     setTab(e.target.name);
   };
@@ -123,7 +113,7 @@ export function ControlPanel() {
     dispatch(getAllOrders());
     dispatch(getAllUserOrders(userLoged.id));
     dispatch(getUserReviews(userLoged.id));
-  }, [search, container, tab, userLoged, products]);
+  }, [search, container, tab, userLoged]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 10;
@@ -139,7 +129,6 @@ export function ControlPanel() {
     setCurrentPage(currentPage - 1);
   };
 
-
   return (
     <div className={style.container}>
       <h2>Control Panel</h2>
@@ -154,11 +143,11 @@ export function ControlPanel() {
             Orders
           </button>
         )}
-          {userLoged.permission === "customer" (
-         <button name="purchasehistory" onClick={(e) => handleTab(e)}>
-         Purchase History
-       </button>
-        )}
+        {userLoged.permission === "customer" ? (
+          <button name="purchasehistory" onClick={(e) => handleTab(e)}>
+            Purchase History
+          </button>
+        ) : null}
         {
           <button name="reviews" onClick={(e) => handleTab(e)}>
             Reviews
@@ -180,14 +169,14 @@ export function ControlPanel() {
           </Link>
         )}
       </div>
-      <div>
+      <div className={style.barFilters}>
         <input
           className={style.search}
           placeholder="Search..."
           name="input"
           onChange={(e) => handleSearch(e.target.value)}
         ></input>
-        {tab === "orders" ? <span>Select filter</span> : null}
+        {tab === "orders" ? <span>Select filter:</span> : null}
         {tab === "orders" && (
           <select
             className={style.buttonfilter}
@@ -203,28 +192,29 @@ export function ControlPanel() {
       </div>
       <div className={style.containerList}>
         <div className={style.bar}>
-          <h4>
-            <CheckBoxOutlineBlank />
-          </h4>
-          {tab === "products" ? <h4 className={style.name}>Product</h4> : null}
-          {tab === "orders" ? <h4 className={style.name}>Order ID</h4> : null}
-          {tab === "orders" ? <h4 className={style.name}>Status</h4> : null}
-          {tab === "orders" ? <h4 className={style.name}>Date</h4> : null}
-          {tab === "orders" ? (
-            <h4 className={style.name}>Confirmation email</h4>
-          ) : null}
-
-          {tab === "categories" ? (
-            <h4 className={style.name}>Category</h4>
-          ) : null}
-          {tab === "users" ? <h4 className={style.name}>User</h4> : null}
-          {tab === "purchasehistory" ? (
-            <h4 className={style.name}>Purchase</h4>
-          ) : null}
-          <h4>Modify</h4>
-          {tab === "orders" ? null : <h4>Delete</h4>}          
-          {tab === "reviews" ? null : <h4>Delete</h4>}
-
+          {tab === "products" ? <h4>Product</h4> : null}
+          {tab === "orders" ? <h4>Order ID</h4> : null}
+          {tab === "orders" ? <h4>Status</h4> : null}
+          {tab === "orders" ? <h4>Date</h4> : null}
+          {tab === "categories" ? <h4>Category</h4> : null}
+          {tab === "users" ? <h4>User</h4> : null}
+          {tab === "users" ? <h4>Role</h4> : null}
+          {tab === "products" || tab === "users" ? <h4>Modify</h4> : null}
+          {tab === "purchasehistory" ? <h4>Purchase</h4> : null}
+          {tab === "reviews" ? <h4>Product</h4> : null}
+          {tab === "reviews" ? <h4>Rating</h4> : null}
+          {tab === "reviews" ? <h4>Review</h4> : null}
+          {tab === "reviews" ||
+          tab === "purchasehistory" ||
+          tab === "orders" ? null : (
+            <h4>Delete</h4>
+          )}
+          {tab === "orders" ? <h4>Confirmation email</h4> : null}
+          {tab === "purchasehistory" ? <h4>Status</h4> : null}
+          {tab === "purchasehistory" ? <h4>Date</h4> : null}
+          {tab === "purchasehistory" ? <h4>Pickup date</h4> : null}
+          {tab === "purchasehistory" ? <h4>Add reviews</h4> : null}
+          {tab === "orders" || tab === "reviews" ? <h4>Delete</h4> : null}
         </div>
 
         <div className={style.containerList}>
@@ -232,28 +222,14 @@ export function ControlPanel() {
             ? products?.map((product) => {
                 return (
                   <div key={product.id} className={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={product.id}
-                        class={style.icon}
-                        onClick={() => checkPress(product.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={product.id}
-                        class={style.icon}
-                        onClick={() => checkPress(product.id)}
-                      />
-                    )}
-
-                    <span className={style.name}>
+                    <span>
                       <Link to={`/product/${product.id}`}>{product.name}</Link>
                     </span>
                     <Link to={`/modifyproduct/${product.id}`}>
                       <Edit class={style.icon} />
                     </Link>
                     <Delete
-                      class={style.icon}
+                      className={style.icon}
                       id={product.id}
                       onClick={() => handleDelete(product.id)}
                     />
@@ -265,29 +241,14 @@ export function ControlPanel() {
             ? orders?.map((order) => {
                 return (
                   <div className={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    )}
-                    <span
-                      onClick={() => changeModal(order.id)}
-                      className={style.name}
-                    >
+                    <span onClick={() => changeModal(order.id)}>
                       {order.id}
                     </span>
-                    <span className={style.name}>{order.orderStatus}</span>
-                    <span className={style.name}>{order.orderDate}</span>
+                    <span>{order.orderStatus}</span>
+                    <span>{order.orderDate}</span>
                     {order.orderStatus === "approved" ? (
                       <button
+                      className={style.iconSelect}
                         onClick={() =>
                           handleEmail(
                             order.email,
@@ -300,11 +261,11 @@ export function ControlPanel() {
                         Send email
                       </button>
                     ) : (
-                      <button disabled>Send email</button>
+                      <button className={style.iconSelectDisable}>Send email</button>
                     )}
                     <dvi>
                       <button
-                        className={style.icon}
+                        className={style.iconDelete}
                         value={order.id}
                         onClick={(e) => getProducts(e)}
                       >
@@ -328,20 +289,7 @@ export function ControlPanel() {
             ? categories?.map((category) => {
                 return (
                   <div className={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={category.id}
-                        class={style.icon}
-                        onClick={() => checkPress(category.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={category.id}
-                        class={style.icon}
-                        onClick={() => checkPress(category.id)}
-                      />
-                    )}
-                    <span className={style.name}>{category.name}</span>
+                    <span>{category.name}</span>
                     <Delete
                       class={style.icon}
                       id={category.id}
@@ -355,30 +303,17 @@ export function ControlPanel() {
             ? userOrders?.map((order) => {
                 return (
                   <div className={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={order.id}
-                        class={style.icon}
-                        onClick={() => checkPress(order.id)}
-                      />
-                    )}
-                    <span
-                      onClick={() => changeModal(order.id)}
-                      className={style.name}
-                    >
+                    <span onClick={() => changeModal(order.id)}>
                       {order.id}
                     </span>
-                    <span className={style.name}>{order.orderStatus}</span>
-                    <span className={style.name}>{order.orderDate}</span>
+                    <span>{order.orderStatus}</span>
+                    <span>{order.orderDate}</span>
+                    <Link to="/dayselect">
+                      <button className={style.iconSelect}>Select</button>
+                    </Link>
                     <div>
                       <button
-                        className={style.icon}
+                        className={style.iconDelete}
                         value={order.id}
                         onClick={(e) => getProducts(e)}
                       >
@@ -402,20 +337,23 @@ export function ControlPanel() {
             ? userReviews?.map((reviews) => {
                 return (
                   <div className={style.list}>
-                    <span className={style.name}>
+                    <span>
                       <Link to={`/product/${reviews.product_id}`}>
                         {reviews.product.name}
                       </Link>
                     </span>
-                    <span className={style.name}>{reviews.rating}</span>
-                    <span className={style.name}>{reviews.description}</span>
+                    <span>{reviews.rating}</span>
+                    <span>{reviews.description}</span>
                     <div>
-                      <Link to={`/modifyReview/${reviews.id}`}>
-                        <button>Modify</button>
-                      </Link>
+                      {tab === "users" &&
+                      userLoged.permission === "customer" ? (
+                        <Link to={`/modifyReview/${reviews.id}`}>
+                          <button className={style.iconSelect}>Modify</button>
+                        </Link>
+                      ) : null}
                       <button
-                        className="delete_review"
-                    //    onClick={functionDeleteReview(reviews.id)}
+                        className={style.iconDelete}
+                        //    onClick={functionDeleteReview(reviews.id)}
                       >
                         Delete
                       </button>
@@ -430,21 +368,8 @@ export function ControlPanel() {
             ? users?.map((user) => {
                 return (
                   <div key={user.id} className={style.list}>
-                    {checkbox ? (
-                      <CheckBox
-                        id={user.id}
-                        class={style.icon}
-                        onClick={() => checkPress(user.id)}
-                      />
-                    ) : (
-                      <CheckBoxOutlineBlank
-                        id={user.id}
-                        class={style.icon}
-                        onClick={() => checkPress(user.id)}
-                      />
-                    )}
-                    <span className={style.name}>{user.name}</span>
-                    <span className={style.name}>{user.permission}</span>
+                    <span>{user.name}</span>
+                    <span>{user.permission}</span>
                     {user.permission === "superadmin" &&
                     userLoged.permission === "admin" ? null : (
                       <>
@@ -471,15 +396,6 @@ export function ControlPanel() {
               })
             : null}
         </div>
-        <div className={style.paginate}>
-          <button className={style.buttonpage} onClick={() => previousPage()}>
-            Prev
-          </button>
-          <button className={style.currentpage}>{currentPage}</button>
-          <button className={style.buttonpage} onClick={() => nextPage()}>
-            Next
-          </button>
-        </div>
       </div>
       <Modal class={style.modal} open={modal} onClose={closeModal}>
         <OrderDetail
@@ -488,6 +404,15 @@ export function ControlPanel() {
           permission={userLoged.permission}
         />
       </Modal>
+      <div className={style.paginate}>
+        <button className={style.buttonpage} onClick={() => previousPage()}>
+          Prev
+        </button>
+        <button className={style.currentpage}>{currentPage}</button>
+        <button className={style.buttonpage} onClick={() => nextPage()}>
+          Next
+        </button>
+      </div>
     </div>
   );
 }
