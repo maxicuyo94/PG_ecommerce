@@ -53,9 +53,10 @@ $gris:#2C3A40;
         }
       }
     }
-    .full{
+
+    .full {
       @media screen and (max-width: $tablet) {
-        display:none;
+        display: none;
         visibility: hidden;
       }
 
@@ -65,12 +66,13 @@ $gris:#2C3A40;
   .main {
     display: flex;
     width: 90%;
-    min-height: 65%;
+    height: 40rem;
     margin: 0 auto;
     margin-bottom: 3rem;
 
     @media screen and (max-width: $tablet) {
       flex-direction: column-reverse;
+      height: 65%;
     }
 
     .details {
@@ -106,16 +108,16 @@ $gris:#2C3A40;
           width: 80%;
           display: flex;
           align-items: center;
-          text-align:left;
+          text-align: left;
 
           span {
-            
+
             @media screen and (min-width: $tablet) {
               margin: 0 auto;
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
-              
+
             }
           }
         }
@@ -206,15 +208,15 @@ $gris:#2C3A40;
       .carousel {
         display: flex;
         margin: auto;
-        height: 90%;
+        max-height: 90%;
         width: 90%;
 
 
-        @media screen and (min-width: $tablet) {
+        @media screen and (max-width: $tablet) {
           padding: 2vh;
         }
 
-        ul {
+        /* ul {
           display: flex;
           padding: 0;
           justify-content: space-between;
@@ -224,7 +226,7 @@ $gris:#2C3A40;
             margin: auto;
             //border-color: #9ABF15;
           }
-        }
+        } */
       }
 
       .buy {
@@ -389,7 +391,7 @@ $gris:#2C3A40;
     margin: auto;
     width: 95%;
     display: flex;
-    height: fit-content;
+    height: 25rem;
     margin-bottom: 1rem;
 
     @media screen and (max-width: $tablet) {
@@ -436,8 +438,15 @@ $gris:#2C3A40;
     }
 
     .slider {
+      height: 100%;
+      display: flex;
       width: 85%;
-      margin: auto;
+      //margin: auto;
+      //justify-content: center;
+      //align-items: center;
+      @media screen and (max-width: $tablet) {
+        width: 100%;
+      }
     }
 
   }

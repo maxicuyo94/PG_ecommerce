@@ -1,10 +1,13 @@
 import * as actionType from "../action_types/actionTypes";
 import { createClient } from "@supabase/supabase-js";
+import {baseURL} from '../../index'
+
 const axios = require('axios');
 const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
 const supabase = createClient(supabaseUrl, supabaseKey);
+
 
 export const getAllOrders = (status) => {
   return async function (dispatch) {
@@ -79,10 +82,20 @@ export const getProductsOfOrder = (id) => {
   };
 };
 
-export const orderPayment = (cart, infoUser) => {
+export const orderPayment = (cart, infoUser, discount) => {
   return async function () {
     try {
-      let response = await axios.post("http://localhost:3001/mercadopago/checkout", { cart, infoUser })
+
+      cart.map(async prod => {
+        await supabase
+          .from("product")  
+          .update({
+            stock: (prod.stock - prod.quantity)
+          })
+          .eq("id", prod.id)
+      })
+
+      let response = await axios.post(`${baseURL}/mercadopago/checkout`, { cart, infoUser, discount })
       return response.data.redirect
     } catch (e) {
       alert(e)
@@ -97,7 +110,7 @@ export const orderEmail = (email, user_id, id, orderDate) => {
         .from('users')
         .select('name,surname')
         .eq('id', user_id)
-      await axios.post(`http://localhost:3001/mercadopago/send/?email=${email}&name=${data.data[0].name}&surname=${data.data[0].surname}&orderId=${id}&orderDate=${orderDate}`)
+      await axios.post(`${baseURL}/mercadopago/send/?email=${email}&name=${data.data[0].name}&surname=${data.data[0].surname}&orderId=${id}&orderDate=${orderDate}`)
     } catch (e) {
       
     }

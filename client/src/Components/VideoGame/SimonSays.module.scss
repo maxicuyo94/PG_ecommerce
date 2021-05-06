@@ -1,0 +1,157 @@
+.container {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 80vh;
+  // z-index: 1;
+}
+
+.gameboard {
+  height: 100vh;
+  width: 100vh;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  max-height: 60vh;
+  max-width: 60vh;
+}
+
+.color {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: left;
+}
+
+.celeste {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: left;
+  border-radius: 15px;
+  background: #9abf15;
+  cursor: pointer;
+}
+
+.celeste_light {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: left;
+  border-radius: 15px;
+  background: #badc58;
+  cursor: pointer;
+}
+
+.violeta {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: right;
+  border-radius: 15px;
+  background: #222;
+  cursor: pointer;
+}
+
+.violeta_light {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: right;
+  border-radius: 15px;
+  background: #555;
+  cursor: pointer;
+}
+
+.naranja {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: left;
+  border-radius: 15px;
+  background: #222;
+  cursor: pointer;
+}
+
+.naranja_light {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: left;
+  border-radius: 15px;
+  background: #555;
+  cursor: pointer;
+}
+
+.verde {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: right;
+  border-radius: 15px;
+  background: #9abf15;
+  cursor: pointer;
+}
+
+.verde_light {
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  float: right;
+  border-radius: 15px;
+  background: #badc58;
+  cursor: pointer;
+}
+
+.btn_start {
+  width: 200px;
+  height: 70px;
+  background: #9abf15;
+  color: #fff;
+  font-size: 1.5rem;
+  position: absolute;
+  top: calc(54% - 50px);
+  left: calc(58% - 200px);
+  border-radius: 40px;
+  border: 0.2rem solid #222;
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: #9abf15;
+  border-radius: 50%;
+  border: 0.2rem solid #222;
+  line-height: 100px;
+  top: calc(51.5% - 50px);
+  left: calc(62% - 200px);
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.final_score {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  margin-top: 6rem;
+  font-size: 1.5rem;
+  z-index: 2;
+  color: #fff;
+}

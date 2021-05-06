@@ -1,6 +1,6 @@
 require("dotenv").config();
 const nodemailer = require('nodemailer');
-const { EMAIL_GMAIL, PASS_EMAIL, OUR_EMAIL } = process.env;
+// const { EMAIL_GMAIL, PASS_EMAIL, OUR_EMAIL } = process.env;
 const { orderEmail } = require('../Templates/orderEmail.js')
 const { activateEmail } = require('../Templates/activateEmail.js')
 const { authUser } = require('../Templates/authUser.js')
@@ -11,14 +11,14 @@ const { A2B } = require('../Templates/A2B.js')
 // This is your API key that you retrieve from www.mailgun.com/cp (free up to 10K monthly emails)
 
 let userMail = async (user) => {
-
+    console.log(user)
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
         secure: false,
         auth: {
-            user: EMAIL_GMAIL,
-            pass: PASS_EMAIL,
+            user: process.env.EMAIL_GMAIL,
+            pass: process.env.PASS_EMAIL,
         },
         tls: {
             // do not fail on invalid certs
@@ -27,7 +27,7 @@ let userMail = async (user) => {
     });
 
     await transporter.sendMail({
-        from: OUR_EMAIL,
+        from: process.env.OUR_EMAIL,
         to: user.userName ? [
             "malejandroceli@gmail.com",
             "maxibc94@gmail.com",
@@ -59,3 +59,4 @@ let userMail = async (user) => {
 module.exports = {
     userMail
 }
+

@@ -33,7 +33,7 @@ export const GET_PRODUCTS_ORDER = "GET_PRODUCTS_ORDER";
 //Reviews
 export const GET_REVIEW_PRODUCT = "GET_REVIEW_PRODUCT";
 export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
-export const GET_USER_REVIEW = "GET_USER_REVIEW";
+export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
 
 //LocalStorage
 export const RESTORE_REDUX = "RESTORE_REDUX";
@@ -42,3 +42,13 @@ export const USER_LOGOUT = "USER_LOGOUT";
 
 // User
 export const USER_CONFIG = "USER_CONFIG"
+export const ADD_POINTS = "ADD_POINTS"
+
+// Appointments
+export const APPOINTMENTS = "APPOINTMENTS"
+
+//Wishlist
+export const ADD_ITEM_WISHLIST = "ADD_ITEM_WISHLIST"
+export const DELETE_ITEM_WISHLIST = "DELETE_ITEM_WISHLIST"
+export const GET_USER_WISHLIST = "GET_USER_WISHLIST"
+

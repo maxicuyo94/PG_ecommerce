@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom'
 import style from "./ModifyUser.module.scss";
-import { updateUser, getUser, sendMail, deactivate, mailActivate, activate, userLogOut } from "../../../Redux/Users/usersActions";
+import { updateUser, getUser, sendMail, deactivate, mailActivate, activate, userLogOut, userStorage } from "../../../Redux/Users/usersActions";
 import { EditUsers } from "./EditUsers/EditUsers"
+import swal from "sweetalert";
 
 export function ModifyUser({ id, dark }) {
   const dispatch = useDispatch();
+  const history = useHistory()
   const userLog = useSelector((state) => state.usersReducer.userLoged);
   const userConfig = useSelector((state) => state.usersReducer.userConfig)
   const [dataUser, setDataUser] = useState({
@@ -13,10 +16,14 @@ export function ModifyUser({ id, dark }) {
     userName: "",
     phone: "",
     address: "",
+    streetNumber: "",
     city: "",
     postal_code: "",
     country: "",
+    points:""
   });
+
+  console.log(userLog)
 
   const handleInputChange = (e) => {
     setDataUser({
@@ -24,8 +31,6 @@ export function ModifyUser({ id, dark }) {
       [e.target.name]: e.target.value,
     });
   };
-
-  console.log(id)
 
   useEffect(() => {
     if (id) {
@@ -45,6 +50,7 @@ export function ModifyUser({ id, dark }) {
         userName: userConfig.user_name,
         phone: userConfig.phone,
         address: userConfig.address && userConfig.address[0].address,
+        streetNumber: userConfig.streetNumber && userConfig.address[0].streetNumber,
         city: userConfig.address && userConfig.address[0].city,
         postal_code: userConfig.address && userConfig.address[0].postal_code,
         country: userConfig.address && userConfig.address[0].country,
@@ -59,10 +65,12 @@ export function ModifyUser({ id, dark }) {
           userName: userLog.user_name,
           phone: userLog.phone,
           address: userLog.address && userLog.address[0].address,
+          streetNumber: userLog.address && userLog.address[0].streetNumber,
           city: userLog.address && userLog.address[0].city,
           postal_code: userLog.address && userLog.address[0].postal_code,
           country: userLog.address && userLog.address[0].country,
-          active: userLog.active
+          active: userLog.active,
+          points: userLog.points
         });
     }
   }, [userLog, userConfig]);
@@ -72,30 +80,30 @@ export function ModifyUser({ id, dark }) {
 
   }
 
-  const modifyUser = (e) => {
+  const modifyUser = async (e) => {
     e.preventDefault();
-    dispatch(updateUser(dataUser));
+    await dispatch(updateUser(dataUser));
+    dispatch(userStorage(dataUser.id))
+    swal('Your data was modified correctly', '', 'success')
+      .then(() => {
+        history.push('/')
+      })
   };
 
   const deactivateUser = (e) => {
     e.preventDefault();
-    dispatch(deactivate(dataUser.id,dataUser.userName));
-    //hay que poner el boton para un usuario pueda querer activar la cuenta, en algun lugar
-    //donde pueda acceder, porque cuando aprete este deactiveuser, se va a desloguear
-    //y no va a volver a poder entrar a su perfil.
-    //dispatch(userLogOut())
+    dispatch(deactivate(dataUser.id, dataUser.userName));
+    dispatch(userLogOut())
   }
 
   const activateUser = (e) => {
     e.preventDefault();
-    dispatch(mailActivate(dataUser.id,dataUser.userName));
+    dispatch(mailActivate(dataUser.id, dataUser.userName));
   }
 
   const activateUserFromAdmin = () => {
     dispatch(activate(dataUser.id))
   }
-
-  console.log(dataUser.active)
 
   return (
     <div className={dark ? style.containerDark : style.container}>
@@ -117,6 +125,7 @@ export function ModifyUser({ id, dark }) {
           <div className={style.phone}>
             <label>Phone</label>
             <input
+              name="phone"
               value={dataUser.phone}
               onChange={(e) => handleInputChange(e)}
             ></input>
@@ -127,6 +136,15 @@ export function ModifyUser({ id, dark }) {
             <input
               name="address"
               value={dataUser.address}
+              onChange={(e) => handleInputChange(e)}
+            ></input>
+          </div>
+
+          <div className={style.address}>
+            <label>Street number</label>
+            <input
+              name="streetNumber"
+              value={dataUser.streetNumber}
               onChange={(e) => handleInputChange(e)}
             ></input>
           </div>
@@ -157,6 +175,10 @@ export function ModifyUser({ id, dark }) {
               value={dataUser.country}
               onChange={(e) => handleInputChange(e)}
             ></input>
+          </div>
+          <div className={style.country}>
+            <label>Tech Points</label>
+            <h3>{Math.floor(dataUser.points)}</h3>
           </div>
           {
             (userLog.permission === "superadmin" || userLog.permission === "admin") && (dataUser.id !== userLog.id) &&

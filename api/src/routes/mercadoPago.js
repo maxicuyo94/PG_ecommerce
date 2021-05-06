@@ -1,8 +1,5 @@
 const server = require("express").Router()
 require("dotenv").config();
-//const nodemailer = require('nodemailer');
-//const mg = require('nodemailer-mailgun-transport');
-//const { API_KEYMAILGUN, EMAIL_PRUEBA } = process.env;  
 
 const mercadopago = require ('mercadopago');
 const {userMail} = require ('../util/email')
@@ -12,10 +9,10 @@ mercadopago.configure({
 });
 
 server.post('/checkout', async (req, res) => {
-  const { cart, infoUser } = req.body
+  const { cart, infoUser, discount } = req.body
   const cartMP = cart.map(product => ({
     title: product.title,
-    unit_price: product.price,
+    unit_price: product.price*(1-discount),
     quantity: product.quantity,
     currency_id: "ARS"
   }))
@@ -34,7 +31,7 @@ server.post('/checkout', async (req, res) => {
         street_number:infoUser.addres.streetNumber
       }
     },
-    external_reference : `${infoUser.email},${infoUser.id},${infoUser.addres.streetName},${infoUser.addres.streetNumber},${infoUser.addres.postalCode},${infoUser.name},${infoUser.surname}`,
+    external_reference : `${infoUser.email},${infoUser.id},${infoUser.addres.streetName},${infoUser.addres.streetNumber},${infoUser.addres.postalCode},${infoUser.name},${infoUser.surname},${discount}`,
 		items: cartMP,
 		back_urls: {
 			"success": "http://localhost:3000",

@@ -2,7 +2,6 @@ import React from "react";
 import Style from "./productcard.module.scss";
 import { NavLink } from "react-router-dom";
 import swal from "sweetalert";
-
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -12,8 +11,7 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 export function ProductCard(props) {
-	  const [t, i18n] = useTranslation("global");
-	  
+  const [t] = useTranslation("global");
   const dispatch = useDispatch();
   const handleAddToCart = (item) => {
     let cartItemModel = {
@@ -23,7 +21,6 @@ export function ProductCard(props) {
       quantity: 1,
       price: (item.price * (1 - item.discount / 100)).toFixed(2),
       stock: item.stock,
-      // discount: item.discount
     };
     dispatch(addItemCart(cartItemModel));
     swal("Done!", "Added to your cart", "success");
@@ -49,17 +46,12 @@ export function ProductCard(props) {
             <img src={props.image} alt="." />
           </NavLink>
         </div>
-        {/* <div className={Style.review}>
-				<label>★</label>
-				<label>★</label>
-				<label>★</label>
-				<label>★</label>
-				<label>★</label>
-				<p>Reviews (4)</p>
-			</div> */}
         <div className={Style.name}>
           <NavLink to={`/product/${props.id}`}>
-            {props.title?.split(" ").slice(0, 3).join(" ")}
+            {props.title
+              ?.split(" ")
+              .slice(0, 3)
+              .join(" ")}
           </NavLink>
         </div>
         <div className={Style.price}>

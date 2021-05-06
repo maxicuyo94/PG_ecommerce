@@ -10,7 +10,7 @@ import { deletingReview } from "./deleteReview";
 
 export function ModifyReview({ id }) {
   const dispatch = useDispatch();
-  const reviews = useSelector((state) => state.reviewsReducer.users);
+  const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const [data, setData] = useState({
     description: "",
     rating: "",
@@ -21,7 +21,7 @@ export function ModifyReview({ id }) {
 
   const upReview = (upReview) => {
     upReview.preventDefault();
-    updateReview(data, data.id);
+   dispatch (updateReview(data));
   };
 
 
@@ -76,11 +76,10 @@ export function ModifyReview({ id }) {
                   description: e.target.value,
                 });
               }}
-              onSubmit={upReview}
             ></textarea>
           </div>
         ) : null}
-        <input type="submit" value="Modify review" />
+        <input type="submit" value="Modify review" onClick={upReview} />
       </form>
     </div>
   );

@@ -46,6 +46,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function Profile() {
   const userLoged = useSelector((state) => state.usersReducer.userLoged);
+  const wishlist = useSelector(state => state.wishlistReducer.wishlist)
   const history = useHistory();
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
@@ -67,6 +68,13 @@ export default function Profile() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const verifyWishlist = e => {
+    e.preventDefault()
+    wishlist.length === 0
+    ? swal('Your wishlist is empty!', 'Add items to your wishlist and come back', 'error')
+    : history.push('/wishlist')
+  }
 
   return (
     <div>
@@ -95,6 +103,11 @@ export default function Profile() {
             </StyledMenuItem>
             <StyledMenuItem>
               <span onClick={handleLogOut}>Log Out</span>
+            </StyledMenuItem>
+            <StyledMenuItem>
+              {
+                <Link onClick={e => verifyWishlist(e)} >Wishlist</Link>
+              }
             </StyledMenuItem>
           </div>
         )}

@@ -6,14 +6,20 @@ $pcxl:1600px;
 $dark:#2C3A40;
 $verde:#9abf15;
 
-.tag {
-    font-family: roboto;
-}
 
 .container {
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 185px);
+    width: 90%;
+    margin: 0 auto;
+
+    @media screen and (max-width: $tablet) {
+
+        width: 100%;
+
+    }
+
     .containerTitle {
         height: 10vh;
         display: flex;
@@ -40,9 +46,9 @@ $verde:#9abf15;
 
         .containerP {
             display: flex;
-            height: fit-content;
+            height: 25rem;
             width: 100%;
-            margin: 0.5vmax 0;
+            margin: 1rem 0;
 
             @media screen and (max-width: $tablet) {
 
@@ -66,6 +72,7 @@ $verde:#9abf15;
                 justify-content: space-around;
                 align-items: center;
                 box-shadow: 6px 5px 18px 5px rgba(39, 39, 39, 0.25);
+
                 span {
                     font-size: 1.5rem;
                 }
@@ -76,10 +83,11 @@ $verde:#9abf15;
                 }
 
                 @media screen and (max-width: $tablet) {
-                    background-color: #485F69;
+                    background-color: #222;
                     margin: 0 auto;
                     width: 90%;
-                    height: 15vh;
+                    height: 2rem;
+                    z-index: 1;
 
                     span {
                         font-size: 1.5rem;
@@ -96,13 +104,13 @@ $verde:#9abf15;
             .carousel {
 
                 width: 85%;
+                height: 100%;
                 display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 25%;
+                //justify-content: center;
+                //align-items: center;
 
                 @media screen and (max-width: $tablet) {
-                    width: 100%;
+                    width: 90%;
                 }
             }
         }
@@ -122,4 +130,9 @@ $verde:#9abf15;
             box-shadow: 2px 0px 5px 0px rgba(255, 255, 255, 0.5) !important;
         }
     }
+}
+
+.img {
+    height:10%;
+    width:60%;
 }

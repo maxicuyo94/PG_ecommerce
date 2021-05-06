@@ -3,18 +3,16 @@ import { Link, NavLink } from "react-router-dom";
 import { SearchBar } from "../SearchBar/SearchBar"
 import { useTranslation } from "react-i18next";
 import style from "./nav.module.scss";
-import MiniShop from "./MiniShop/MiniShop";
+// import MiniShop from "./MiniShop/MiniShop";
+import MiniCart from "./MiniCart/MiniCart";
 import BtnLang from "./BtnLang/BtnLang";
 import BtnDark from './BtnDark/BtnDark'
 import Profile from './Profile/Profile'
 import { useSelector } from "react-redux";
 
 export function Nav({ priority, dark }) {
-  // eslint-disable-next-line
   const userLoged = useSelector(state =>  state.usersReducer.userLoged)
-    // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-  //const history = useHistory();
 
   return (
     <div className={dark ? style.containerDark : style.container}>
@@ -47,7 +45,8 @@ export function Nav({ priority, dark }) {
             <SearchBar/>
             </li>
           <li>
-            <MiniShop />
+            {/* <MiniShop /> */}
+            <MiniCart />
           </li>
           <li>
             <BtnLang />

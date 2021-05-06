@@ -24,13 +24,15 @@ export const postUser = (users) => {
           surname: users.surname,
           email: user.email,
           user_name: users.userName,
-          phone: users.phone
+          phone: users.phone,
+          recommended: users.recommended && users.recommended
         },
       ]);
       await supabase.from("address").insert([
         {
           user_id: user.id,
-          address: users.address,
+          address: users.streetName,
+          streetNumber: users.streetNumber,
           city: users.city,
           postal_code: users.postal_code,
           country: users.country,
@@ -118,8 +120,9 @@ export const userLogin = (users) => {
         alert(error.message)
       } else {
         let previousStorage = localStorage.getItem("cart") && JSON.parse(window.localStorage.getItem("cart"))
-        let guestCartAdded = previousStorage.map(item => addItemCart(item))
-        console.log(guestCartAdded)
+        //let guestCartAdded = 
+        previousStorage.map(item => addItemCart(item))
+        //console.log(guestCartAdded)
         dispatch({ type: actionType.USER_LOGIN, payload: user.user });
         const userLoged = await supabase
           .from("users")
@@ -130,8 +133,18 @@ export const userLogin = (users) => {
           dispatch(setCart(user.user.id));
         }, 2000);
       }
+    } else if (actived.data[0].active === false) {
+
+      const user_id = await supabase
+        .from("users")
+        .select("id,user_name")
+        .eq("email", users.email)
+
+      swal("Account deactivated", "If you want to active your account, press the button", "error", {
+        buttons: { button: 'Active' }
+      }).then(() => dispatch(mailActivate(user_id.data[0].id, user_id.data[0].user_name)));
     } else {
-      swal("Oops", "account deactivated", "error");
+      swal("Oops", "Email or password incorrect", "error");
     }
   }
 };
@@ -165,7 +178,6 @@ export const sendMail = (email) => {
 export const ResetPassword = (access_token, new_password) => {
   return async function () {
     try {
-      console.log(access_token, new_password);
       // eslint-disable-next-line
       const { error, data } = await supabase.auth.api.updateUser(access_token, {
         password: new_password,
@@ -201,7 +213,7 @@ export const changeUserPermission = (id, newPermission) => {
   }
 }
 
-export const deactivate = (id,userName) => {
+export const deactivate = (id, userName) => {
   return async function () {
     try {
       await supabase
@@ -210,7 +222,7 @@ export const deactivate = (id,userName) => {
           active: false,
         })
         .eq("id", id);
-      swal("Oops", "account deactivated", "error");
+      swal("Account deactivated", "If you want recovery your account, try login again", "error");
       await axios.post(`http://localhost:3001/mercadopago/send?userName=${userName}`)
     } catch (e) {
 
@@ -218,11 +230,11 @@ export const deactivate = (id,userName) => {
   }
 }
 
-export const mailActivate = (id,userName) => {
+export const mailActivate = (id, userName) => {
   return async function () {
     try {
-      console.log(userName)
-      swal("Oops", "Te llegara un mail cuando el jefe te acepte otra vez", "success");
+      console.log("mail")
+      swal("Send email", "Please, wait the admin will active your account in a moment", "success");
       await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&userName=${userName}&status='actived'`)
     } catch (e) {
 
@@ -248,31 +260,31 @@ export const activate = (email) => {
   }
 }
 
-export const getUser  = (id) => {
+export const getUser = (id) => {
   return async (dispatch) => {
     const user = await supabase
-    .from("users")
-    .select("*,address(*)")
-    .eq("id", id);
+      .from("users")
+      .select("*,address(*)")
+      .eq("id", id);
     dispatch({ type: actionType.USER_CONFIG, payload: user.data[0] });
   }
 }
 
-export const activatedUser = (id,name) => {
+export const activatedUser = (id, name) => {
   return async function () {
     try {
 
       await supabase
-      .from("users")
-      .update({
-        active: true,
-      })
-      .eq("id", id);
+        .from("users")
+        .update({
+          active: true,
+        })
+        .eq("id", id);
 
       const user = await supabase
-      .from("users")
-      .select("email")
-      .eq("id", id);
+        .from("users")
+        .select("email")
+        .eq("id", id);
       swal("Oops", "usuario activado", "success");
       await axios.post(`http://localhost:3001/mercadopago/send?id=${id}&name=${name}&email=${user.data[0].email}`)
     } catch (e) {
@@ -281,3 +293,29 @@ export const activatedUser = (id,name) => {
   }
 }
 
+export const searchPoints = (id) => {
+  return async function () {
+    let response = await supabase
+      .from("users")
+      .select("points")
+      .eq("id", id)
+
+    return response.data[0].points
+  }
+}
+
+export const addPoints = (userData, points) => {
+  return async dispatch => {
+    const user = await supabase
+      .from('users')
+      .select('points')
+      .eq('id', userData)
+
+    await supabase
+      .from('users')
+      .update({ points: user.data[0].points + points })
+      .eq('id', userData)
+
+    dispatch({ type: actionType.ADD_POINTS, payload: points })
+  }
+}
