@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
-import MiniCard from "../MiniShop/MiniCard";
+import MiniCard from "../MiniCart/MiniCard";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
 import {
