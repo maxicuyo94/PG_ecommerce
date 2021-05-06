@@ -29,6 +29,7 @@ export const addToWishlist = (payload2) => {
             user_id: payload.userId,
           },
         ]);
+        dispatch(getUserWishlist(payload.userId))
     } else {
        await supabase
           .from("wishlist")

@@ -29,6 +29,7 @@ import { Points } from "./Components/Points/Points";
 import { DaySelector } from "./Components/AppointmentsSelector/DaySelector/DaySelector";
 import { Appointments } from "./Components/AppointmentsSelector/Appointments/Appointments";
 import Wishlist from "./Components/Wishlist/Wishlist";
+import { getUserWishlist } from "./Redux/Wishlist/wishlistActions";
 
 function App() {
   // eslint-disable-next-line
@@ -47,6 +48,7 @@ function App() {
   useEffect(() => {
     if (userLogedStorage) {
       dispatch(userStorage(userLogedStorage.currentSession.user.id));
+      dispatch(getUserWishlist(userLogedStorage.currentSession.user.id))
     }
     dispatch(setCart(userLogedStorage.currentSession?.user.id));
     const lastProducts = async () => {
