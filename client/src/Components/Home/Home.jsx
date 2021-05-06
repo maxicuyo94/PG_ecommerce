@@ -40,7 +40,6 @@ export function Home(props) {
   let discount = external && external.split(',')[7];
   let address = `${streetName} ${streetNumber}`
   let userEmail = lsemail ? lsemail : mpEmail;
-  console.log(discount)
   let discountPoints = discount == 0.1 ? 2000 : discount == 0.2 ? 4000 : discount == 0.4 ? 8000 : null;
 
   const fecha = new Date();
@@ -70,66 +69,40 @@ export function Home(props) {
 
   return (
     <div className={props.dark ? styles.containerDark : styles.container}>
-      {/* <Banner2 /> */}
+      {/* {productByCategories[0] && console.log('Categoria 1:', productByCategories[0].name, ' Productos:', productByCategories[0].product_categories)
+      } */}
       <div className={styles.containerTitle}>
         <span className={styles.tag}>{t("home.title")}</span>
       </div>
       <div className={styles.products}>
-        {lastProducts?.length > 0 && <div className={styles.containerP}>
-          <div className={styles.title}>
-            <span className={styles.tag}>¡This product has to be yours!</span>
+        {
+          lastProducts?.length > 0 && <div className={styles.containerP}>
+            <div className={styles.title}>
+              <span className={styles.tag}>¡This product has to be yours!</span>
+            </div>
+            <div className={styles.carousel}>
+              {lastProducts.length > 0 && (
+                <SwiperSlider products={lastProducts} />
+              )}
+            </div>
           </div>
-          <div className={styles.carousel}>
-            {lastProducts.length > 0 && (
-              <SwiperSlider products={lastProducts} />
-            )}
-          </div>
-        </div>}
-        <div className={styles.containerP}>
-          <div className={styles.title}>
-          {/* <img className={styles.img}
-              src={
-                "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
-              } alt="Ups, we don't found anything here. Try again tomorrow!"
-            /> */}
-            <span className={styles.tag}>{t("home-cat1.processors")}</span>
-          </div>
-          <div className={styles.carousel}>
-            {productByCategories[0] && (
-              <SwiperSlider products={productByCategories[0].data} />
-            )}
-          </div>
-        </div>
-        <div className={styles.containerP}>
-          <div className={styles.title}>
-          {/* <img className={styles.img}
-              src={
-                "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
-              } alt="Ups, we don't found anything here. Try again tomorrow!"
-            /> */}
-            <span className={styles.tag}>{t("home-cat2.laptops")}</span>
-          </div>
-          <div className={styles.carousel}>
-            {productByCategories[1] && (
-              <SwiperSlider products={productByCategories[1].data} />
-            )}
-          </div>
-        </div>
-        <div className={styles.containerP}>
-          <div className={styles.title}>
-          {/* <img className={styles.img}
-              src={
-                "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
-              } alt="Ups, we don't found anything here. Try again tomorrow!"
-            /> */}
-            <span className={styles.tag}>{t("home-cat3.keyboards")}</span>
-          </div>
-          <div className={styles.carousel}>
-            {productByCategories[2] && (
-              <SwiperSlider products={productByCategories[2].data} />
-            )}
-          </div>
-        </div>
+        }
+        {
+          productByCategories?.length > 0 && productByCategories?.map((categories, i) => {
+            return (
+              <div className={styles.containerP} key={categories.name}>
+                <div className={styles.title}>
+                  <span className={styles.tag}>{categories.name}</span>
+                  {/* <span className={styles.tag}>{t("home-cat2.laptops")}</span> */}
+                </div>
+                <div className={styles.carousel}>
+                  <SwiperSlider products={categories.product_categories} />
+                  {/* {console.log('Home Category: ', categories.product_categories)} */}
+                </div>
+              </div>
+            )
+          })
+        }
       </div>
     </div>
   );
