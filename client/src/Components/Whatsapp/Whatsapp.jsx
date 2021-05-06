@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import React from "react";
 import whatsapp from "../../Assets/static/whatsapp.svg";
 import styles from "./Whatsapp.module.scss";

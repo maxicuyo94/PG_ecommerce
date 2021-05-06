@@ -49,9 +49,9 @@ const SimonSays = () => {
 
   useEffect(() => {
     if (start && play.isDisplay && play.colors.length) {
-      // eslint-disable-next-line
       displayColors();
     }
+    // eslint-disable-next-line
   }, [start, play.isDisplay, play.colors.length]);
 
   useEffect(() => {

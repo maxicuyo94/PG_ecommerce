@@ -1,23 +1,25 @@
+/* eslint-disable */
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin, sendMail } from "../../../Redux/Users/usersActions";
 import { useHistory, useLocation } from "react-router-dom";
 import style from "./login.module.scss";
 import MultifactorAuth from "../MultifactorAuth/MultifactorAuth";
-import { createClient } from '@supabase/supabase-js';
-import axios from 'axios';
-//import { useLocalStorage } from "../../../LocalStorage/useLocalStorage";
+import { createClient } from "@supabase/supabase-js";
+import axios from "axios";
 
 export function Login() {
   const dispatch = useDispatch();
-  const userRegistered = useSelector(state => state.usersReducer.userLoged)
-  const location = useLocation()
+  const userRegistered = useSelector((state) => state.usersReducer.userLoged);
+  const location = useLocation();
   const history = useHistory();
- 
-  const SUPABASE_URL = "https://zgycwtqkzgitgsycfdyk.supabase.co"
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNzczMDk4NCwiZXhwIjoxOTMzMzA2OTg0fQ.v7M4hQhgNYxkXa3zwDLs5dAWR_1egDuCASySblcNgSA'
+
+  const SUPABASE_URL = "https://zgycwtqkzgitgsycfdyk.supabase.co";
+  const SUPABASE_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNzczMDk4NCwiZXhwIjoxOTMzMzA2OTg0fQ.v7M4hQhgNYxkXa3zwDLs5dAWR_1egDuCASySblcNgSA";
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-   
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -26,10 +28,11 @@ export function Login() {
   useEffect(() => {
     if (userRegistered?.id) {
       if (location.state.from) {
-        history.push(location.state.from)
+        history.push(location.state.from);
       }
     }
-  }, [userRegistered])
+    // eslint-disable-next-line
+  }, [userRegistered]);
 
   const handleState = (e) => {
     setUser({
@@ -49,18 +52,21 @@ export function Login() {
     dispatch(sendMail(document.getElementById("email").value));
   };
 
+  // eslint-disable-next-line
   const createPin = async (e) => {
-    e.preventdefault()
+    e.preventdefault();
     //must have an email
     // generate pin
     let newPin = Math.round(Math.random() * 9999);
     //save pin in supabase
     await supabase
-      .from('users')
+      .from("users")
       .update({ pin: `${newPin}` })
-      .eq('email', `${user.email}`)
-    //send pin by email (ask marian)
-    await axios.post(`http://localhost:3001/mercadopago/send?pin=${newPin}&email=${user.email}`)
+      .eq("email", `${user.email}`);
+    //send pin by email
+    await axios.post(
+      `http://localhost:3001/mercadopago/send?pin=${newPin}&email=${user.email}`
+    );
   };
 
   return (
@@ -93,21 +99,34 @@ export function Login() {
           onClick={(e) => loginUsers(e)}
         >
           LogIn
-          </button>
-        <MultifactorAuth  prueba="hola" email={user.email} onLogin={ loginUsers}/>
+        </button>
+        <MultifactorAuth
+          prueba="hola"
+          email={user.email}
+          onLogin={loginUsers}
+        />
         <div>
           <input type="text" id="email" placeholder="Email" />
         </div>
-        <button className={style.simpleButton} type="button" onClick={(e) => resetPassword(e)}>
+        <button
+          className={style.simpleButton}
+          type="button"
+          onClick={(e) => resetPassword(e)}
+        >
           Forgot password?
         </button>
         <div className={style.containerGG}>
-          <div className={style.githubButton}
+          <div
+            className={style.githubButton}
             onClick={() =>
-              window.location.href = "https://zgycwtqkzgitgsycfdyk.supabase.co/auth/v1/authorize?provider=github"}
+              (window.location.href =
+                "https://zgycwtqkzgitgsycfdyk.supabase.co/auth/v1/authorize?provider=github")
+            }
           >
-            <img src="/images/GitHub-Mark-Light-32px.png"
-              className={style.googleButton} type="button"
+            <img
+              src="/images/GitHub-Mark-Light-32px.png"
+              className={style.googleButton}
+              type="button"
             />
             <span>Sign in with GitHub</span>
           </div>
@@ -116,7 +135,10 @@ export function Login() {
             className={style.googleButton}
             type="button"
             onClick={() =>
-              window.location.href = "https://zgycwtqkzgitgsycfdyk.supabase.co/auth/v1/authorize?provider=google"} />
+              (window.location.href =
+                "https://zgycwtqkzgitgsycfdyk.supabase.co/auth/v1/authorize?provider=google")
+            }
+          />
         </div>
       </>
     </form>

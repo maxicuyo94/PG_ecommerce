@@ -52,7 +52,7 @@ export function Catalogue({ dark }) {
         getAllProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
       );
     }
-    
+
     dispatch(getCategories());
   }, [dispatch, stableDispatch, Pages, Category, Prices, history.location.pathname, history.location.search]);
 
@@ -69,6 +69,7 @@ export function Catalogue({ dark }) {
       dispatch(clearSearch())
     }
   }, [])
+
 
   const handleInputChange = (e) => {
     e.preventDefault();
