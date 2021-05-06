@@ -18,6 +18,7 @@ import StarIcon from "@material-ui/icons/Star";
 import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
+// eslint-disable-next-line
 let random = Math.round(Math.random() * 2);
 export const Product = (props) => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export const Product = (props) => {
   );
   const Link = `http://192.168.100.4:3000/product/${id}`;
 
+  // eslint-disable-next-line
   const [deleting, setDeleting] = useState(null);
 
   const [value, setValue] = useState(1);
@@ -43,6 +45,7 @@ export const Product = (props) => {
     value > 1 && setValue(value - 1);
   };
 
+  // eslint-disable-next-line
   const [userLog] = useLocalStorage("supabase.auth.token");
 
   useEffect(() => {
@@ -50,6 +53,7 @@ export const Product = (props) => {
     if (!findLastProduct) {
       setProductsVisited((product) => [...product, props.id]);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

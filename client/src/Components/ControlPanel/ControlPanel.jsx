@@ -14,7 +14,7 @@ import {
   getAllUserOrders,
   orderEmail,
 } from "../../Redux/Orders/orderActions";
-import { getUserReviews, deleteReview } from "../../Redux/Reviews/reviewsActions";
+import { getUserReviews } from "../../Redux/Reviews/reviewsActions";
 import style from "./controlpanel.module.scss";
 import {
   Edit,
@@ -25,7 +25,6 @@ import {
 import { Link } from "react-router-dom";
 import { OrderDetail } from "./OrderDetail/OrderDetail";
 import Modal from "@material-ui/core/Modal";
-//import { useLocalStorage } from "../../LocalStorage/useLocalStorage.js";
 import { ProductSelection } from "./Modals/ProductSelection";
 
 export function ControlPanel() {
@@ -67,6 +66,7 @@ export function ControlPanel() {
     } else {
       dispatch(getAllOrders());
     }
+    // eslint-disable-next-line
   }, [filter]);
 
   const changeModal = async (id) => {
@@ -123,13 +123,14 @@ export function ControlPanel() {
     dispatch(getAllOrders());
     dispatch(getAllUserOrders(userLoged.id));
     dispatch(getUserReviews(userLoged.id));
+    // eslint-disable-next-line
   }, [search, container, tab, userLoged]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 10;
   const indexLastResult = currentPage * resultsPerPage;
+  // eslint-disable-next-line
   const indexFirstResult = indexLastResult - resultsPerPage;
-  // const showedResults = state.allGames.slice(indexFirstResult, indexLastResult);
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -138,7 +139,6 @@ export function ControlPanel() {
   const previousPage = () => {
     setCurrentPage(currentPage - 1);
   };
-
 
   return (
     <div className={style.container}>
@@ -412,7 +412,7 @@ export function ControlPanel() {
                       </Link>
                       <button
                         className="delete_review"
-                    //    onClick={functionDeleteReview(reviews.id)}
+                        //    onClick={functionDeleteReview(reviews.id)}
                       >
                         Delete
                       </button>

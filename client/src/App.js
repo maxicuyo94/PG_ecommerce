@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { ProtectedRoute } from "./AuthRoutes/ProtectedRoute";
 import { useLocalStorage } from "./LocalStorage/useLocalStorage";
 import Layout from "./Components/Layout/Layout";
