@@ -6,7 +6,7 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const Search = (input) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const JSON = await supabase
       .from("product")
       .select("*, images(url), reviews(*)")
@@ -15,20 +15,19 @@ export const Search = (input) => {
   };
 };
 
-
 export const Searching = (payload) => {
   return {
     type: actionType.SEARCHING,
     payload,
-  }
+  };
 };
 
 export const totalProducts = (product) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     if (!product) {
       let JSON = await supabase
         .from("product")
-        .select("*, images(url), reviews(*)")
+        .select("*, images(url), reviews(*)");
       return dispatch({
         type: actionType.PRODUCTS,
         payload: JSON.data,
@@ -39,7 +38,6 @@ export const totalProducts = (product) => {
       .select("*, images(url)")
       .ilike("name", `%${product}%`);
     dispatch({ type: actionType.PRODUCTS, payload: JSON.data });
-
   };
 };
 
@@ -48,15 +46,16 @@ export const allProducts = (limit, offset, cate, price, input) => {
   let lowestPrice = !price[0] ? "" : "price";
   let highestPrice = !price[1] ? "" : "price";
   let name = !input ? "" : "name";
-  return async function (dispatch) {
+  return async function(dispatch) {
     let JSON = await supabase
       .from("product")
-      .select("name,price,rating,id,stock,discount,categories(name), images(url), reviews(*)")
+      .select(
+        "name,price,rating,id,stock,discount,categories(name), images(url), reviews(*)"
+      )
       .ilike(name, `${input}%`)
       .eq(categoryName, cate)
       .gt(lowestPrice, price[0])
       .lt(highestPrice, price[1]);
-    console.log(JSON)
     dispatch({
       type: actionType.SEARCH,
       payload: JSON.data,
@@ -66,7 +65,7 @@ export const allProducts = (limit, offset, cate, price, input) => {
 };
 
 export const productDetail = (input) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const JSON = await supabase
       .from("product")
       .select("*, categories(id, name), images(url), reviews(*)")
@@ -76,62 +75,33 @@ export const productDetail = (input) => {
 };
 
 export const getCategories = (category) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     if (!category) {
       const JSON = await supabase.from("categories").select("*");
       return dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data });
-    };
-    const JSON = await supabase.from("categories").select("*").ilike("name", `%${category}%`);
+    }
+    const JSON = await supabase
+      .from("categories")
+      .select("*")
+      .ilike("name", `%${category}%`);
     return dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data });
-  }
+  };
 };
 
-/* export const getProductsByCategories = (input) => {
-  return async function (dispatch) {
-    // eslint-disable-next-line
-    let Pname = !input ? "" : "name";
-    const categoriesID = await supabase
-      .from("categories")
-      .select("id, name")
-      .range(0, 2);
-
-    const productsID = await Promise.all(
-      categoriesID.data.map(async (categoryID) => {
-        const productID = await supabase
-          .from("product_categories")
-          .select("product_id, product(name)")
-          .eq("categories_id", categoryID.id);
-        return { data: productID.data, name: categoryID.name };
-      })
-    );
-    const products = await Promise.all(
-      productsID.map(async (arrProductbyCategory) => {
-        const promiseProducts = await Promise.all(
-          arrProductbyCategory.data.map(async (objID) => {
-            const product = await supabase
-              .from("product")
-              .select("*, images(url), reviews(*)")
-              .eq("id", objID.product_id);
-            return product.data[0];
-          })
-        );
-        return { name: arrProductbyCategory.name, data: promiseProducts };
-      })
-    );
-
-    dispatch({ type: actionType.GET_PRODUCTBYCATEGORIES, payload: products });
-  };
-}; */
 export const getProductsByCategories = (input) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     // eslint-disable-next-line
     let { data: categories, error } = await supabase
-      .from('categories')
-      .select('name , product_categories(product(*,images(url),reviews(*)))')
+      .from("categories")
+      .select("name , product_categories(product(*,images(url),reviews(*)))");
 
-    dispatch({ type: actionType.GET_PRODUCTBYCATEGORIES, payload: categories.sort(() => Math.random() - 0.5).slice(0, 3) });
+    dispatch({
+      type: actionType.GET_PRODUCTBYCATEGORIES,
+      payload: categories.sort(() => Math.random() - 0.5).slice(0, 3),
+    });
   };
 };
+
 export const postProduct = (product) => {
   return async (dispatch) => {
     await supabase.from("product").insert([
@@ -205,7 +175,10 @@ export const updateProduct = (product, id) => {
         .insert([{ product_id: id, categories_id: category.id }]);
     });
     product.delImages.map(async (img) => {
-      await supabase.from("images").delete("*").match({ url: img.url });
+      await supabase
+        .from("images")
+        .delete("*")
+        .match({ url: img.url });
     });
     product.upImages.map(async (image) => {
       await supabase.from("images").insert([
@@ -235,20 +208,32 @@ export const updateProduct = (product, id) => {
 
 export const deleteProduct = (id) => {
   return async () => {
-    await supabase.from("product_categories").delete("*").eq("product_id", id);
-    await supabase.from("images").delete("*").match({ product_id: id });
-    await supabase.from("product").delete().eq("id", id);
+    await supabase
+      .from("product_categories")
+      .delete("*")
+      .eq("product_id", id);
+    await supabase
+      .from("images")
+      .delete("*")
+      .match({ product_id: id });
+    await supabase
+      .from("product")
+      .delete()
+      .eq("id", id);
   };
 };
 
 export const deleteCategory = (id) => {
   return async () => {
-    await supabase.from("categories").delete("*").match({ id: id });
+    await supabase
+      .from("categories")
+      .delete("*")
+      .match({ id: id });
   };
 };
 
 export const getProductsVisited = (products) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const promiseProducts = await Promise.all(
       products.map(async (id) => {
         const product = await supabase
@@ -258,6 +243,6 @@ export const getProductsVisited = (products) => {
         return product.data[0];
       })
     );
-    dispatch({ type: actionType.LAST_PRODUCT, payload: promiseProducts })
-  }
-}
+    dispatch({ type: actionType.LAST_PRODUCT, payload: promiseProducts });
+  };
+};

@@ -5,7 +5,7 @@ const InitialState = {
   orderDetail: {},
   userOrder: [],
   orderProducts: [],
-  userOrders: []
+  userOrders: [],
 };
 
 function Reducer(state = InitialState, action) {

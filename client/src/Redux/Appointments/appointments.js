@@ -6,29 +6,30 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const postAppointment = (idHour, dateAppointments, order) => {
-    return async () => {
-        await supabase
-        .from("appointments")
-        .insert([{
-            hour_id: idHour,
-            date: dateAppointments,
-            order_id: order
-        }])
-    }  
-}
+  return async () => {
+    await supabase.from("appointments").insert([
+      {
+        hour_id: idHour,
+        date: dateAppointments,
+        order_id: order,
+      },
+    ]);
+  };
+};
 
 export const allAppointments = (date, order) => {
-    return async (dispatch) => {
-        const data = await supabase
-        .from('appointments')
-        .select('*')
-        .eq('date', date);
-        dispatch({ type: actionType.APPOINTMENTS, payload: 
-            { 
-                hours: data.data,
-                order: order,
-                date: date
-        } 
-    })
-    }
-}
+  return async (dispatch) => {
+    const data = await supabase
+      .from("appointments")
+      .select("*")
+      .eq("date", date);
+    dispatch({
+      type: actionType.APPOINTMENTS,
+      payload: {
+        hours: data.data,
+        order: order,
+        date: date,
+      },
+    });
+  };
+};
