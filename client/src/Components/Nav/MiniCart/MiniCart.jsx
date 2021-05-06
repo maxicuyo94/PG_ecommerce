@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
-import MiniCard from "../MiniShop/MiniCard";
+import MiniCard from "../MiniCart/MiniCard";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -76,7 +76,13 @@ export default function SimpleMenu() {
       setSubtotal(amount);
       localStorage.setItem("amountTotal", JSON.stringify(amount));
     }
+    if (!cart.length) {
+      setAnchorEl(null);
+      history.push("/")
+    }
   }, [cart]);
+
+
 
   useEffect(() => {
     setTotal((subtotal - subtotal * (coupon / 100)).toFixed(2));
