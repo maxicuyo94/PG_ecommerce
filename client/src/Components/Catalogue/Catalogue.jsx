@@ -17,8 +17,10 @@ import Cards from "./Cards/Cards";
 export function Catalogue({ dark }) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-  const wantedProducts = useSelector((state) => state.productReducer.wantedProducts);
-  const allProducts = useSelector(state => state.productReducer.allProducts)
+  const wantedProducts = useSelector(
+    (state) => state.productReducer.wantedProducts
+  );
+  const allProducts = useSelector((state) => state.productReducer.allProducts);
   const Categories = useSelector((state) => state.productReducer.categories);
   const [Pages, setPages] = useState(0);
   const [Category, setCategory] = useState("");
@@ -27,7 +29,7 @@ export function Catalogue({ dark }) {
   const stableDispatch = useCallback(dispatch, []);
   const Input = useSelector((state) => state.productReducer.Searchingg);
   const [view, setView] = useState(false);
-  const [renderItems, setRenderItems] = useState([])
+  const [renderItems, setRenderItems] = useState([]);
 
   const location = useLocation();
   const history = useHistory();
@@ -54,22 +56,32 @@ export function Catalogue({ dark }) {
     }
 
     dispatch(getCategories());
-  }, [dispatch, stableDispatch, Pages, Category, Prices, history.location.pathname, history.location.search]);
+    // eslint-disable-next-line
+  }, [
+    dispatch,
+    stableDispatch,
+    Pages,
+    Category,
+    Prices,
+    history.location.pathname,
+    history.location.search,
+  ]);
 
   useEffect(() => {
-    if(wantedProducts.length) {
-      setRenderItems(wantedProducts)
+    if (wantedProducts.length) {
+      setRenderItems(wantedProducts);
     } else {
-      setRenderItems(allProducts)
+      setRenderItems(allProducts);
     }
-  }, [wantedProducts])
+    // eslint-disable-next-line
+  }, [wantedProducts]);
 
   useEffect(() => {
     return () => {
-      dispatch(clearSearch())
-    }
-  }, [])
-
+      dispatch(clearSearch());
+    };
+    // eslint-disable-next-line
+  }, []);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -86,8 +98,8 @@ export function Catalogue({ dark }) {
   };
 
   const handleClearSearch = () => {
-    dispatch(clearSearch())
-  }
+    dispatch(clearSearch());
+  };
 
   const prevPage = () => {
     Pages > 0 && setPages(Pages - 1);
@@ -112,7 +124,7 @@ export function Catalogue({ dark }) {
         <div className={styles.title}>
           <span>{t("catalogue.textTwo")}</span>
         </div>
-        <button onClick={() => handleClearSearch()}>Clear Search</button>   
+        <button onClick={() => handleClearSearch()}>Clear Search</button>
         <div className={styles.categories}>
           <span>{t("catalogue.texThree")}</span>
           <select onChange={handleInputChange}>
