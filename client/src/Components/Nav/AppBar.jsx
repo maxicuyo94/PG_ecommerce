@@ -104,6 +104,7 @@ export default function NavBar({ priority, dark }) {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cartReducer.cart)
   const user = useSelector(state =>  state.usersReducer.userLoged)
+  const wishlist = useSelector(state =>  state.wishlistReducer.wishlist)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -165,7 +166,9 @@ export default function NavBar({ priority, dark }) {
     } else if( e.target.id === 'logOut') {
       handleLogOut()
     } else if( e.target.id === 'wishlist') {
-      history.push('/wishlist')
+      !wishlist.length
+      ? swal('Your wishlist is empty!', 'Add items to your wishlist and come back', 'error')
+      : history.push('/wishlist')
     }
     setAnchorEl(null);
       handleMobileMenuClose();
@@ -206,10 +209,10 @@ export default function NavBar({ priority, dark }) {
       open={isMenuOpen}
       onClose={handleMenuProfile}
     >
+      <MenuItem id='wishlist' onClick={(e) => handleMenuProfile(e)}>Wishlist</MenuItem>
       <MenuItem id='account' onClick={(e) => handleMenuProfile(e)}>Account</MenuItem>
       <MenuItem id='profile' onClick={(e) => handleMenuProfile(e)}>Profile</MenuItem>
       <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem>
-      <MenuItem id='wishlist' onClick={(e) => handleMenuProfile(e)}>Wishlist</MenuItem>
     </Menu>
   );
   //--------------------------------------------------------------//

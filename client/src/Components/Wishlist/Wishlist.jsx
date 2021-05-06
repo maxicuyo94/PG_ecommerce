@@ -17,18 +17,12 @@ const Wishlist = () => {
   return (
     <div className="container"> 
       <h2>Wishlist</h2>
-      {wishlist.length > 0 ? (
       <div className="productsWishlist">
-      {wishlist?.map((product) => (
-        <WishListCard props={product.product} userId={userId} />
+      {
+        wishlist?.map((product) => (
+          <WishListCard props={product.product} userId={userId} />
       ))}
     </div>
-      ) : (
-        <div className="noProducts">
-          <span>You don't got any favorites yet!</span>
-          <hr />
-        </div>
-      )}
     </div>
   );
 };
