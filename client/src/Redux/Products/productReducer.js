@@ -6,8 +6,8 @@ const InitialState = {
   productDetail: {},
   categories: [],
   productByCategories: {},
-  Searchingg:'',
-  lastProducts: []
+  Searchingg: "",
+  lastProducts: [],
 };
 
 function productReducer(state = InitialState, action) {
@@ -17,11 +17,11 @@ function productReducer(state = InitialState, action) {
         ...state,
         allProducts: action.payload,
       };
-      case actionType.SEARCHING:
-        return {
-          ...state,
-          Searchingg: action.payload,
-        };
+    case actionType.SEARCHING:
+      return {
+        ...state,
+        Searchingg: action.payload,
+      };
     case actionType.SEARCH:
       return {
         ...state,
@@ -59,10 +59,10 @@ function productReducer(state = InitialState, action) {
         productByCategories: action.payload,
       };
     case actionType.LAST_PRODUCT:
-      return{
+      return {
         ...state,
-        lastProducts: action.payload
-      }
+        lastProducts: action.payload,
+      };
     default:
       return state;
   }

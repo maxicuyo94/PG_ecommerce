@@ -7,13 +7,13 @@ export const PRODUCTS = "PRODUCTS";
 export const POST_USER = "POST_USER";
 export const ALL_USERS = "ALL_USERS";
 export const POST_PRODUCT = "POSTPRUDOCT";
-export const LAST_PRODUCT = "LAST_PRODUCT"
+export const LAST_PRODUCT = "LAST_PRODUCT";
 export const PRODUCT_DETAIL = "PRODUCTDETAIL";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_PRODUCTBYCATEGORIES = "GET_PRODUCTBYCATEGORIES";
-export const USER_LOGIN = "USER_LOGIN"
+export const USER_LOGIN = "USER_LOGIN";
 export const ORDERS = "ORDERS";
-export const DARK = 'DARK'
+export const DARK = "DARK";
 
 //Cart
 export const SET_CART = "SET_CART";
@@ -40,16 +40,14 @@ export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
 export const RESTORE_REDUX = "RESTORE_REDUX";
 export const USER_LOGOUT = "USER_LOGOUT";
 
-
 // User
-export const USER_CONFIG = "USER_CONFIG"
-export const ADD_POINTS = "ADD_POINTS"
+export const USER_CONFIG = "USER_CONFIG";
+export const ADD_POINTS = "ADD_POINTS";
 
 // Appointments
-export const APPOINTMENTS = "APPOINTMENTS"
+export const APPOINTMENTS = "APPOINTMENTS";
 
 //Wishlist
-export const ADD_ITEM_WISHLIST = "ADD_ITEM_WISHLIST"
-export const DELETE_ITEM_WISHLIST = "DELETE_ITEM_WISHLIST"
-export const GET_USER_WISHLIST = "GET_USER_WISHLIST"
-
+export const ADD_ITEM_WISHLIST = "ADD_ITEM_WISHLIST";
+export const DELETE_ITEM_WISHLIST = "DELETE_ITEM_WISHLIST";
+export const GET_USER_WISHLIST = "GET_USER_WISHLIST";
