@@ -12,7 +12,7 @@ export function AboutUs(){
   return(
 
     <div className={style.containerAbout}>
-      <label className={style.title}>Who we are?</label>
+      <label className={style.title}>Our Team</label>
       <label className={style.tdescription}>We are a team of 10 people passionate about programming. This ecommerce is the final project of the intensive bootcamp Soy Henry.</label>
       <div className={style.cardsContainer}>
 

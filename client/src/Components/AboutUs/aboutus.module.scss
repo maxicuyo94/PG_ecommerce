@@ -13,13 +13,13 @@
   .card{
     width: 20rem;
     margin: 20px;
-    box-shadow: 10px 10px darkolivegreen;
-    border-radius: 10px
+    box-shadow: 0px 0px 15px darkolivegreen;
+    border-radius: 10px;
   }
 
   .card:hover{
-    box-shadow: 20px 20px darkolivegreen;
-
+    box-shadow: 0px 0px 30px darkolivegreen;
+    transform: scale(1.05);
     transition: 0.5s;
 
     .name{
@@ -30,7 +30,7 @@
 
     .logos{
         width:180px;
-        transition: 0.5s
+        transition: 0.3s
     }
     .logo{
       transform: scale(1.2);
