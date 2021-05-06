@@ -6,21 +6,16 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const Search = (input) => {
-  return async function(dispatch) {
-    const JSON = await supabase
-      .from("product")
-      .select("*, images(url), reviews(*)")
-      .ilike("name", `%${input}%`);
-    dispatch({ type: actionType.SEARCHB, payload: JSON.data });
+  return async function (dispatch) {
+    dispatch({ type: actionType.SEARCHING, payload: input });
   };
 };
 
 
 export const clearSearch = () => {
-  return {
-    type: actionType.CLEAR_SEARCHB,
-    payload: [],
-  }
+  return async function (dispatch) {
+    dispatch({ type: actionType.SEARCHING, payload: '' });
+  };
 };
 
 export const totalProducts = (product) => {
@@ -53,7 +48,7 @@ export const getAllProducts = (limit, offset, cate, price, input) => {
       .select(
         "name,price,rating,id,stock,discount,categories(name), images(url), reviews(*)"
       )
-      .ilike(name, `${input}%`)
+      .ilike(name, `%${input}%`)
       .eq(categoryName, cate)
       .gt(lowestPrice, price[0])
       .lt(highestPrice, price[1]);

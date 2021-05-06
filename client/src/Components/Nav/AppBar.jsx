@@ -19,7 +19,7 @@ import { userLogOut } from "../../Redux/Users/usersActions";
 import swal from "sweetalert";
 import MiniCart from "./MiniCart/MiniCart";
 import BtnDark from "./BtnDark/BtnDark";
-import { Search } from "../../Redux/Products/productActions";
+import { clearSearch, Search } from "../../Redux/Products/productActions";
 import logo from "../../Assets/static/simbolo-verde.png"
 
 
@@ -133,6 +133,7 @@ export default function NavBar({ priority, dark }) {
 
   const handleCatalogue = (event) => {
     history.push('/catalogue')
+    dispatch(clearSearch())
     setAnchorEl(null);
     handleMobileMenuClose();
   };
