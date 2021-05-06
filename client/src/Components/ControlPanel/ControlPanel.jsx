@@ -123,7 +123,7 @@ export function ControlPanel() {
     dispatch(getAllOrders());
     dispatch(getAllUserOrders(userLoged.id));
     dispatch(getUserReviews(userLoged.id));
-  }, [search, container, tab, userLoged]);
+  }, [search, container, tab, userLoged, products]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 10;
@@ -154,11 +154,11 @@ export function ControlPanel() {
             Orders
           </button>
         )}
-        {
-          <button name="purchasehistory" onClick={(e) => handleTab(e)}>
-            Purchase History
-          </button>
-        }
+          {userLoged.permission === "customer" (
+         <button name="purchasehistory" onClick={(e) => handleTab(e)}>
+         Purchase History
+       </button>
+        )}
         {
           <button name="reviews" onClick={(e) => handleTab(e)}>
             Reviews
@@ -222,8 +222,11 @@ export function ControlPanel() {
             <h4 className={style.name}>Purchase</h4>
           ) : null}
           <h4>Modify</h4>
-          {tab === "orders" ? null : <h4>Delete</h4>}
+          {tab === "orders" ? null : <h4>Delete</h4>}          
+          {tab === "reviews" ? null : <h4>Delete</h4>}
+
         </div>
+
         <div className={style.containerList}>
           {tab === "products"
             ? products?.map((product) => {
@@ -322,7 +325,7 @@ export function ControlPanel() {
               })
             : null}
           {tab === "categories"
-            ? categories.map((category) => {
+            ? categories?.map((category) => {
                 return (
                   <div className={style.list}>
                     {checkbox ? (
@@ -424,7 +427,7 @@ export function ControlPanel() {
           {tab === "users" &&
           (userLoged.permission === "superadmin" ||
             userLoged.permission === "admin")
-            ? users.map((user) => {
+            ? users?.map((user) => {
                 return (
                   <div key={user.id} className={style.list}>
                     {checkbox ? (
