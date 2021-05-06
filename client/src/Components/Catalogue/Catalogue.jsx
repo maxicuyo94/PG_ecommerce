@@ -13,11 +13,16 @@ import { useTranslation } from "react-i18next";
 import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
 import ViewListOutlinedIcon from "@material-ui/icons/ViewListOutlined";
 import Cards from "./Cards/Cards";
+import { Button } from "@material-ui/core";
 
 export function Catalogue({ dark }) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-  const allProducts = useSelector(state => state.productReducer.allProducts)
+  
+  const wantedProducts = useSelector(
+    (state) => state.productReducer.wantedProducts
+  );
+  const allProducts = useSelector((state) => state.productReducer.allProducts);
   const Categories = useSelector((state) => state.productReducer.categories);
   const [Pages, setPages] = useState(0);
   const [Category, setCategory] = useState("");
@@ -26,6 +31,7 @@ export function Catalogue({ dark }) {
   const stableDispatch = useCallback(dispatch, []);
   const Input = useSelector((state) => state.productReducer.Searching);
   const [view, setView] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const location = useLocation();
   const history = useHistory();
@@ -51,8 +57,17 @@ export function Catalogue({ dark }) {
       );
     }
     dispatch(getCategories());
-  }, [dispatch, stableDispatch, Pages, Category, Prices, Input, history.location.pathname, history.location.search]);
-
+    // eslint-disable-next-line
+  }, [
+    dispatch,
+    stableDispatch,
+    Pages,
+    Category,
+    Prices,
+    Input,
+    history.location.pathname,
+    history.location.search,
+  ]);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -68,15 +83,23 @@ export function Catalogue({ dark }) {
       : setPrices([e.target.value, 200 + parseInt(e.target.value)]);
   };
 
-  const handleClearSearch = () => {
-    dispatch(clearSearch())
-  }
+  // const handleClearSearch = () => {
+  //   dispatch(clearSearch());
+  // };
 
   const prevPage = () => {
+    setIsDisabled(true)
     Pages > 0 && setPages(Pages - 1);
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 1000);
   };
   const nextPage = () => {
+    setIsDisabled(true)
     allProducts.length > 3 && setPages(Pages + 1);
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 1000);
   };
 
   return (
@@ -125,13 +148,13 @@ export function Catalogue({ dark }) {
           </button>
         </div>
         <div className={styles.pagination}>
-          <button onClick={prevPage}>
+          <Button onClick={prevPage} disabled={isDisabled}>
             <ArrowBackIosOutlinedIcon style={{ fontSize: "1rem" }} />
-          </button>
+          </Button>
           <input type="text" value={Pages + 1} disabled />
-          <button onClick={nextPage}>
+          <Button onClick={nextPage} disabled={isDisabled}>
             <ArrowForwardIosOutlinedIcon style={{ fontSize: "1rem" }} />
-          </button>
+          </Button>
         </div>
       </div>
       <div className={styles.products}>
