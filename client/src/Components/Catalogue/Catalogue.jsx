@@ -31,8 +31,6 @@ export function Catalogue({ dark }) {
   const Input = useSelector((state) => state.productReducer.Searching);
   const [view, setView] = useState(false);
 
-  const [renderItems, setRenderItems] = useState([]);
-
   const location = useLocation();
   const history = useHistory();
 
@@ -64,25 +62,26 @@ export function Catalogue({ dark }) {
     Pages,
     Category,
     Prices,
+    Input,
     history.location.pathname,
     history.location.search,
   ]);
 
-  useEffect(() => {
-    if (wantedProducts.length) {
-      setRenderItems(wantedProducts);
-    } else {
-      setRenderItems(allProducts);
-    }
-    // eslint-disable-next-line
-  }, [wantedProducts]);
+  // useEffect(() => {
+  //   if (wantedProducts.length) {
+  //     setRenderItems(wantedProducts);
+  //   } else {
+  //     setRenderItems(allProducts);
+  //   }
+  //   // eslint-disable-next-line
+  // }, [wantedProducts]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(clearSearch());
-    };
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(clearSearch());
+  //   };
+  //   // eslint-disable-next-line
+  // }, []);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -98,9 +97,9 @@ export function Catalogue({ dark }) {
       : setPrices([e.target.value, 200 + parseInt(e.target.value)]);
   };
 
-  const handleClearSearch = () => {
-    dispatch(clearSearch());
-  };
+  // const handleClearSearch = () => {
+  //   dispatch(clearSearch());
+  // };
 
   const prevPage = () => {
     Pages > 0 && setPages(Pages - 1);

@@ -76,7 +76,13 @@ export default function SimpleMenu() {
       setSubtotal(amount);
       localStorage.setItem("amountTotal", JSON.stringify(amount));
     }
+    if (!cart.length) {
+      setAnchorEl(null);
+      history.push("/")
+    }
   }, [cart]);
+
+
 
   useEffect(() => {
     setTotal((subtotal - subtotal * (coupon / 100)).toFixed(2));
