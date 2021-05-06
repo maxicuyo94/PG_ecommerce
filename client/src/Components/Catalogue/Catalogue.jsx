@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
 import ViewListOutlinedIcon from "@material-ui/icons/ViewListOutlined";
 import Cards from "./Cards/Cards";
+import { Button } from "@material-ui/core";
 
 export function Catalogue({ dark }) {
   // eslint-disable-next-line
@@ -30,6 +31,7 @@ export function Catalogue({ dark }) {
   const stableDispatch = useCallback(dispatch, []);
   const Input = useSelector((state) => state.productReducer.Searching);
   const [view, setView] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const location = useLocation();
   const history = useHistory();
@@ -67,22 +69,6 @@ export function Catalogue({ dark }) {
     history.location.search,
   ]);
 
-  // useEffect(() => {
-  //   if (wantedProducts.length) {
-  //     setRenderItems(wantedProducts);
-  //   } else {
-  //     setRenderItems(allProducts);
-  //   }
-  //   // eslint-disable-next-line
-  // }, [wantedProducts]);
-
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(clearSearch());
-  //   };
-  //   // eslint-disable-next-line
-  // }, []);
-
   const handleInputChange = (e) => {
     e.preventDefault();
     setCategory(e.target.value);
@@ -102,10 +88,18 @@ export function Catalogue({ dark }) {
   // };
 
   const prevPage = () => {
+    setIsDisabled(true)
     Pages > 0 && setPages(Pages - 1);
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 1000);
   };
   const nextPage = () => {
+    setIsDisabled(true)
     allProducts.length > 3 && setPages(Pages + 1);
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 1000);
   };
 
   return (
@@ -154,13 +148,13 @@ export function Catalogue({ dark }) {
           </button>
         </div>
         <div className={styles.pagination}>
-          <button onClick={prevPage}>
+          <Button onClick={prevPage} disabled={isDisabled}>
             <ArrowBackIosOutlinedIcon style={{ fontSize: "1rem" }} />
-          </button>
+          </Button>
           <input type="text" value={Pages + 1} disabled />
-          <button onClick={nextPage}>
+          <Button onClick={nextPage} disabled={isDisabled}>
             <ArrowForwardIosOutlinedIcon style={{ fontSize: "1rem" }} />
-          </button>
+          </Button>
         </div>
       </div>
       <div className={styles.products}>
