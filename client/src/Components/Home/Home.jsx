@@ -126,7 +126,7 @@ export function Home(props) {
               )}
             </div>
           </div>
-        )};
+        )}
         
         {productByCategories?.length > 0 &&
           productByCategories.map((categories) => {
