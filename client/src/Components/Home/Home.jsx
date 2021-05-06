@@ -122,13 +122,14 @@ export function Home(props) {
             </div>
             <div className={styles.carousel}>
               {lastProducts.length > 0 && (
-              <SwiperSlider products={lastProducts} />
+                <SwiperSlider products={lastProducts} />
               )}
             </div>
           </div>
-        }
-        {
-          productByCategories?.length > 0 && productByCategories.map((categories) => {
+        )};
+        
+        {productByCategories?.length > 0 &&
+          productByCategories.map((categories) => {
             return (
               <div className={styles.containerP} key={categories.name}>
                 <div className={styles.title}>
