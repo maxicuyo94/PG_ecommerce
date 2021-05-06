@@ -15,21 +15,23 @@ const Wishlist = () => {
     // eslint-disable-next-line
   }, []);
 
+  const redirect = () => {
+    window.location.href = "/";
+   // setTimeout (redirect(), 3000);
+  }
+
   return (
     <div className="container">
-      <h2>Wishlist</h2>
       {wishlist.length > 0 ? (
         <div className="productsWishlist">
+          <h2>Wishlist</h2>
           {wishlist?.map((product) => (
             <WishListCard props={product.product} userId={userId} />
           ))}
         </div>
       ) : (
-        <div className="emptyWishlist">
-          <span>You don't got any favorites yet</span>
-          setTimeout( function() {(window.location.href = "/")}, 3000 )
-        </div>
-      )}
+        redirect()
+        )}
     </div>
   );
 };
