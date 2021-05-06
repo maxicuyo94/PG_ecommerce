@@ -1,9 +1,10 @@
 import React from "react";
-import style from "./footer.module.scss";
+//import style from "./footer.module.scss";
 import { useTranslation } from "react-i18next";
 import SimpleReactFooter from "simple-react-footer";
+import { PinDropSharp } from "@material-ui/icons";
 
-export function Footer() {
+export function Footer({dark}) {
   const [t, i18n] = useTranslation("global");
   const description = "We are an ecommerce dedicated to the sell of hardwares and differents computer parts ";
   const title = "TechStore";
@@ -57,7 +58,7 @@ export function Footer() {
     }
  ];
   return (
-    <div className={style.container}>
+    <div >
 <SimpleReactFooter 
     description={description} 
     title={title}
@@ -70,11 +71,9 @@ export function Footer() {
     pinterest="fluffy_cats_collections"
     copyright="black"
     iconColor="black"
-    // backgroundColor="bisque"
     fontColor="white"
     copyrightColor="darkgrey"
-
-    backgroundColor='#222'
+    backgroundColor={dark ? '#9abf15' : '#222'}
  />
     </div>
   );

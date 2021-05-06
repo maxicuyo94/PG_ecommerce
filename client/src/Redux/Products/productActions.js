@@ -25,7 +25,7 @@ export const Searching = (payload) => {
 
 export const totalProducts = (product) => {
   return async function (dispatch) {
-    if(!product) {
+    if (!product) {
       let JSON = await supabase
         .from("product")
         .select("*, images(url), reviews(*)")
@@ -35,10 +35,10 @@ export const totalProducts = (product) => {
       });
     }
     const JSON = await supabase
-    .from("product")
-    .select("*, images(url)")
-    .ilike("name", `%${product}%`);
-  dispatch({ type: actionType.PRODUCTS, payload: JSON.data });
+      .from("product")
+      .select("*, images(url)")
+      .ilike("name", `%${product}%`);
+    dispatch({ type: actionType.PRODUCTS, payload: JSON.data });
 
   };
 };
@@ -51,12 +51,12 @@ export const allProducts = (limit, offset, cate, price, input) => {
   return async function (dispatch) {
     let JSON = await supabase
       .from("product")
-      .select("name,price,rating,id,stock,categories(name), images(url), reviews(*)")
-      .ilike(name, `%${input}%`)
+      .select("name,price,rating,id,stock,discount,categories(name), images(url), reviews(*)")
+      .ilike(name, `${input}%`)
       .eq(categoryName, cate)
       .gt(lowestPrice, price[0])
       .lt(highestPrice, price[1]);
-      console.log(JSON)
+    console.log(JSON)
     dispatch({
       type: actionType.SEARCH,
       payload: JSON.data,
@@ -77,16 +77,16 @@ export const productDetail = (input) => {
 
 export const getCategories = (category) => {
   return async function (dispatch) {
-    if(!category) {
+    if (!category) {
       const JSON = await supabase.from("categories").select("*");
       return dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data });
     };
     const JSON = await supabase.from("categories").select("*").ilike("name", `%${category}%`);
     return dispatch({ type: actionType.GET_CATEGORIES, payload: JSON.data });
-    }
+  }
 };
 
-export const getProductsByCategories = (input) => {
+/* export const getProductsByCategories = (input) => {
   return async function (dispatch) {
     // eslint-disable-next-line
     let Pname = !input ? "" : "name";
@@ -121,8 +121,17 @@ export const getProductsByCategories = (input) => {
 
     dispatch({ type: actionType.GET_PRODUCTBYCATEGORIES, payload: products });
   };
-};
+}; */
+export const getProductsByCategories = (input) => {
+  return async function (dispatch) {
+    // eslint-disable-next-line
+    let { data: categories, error } = await supabase
+      .from('categories')
+      .select('name , product_categories(product(*,images(url),reviews(*)))')
 
+    dispatch({ type: actionType.GET_PRODUCTBYCATEGORIES, payload: categories.sort(() => Math.random() - 0.5).slice(0, 3) });
+  };
+};
 export const postProduct = (product) => {
   return async (dispatch) => {
     await supabase.from("product").insert([
@@ -133,7 +142,7 @@ export const postProduct = (product) => {
         brand: product.brand,
         stock: product.stock,
         model: product.model,
-        ranking: product.ranking,
+        rating: product.ranking,
         storage: product.storage,
         status: product.status,
       },
@@ -234,7 +243,6 @@ export const deleteProduct = (id) => {
 
 export const deleteCategory = (id) => {
   return async () => {
-    console.log(id);
     await supabase.from("categories").delete("*").match({ id: id });
   };
 };
@@ -250,6 +258,6 @@ export const getProductsVisited = (products) => {
         return product.data[0];
       })
     );
-    dispatch ({type: actionType.LAST_PRODUCT,  payload: promiseProducts})
+    dispatch({ type: actionType.LAST_PRODUCT, payload: promiseProducts })
   }
 }

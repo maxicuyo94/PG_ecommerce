@@ -7,13 +7,18 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/components/lazy/lazy.scss'
-import './SwiperSlider.scss'
+//import './SwiperSlider.scss'
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, EffectFade])
 
-const SwiperSlider = (products) => {
+const SwiperSlider = ({products}) => {
+
+  let category = products.map((item) => item.product)
+  console.log('Slider: ', category, ' Productos:')
+
   return (
     <Swiper
       navigation
+      style={{ '--swiper-navigation-color': '#9abf15' }}
       pagination={false}
       scrollbar={false}
       autoHeight={false}
@@ -53,21 +58,21 @@ const SwiperSlider = (products) => {
       }
     >
       {
-        products && products.products.filter(item => item.stock > 0).map((item, i) => {
-            return (
-              <SwiperSlide key={i}>
-                <CategoriesHome 
-                  key={item.id}
-                  id={item.id}
-                  stock={item.stock}
-                  title={item.name}
-                  price={item.price}
-                  image={item.images[0]?.url}
-                  discount={item.discount}
-                  reviews={item.reviews}
-                />
-              </SwiperSlide>
-            );
+        category?.filter(item => item.stock > 0).map((item, i) => {
+          return (
+            <SwiperSlide key={i}>
+              <CategoriesHome
+                key={item.id}
+                id={item.id}
+                stock={item.stock}
+                title={item.name}
+                price={item.price}
+                image={item.images}
+                discount={item.discount}
+                reviews={item.reviews}
+              />
+            </SwiperSlide>
+          );
         })
       }
     </Swiper>

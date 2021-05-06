@@ -17,10 +17,12 @@ export function SignUp() {
     userName: "",
     password: "",
     phone: "",
-    address: "",
+    streetName: "",
+    streetNumber: "",
     city: "",
     postal_code: "",
     country: "",
+    recommended: ""
   });
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(true);
@@ -152,16 +154,32 @@ export function SignUp() {
       <div>
         <label
           className={errors.userName && success === false ? style.danger : ""}
-          htmlFor="address"
+          htmlFor="streetName"
         >
-          Address
+          Street name
         </label>
         <input
           className={errors.userName && success === false ? style.danger : ""}
           type="text"
-          name="address"
-          placeholder="Address"
-          value={user.address}
+          name="streetName"
+          placeholder="Street name"
+          value={user.streetName}
+          onChange={handleState}
+        />
+      </div>
+      <div>
+        <label
+          className={errors.userName && success === false ? style.danger : ""}
+          htmlFor="streetNumber"
+        >
+          Street number
+        </label>
+        <input
+          className={errors.userName && success === false ? style.danger : ""}
+          type="text"
+          name="streetNumber"
+          placeholder="Street number"
+          value={user.streetNumber}
           onChange={handleState}
         />
       </div>
@@ -210,6 +228,22 @@ export function SignUp() {
           name="country"
           placeholder="Country"
           value={user.country}
+          onChange={handleState}
+        />
+      </div>
+      <div>
+        <label
+          className={errors.userName && success === false ? style.danger : ""}
+          htmlFor="recommended"
+        >
+          User recommended
+        </label>
+        <input
+          className={errors.userName && success === false ? style.danger : ""}
+          type="text"
+          name="recommended"
+          placeholder="User recommended"
+          value={user.recommended}
           onChange={handleState}
         />
       </div>

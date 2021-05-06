@@ -6,7 +6,6 @@ export function deletingReview ({
   idReview,
   idProduct,
   dispatch,
-  renderReviews,
 }) {
   const functionDeleteReview = () => {
     dispatch(deleteReview(idProduct, idReview))

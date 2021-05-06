@@ -11,7 +11,7 @@ import { Access } from "./Components/Access/Access";
 import { ModifyUser } from "./Components/Access/ModifyUser/ModifyUser";
 import { ModifyProduct } from "./Components/ModifyProduct/ModifyProduct.jsx";
 import { ControlPanel } from "./Components/ControlPanel/ControlPanel.jsx";
-import { CheckOut } from "./Components/CheckOut/CheckOut.jsx";
+import CheckOut from "./Components/CheckOut/CheckOut.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "./Redux/Cart/cartActions";
 import { userStorage } from "./Redux/Users/usersActions";
@@ -20,11 +20,17 @@ import { Review } from "./Components/Review/review";
 import { Payment } from "./Components/Payment/Payment";
 import { ModifyReview } from "./Components/Review/modifyReview";
 import { checkout } from "./Redux/Cart/cartActions";
-import { getProductsVisited } from "./Redux/Products/productActions"
+import { getProductsVisited } from "./Redux/Products/productActions";
 import swal from "sweetalert";
-import { Banner } from './Components/Banner/Banner'
 import { ActiveUser } from './Components/ControlPanel/ActiveUser/ActiveUser'
-import {AboutUs} from './Components/AboutUs/AboutUs.jsx'
+import { Banner, Banner2 } from "./Components/Banner/Banner";
+import { ActiveUser } from "./Components/ControlPanel/ActiveUser/ActiveUser";
+import SimonSays from "./Components/VideoGame/SimonSays";
+import { Points } from "./Components/Points/Points";
+import { DaySelector } from "./Components/AppointmentsSelector/DaySelector/DaySelector";
+import { Appointments } from "./Components/AppointmentsSelector/Appointments/Appointments";
+import Wishlist from "./Components/Wishlist/Wishlist";
+
 
 function App() {
   // eslint-disable-next-line
@@ -32,36 +38,37 @@ function App() {
     "supabase.auth.token",
     ""
   );
-  const [productsVisited, setProductsVisited] = useLocalStorage("productVisited", [])
+  const [productsVisited, setProductsVisited] = useLocalStorage(
+    "productVisited",
+    []
+  );
 
   const dark = useSelector((state) => state.darkReducer.dark);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     if (userLogedStorage) {
       dispatch(userStorage(userLogedStorage.currentSession.user.id));
-      dispatch(setCart(userLogedStorage.currentSession?.user.id));
     }
+    dispatch(setCart(userLogedStorage.currentSession?.user.id));
     const lastProducts = async () => {
       if (productsVisited) {
-        await dispatch(getProductsVisited(productsVisited))
-        setProductsVisited([], true)
+        await dispatch(getProductsVisited(productsVisited));
+        setProductsVisited([], true);
       }
-    }
-    lastProducts()
+    };
+    lastProducts();
   }, [dispatch, userLogedStorage]);
 
   return (
     <Layout dark={dark}>
+      <Route exact path="/" component={Banner2} />
       <Route exact path="/" render={() => <Home dark={dark} />} />
       <ProtectedRoute exact path="/Access" component={() => <Access />} />
       <ProtectedRoute
         exact
         path="/myprofile"
-        component={() => (
-          <ModifyUser dark={dark} />
-        )}
+        component={() => <ModifyUser dark={dark} />}
       />
       <ProtectedRoute
         exact
@@ -92,6 +99,8 @@ function App() {
       />
       <Route exact path="/Order" render={() => <CheckOut dark={dark} />} />
       <Route exact path="/About" render={() => <AboutUs/>} />
+      <Route exact path="/points" render={() => <Points dark={dark} />} />
+
       <ProtectedRoute
         exact
         path="/modifyProduct/:id"
@@ -123,6 +132,10 @@ function App() {
           <ModifyReview id={match.params.id} dark={dark} />
         )}
       />
+      <ProtectedRoute exact path="/videogame" component={SimonSays} />
+      <ProtectedRoute exact path="/dayselect" component={DaySelector} />
+      <ProtectedRoute exact path="/appointments" component={Appointments} />
+      <Route exact path="/wishlist" component={Wishlist} />
     </Layout>
   );
 }
