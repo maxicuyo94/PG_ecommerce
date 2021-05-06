@@ -36,7 +36,6 @@ export const postUser = (users) => {
           city: users.city,
           postal_code: users.postal_code,
           country: users.country,
-          streetNumber: users.streetNumber,
         },
       ]);
       await supabase.from("order").insert([
