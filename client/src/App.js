@@ -22,6 +22,7 @@ import { ModifyReview } from "./Components/Review/modifyReview";
 import { checkout } from "./Redux/Cart/cartActions";
 import { getProductsVisited } from "./Redux/Products/productActions";
 import swal from "sweetalert";
+import { ActiveUser } from './Components/ControlPanel/ActiveUser/ActiveUser'
 import { Banner, Banner2 } from "./Components/Banner/Banner";
 import { ActiveUser } from "./Components/ControlPanel/ActiveUser/ActiveUser";
 import SimonSays from "./Components/VideoGame/SimonSays";
@@ -30,6 +31,7 @@ import { DaySelector } from "./Components/AppointmentsSelector/DaySelector/DaySe
 import { Appointments } from "./Components/AppointmentsSelector/Appointments/Appointments";
 import Wishlist from "./Components/Wishlist/Wishlist";
 import { getUserWishlist } from "./Redux/Wishlist/wishlistActions";
+
 
 function App() {
   // eslint-disable-next-line
@@ -98,7 +100,9 @@ function App() {
         )}
       />
       <Route exact path="/Order" render={() => <CheckOut dark={dark} />} />
+      <Route exact path="/About" render={() => <AboutUs/>} />
       <Route exact path="/points" render={() => <Points dark={dark} />} />
+
       <ProtectedRoute
         exact
         path="/modifyProduct/:id"
