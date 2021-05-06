@@ -266,8 +266,8 @@ export const Product = (props) => {
           <span>MORE PRODUCTS</span>
         </div>
         <div className={styles.slider}>
-          {productByCategories[random] && (
-            <SwiperSlider products={productByCategories[random].data} />
+          {productByCategories.length > 0 && (
+            <SwiperSlider products={productByCategories[1].product_categories} />
           )}
         </div>
       </div>
