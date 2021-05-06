@@ -12,6 +12,12 @@ function wishlistReducer(state = InitialState, action) {
         wishlist: action.payload,
       };
 
+    case actionType.GET_USER_WISHLIST:
+      return {
+        ...state,
+        wishlist: action.payload,
+      };
+
     case actionType.DELETE_ITEM_WISHLIST:
       return {
         ...state,

@@ -30,13 +30,14 @@ import "swiper/components/pagination/pagination.scss";
 SwiperCore.use([Autoplay, Navigation, Pagination, EffectFade]);
 export const CategoriesHome = (props) => {
   const dispatch = useDispatch();
-  //const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
   const [userLog] = useLocalStorage("supabase.auth.token");
   const userId = userLog && userLog.currentSession.user.id;
   const [fav, setFav] = useState(false);
   const [cart, setCart] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const handleFav = () => {
+    //agregar alerta si no estás logueado
+    dispatch(addToWishlist({id: props.id, fav: !fav, userId}));
     setFav(!fav);
   };
 
@@ -58,19 +59,6 @@ export const CategoriesHome = (props) => {
     swal("Done!", "Added to cart", "success");
   };
 
-  //let wishlistButton = document.querySelector(".addToWishlist");
-
-  // const addFavorite = (e) => {
-  //   e.preventDefault();
-  //   dispatch(addToWishlist(wishlist));
-  //   swal({ text: `Added!`, icon: "success" });
-  // };
-
-  // const removeFavorite = (e) => {
-  //   e.preventDefault();
-  //   dispatch(deleteWishlist(wishlist));
-  //   swal({ text: `Deleted!`, icon: "success" });
-  // };
 
   return (
     <div className={dark ? styles.containerDark : styles.container}>
@@ -95,9 +83,6 @@ export const CategoriesHome = (props) => {
           ) : (
             <FavoriteBorderIcon style={{ fontSize: "1.5rem" }} />
           )}
-        </button>
-        <button className="addToWishlist">
-          Wishlist
         </button>
       </div>
 

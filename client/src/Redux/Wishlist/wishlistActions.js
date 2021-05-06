@@ -4,43 +4,39 @@ const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
 const supabase = createClient(supabaseUrl, supabaseKey);
-  
 
-export const addToWishlist = async (payload) => {
-  let userId =
-  localStorage.getItem("supabase.auth.token") &&
-  JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession.user
-    .id;
-
-if (userId) {
-   let payload = await supabase.from("wishlist").insert([
-        {
-          product_id: payload.id,
-          user_id: userId,
-        },
-      ]);
-    }
-    return { type: actionType.ADD_ITEM_WISHLIST, payload };
+export const getUserWishlist = (id) => {
+  return async function (dispatch) {
+    const JSON = await supabase
+      .from("wishlist")
+      .select("*, product (*)")
+      .eq("user_id", id);
+    dispatch({
+      type: actionType.GET_USER_WISHLIST,
+      payload: JSON.data,
+    });
+  };
 };
 
-export const deleteWishlist = (payload) => {
-      let userId =
-        localStorage.getItem("supabase.auth.token") &&
-        JSON.parse(localStorage.getItem("supabase.auth.token")).currentSession
-          .user.id;
-  
-      if (userId) {
-        let deleteItem = async () => {
-          const idWishlist = await supabase
-            .from("wishlist")
-            .select("id")
-            .eq("user_id", userId);
-  
-          await supabase.from("wishlist").delete().match({
+export const addToWishlist = (payload2) => {
+  let payload = payload2
+  return async function(dispatch) {
+    console.log(payload);
+    if (payload.fav) {
+         await supabase.from("wishlist").insert([
+          {
             product_id: payload.id,
+            user_id: payload.userId,
+          },
+        ]);
+    } else {
+       await supabase
+          .from("wishlist")
+          .delete()
+          .match({
+            product_id: payload.id,
+            user_id: payload.userId,
           });
-        };
-        deleteItem();
-      }
-    return { type: actionType.DELETE_ITEM_WISHLIST, payload };
+      };
   };
+};
