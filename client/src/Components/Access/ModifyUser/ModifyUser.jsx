@@ -46,6 +46,7 @@ export function ModifyUser({ id, dark }) {
       };
       gUser();
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -79,6 +80,7 @@ export function ModifyUser({ id, dark }) {
           points: userLog.points,
         });
     }
+    // eslint-disable-next-line
   }, [userLog, userConfig]);
 
   const resetPassword = () => {

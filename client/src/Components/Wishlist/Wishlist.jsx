@@ -12,17 +12,17 @@ const Wishlist = () => {
 
   useEffect(() => {
     dispatch(getUserWishlist(userId));
+    // eslint-disable-next-line
   }, []);
 
   return (
-    <div className="container"> 
+    <div className="container">
       <h2>Wishlist</h2>
       <div className="productsWishlist">
-      {
-        wishlist?.map((product) => (
+        {wishlist?.map((product) => (
           <WishListCard props={product.product} userId={userId} />
-      ))}
-    </div>
+        ))}
+      </div>
     </div>
   );
 };

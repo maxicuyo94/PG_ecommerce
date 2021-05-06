@@ -14,6 +14,7 @@ import ViewListOutlinedIcon from "@material-ui/icons/ViewListOutlined";
 import Cards from "./Cards/Cards";
 
 export function Catalogue({ dark }) {
+  // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
   const Products = useSelector((state) => state.productReducer.wantedProducts);
   const Categories = useSelector((state) => state.productReducer.categories);
@@ -48,7 +49,7 @@ export function Catalogue({ dark }) {
         allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
       );
     }
-
+    // eslint-disable-next-line
     dispatch(getCategories());
   }, [
     dispatch,
