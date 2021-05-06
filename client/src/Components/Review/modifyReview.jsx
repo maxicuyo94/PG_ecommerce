@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import style from "./modifyreview.module.scss";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { updateReview } from "../../Redux/Reviews/reviewsActions";
+import swal from "sweetalert";
 
 export function ModifyReview({ id }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   // eslint-disable-next-line
   const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const [data, setData] = useState({
@@ -19,6 +22,14 @@ export function ModifyReview({ id }) {
   const upReview = (upReview) => {
     upReview.preventDefault();
     dispatch(updateReview(data));
+    swal("Review modificated successfully!", {
+      buttons: {
+        button: "Ok",
+      },
+      icon: "success",
+    }).then((resp) => {
+      resp && history.push(`/controlpanel`);
+    });
   };
 
   return (

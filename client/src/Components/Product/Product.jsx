@@ -72,6 +72,8 @@ export const Product = (props) => {
     // eslint-disable-next-line
   }, [id]);
 
+
+
   const handleAddToCart = (details) => {
     let cartItemModel = {
       title: details.name,
