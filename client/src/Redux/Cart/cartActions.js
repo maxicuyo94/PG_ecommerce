@@ -171,9 +171,10 @@ export const clearCart = () => {
       const idOrder = await supabase
         .from("order")
         .select("id")
-        .eq("user_id", userId);
+        .eq("user_id", userId)
+        .eq("orderStatus", "inCart")
 
-      supabase
+      await supabase
         .from("order_detail")
         .delete()
         .eq("order_id", idOrder.data[0].id);

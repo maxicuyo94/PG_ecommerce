@@ -15,11 +15,12 @@ export const Search = (input) => {
   };
 };
 
-export const Searching = (payload) => {
+
+export const clearSearch = () => {
   return {
-    type: actionType.SEARCHING,
-    payload,
-  };
+    type: actionType.CLEAR_SEARCHB,
+    payload: [],
+  }
 };
 
 export const totalProducts = (product) => {
@@ -41,7 +42,7 @@ export const totalProducts = (product) => {
   };
 };
 
-export const allProducts = (limit, offset, cate, price, input) => {
+export const getAllProducts = (limit, offset, cate, price, input) => {
   let categoryName = !cate ? "" : "categories.name";
   let lowestPrice = !price[0] ? "" : "price";
   let highestPrice = !price[1] ? "" : "price";

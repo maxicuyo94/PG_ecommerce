@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import {
-  allProducts,
+  clearSearch,
+  getAllProducts,
   getCategories,
 } from "../../Redux/Products/productActions";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
@@ -16,7 +17,8 @@ import Cards from "./Cards/Cards";
 export function Catalogue({ dark }) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-  const Products = useSelector((state) => state.productReducer.wantedProducts);
+  const wantedProducts = useSelector((state) => state.productReducer.wantedProducts);
+  const allProducts = useSelector(state => state.productReducer.allProducts)
   const Categories = useSelector((state) => state.productReducer.categories);
   const [Pages, setPages] = useState(0);
   const [Category, setCategory] = useState("");
@@ -25,6 +27,7 @@ export function Catalogue({ dark }) {
   const stableDispatch = useCallback(dispatch, []);
   const Input = useSelector((state) => state.productReducer.Searchingg);
   const [view, setView] = useState(false);
+  const [renderItems, setRenderItems] = useState([])
 
   const location = useLocation();
   const history = useHistory();
@@ -42,25 +45,30 @@ export function Catalogue({ dark }) {
     if (query.has("category")) {
       const selectQuery = query.get("category");
       stableDispatch(
-        allProducts(Pages * 4, Pages * 4 + 4, selectQuery, Prices, Input)
+        getAllProducts(Pages * 4, Pages * 4 + 4, selectQuery, Prices, Input)
       );
     } else {
       stableDispatch(
-        allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
+        getAllProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
       );
     }
-    // eslint-disable-next-line
+    
     dispatch(getCategories());
-  }, [
-    dispatch,
-    stableDispatch,
-    Pages,
-    Category,
-    Prices,
-    Input,
-    history.location.pathname,
-    history.location.search,
-  ]);
+  }, [dispatch, stableDispatch, Pages, Category, Prices, history.location.pathname, history.location.search]);
+
+  useEffect(() => {
+    if(wantedProducts.length) {
+      setRenderItems(wantedProducts)
+    } else {
+      setRenderItems(allProducts)
+    }
+  }, [wantedProducts])
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearSearch())
+    }
+  }, [])
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -76,11 +84,15 @@ export function Catalogue({ dark }) {
       : setPrices([e.target.value, 200 + parseInt(e.target.value)]);
   };
 
+  const handleClearSearch = () => {
+    dispatch(clearSearch())
+  }
+
   const prevPage = () => {
     Pages > 0 && setPages(Pages - 1);
   };
   const nextPage = () => {
-    Products.length > 3 && setPages(Pages + 1);
+    renderItems.length > 3 && setPages(Pages + 1);
   };
 
   return (
@@ -99,6 +111,7 @@ export function Catalogue({ dark }) {
         <div className={styles.title}>
           <span>{t("catalogue.textTwo")}</span>
         </div>
+        <button onClick={() => handleClearSearch()}>Clear Search</button>   
         <div className={styles.categories}>
           <span>{t("catalogue.texThree")}</span>
           <select onChange={handleInputChange}>
@@ -139,7 +152,7 @@ export function Catalogue({ dark }) {
       </div>
       <div className={styles.products}>
         <div className={styles.searched}>
-          {Products?.map((item) => (
+          {renderItems?.map((item) => (
             <Cards
               key={item.id}
               id={item.id}
