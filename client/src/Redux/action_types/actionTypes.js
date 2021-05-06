@@ -1,5 +1,6 @@
 export const SEARCH = "SEARCH";
 export const SEARCHING = "SEARCHING";
+export const CLEAR_SEARCHB = "CLEAR_SEARCHB"
 
 export const SEARCHB = "SEARCHB";
 export const PRODUCTS = "PRODUCTS";

@@ -13,7 +13,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, EffectFade])
 const SwiperSlider = ({products}) => {
 
   let category = products.map((item) => item.product)
-  console.log('Slider: ', category, ' Productos:')
+  // console.log('Slider: ', category, ' Productos:')
 
   return (
     <Swiper
