@@ -71,6 +71,8 @@ export function Catalogue({ dark }) {
 
   const handleInputChange = (e) => {
     e.preventDefault();
+    query.delete('category')
+    history.push("/catalogue")
     setCategory(e.target.value);
   };
 
