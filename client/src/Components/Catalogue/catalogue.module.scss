@@ -33,6 +33,7 @@ $gris:#2C3A40;
     @media screen and (max-width: $tablet) {
       width: 90%;
       height: 15rem;
+      margin-top: 1rem;
     }
 
     .title {
@@ -148,7 +149,7 @@ $gris:#2C3A40;
     width: 70%;
 
     @media screen and (max-width: $tablet) {
-      width: 90%;
+      width: 95%;
       margin-top: 1rem;
     }
 
@@ -176,10 +177,11 @@ $gris:#2C3A40;
     background-color: transparent;
     box-shadow: 2px 0px 5px 0px rgba(255, 255, 255, 0.5);
     color: #fff;
-
+    
     .pagination {
-
+      
       input {
+        color: #fff;
         background-color: transparent;
         box-shadow: 2px 0px 5px 0px rgba(255, 255, 255, 0.5);
 

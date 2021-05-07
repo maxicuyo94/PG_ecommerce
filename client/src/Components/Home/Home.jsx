@@ -66,8 +66,8 @@ export function Home(props) {
       status === "approved"
         ? "success"
         : status === "rejected"
-        ? "error"
-        : "warning";
+          ? "error"
+          : "warning";
     swal(`Payment ${status}`, "", responseStatus);
 
     if (userId !== "undefined") {
@@ -115,19 +115,19 @@ export function Home(props) {
         <span className={styles.tag}>{t("home.title")}</span>
       </div>
       <div className={styles.products}>
-        {lastProducts?.length > 0 && (
+        {lastProducts?.length > 2 && (
           <div className={styles.containerP}>
             <div className={styles.title}>
               <span>{t("home2.lastProduct")}</span>
             </div>
             <div className={styles.carousel}>
-              {lastProducts.length > 0 && (
-                <SwiperSlider products={lastProducts} />
+              {lastProducts.length > 2 && (
+                <SwiperSlider products={lastProducts} flag={true} />
               )}
             </div>
           </div>
         )}
-        
+
         {productByCategories?.length > 0 &&
           productByCategories.map((categories) => {
             return (

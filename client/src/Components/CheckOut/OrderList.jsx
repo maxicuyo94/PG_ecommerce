@@ -63,7 +63,7 @@ export default function OrderList() {
 
         <ListItem className={classes.Total}>
           <ListItemText primary="Total" />
-          <Typography variant="subtitle1">${total}</Typography>
+          <Typography variant="subtitle1">US${total}</Typography>
         </ListItem>
       </List>
     </>

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import style from "./signup.module.scss";
 import swal from "sweetalert";
 import { useHistory } from "react-router-dom";
+import { StylesProvider } from "@material-ui/styles";
 
 export function SignUp() {
   const dispatch = useDispatch();
@@ -87,6 +88,8 @@ export function SignUp() {
 
   return (
     <form className={style.container}>
+    <div className={style.contents}>
+      <div className={style.column}>
       <div>
         <label
           className={errors.name && success === false ? style.danger : ""}
@@ -151,11 +154,12 @@ export function SignUp() {
           onChange={handleState}
         />
       </div>
+    
       <div>
         <label
           className={errors.userName && success === false ? style.danger : ""}
           htmlFor="streetName"
-        >
+          >
           Street name
         </label>
         <input
@@ -165,7 +169,7 @@ export function SignUp() {
           placeholder="Street name"
           value={user.streetName}
           onChange={handleState}
-        />
+          />
       </div>
       <div>
         <label
@@ -181,8 +185,10 @@ export function SignUp() {
           placeholder="Street number"
           value={user.streetNumber}
           onChange={handleState}
-        />
+          />
       </div>
+    </div>
+    <div className={style.column}>
       <div>
         <label
           className={errors.userName && success === false ? style.danger : ""}
@@ -289,22 +295,24 @@ export function SignUp() {
             (errors.password && success === false)
               ? style.danger
               : ""
-          }
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={user.password}
-          onChange={handleState}
-        />
-        <span>
+            }
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={user.password}
+            onChange={handleState}
+            />
+      </div>
+    </div>
+  </div>
+        <span className={style.password}>
           Use at least eight characters with a combination of letters, numbers,
           and symbols (@$!%*?&)
         </span>
-      </div>
       <Link to="/login">
         <button
           type="button"
-          className={success === VAL ? style.successButton : style.simpleButton}
+          className={style.button}
           onClick={(e) => created(e)}
         >
           SignUp

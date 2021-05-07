@@ -18,14 +18,6 @@ const theme = createMuiTheme({
     background: {
       default: '#fff',
     },
-    // breakpoints: {
-    //   xs: '0',
-    //   sm: '600',
-    //   md: '960',
-    //   lg: '1280',
-    //   xl: '1920' 
-    // },
-    // type: 'dark',
   },
 });
 

@@ -117,12 +117,12 @@
   color: #fff;
   font-size: 1.5rem;
   position: absolute;
-  top: 50%;
+  top: calc(50% + 1rem);
   left: calc(50% - 5rem);
   border-radius: 3rem;
   border: 0.2rem solid #222;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 0.5s ease-in ;
 
   &:hover {
     background-color: #fff;
@@ -135,7 +135,7 @@
 
 
   &:hover {
-    border: 0.2rem solid #fff;
+    border: 0.2rem solid #2C3A40;
     background-color: #222;
     color: #fff;
   }
@@ -152,7 +152,7 @@
   background: #9abf15;
   color: #fff;
   border-radius: 5rem;
-  top: calc(50% - 1rem);
+  top: calc(50%);
   left: calc(50% - 3rem);
   font-size: 1.5rem;
   border: 0.2rem solid #222;
