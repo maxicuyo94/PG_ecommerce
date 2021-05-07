@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AddCategory } from "../AddCategory/AddCategory";
-import { postProduct, getCategories } from "../../Redux/Products/productActions.js";
+import { postProduct, getCategories, totalProducts } from "../../Redux/Products/productActions.js";
 import axios from 'axios';
 import style from "./addproduct.module.scss";
 import Modal from "@material-ui/core/Modal";
@@ -83,7 +83,8 @@ export function AddProduct() {
   const createProd = (data) => {
     upload().then(
     dispatch(postProduct(data))
-    )
+    );
+    dispatch(totalProducts())
   };
 
   const changeModal = () => {

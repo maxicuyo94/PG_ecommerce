@@ -7,11 +7,14 @@
   background-color: white;
   border-radius: 4px;
 
-  .list {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+  div {
+    margin: 2rem;
   }
+
+  .margen {
+    margin-left: 2rem;
+  }
+
 
   button {
     align-self: center;
