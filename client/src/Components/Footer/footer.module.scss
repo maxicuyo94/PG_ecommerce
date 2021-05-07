@@ -1,82 +1,58 @@
 .container {
+    position:relative;
+    bottom:0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    color: #fff;
     background-color: #222;
-    width: 100%;
-    height: 17.5rem;
-    display: flex;
-    justify-content: center;
-    color: white;
-    border: solid;
-    border-color: #222;
-    //border-width: 1px;
-    //position: absolute;
-    margin-top: 5rem;
+    height: 15rem;
 
-    .contents {
-        flex-direction: column;
-        width: 80%;
-        display: flex;
+    .info {
+        margin-top: -5rem;
+        margin-left: 3rem;
+        h1 {
+            // font-size: x-large;
+            font-weight: 600;
+        }
+    }
 
-        .signNL {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            .input {
-                height: 1.5rem;
-                width: 15rem;
-                margin: 0.5rem;
+    // .routes {
+        .links {
+            // display: flex;
+            // flex-direction: row;
+            // justify-content: space-evenly;
+            // margin-top: 0.5rem;
+            // margin-left: -5rem;
+            .link {
+                margin-left: 20rem;
+                margin-right: -7.5rem;
+                font-size: larger;
+                transition: 500ms;
+                &:hover {
+                    transition: 500ms;
+                    color: #9abf15;
+                }
             }
         }
+    // }
 
-        .info {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-        }
-    }
-
-    h4 {
-        margin: 0;
-    }
-}
-
-.containerDark {
-    background-color: #9abf15;
-    width: 100%;
-    height: 17.5rem;
-    display: flex;
-    justify-content: center;
-    color: white;
-    border: solid;
-    border-color: #222;
-
-    //border-width: 1px;
-    //position: absolute;
-    .contents {
-        flex-direction: column;
-        width: 80%;
+    .game {
         display: flex;
-
-        .signNL {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            .input {
-                height: 1.5rem;
-                width: 15rem;
-                margin: 0.5rem;
-            }
+        flex-direction: row;
+        align-items: center;
+        margin-left: 20rem;
+        margin-top: 3rem;
+        font-weight: 500;
+        font-size: large;
+        transition: 500ms;
+        &:hover {
+            transition: 500ms;
+            color: #9abf15;
         }
-
-        .info {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
+        .icon {
+            width: 25%;
         }
-    }
-
-    h4 {
-        margin: 0;
     }
 }
