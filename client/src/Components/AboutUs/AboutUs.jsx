@@ -1,7 +1,6 @@
 import React from 'react'
 import style from './aboutus.module.scss'
 
-import John from './img/ejemplo.png'
 import Fla from './img/Fla.png'
 import Joaco from './img/joaco.png'
 import Marian from './img/Marian.png'
