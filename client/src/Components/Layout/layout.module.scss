@@ -1,6 +1,7 @@
 $minwidth: 600px;
 // $midwidth: 900px;
-$dark:#2C3A40;
+// $dark:#2C3A40;
+$dark: #424242;
 
 .container {
   display: flex;
@@ -14,8 +15,12 @@ $dark:#2C3A40;
    display: none; 
   }
 
+//  margin-top: 5rem;
+
+
+
   main {
-    min-height: calc(100vh - 185px);
+    min-height: calc(100vh - 5rem);
     width: 100%;
     display: flex;
     flex-direction: column;

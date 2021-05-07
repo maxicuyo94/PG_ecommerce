@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route } from 'react-router-dom'
 import { Footer } from "../Footer/Footer";
 import Whatsapp from "../Whatsapp/Whatsapp";
@@ -7,8 +7,27 @@ import styles from "./layout.module.scss";
 import { Banner2 } from '../Banner/Banner'
 import AppBar from '../Nav/AppBar'
 
+import { ThemeProvider } from "@material-ui/styles";
+import theme from "../../theme";
+import darkTheme from "../../themeDark";
+
+
+
+
 function Layout({ children, priority, dark }) {
+
+  const [themeChoosen, setIsDark] = useState(theme)
+
+  useEffect(() => {
+    if(dark) {
+      setIsDark(darkTheme)
+    } else {
+      setIsDark(theme)
+    }
+  }, [dark])
+
   return (
+    <ThemeProvider theme={themeChoosen}>
     <div className={dark ? styles.containerDark : styles.container}>
       <div className={styles.redes}>
         <Whatsapp />
@@ -28,6 +47,7 @@ function Layout({ children, priority, dark }) {
         <Footer priority={priority} dark={dark} />
       </main>
     </div>
+    </ThemeProvider>
   );
 }
 
