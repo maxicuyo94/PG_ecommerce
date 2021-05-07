@@ -88,9 +88,9 @@ const useStyles = makeStyles((theme) => ({
   },
   navBar: {
     position: "fixed",
+    height: "4rem",
   },
   Logo: {
-    height: "4rem",
     display: "flex",
     alignItems: "center",
     padding: "1rem",
@@ -169,10 +169,10 @@ export default function NavBar({ priority, dark }) {
     } else if (e.target.id === "wishlist") {
       !wishlist.length
         ? swal(
-            "Your wishlist is empty!",
-            "Add items to your wishlist and come back",
-            "error"
-          )
+          "Your wishlist is empty!",
+          "Add items to your wishlist and come back",
+          "error"
+        )
         : history.push("/wishlist");
     }
     setAnchorEl(null);
@@ -180,7 +180,7 @@ export default function NavBar({ priority, dark }) {
   };
 
   //Search
-  const handleInputChange = function(e) {
+  const handleInputChange = function (e) {
     setSearch(e.target.value);
   };
 
@@ -214,16 +214,16 @@ export default function NavBar({ priority, dark }) {
       onClose={handleMenuProfile}
     >
       <MenuItem id="wishlist" onClick={(e) => handleMenuProfile(e)}>
-      {t("bar.1")}
+        {t("bar.1")}
       </MenuItem>
       <MenuItem id="account" onClick={(e) => handleMenuProfile(e)}>
-      {t("bar.2")}
+        {t("bar.2")}
       </MenuItem>
       <MenuItem id="profile" onClick={(e) => handleMenuProfile(e)}>
-      {t("bar.3")}
+        {t("bar.3")}
       </MenuItem>
       <MenuItem id="logOut" onClick={(e) => handleMenuProfile(e)}>
-      {t("bar.4")}
+        {t("bar.4")}
       </MenuItem>
     </Menu>
   );
@@ -245,7 +245,7 @@ export default function NavBar({ priority, dark }) {
         <IconButton color="primary">
           <MenuIcon />
         </IconButton>
-         {t("bar.5")}
+        {t("bar.5")}
       </MenuItem>
 
       <MenuItem onClick={handleToCart}>
@@ -257,7 +257,7 @@ export default function NavBar({ priority, dark }) {
         {t("bar.6")}
       </MenuItem>
 
-      <BtnLang />
+      {/* <BtnLang /> */}
 
       <MenuItem>
         <IconButton color="primary">
@@ -275,7 +275,7 @@ export default function NavBar({ priority, dark }) {
           >
             <AccountCircle />
           </IconButton>
-           {t("bar.7")}
+          {t("bar.7")}
         </MenuItem>
       ) : (
         <MenuItem onClick={handleLogin}>
@@ -286,7 +286,7 @@ export default function NavBar({ priority, dark }) {
           >
             <AccountCircle />
           </IconButton>
-           {t("bar.8")}
+          {t("bar.8")}
         </MenuItem>
       )}
     </Menu>
@@ -370,9 +370,9 @@ export default function NavBar({ priority, dark }) {
               </MenuItem>
             )}
 
-            <MenuItem>
+            {/* <MenuItem>
               <BtnLang />
-            </MenuItem>
+            </MenuItem> */}
 
             <MenuItem>
               <IconButton color="primary">
