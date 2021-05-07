@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     display: 'flex',
     justifyContent: 'center',
-    minHeight: "100%",
+    marginLeft: "0",
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       minHeight: "100%",

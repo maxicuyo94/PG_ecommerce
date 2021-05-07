@@ -18,19 +18,14 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: "transparent",
     padding: theme.spacing(2),
-    margin: "auto",
-    maxWidth: 900,
-    height: 200,
-    backgroundColor:"transparent",
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      backgroundColor: "transparent",
+      padding: theme.spacing(2),
+      margin: "auto",
+      maxWidth: 900,
+      height: 200,
+    },
   },
-  image: {
-    width: 160,
-    height: 160,
-  },
-  // image: {
-  //   width: 160,
-  //   height: 160,
-  // },
   img: {
     margin: "auto",
     display: "block",
