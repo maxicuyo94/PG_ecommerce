@@ -4,6 +4,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    padding: 1rem;
     div{
         margin:0.5rem;
 
@@ -49,5 +50,8 @@
             justify-content: space-around;
             align-items: center;
         }
+    }
+    .multifactorAuth{
+        z-index: 0;
     }
 }

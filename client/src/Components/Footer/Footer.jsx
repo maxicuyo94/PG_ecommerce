@@ -58,7 +58,7 @@ export function Footer({dark}) {
     }
  ];
   return (
-    <div className={ dark ? style.containerDark : style.container}>
+    // <div className={ dark ? style.containerDark : style.container}>
 <SimpleReactFooter 
     description={description} 
     title={title}
@@ -75,6 +75,6 @@ export function Footer({dark}) {
     copyrightColor="darkgrey"
     backgroundColor={dark ? '#9abf15' : '#222'}
  />
-    </div>
+    // </div>
   );
 }

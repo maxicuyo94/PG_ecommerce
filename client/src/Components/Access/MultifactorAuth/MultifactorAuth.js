@@ -63,7 +63,7 @@ export default function MultifactorAuth(params) {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Multifactor Login email
+        Login
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Complete login</DialogTitle>

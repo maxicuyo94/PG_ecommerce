@@ -86,15 +86,17 @@ export function Login() {
             onChange={handleState}
           />
         </div>
-        <button
+        {/* <button
           className={style.simpleButton}
           type="button"
           name="login"
           onClick={(e) => loginUsers(e)}
         >
           LogIn
-          </button>
-        <MultifactorAuth  prueba="hola" email={user.email} onLogin={ loginUsers}/>
+          </button> */}
+        <div className={style.multifactorAuth}>
+          <MultifactorAuth  prueba="hola" email={user.email} onLogin={ loginUsers}/>
+        </div>
         <div>
           <input type="text" id="email" placeholder="Email" />
         </div>
