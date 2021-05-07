@@ -1,7 +1,10 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { postAppointment } from "../../../Redux/Appointments/appointments";
-import style from "./appointment.module.scss";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { postAppointment } from '../../../Redux/Appointments/appointments';
+import style from './appointment.module.scss';
+import { Link } from "react-router-dom";
+
+
 
 const Hours = [
   {
@@ -38,72 +41,65 @@ const Hours = [
   },
 ];
 
-export function Appointments() {
-  // eslint-disable-next-line
-  const userLoged = useSelector((state) => state.usersReducer.userLoged);
-  const dateAppointment = useSelector((state) => state.appointmentReducer);
-  const dispatch = useDispatch();
+export function Appointments () {
+    const userLoged = useSelector(state => state.usersReducer.userLoged);
+    const dateAppointment = useSelector(state => state.appointmentReducer)
+    console.log(dateAppointment, 'aca')
+    const dispatch = useDispatch()
 
-  const handleReserve = (idHour) => {
-    dispatch(
-      postAppointment(
-        idHour,
-        dateAppointment.date,
-        "01792ab0-ee79-41a7-ad79-a7bb6a279edc"
-      )
-    );
-  };
+    const handleReserve = (idHour) => {
+        dispatch(postAppointment(idHour, dateAppointment.date, "01792ab0-ee79-41a7-ad79-a7bb6a279edc"))
+    }
 
-  return (
-    <div className={style.container}>
-      <div className={style.contents}>
-        <h1>Appointmen</h1>
-        <div>
-          <ul className={style.titles}>
-            <li>
-              <h4>Hour</h4>
-            </li>
-            <li>
-              <h4>Availability</h4>
-            </li>
-            <li>
-              <h4>Reserve</h4>
-            </li>
-          </ul>
+    return (
+        <div className={style.container}>
+            <div className={style.contents}>
+                <h1>Appointments</h1>
+                <div >
+                    <ul className={style.titles}>
+                        <li>
+                            <h3>Hour</h3>
+                        </li>
+                        <li>
+                            <h3>Availability</h3>
+                        </li>
+                        <li>
+                            <h3>Reserve</h3>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                {Hours.map((hour)=>{
+                    let count = 0
+                    dateAppointment.hours.map((hR)=>{
+                        hour.id === hR.id && count++
+                    })   
+                return(
+                    <div className={style.contentsAppointment}>
+                        <ul className={style.appointments}>
+                            <li>
+                                {hour.hour} hs
+                            </li>
+                            <li>
+                                {(count < 10 || count === "undefined") ? "Available" : "Not Available"}
+                            </li>
+                            <li>
+                                <Link to='/controlpanel'>
+                                <button
+                                    onClick={()=> handleReserve(hour.id)}
+                                    className={style.button}
+                                    disabled={(count < 10 || count === "undefined") ? "" : "disabled"}
+                                >
+                                    Reserve
+                                </button>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                )
+                })
+                }
+                </div>
+            </div>
         </div>
-        <div>
-          {Hours.map((hour) => {
-            let count = 0;
-            // eslint-disable-next-line
-            dateAppointment.hours.map((hR) => {
-              hour.id === hR.id && count++;
-            });
-            return (
-              <div className={style.contentsAppointment}>
-                <ul className={style.appointments}>
-                  <li>{hour.hour} hs</li>
-                  <li>
-                    {count < 10 || count === "undefined"
-                      ? "Available"
-                      : "Not Available"}
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => handleReserve(hour.id)}
-                      className={style.button}
-                      disabled={
-                        count < 10 || count === "undefined" ? "" : "disabled"
-                      }
-                    >
-                      Reserve
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
+    )}

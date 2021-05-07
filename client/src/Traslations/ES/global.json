@@ -3,6 +3,10 @@
       "title": "PRODUCTOS MÁS VENDIDOS"
     },
 
+    "home2": {
+      "lastProduct": "¡Este producto tiene que ser tuyo!"
+    },
+
     "seeProducts": {
         "products": "Mira todos los productos"
       },
@@ -106,6 +110,37 @@
     "title11":"Añadir imagenes",
     "title12":"Crear Producto",
     "title13":"Añadir categoría"
+  },
+  "about": {
+    "title": "Conoce a nuestro equipo",
+    "description": "Somos diez personas apasionadas por aprender, asumir nuevos desafíos y programar. Este e-commerce es el proyecto final de Soy Henry."
+  },
+  "login": {
+    "button": "Ingresar",
+    "forgot": "Olvidé mi contraseña",
+    "github": "Ingresar con GitHub"
+  },
+  "l": {
+    "language": "Lenguaje"
+  },
+  "bar": {
+    "1": "Favoritos",
+    "2": "Mi cuenta",
+    "3": "Perfil",
+    "4": "Cerrar sesión",
+    "5": "Catálogo",
+    "6": "Carrito",
+    "7": "Mi perfil",
+    "8": "Ingresar",
+    "search": "Buscar..."
+  },
+  "checkout": {
+    "checkout": "Checkout",
+    "ty": "Gracias por tu pedido",
+    "detail": "Tu número de pedido es # 2001539. Hemos enviado la confirmación de tu pedido por correo electrónico y te enviaremos una actualización cuando se haya despachado.",
+    "back": "Volver",
+    "shopping": "SEGUIR COMPRANDO",
+    "payment": "Ir a pagar",
+    "next": "SIGUIENTE"
   }
-
 }

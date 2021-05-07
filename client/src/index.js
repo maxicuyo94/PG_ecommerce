@@ -16,7 +16,6 @@ import global_en from "./Traslations/EN/global.json";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./theme";
 
-export const baseURL = process.env.REACT_APP_API ?  process.env.REACT_APP_API : 'http://localhost:3001';
 
 
 

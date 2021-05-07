@@ -101,7 +101,7 @@ export const orderPayment = (cart, infoUser, discount) => {
           .eq("id", prod.id);
       });
 
-      let response = await axios.post(`${baseURL}/mercadopago/checkout`, {
+      let response = await axios.post(`https://henrystechstore.herokuapp.com/mercadopago/checkout`, {
         cart,
         infoUser,
         discount,
@@ -121,7 +121,7 @@ export const orderEmail = (email, user_id, id, orderDate) => {
         .select("name,surname")
         .eq("id", user_id);
       await axios.post(
-        `${baseURL}/mercadopago/send/?email=${email}&name=${data.data[0].name}&surname=${data.data[0].surname}&orderId=${id}&orderDate=${orderDate}`
+        `https://henrystechstore.herokuapp.com/mercadopago/send/?email=${email}&name=${data.data[0].name}&surname=${data.data[0].surname}&orderId=${id}&orderDate=${orderDate}`
       );
     } catch (e) {}
   };
