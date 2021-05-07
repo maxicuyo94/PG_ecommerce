@@ -2,43 +2,41 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './Points.module.scss'
 
 export function Points() {
-    const [active, setActive] = useState("cuadrado")
-    const [ cascadeChildrens, setCascadechildrens ] = useState([])
-    const cascade = useRef()
-
-    let elCascade = [<div className={styles[active]}></div>]
-
-    // useEffect(()=>{
-    //     const change = async () => {
-    //         setCascadechildrens(elCascade)
-    //     }
-    //     change()
-    // },[])
+    // const rectangulo = [
+    //     [false, false, false, false],
+    //     [false, false, false, false],
+    //     [false, false, false, false],
+    //     [false, false, false, false],
+    //     [false, false, false, false],
+    //     [false, false, false, false],
+    //     [false, false, false, false],
+    //     [false, false, false, false],
+    //     [false, false, false, false],
+    //     [false, false, false, false],
+    // ]
     
-    useEffect(()=>{
-        if(active==="cuadrado" && cascadeChildrens.length === 0){
-            console.log(elCascade)
-            setCascadechildrens(state=> [...state, <div className={styles[active]}></div>])
-        }
-        setActive("caida")
-        if(active === "caida"){
-            setTimeout(()=> {
-                console.log("hola",cascade.current.children[0])
-                cascade.current.removeChild(cascade.current.children[0])
-                setActive("cuadrado")
-            }, 1100)
-        }
-
-    },[active])
-
-    console.log(active)
+    // useEffect(()=>{
+    //     if (!rectangulo.all.all){
+    //         rectangulo[0][Math.random()]
+    //     } si esta vacio
+    //     else{
+    //       setTimeout(() => {
+    //           rectangugulo[fila1][columna3]
+    //           si fila+1 extiste rectangugulo[fila1+1][columna3]
+    //       }, 100
+    //     }
+  
+    // }
+    // ),[rectangulo])
+    
+    // rectangulo.map()
 
     return (
         <div className={styles.container}>
             <div className={styles.contents}>
-                <div className={styles.cascade} ref={cascade}>
+                {/* <div className={styles.cascade} ref={cascade}>
                     {cascadeChildrens && cascadeChildrens[0]}
-                </div>
+                </div> */}
                 <h1 className={styles.tag}>TechStore Points</h1>
                 <div className={styles.border}>
                     <section className={styles.section}>
