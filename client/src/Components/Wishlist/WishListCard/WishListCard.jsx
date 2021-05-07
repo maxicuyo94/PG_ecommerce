@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     maxWidth: 900,
     height: 200,
+    backgroundColor:"transparent",
   },
   image: {
     width: 160,
