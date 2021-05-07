@@ -21,15 +21,26 @@ export function Banner2() {
 
   return (
     <div>
-    {
-      Img === points ? <Link to='/points'>   
-      <img className={style.container} src={Img} alt="points"/>
-      {/* <div className={style.container} style={{backgroundImage:`url(${Img})`}}></div> */}
-      </Link> : Img === simonImage ? <Link to='/videogame'>   
-      <img className={style.container} src={Img} alt="Simon Say"/>
-      </Link> : 
-      <img className={style.container} src={Img} alt=""/>
-    }
+      {Img === points ? (
+        <Link to="/points">
+          <div
+            className={style.container}
+            style={{ backgroundImage: `url(${Img})` }}
+          ></div>
+        </Link>
+      ) : Img === simonImage ? (
+        <Link to="/videogame">
+          <div
+            className={style.container}
+            style={{ backgroundImage: `url(${Img})` }}
+          ></div>
+        </Link>
+      ) : (
+        <div
+          className={style.container}
+          style={{ backgroundImage: `url(${Img})` }}
+        ></div>
+      )}
     </div>
   );
 }

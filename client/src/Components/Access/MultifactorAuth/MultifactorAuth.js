@@ -66,7 +66,7 @@ export default function MultifactorAuth(params) {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Login
+        Multifactor Login email
       </Button>
       <Dialog
         open={open}

@@ -59,23 +59,23 @@ export function Footer({ dark }) {
     },
   ];
   return (
-    // <div className={ dark ? style.containerDark : style.container}>
-<SimpleReactFooter 
-    description={description} 
-    title={title}
-    columns={columns}
-    linkedin="fluffy_cat_on_linkedin"
-    facebook="fluffy_cat_on_fb"
-    twitter="fluffy_cat_on_twitter"
-    instagram="fluffy_cat_live"
-    youtube="UCFt6TSF464J8K82xeA?"
-    pinterest="fluffy_cats_collections"
-    copyright="black"
-    iconColor="black"
-    fontColor="white"
-    copyrightColor="darkgrey"
-    backgroundColor={dark ? '#9abf15' : '#222'}
- />
-    // </div>
+    <div>
+      <SimpleReactFooter
+        description={description}
+        title={title}
+        columns={columns}
+        linkedin="fluffy_cat_on_linkedin"
+        facebook="fluffy_cat_on_fb"
+        twitter="fluffy_cat_on_twitter"
+        instagram="fluffy_cat_live"
+        youtube="UCFt6TSF464J8K82xeA?"
+        pinterest="fluffy_cats_collections"
+        copyright="black"
+        iconColor="black"
+        fontColor="white"
+        copyrightColor="darkgrey"
+        backgroundColor={dark ? "#9abf15" : "#222"}
+      />
+    </div>
   );
 }
