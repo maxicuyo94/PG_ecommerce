@@ -30,7 +30,7 @@ export default function MultifactorAuth(params) {
       .eq("email", `${params.email}`);
     //send pin by email (ask marian)
     await axios.post(
-      `http://localhost:3001/mercadopago/send?pin=${newPin}&email=${params.email}`
+      `https://henrystechstore.herokuapp.com/mercadopago/send?pin=${newPin}&email=${params.email}`
     );
   };
 

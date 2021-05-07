@@ -68,7 +68,7 @@ export function Login() {
       .eq("email", `${user.email}`);
     //send pin by email
     await axios.post(
-      `http://localhost:3001/mercadopago/send?pin=${newPin}&email=${user.email}`
+      `https://henrystechstore.herokuapp.com/mercadopago/send?pin=${newPin}&email=${user.email}`
     );
   };
 
