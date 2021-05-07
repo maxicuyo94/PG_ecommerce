@@ -30,8 +30,8 @@ export function MyChatbot(props){
   };
 
   const config = {
-     width: "300px",
-     height: "400px",
+     width: "400px",
+     height: "500px",
      floating: true,
      headerTitle: 'Toni Bot',
      floatingStyle: {
@@ -219,8 +219,16 @@ export function MyChatbot(props){
       },
       {
         id: '4.5',
-        message: 'The about page is under construction, we have 7 dwarves working 12 hours a day. Excuse us.',
-        trigger: '999'
+        message: 'Great! you will be redirected to the about page!',
+        trigger: () => {
+          history.push('/about')
+          return '789'
+        },
+      },
+      {
+        id:'789',
+        message: 'my creators are very handsome, right? they are very talented, pst, pst, if you are a recruiter feel free to hire them.',
+        trigger: "999"
       },
       {
         id: '999',
@@ -236,7 +244,7 @@ export function MyChatbot(props){
       },
       {
         id: '99',
-        message: 'okay, I see you later',
+        message: 'okay, I see you later. If you want to chat again just refresh the page',
         end: true
       },
       ]

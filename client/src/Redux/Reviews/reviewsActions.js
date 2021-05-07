@@ -20,7 +20,7 @@ export const createReview = (reviews) => {
 };
 
 export const getReviewsOfProduct = (id) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const JSON = await supabase
       .from("reviews")
       .select("*")
@@ -33,10 +33,10 @@ export const getReviewsOfProduct = (id) => {
 };
 
 export const getUserReviews = (id) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const JSON = await supabase
       .from("reviews")
-      .select("*, product (name)")
+      .select("*, product (name), users (name, surname)")
       .eq("user_id", id);
     dispatch({
       type: actionType.GET_USER_REVIEWS,
@@ -45,16 +45,18 @@ export const getUserReviews = (id) => {
   };
 };
 
-
 export const getReviewById = (id) => {
-  return async function (dispatch) {
-    const JSON = await supabase.from("reviews").select("*").eq("id", id);
+  return async function(dispatch) {
+    const JSON = await supabase
+      .from("reviews")
+      .select("*")
+      .eq("id", id);
     dispatch({ type: actionType.GET_REVIEW_BY_ID, payload: JSON.data });
   };
 };
 
 export const updateReview = (review) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     //eslint-disable-next-line
     const JSON = await supabase
       .from("reviews")
@@ -68,6 +70,9 @@ export const updateReview = (review) => {
 
 export const deleteReview = (id) => {
   return async () => {
-    await supabase.from("reviews").delete().eq("id", id);
+    await supabase
+      .from("reviews")
+      .delete()
+      .eq("id", id);
   };
 };

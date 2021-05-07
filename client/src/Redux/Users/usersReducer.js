@@ -12,7 +12,7 @@ const InitialState = {
   userOrders: [],
   orderDetail: {},
   userLoged: {},
-  userConfig: {}
+  userConfig: {},
 };
 
 function usersReducer(state = InitialState, action) {
@@ -25,31 +25,31 @@ function usersReducer(state = InitialState, action) {
     case actionType.USER_LOGIN:
       return {
         ...state,
-        userLoged: action.payload
+        userLoged: action.payload,
       };
     case actionType.USER_LOGOUT:
       return {
         ...state,
-        userLoged: {}
+        userLoged: {},
       };
     case actionType.RESTORE_REDUX:
       return {
         ...state,
-        userLoged: action.payload
+        userLoged: action.payload,
       };
     case actionType.USER_CONFIG:
       return {
         ...state,
-        userConfig: action.payload
-      }
+        userConfig: action.payload,
+      };
     case actionType.ADD_POINTS:
       return {
         ...state,
         userLoged: {
           ...state.userLoged,
-          points: state.userLoged.points + action.payload
-        }
-      }
+          points: state.userLoged.points + action.payload,
+        },
+      };
     default:
       return state;
   }

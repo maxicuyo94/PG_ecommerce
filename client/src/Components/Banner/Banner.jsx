@@ -1,26 +1,23 @@
-import React, {useEffect, useState} from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import style from "./banner.module.scss";
-import {Link} from 'react-router-dom'
-import simonImage from './simonsays.png'
-import points from './points.png'
-import { PowerInputSharp } from "@material-ui/icons";
-
+import { Link } from "react-router-dom";
+import simonImage from "./simonsays.png";
+import points from "./points.png";
 
 export function Banner2() {
-  const [Img, setImg] = useState(points)
+  const [Img, setImg] = useState(points);
 
   useEffect(() => {
-    if(Img === points ){
+    if (Img === points) {
       setTimeout(() => {
-        setImg(simonImage)
+        setImg(simonImage);
       }, 4000);
     } else {
       setTimeout(() => {
-        setImg(points)
-      }, 4000)
+        setImg(points);
+      }, 4000);
     }
-  }, [Img]) 
+  }, [Img]);
 
   return (
     <div>

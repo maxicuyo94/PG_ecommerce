@@ -4,8 +4,9 @@ import productReducer from "./Products/productReducer";
 import orderReducer from "./Orders/orderReducer";
 import usersReducer from "./Users/usersReducer";
 import reviewsReducer from "./Reviews/reviewsReducer";
-import darkReducer from './Dark/darkReducer';
-import appointmentReducer from './Appointments/appointmentReducer';
+import darkReducer from "./Dark/darkReducer";
+import appointmentReducer from "./Appointments/appointmentReducer";
+import wishlistReducer from "./Wishlist/wishlistReducer";
 
 const rootReducer = combineReducers({
   cartReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   usersReducer,
   reviewsReducer,
   darkReducer,
-  appointmentReducer
+  appointmentReducer,
+  wishlistReducer,
 });
 
 export default rootReducer;

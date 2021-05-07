@@ -1,12 +1,10 @@
 import React from "react";
 import { Route } from 'react-router-dom'
-import { Nav } from "../Nav/Nav";
 import { Footer } from "../Footer/Footer";
 import Whatsapp from "../Whatsapp/Whatsapp";
 import { MyChatbot } from '../ChatBot/ChatBot';
 import styles from "./layout.module.scss";
 import { Banner2 } from '../Banner/Banner'
-import { Header } from '../Header/Header'
 import AppBar from '../Nav/AppBar'
 
 function Layout({ children, priority, dark }) {

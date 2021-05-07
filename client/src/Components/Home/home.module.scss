@@ -27,7 +27,7 @@ $verde:#9abf15;
         align-items: center;
 
         span {
-            font-size: 2rem;
+            font-size: 3rem;
             font-weight: bolder;
         }
 
@@ -69,18 +69,15 @@ $verde:#9abf15;
                 font-size: 1.5vw;
                 display: flex;
                 flex-direction: column;
-                justify-content: space-around;
+                justify-content: center;
                 align-items: center;
                 box-shadow: 6px 5px 18px 5px rgba(39, 39, 39, 0.25);
 
                 span {
                     font-size: 1.5rem;
-                }
-
-                p {
-                    font-size: 1rem;
                     text-align: center;
                 }
+
 
                 @media screen and (max-width: $tablet) {
                     background-color: #222;
@@ -133,6 +130,6 @@ $verde:#9abf15;
 }
 
 .img {
-    height:10%;
-    width:60%;
+    height: 10%;
+    width: 60%;
 }

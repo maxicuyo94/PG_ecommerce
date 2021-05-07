@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -11,16 +11,16 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import LanguageIcon from "@material-ui/icons/Language";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { useDispatch, useSelector } from "react-redux";
-import style from "./nav.module.scss";
 import { NavLink, useHistory } from "react-router-dom";
 import BtnLang from "./BtnLang/BtnLang";
 import { userLogOut } from "../../Redux/Users/usersActions";
 import swal from "sweetalert";
 import MiniCart from "./MiniCart/MiniCart";
 import BtnDark from "./BtnDark/BtnDark";
+import { clearSearch, Search } from "../../Redux/Products/productActions";
+import logo from "../../Assets/static/simbolo-verde.png"
 
 
 
@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center"
   },
   inputRoot: {
+    display: 'flex',
     color: "inherit"
   },
   inputInput: {
@@ -70,9 +71,9 @@ const useStyles = makeStyles((theme) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
-    width: "10ch",
+    width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "25ch"
+      width: "100%"
     }
   },
   sectionDesktop: {
@@ -90,6 +91,12 @@ const useStyles = makeStyles((theme) => ({
   navBar: {
     position: 'fixed',
   },
+  Logo: {
+    height: '8vh',
+    display: 'flex',
+    alignItems: 'center',
+    padding:'1rem'
+  },
 }));
 
 export default function NavBar({ priority, dark }) {
@@ -98,10 +105,20 @@ export default function NavBar({ priority, dark }) {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cartReducer.cart)
   const user = useSelector(state =>  state.usersReducer.userLoged)
+  const wishlist = useSelector(state =>  state.wishlistReducer.wishlist)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [search, setSearch] = useState("");
+  const [width, setWidth] = React.useState(window.innerWidth);
+  // const breakPoint = 1450;
+
+  useEffect(() => {
+    const handleWindowResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+   },[width]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -117,6 +134,7 @@ export default function NavBar({ priority, dark }) {
 
   const handleCatalogue = (event) => {
     history.push('/catalogue')
+    dispatch(clearSearch())
     setAnchorEl(null);
     handleMobileMenuClose();
   };
@@ -149,11 +167,30 @@ export default function NavBar({ priority, dark }) {
       history.push('/myProfile')
     } else if( e.target.id === 'logOut') {
       handleLogOut()
+    } else if( e.target.id === 'wishlist') {
+      !wishlist.length
+      ? swal('Your wishlist is empty!', 'Add items to your wishlist and come back', 'error')
+      : history.push('/wishlist')
     }
     setAnchorEl(null);
       handleMobileMenuClose();
   };
+
+  //Search
+  const handleInputChange = function (e) {
+    setSearch(e.target.value);
+  };
   
+  const handleSubmitSearch = (e) => {
+    e.preventDefault()
+    if (search !== "") {
+      dispatch(Search(search))
+      history.push('/catalogue')
+      setSearch("");
+    } else {
+      alert('Enter to input to search!')
+    }
+  }
 
 
   //Menu Profile -------------------------------------------------//
@@ -174,9 +211,10 @@ export default function NavBar({ priority, dark }) {
       open={isMenuOpen}
       onClose={handleMenuProfile}
     >
+      <MenuItem id='wishlist' onClick={(e) => handleMenuProfile(e)}>Wishlist</MenuItem>
       <MenuItem id='account' onClick={(e) => handleMenuProfile(e)}>Account</MenuItem>
       <MenuItem id='profile' onClick={(e) => handleMenuProfile(e)}>Profile</MenuItem>
-      <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem> 
+      <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem>
     </Menu>
   );
   //--------------------------------------------------------------//
@@ -252,24 +290,31 @@ export default function NavBar({ priority, dark }) {
     <div className={classes.grow} >
       <AppBar className={classes.navBar} color='secondary'>
         <Toolbar className={classes.toolBar}>
-          <NavLink to={"/"}>
+          <NavLink to={"/"} className={classes.Logo}>
+            {
+            width > 720 ?
             <img
               src={
                 "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
               } 
               alt="Ups, we don't found anything here. Try again tomorrow!"
-              width="220"
               height="50"
             />
+            :
+            <img
+              src={logo}
+              alt="Ups, we don't found anything here. Try again tomorrow!"
+              height="62"
+            />
+            }
           </NavLink>
-          {/* <Typography className={classes.title} variant="h6" noWrap>
-            Tech Store
-          </Typography> */}
-          <div className={classes.search}>
+          <form className={classes.search} onSubmit={(e) => handleSubmitSearch(e)}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
+              value={search}
+              onChange={handleInputChange}
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
@@ -277,7 +322,7 @@ export default function NavBar({ priority, dark }) {
               }}
               inputProps={{ "aria-label": "search" }}
             />
-          </div>
+          </form>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <MenuItem onClick={handleCatalogue}>
