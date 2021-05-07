@@ -5,6 +5,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { useDispatch } from 'react-redux';
 import { setDarkMode } from '../../../Redux/Dark/darkActions'
+import NightsStayIcon from '@material-ui/icons/NightsStay';
+import WbSunnyIcon from '@material-ui/icons/WbSunny';
 const DarkSwitch = withStyles({
     switchBase: {
         color: '#9abf15',
@@ -42,7 +44,7 @@ export default function BtnDark() {
                         onChange={handleChange}
                     />
                 }
-                label={dark ? "🌚" : '🌞'}
+                label={dark ? <NightsStayIcon style={{ fontSize: "1.5rem", textAlign: "center", display: "flex", alignItems: "center" }} /> : <WbSunnyIcon style={{ fontSize: "1.5rem", display: "flex", alignItems: "center" }} />}
             />
         </FormGroup>
     );

@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
   },
   Logo: {
-    height: '8vh',
+    height: '4rem',
     display: 'flex',
     alignItems: 'center',
     padding:'1rem'
