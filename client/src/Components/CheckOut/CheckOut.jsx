@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     display: "flex",
     justifyContent: "center",
+    marginLeft: "0",
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: "auto",

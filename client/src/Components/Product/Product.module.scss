@@ -15,7 +15,7 @@ $gris:#2C3A40;
   color: black;
 
   flex-direction: column;
-  background-color: white;
+  background-color: transparent;
   overflow: hidden;
 
   .nav {
@@ -361,7 +361,6 @@ $gris:#2C3A40;
     margin: auto;
     margin-bottom: 3rem;
     padding: 1rem;
-
     .reviewTitle {
       span {
         font-size: 2rem;
@@ -402,7 +401,7 @@ $gris:#2C3A40;
     .more {
       z-index: 2;
       min-width: 15%;
-      background-color: #485F69;
+      background-color:#222;
       color: white;
       font-size: 1.5vw;
       display: flex;
@@ -421,7 +420,7 @@ $gris:#2C3A40;
       }
 
       @media screen and (max-width: $tablet) {
-        background-color: #485F69;
+        //background-color: #485F69;
         margin: 0 auto;
         width: 90%;
         height: 15vh;
@@ -478,7 +477,7 @@ $gris:#2C3A40;
 
 .containerDark {
   @extend .container;
-  background-color: $gris;
+  //background-color: $gris;
 
   .nav {
     color: #fff;
@@ -493,13 +492,13 @@ $gris:#2C3A40;
 
   .review {
     color: #fff;
-    background-color: $gris;
+    //background-color: $gris;
   }
 
   .related {
     .more {
       color: #fff !important;
-      background-color: $verde !important;
+      //background-color: $verde !important;
       box-shadow: 2px 0px 5px 0px rgba(255, 255, 255, 0.5) !important;
     }
   }

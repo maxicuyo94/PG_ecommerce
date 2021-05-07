@@ -10,9 +10,15 @@ import 'swiper/components/lazy/lazy.scss'
 //import './SwiperSlider.scss'
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, EffectFade])
 
-const SwiperSlider = ({products}) => {
+const SwiperSlider = ({ products, flag }) => {
+  let category = []
+  if (flag) {
+    category = products
+  }
+  else {
+    category = products.map((item) => item.product)
 
-  let category = products.map((item) => item.product)
+  }
   // console.log('Slider: ', category, ' Productos:')
 
   return (

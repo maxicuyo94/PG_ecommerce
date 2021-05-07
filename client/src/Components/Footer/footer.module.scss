@@ -9,7 +9,7 @@ $gris:#2C3A40;
 
 .container {
     display: flex;
-    align-items: center;
+    //align-items: center;
     color: #fff;
     background-color: #222;
     min-height: 20rem;
@@ -20,7 +20,7 @@ $gris:#2C3A40;
     }
 
     .info {
-        height: 100%;
+        min-height: 100%;
         width: 50%;
         padding: 0 5rem;
         display: flex;
@@ -62,7 +62,7 @@ $gris:#2C3A40;
         display: flex;
         flex-direction: column;
         width: 50%;
-        height: 100%;
+        min-height: 100%;
 
         @media screen and (max-width: $tablet) {
             width: 100%;
@@ -72,7 +72,7 @@ $gris:#2C3A40;
         .links {
             min-height: 30%;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center;
             width: 80%;
             margin: 0 auto;
 
