@@ -35,20 +35,23 @@ export const OrderDetail = ({ id, status, permission }) => {
 
   return (
     <div className={style.div}>
-      <div class="table">
+      <div>
         <h2>Order Detail N° {id}</h2>
-        <td>Made By </td>
-        <td> User N° {order.user_id}</td>
+        <br></br>
         <tr>
-          <td>Date</td>
+          <td>Made by user: </td>
+          <td className={style.margen}>{order.user_id}</td>
+        </tr>
+        <tr>
+          <td>Date:</td>
           <td>{order.orderDate}</td>
         </tr>
         <tr>
-          <td>Payment Method</td>
-          <td>{order.paymentType}</td>
+          <td>Payment Method:</td>
+          <td>Credit card</td>
         </tr>
         <tr>
-          <td>Status</td>
+          <td>Status:</td>
           {order.orderStatus}
           <br></br>
           {permission !== 'customer' && permission ? <select className={style.buttonfilter} onClick={(e) => handleFilter(e)}>
