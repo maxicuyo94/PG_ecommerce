@@ -10,7 +10,7 @@ const SimonSays = () => {
   const [lightColor, setLightColor] = useState("");
   const user = useSelector((state) => state.usersReducer.userLoged);
   const dispatch = useDispatch();
-
+  const dark = useSelector((state) => state.darkReducer.dark);
   const colorList = ["blue", "purple", "orange", "green"];
 
   const initPlay = {
@@ -149,18 +149,20 @@ const SimonSays = () => {
         ></div>
         {start && !play.isDisplay && !play.userPlay && play.score && (
           <div className="lost">
-            <button onClick={endGame} className={styles.btn_start}>
+            <button onClick={endGame} className={dark ? styles.btnD_start : styles.btn_start}>
               Close
             </button>
           </div>
         )}
         {!start && !play.score && (
-          <button onClick={startGame} className={styles.btn_start}>
+          <button onClick={startGame} className={dark ? styles.btnD_start : styles.btn_start}>
             Start!
           </button>
         )}
         {start && (play.isDisplay || play.userPlay) && (
-          <div className={styles.score}>{play.score}</div>
+          <button className={ dark ? styles.scoreD : styles.score} disabled>
+            {play.score}
+          </button>
         )}
       </div>
     </div>
