@@ -31,7 +31,7 @@ export const Product = (props) => {
   const productByCategories = useSelector(
     (state) => state.productReducer.productByCategories
   );
-  const Link = `http://192.168.100.4:3000/product/${id}`;
+  const Link = `https://henrystechstore.web.app/product/${id}`;
 
   // eslint-disable-next-line
   const [deleting, setDeleting] = useState(null);

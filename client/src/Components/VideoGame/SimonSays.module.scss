@@ -2,7 +2,7 @@
   margin: 0;
   display: flex;
   align-items: center;
-  height: 80vh;
+  min-height: calc(100vh - 4rem);
   // z-index: 1;
 }
 
@@ -111,40 +111,66 @@
 }
 
 .btn_start {
-  width: 200px;
-  height: 70px;
+  width: 10rem;
+  height: 4rem;
   background: #9abf15;
   color: #fff;
   font-size: 1.5rem;
   position: absolute;
-  top: calc(54% - 50px);
-  left: calc(58% - 200px);
-  border-radius: 40px;
+  top: 50%;
+  left: calc(50% - 5rem);
+  border-radius: 3rem;
   border: 0.2rem solid #222;
   cursor: pointer;
+  transition: 0.5s;
+
+  &:hover {
+    background-color: #fff;
+    color: black;
+  }
+}
+
+.btnD_start {
+  @extend .btn_start;
+
+
+  &:hover {
+    border: 0.2rem solid #fff;
+    background-color: #222;
+    color: #fff;
+  }
+}
+
+.score {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  width: 6rem;
+  height: 6rem;
+  position: absolute;
+  background: #9abf15;
+  color: #fff;
+  border-radius: 5rem;
+  top: calc(50% - 1rem);
+  left: calc(50% - 3rem);
+  font-size: 1.5rem;
+  border: 0.2rem solid #222;
+  transition: 0.5s;
+}
+
+.scoreD {
+  @extend .score;
+
+
+  border: 0.2rem solid #2C3A40;
 }
 
 .hide {
   display: none;
 }
 
-.score {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background-color: #9abf15;
-  border-radius: 50%;
-  border: 0.2rem solid #222;
-  line-height: 100px;
-  top: calc(51.5% - 50px);
-  left: calc(62% - 200px);
-  font-size: 2.5rem;
-  color: #fff;
-}
+
 
 .final_score {
   display: flex;
