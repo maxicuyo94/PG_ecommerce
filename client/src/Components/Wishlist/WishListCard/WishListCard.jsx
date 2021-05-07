@@ -20,7 +20,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: "auto",
     maxWidth: 900,
-    height: "100%",
+    height: 200,
+    backgroundColor:"transparent",
+  },
+  image: {
+    width: 160,
+    height: 160,
   },
   // image: {
   //   width: 160,
