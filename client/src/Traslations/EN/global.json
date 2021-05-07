@@ -3,6 +3,10 @@
     "title": "TOP PRODUCTS & DEALS"
   },
 
+  "home2": {
+    "lastProduct": "This product has to be yours!"
+  },
+
   "seeProducts": {
     "products": "See all products"
   },
@@ -107,5 +111,37 @@
     "title11":"Add images",
     "title12":"Create Product",
     "title13":"Add Category"
+  },
+  "about": {
+    "title": "Meet the team",
+    "description": "We are a team of ten people passionate about learn and programming. This e-commerce is the final project of the intensive bootcamp Soy Henry."
+  },
+  "login": {
+    "button": "LogIn",
+    "forgot": "Forgot password?",
+    "github": "Sign in with GitHub"
+  },
+  "l": {
+    "language": "Language"
+  },
+  "bar": {
+    "1": "Wishlist",
+    "2": "Account",
+    "3": "Profile",
+    "4": "Log Out",
+    "5": "Catalogue",
+    "6": "Cart",
+    "7": "Profile",
+    "8": "Login",
+    "search": "Search..."
+  },
+  "checkout": {
+    "checkout": "Checkout",
+    "ty": "Thank you for your order",
+    "detail": "Your order number is #2001539. We have emailed your order confirmation, and will send you an update when your order has shipped.",
+    "back": "Back",
+    "shopping": "CONTINUE SHOPPING",
+    "payment": "Go to payment",
+    "next": "NEXT"
   }
 }

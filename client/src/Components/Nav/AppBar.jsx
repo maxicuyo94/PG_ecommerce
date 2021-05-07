@@ -20,38 +20,36 @@ import swal from "sweetalert";
 import MiniCart from "./MiniCart/MiniCart";
 import BtnDark from "./BtnDark/BtnDark";
 import { clearSearch, Search } from "../../Redux/Products/productActions";
-import logo from "../../Assets/static/simbolo-verde.png"
-
-
-
+import logo from "../../Assets/static/simbolo-verde.png";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
-      display: "block"
-    }
+      display: "block",
+    },
   },
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -60,11 +58,11 @@ const useStyles = makeStyles((theme) => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   inputRoot: {
-    display: 'flex',
-    color: "inherit"
+    display: "flex",
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -73,39 +71,41 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("lg")]: {
-      display: "flex"
+      display: "flex",
     },
   },
   sectionMobile: {
     display: "flex",
     [theme.breakpoints.up("lg")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   navBar: {
-    position: 'fixed',
+    position: "fixed",
   },
   Logo: {
-    height: '4rem',
-    display: 'flex',
-    alignItems: 'center',
-    padding:'1rem'
+    height: "4rem",
+    display: "flex",
+    alignItems: "center",
+    padding: "1rem",
   },
 }));
 
 export default function NavBar({ priority, dark }) {
+  // eslint-disable-next-line
+  const [t, i18n] = useTranslation("global");
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.cartReducer.cart)
-  const user = useSelector(state =>  state.usersReducer.userLoged)
-  const wishlist = useSelector(state =>  state.wishlistReducer.wishlist)
+  const cart = useSelector((state) => state.cartReducer.cart);
+  const user = useSelector((state) => state.usersReducer.userLoged);
+  const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -118,7 +118,7 @@ export default function NavBar({ priority, dark }) {
     const handleWindowResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleWindowResize);
     return () => window.removeEventListener("resize", handleWindowResize);
-   },[width]);
+  }, [width]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -133,17 +133,16 @@ export default function NavBar({ priority, dark }) {
   };
 
   const handleCatalogue = (event) => {
-    history.push('/catalogue')
-    dispatch(clearSearch())
+    history.push("/catalogue");
+    dispatch(clearSearch());
     setAnchorEl(null);
     handleMobileMenuClose();
   };
   const handleToCart = (event) => {
-    history.push('/order')
+    history.push("/order");
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-  
 
   const handleLogOut = () => {
     const error = dispatch(userLogOut());
@@ -155,43 +154,46 @@ export default function NavBar({ priority, dark }) {
   };
 
   const handleLogin = () => {
-    history.push('/access')
+    history.push("/access");
     setAnchorEl(null);
     handleMobileMenuClose();
   };
 
   const handleMenuProfile = (e) => {
-    if( e.target.id === 'account') {
-      history.push('/controlpanel')
-    } else if( e.target.id === 'profile') {
-      history.push('/myProfile')
-    } else if( e.target.id === 'logOut') {
-      handleLogOut()
-    } else if( e.target.id === 'wishlist') {
+    if (e.target.id === "account") {
+      history.push("/controlpanel");
+    } else if (e.target.id === "profile") {
+      history.push("/myProfile");
+    } else if (e.target.id === "logOut") {
+      handleLogOut();
+    } else if (e.target.id === "wishlist") {
       !wishlist.length
-      ? swal('Your wishlist is empty!', 'Add items to your wishlist and come back', 'error')
-      : history.push('/wishlist')
+        ? swal(
+            "Your wishlist is empty!",
+            "Add items to your wishlist and come back",
+            "error"
+          )
+        : history.push("/wishlist");
     }
     setAnchorEl(null);
-      handleMobileMenuClose();
+    handleMobileMenuClose();
   };
 
   //Search
-  const handleInputChange = function (e) {
+  const handleInputChange = function(e) {
     setSearch(e.target.value);
   };
-  
+
   const handleSubmitSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (search !== "") {
-      dispatch(Search(search))
-      history.push('/catalogue')
+      dispatch(Search(search));
+      history.push("/catalogue");
       setSearch("");
     } else {
-      alert('Enter to input to search!')
+      alert("Enter to input to search!");
     }
-  }
-
+  };
 
   //Menu Profile -------------------------------------------------//
   const menuId = "primary-search-account-menu";
@@ -199,26 +201,33 @@ export default function NavBar({ priority, dark }) {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
+        vertical: "bottom",
+        horizontal: "center",
       }}
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
+        vertical: "top",
+        horizontal: "center",
       }}
       id={menuId}
       keepMounted
       open={isMenuOpen}
       onClose={handleMenuProfile}
     >
-      <MenuItem id='wishlist' onClick={(e) => handleMenuProfile(e)}>Wishlist</MenuItem>
-      <MenuItem id='account' onClick={(e) => handleMenuProfile(e)}>Account</MenuItem>
-      <MenuItem id='profile' onClick={(e) => handleMenuProfile(e)}>Profile</MenuItem>
-      <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem>
+      <MenuItem id="wishlist" onClick={(e) => handleMenuProfile(e)}>
+      {t("bar.1")}
+      </MenuItem>
+      <MenuItem id="account" onClick={(e) => handleMenuProfile(e)}>
+      {t("bar.2")}
+      </MenuItem>
+      <MenuItem id="profile" onClick={(e) => handleMenuProfile(e)}>
+      {t("bar.3")}
+      </MenuItem>
+      <MenuItem id="logOut" onClick={(e) => handleMenuProfile(e)}>
+      {t("bar.4")}
+      </MenuItem>
     </Menu>
   );
   //--------------------------------------------------------------//
-
 
   //Menu Mobile -------------------------------------------------//
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -236,27 +245,27 @@ export default function NavBar({ priority, dark }) {
         <IconButton color="primary">
           <MenuIcon />
         </IconButton>
-        <p>Catalogue</p>
+         {t("bar.5")}
       </MenuItem>
 
       <MenuItem onClick={handleToCart}>
-        <IconButton >
+        <IconButton>
           <Badge badgeContent={cart.length} color="error">
-            <ShoppingCartIcon color="primary"/>
+            <ShoppingCartIcon color="primary" />
           </Badge>
         </IconButton>
-        <p>Cart</p>
+        {t("bar.6")}
       </MenuItem>
 
       <BtnLang />
 
       <MenuItem>
         <IconButton color="primary">
-          <BtnDark/>
+          <BtnDark />
         </IconButton>
       </MenuItem>
 
-      {user?.id ?
+      {user?.id ? (
         <MenuItem onClick={handleProfileMenuOpen}>
           <IconButton
             aria-label="account of current user"
@@ -266,9 +275,9 @@ export default function NavBar({ priority, dark }) {
           >
             <AccountCircle />
           </IconButton>
-          <p>Profile</p>
+           {t("bar.7")}
         </MenuItem>
-      :
+      ) : (
         <MenuItem onClick={handleLogin}>
           <IconButton
             aria-label="account of current user"
@@ -277,48 +286,48 @@ export default function NavBar({ priority, dark }) {
           >
             <AccountCircle />
           </IconButton>
-          <p>Login</p>
+           {t("bar.8")}
         </MenuItem>
-      }
-
+      )}
     </Menu>
   );
   //--------------------------------------------------------------//
 
-
   return (
-    <div className={classes.grow} >
-      <AppBar className={classes.navBar} color='secondary'>
+    <div className={classes.grow}>
+      <AppBar className={classes.navBar} color="secondary">
         <Toolbar className={classes.toolBar}>
           <NavLink to={"/"} className={classes.Logo}>
-            {
-            width > 720 ?
-            <img
-              src={
-                "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
-              } 
-              alt="Ups, we don't found anything here. Try again tomorrow!"
-              height="50"
-            />
-            :
-            <img
-              src={logo}
-              alt="Ups, we don't found anything here. Try again tomorrow!"
-              height="62"
-            />
-            }
+            {width > 720 ? (
+              <img
+                src={
+                  "https://res.cloudinary.com/techstore/image/upload/v1619885737/logo-nav_qycrol.png"
+                }
+                alt="Ups, we don't found anything here. Try again tomorrow!"
+                height="50"
+              />
+            ) : (
+              <img
+                src={logo}
+                alt="Ups, we don't found anything here. Try again tomorrow!"
+                height="62"
+              />
+            )}
           </NavLink>
-          <form className={classes.search} onSubmit={(e) => handleSubmitSearch(e)}>
+          <form
+            className={classes.search}
+            onSubmit={(e) => handleSubmitSearch(e)}
+          >
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
               value={search}
               onChange={handleInputChange}
-              placeholder="Search…"
+              placeholder={t("bar.search")}
               classes={{
                 root: classes.inputRoot,
-                input: classes.inputInput
+                input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
             />
@@ -329,14 +338,14 @@ export default function NavBar({ priority, dark }) {
               <IconButton color="primary">
                 <MenuIcon />
               </IconButton>
-              <p>Catalogue</p>
+              <p>{t("bar.5")}</p>
             </MenuItem>
-            
+
             <MenuItem>
               <MiniCart />
             </MenuItem>
 
-            {user?.id ?
+            {user?.id ? (
               <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                   aria-label="account of current user"
@@ -346,9 +355,9 @@ export default function NavBar({ priority, dark }) {
                 >
                   <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                <p>{t("bar.7")}</p>
               </MenuItem>
-            :
+            ) : (
               <MenuItem onClick={handleLogin}>
                 <IconButton
                   aria-label="account of current user"
@@ -357,22 +366,21 @@ export default function NavBar({ priority, dark }) {
                 >
                   <AccountCircle />
                 </IconButton>
-                <p>Login</p>
+                <p>{t("bar.8")}</p>
               </MenuItem>
-            }
-            
+            )}
+
             <MenuItem>
               <BtnLang />
             </MenuItem>
 
             <MenuItem>
               <IconButton color="primary">
-                <BtnDark/>
+                <BtnDark />
               </IconButton>
             </MenuItem>
-
           </div>
-          
+
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
