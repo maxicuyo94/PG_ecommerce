@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import {
-  allProducts,
+  clearSearch,
+  getAllProducts,
   getCategories,
 } from "../../Redux/Products/productActions";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
@@ -12,18 +13,25 @@ import { useTranslation } from "react-i18next";
 import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
 import ViewListOutlinedIcon from "@material-ui/icons/ViewListOutlined";
 import Cards from "./Cards/Cards";
+import { Button } from "@material-ui/core";
 
 export function Catalogue({ dark }) {
+  // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-  const Products = useSelector((state) => state.productReducer.wantedProducts);
+  
+  const wantedProducts = useSelector(
+    (state) => state.productReducer.wantedProducts
+  );
+  const allProducts = useSelector((state) => state.productReducer.allProducts);
   const Categories = useSelector((state) => state.productReducer.categories);
   const [Pages, setPages] = useState(0);
   const [Category, setCategory] = useState("");
   const [Prices, setPrices] = useState(["", ""]);
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
-  const Input = useSelector((state) => state.productReducer.Searchingg);
+  const Input = useSelector((state) => state.productReducer.Searching);
   const [view, setView] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const location = useLocation();
   const history = useHistory();
@@ -41,15 +49,15 @@ export function Catalogue({ dark }) {
     if (query.has("category")) {
       const selectQuery = query.get("category");
       stableDispatch(
-        allProducts(Pages * 4, Pages * 4 + 4, selectQuery, Prices, Input)
+        getAllProducts(Pages * 4, Pages * 4 + 4, selectQuery, Prices, Input)
       );
     } else {
       stableDispatch(
-        allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
+        getAllProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
       );
     }
-
     dispatch(getCategories());
+    // eslint-disable-next-line
   }, [
     dispatch,
     stableDispatch,
@@ -75,11 +83,23 @@ export function Catalogue({ dark }) {
       : setPrices([e.target.value, 200 + parseInt(e.target.value)]);
   };
 
+  // const handleClearSearch = () => {
+  //   dispatch(clearSearch());
+  // };
+
   const prevPage = () => {
+    setIsDisabled(true)
     Pages > 0 && setPages(Pages - 1);
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 1000);
   };
   const nextPage = () => {
-    Products.length > 3 && setPages(Pages + 1);
+    setIsDisabled(true)
+    allProducts.length > 3 && setPages(Pages + 1);
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 1000);
   };
 
   return (
@@ -98,6 +118,7 @@ export function Catalogue({ dark }) {
         <div className={styles.title}>
           <span>{t("catalogue.textTwo")}</span>
         </div>
+
         <div className={styles.categories}>
           <span>{t("catalogue.texThree")}</span>
           <select onChange={handleInputChange}>
@@ -127,18 +148,18 @@ export function Catalogue({ dark }) {
           </button>
         </div>
         <div className={styles.pagination}>
-          <button onClick={prevPage}>
+          <Button onClick={prevPage} disabled={isDisabled}>
             <ArrowBackIosOutlinedIcon style={{ fontSize: "1rem" }} />
-          </button>
+          </Button>
           <input type="text" value={Pages + 1} disabled />
-          <button onClick={nextPage}>
+          <Button onClick={nextPage} disabled={isDisabled}>
             <ArrowForwardIosOutlinedIcon style={{ fontSize: "1rem" }} />
-          </button>
+          </Button>
         </div>
       </div>
       <div className={styles.products}>
         <div className={styles.searched}>
-          {Products?.map((item) => (
+          {allProducts?.map((item) => (
             <Cards
               key={item.id}
               id={item.id}

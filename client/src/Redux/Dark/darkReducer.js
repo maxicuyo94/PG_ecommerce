@@ -1,19 +1,19 @@
 import * as actionType from "../action_types/actionTypes";
 
 const InitialState = {
-    dark: false,
+  dark: false,
 };
 
 function Reducer(state = InitialState, action) {
-    switch (action.type) {
-        case actionType.DARK:
-            return {
-                ...state,
-                dark: action.payload,
-            };
+  switch (action.type) {
+    case actionType.DARK:
+      return {
+        ...state,
+        dark: action.payload,
+      };
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
 export default Reducer;

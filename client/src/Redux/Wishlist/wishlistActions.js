@@ -6,7 +6,7 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const getUserWishlist = (id) => {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const JSON = await supabase
       .from("wishlist")
       .select("*, product(*, images(*))")
@@ -19,26 +19,25 @@ export const getUserWishlist = (id) => {
 };
 
 export const addToWishlist = (payload2) => {
-  let payload = payload2
+  let payload = payload2;
   return async function(dispatch) {
-    console.log(payload);
     if (payload.fav) {
-         await supabase.from("wishlist").insert([
-          {
-            product_id: payload.id,
-            user_id: payload.userId,
-          },
-        ]);
-        dispatch(getUserWishlist(payload.userId))
+      await supabase.from("wishlist").insert([
+        {
+          product_id: payload.id,
+          user_id: payload.userId,
+        },
+      ]);
+      dispatch(getUserWishlist(payload.userId));
     } else {
-       await supabase
-          .from("wishlist")
-          .delete()
-          .match({
-            product_id: payload.id,
-            user_id: payload.userId,
-          });
-          dispatch({ type: actionType.DELETE_ITEM_WISHLIST, payload: payload.id})
-      };
+      await supabase
+        .from("wishlist")
+        .delete()
+        .match({
+          product_id: payload.id,
+          user_id: payload.userId,
+        });
+      dispatch({ type: actionType.DELETE_ITEM_WISHLIST, payload: payload.id });
+    }
   };
 };

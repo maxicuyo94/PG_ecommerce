@@ -12,17 +12,26 @@ const Wishlist = () => {
 
   useEffect(() => {
     dispatch(getUserWishlist(userId));
+    // eslint-disable-next-line
   }, []);
 
+  const redirect = () => {
+    window.location.href = "/";
+   // setTimeout (redirect(), 3000);
+  }
+
   return (
-    <div className="container"> 
-      <h2>Wishlist</h2>
-      <div className="productsWishlist">
-      {
-        wishlist?.map((product) => (
-          <WishListCard props={product.product} userId={userId} />
-      ))}
-    </div>
+    <div className="container">
+      {wishlist.length > 0 ? (
+        <div className="productsWishlist">
+          <h2>Wishlist</h2>
+          {wishlist?.map((product) => (
+            <WishListCard props={product.product} userId={userId} />
+          ))}
+        </div>
+      ) : (
+        redirect()
+        )}
     </div>
   );
 };

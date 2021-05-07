@@ -1,13 +1,13 @@
 import * as actionType from "../action_types/actionTypes";
 
 const InitialState = {
-  allproducts: [],
+  allProducts: [],
   wantedProducts: [],
   productDetail: {},
   categories: [],
   productByCategories: {},
-  Searchingg:'',
-  lastProducts: []
+  Searching: "",
+  lastProducts: [],
 };
 
 function productReducer(state = InitialState, action) {
@@ -15,17 +15,17 @@ function productReducer(state = InitialState, action) {
     case actionType.PRODUCTS:
       return {
         ...state,
-        allproducts: action.payload,
+        allProducts: action.payload,
       };
       case actionType.SEARCHING:
         return {
           ...state,
-          Searchingg: action.payload,
+          Searching: action.payload,
         };
     case actionType.SEARCH:
       return {
         ...state,
-        wantedProducts: action.payload
+        allProducts: action.payload
           .filter((category) => category.categories.length)
           .slice(action.pages.limit, action.pages.offset),
       };
@@ -34,6 +34,11 @@ function productReducer(state = InitialState, action) {
         ...state,
         wantedProducts: action.payload,
       };
+    case actionType.CLEAR_SEARCHB:
+      return {
+        ...state,
+        wantedProducts: action.payload,
+      };  
 
     case actionType.PRODUCT_DETAIL:
       state.productDetail = {};
@@ -54,10 +59,10 @@ function productReducer(state = InitialState, action) {
         productByCategories: action.payload,
       };
     case actionType.LAST_PRODUCT:
-      return{
+      return {
         ...state,
-        lastProducts: action.payload
-      }
+        lastProducts: action.payload,
+      };
     default:
       return state;
   }
