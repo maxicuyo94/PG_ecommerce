@@ -1,58 +1,8 @@
 .container {
-    position:relative;
-    bottom:0;
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     color: #fff;
     background-color: #222;
-    height: 15rem;
-
-    .info {
-        margin-top: -5rem;
-        margin-left: 3rem;
-        h1 {
-            // font-size: x-large;
-            font-weight: 600;
-        }
-    }
-
-    // .routes {
-        .links {
-            // display: flex;
-            // flex-direction: row;
-            // justify-content: space-evenly;
-            // margin-top: 0.5rem;
-            // margin-left: -5rem;
-            .link {
-                margin-left: 20rem;
-                margin-right: -7.5rem;
-                font-size: larger;
-                transition: 500ms;
-                &:hover {
-                    transition: 500ms;
-                    color: #9abf15;
-                }
-            }
-        }
-    // }
-
-    .game {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-left: 20rem;
-        margin-top: 3rem;
-        font-weight: 500;
-        font-size: large;
-        transition: 500ms;
-        &:hover {
-            transition: 500ms;
-            color: #9abf15;
-        }
-        .icon {
-            width: 25%;
-        }
-    }
+    height: 20rem;
 }

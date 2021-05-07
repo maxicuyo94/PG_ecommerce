@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import simon from '../../Assets/static/game-4.svg'
+import simon from '../../Assets/static/game-3.svg'
 import styles from './footer.module.scss'
 
 const Footer = () => {
@@ -12,7 +12,7 @@ const Footer = () => {
           This is an e-commerce were you can buy anything from computers to its components.
         </p>
       </div>
-      <div clasName={styles.vl}/>
+      {/* <div clasName={styles.vl}/> */}
       <div className={styles.routes}>
         <div className={styles.links}>
           <Link className={styles.link} to='/about'>About</Link>
