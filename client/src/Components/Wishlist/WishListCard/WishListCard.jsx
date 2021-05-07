@@ -16,10 +16,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
   },
   paper: {
+    backgroundColor: "transparent",
     padding: theme.spacing(2),
     margin: "auto",
     maxWidth: 900,
-    height: 200,
+    height: "100%",
   },
   image: {
     width: 160,
@@ -47,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 3,
     color: "#fff",
   },
+  buttonRemove: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+    borderRadius: 3,
+    color: "primary",
+  }
 }));
 
 export default function WishListCard({ props, userId }) {
@@ -116,9 +123,9 @@ export default function WishListCard({ props, userId }) {
                   Add To Cart
                 </Button>
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   color="primary"
-                  className={classes.button}
+                  className={classes.buttonRemove}
                   onClick={(e) => removeFromFav(e)}
                 >
                   Remove
