@@ -64,6 +64,7 @@ export function ControlPanel() {
     } else {
       dispatch(getAllOrders());
     }
+    // eslint-disable-next-line
   }, [filter]);
 
   const changeModal = async (id) => {
@@ -113,13 +114,14 @@ export function ControlPanel() {
     dispatch(getAllOrders());
     dispatch(getAllUserOrders(userLoged.id));
     dispatch(getUserReviews(userLoged.id));
+    // eslint-disable-next-line
   }, [search, container, tab, userLoged]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 10;
   const indexLastResult = currentPage * resultsPerPage;
+  // eslint-disable-next-line
   const indexFirstResult = indexLastResult - resultsPerPage;
-  // const showedResults = state.allGames.slice(indexFirstResult, indexLastResult);
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -301,6 +303,7 @@ export function ControlPanel() {
             : null}
           {tab === "purchasehistory"
             ? userOrders?.map((order) => {
+             
                 return (
                   <div className={style.list}>
                     <span onClick={() => changeModal(order.id)}>

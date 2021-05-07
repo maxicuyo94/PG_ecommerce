@@ -21,7 +21,9 @@ function wishlistReducer(state = InitialState, action) {
     case actionType.DELETE_ITEM_WISHLIST:
       return {
         ...state,
-        wishlist: state.wishlist.filter(product => product.product_id !== action.payload),
+        wishlist: state.wishlist.filter(
+          (product) => product.product_id !== action.payload
+        ),
       };
 
     default:

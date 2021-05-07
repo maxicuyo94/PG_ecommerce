@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import style from "./modifyreview.module.scss";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateReview,
-  getReviewById,
-} from "../../Redux/Reviews/reviewsActions";
-import { deletingReview } from "./deleteReview";
+import { updateReview } from "../../Redux/Reviews/reviewsActions";
 
 export function ModifyReview({ id }) {
   const dispatch = useDispatch();
+  // eslint-disable-next-line
   const reviews = useSelector((state) => state.reviewsReducer.reviews);
   const [data, setData] = useState({
     description: "",
@@ -21,9 +18,8 @@ export function ModifyReview({ id }) {
 
   const upReview = (upReview) => {
     upReview.preventDefault();
-   dispatch (updateReview(data));
+    dispatch(updateReview(data));
   };
-
 
   return (
     <div className={style.containerReview}>

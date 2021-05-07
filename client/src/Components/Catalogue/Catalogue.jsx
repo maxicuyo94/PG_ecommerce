@@ -1,101 +1,125 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-//import { ProductCard } from "../ProductCard/ProductCard";
-import { useLocation, useHistory } from 'react-router-dom'
-import { allProducts, getCategories, } from "../../Redux/Products/productActions";
-//import left from "../../Assets/static/arrow-back.svg";
-//import right from "../../Assets/static/arrow-next.svg";
-import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
-import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
+import { useLocation, useHistory } from "react-router-dom";
+import {
+  clearSearch,
+  getAllProducts,
+  getCategories,
+} from "../../Redux/Products/productActions";
+import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
+import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 import styles from "./catalogue.module.scss";
 import { useTranslation } from "react-i18next";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { CategoriesHome } from '../Home/Categories/CategoriesHome'
-import { Banner2 } from '../Banner/Banner'
-import ViewModuleOutlinedIcon from '@material-ui/icons/ViewModuleOutlined';
-import ViewListOutlinedIcon from '@material-ui/icons/ViewListOutlined';
-import Cards from './Cards/Cards'
+import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
+import ViewListOutlinedIcon from "@material-ui/icons/ViewListOutlined";
+import Cards from "./Cards/Cards";
+import { Button } from "@material-ui/core";
+
 export function Catalogue({ dark }) {
+  // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
-  const Products = useSelector((state) => state.productReducer.wantedProducts);
+  
+  const wantedProducts = useSelector(
+    (state) => state.productReducer.wantedProducts
+  );
+  const allProducts = useSelector((state) => state.productReducer.allProducts);
   const Categories = useSelector((state) => state.productReducer.categories);
   const [Pages, setPages] = useState(0);
   const [Category, setCategory] = useState("");
   const [Prices, setPrices] = useState(["", ""]);
   const dispatch = useDispatch();
   const stableDispatch = useCallback(dispatch, []);
-  const Input = useSelector(state => state.productReducer.Searchingg)
-  const [view, setView] = useState(false)
+  const Input = useSelector((state) => state.productReducer.Searching);
+  const [view, setView] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false)
 
-
-  const location = useLocation()
-  const history = useHistory()
+  const location = useLocation();
+  const history = useHistory();
 
   function useQuery() {
     return new URLSearchParams(location.search);
   }
   let query = useQuery();
 
-
   useEffect(() => {
     setPages(0);
   }, [Category, Prices]);
 
   useEffect(() => {
-    if (query.has('category')) {
-      const selectQuery = query.get('category')
+    if (query.has("category")) {
+      const selectQuery = query.get("category");
       stableDispatch(
-        allProducts(Pages * 4, Pages * 4 + 4, selectQuery, Prices, Input)
+        getAllProducts(Pages * 4, Pages * 4 + 4, selectQuery, Prices, Input)
       );
     } else {
       stableDispatch(
-        allProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
+        getAllProducts(Pages * 4, Pages * 4 + 4, Category, Prices, Input)
       );
     }
-
     dispatch(getCategories());
-
-  }, [dispatch, stableDispatch, Pages, Category, Prices, Input, history.location.pathname, history.location.search]);
-
+    // eslint-disable-next-line
+  }, [
+    dispatch,
+    stableDispatch,
+    Pages,
+    Category,
+    Prices,
+    Input,
+    history.location.pathname,
+    history.location.search,
+  ]);
 
   const handleInputChange = (e) => {
     e.preventDefault();
     setCategory(e.target.value);
   };
 
-
   const handleInputChangeP = (e) => {
     e.preventDefault();
     e.target.value === ""
       ? setPrices(["", ""])
       : e.target.value === "400"
-        ? setPrices([e.target.value, ""])
-        : setPrices([e.target.value, 200 + parseInt(e.target.value)]);
+      ? setPrices([e.target.value, ""])
+      : setPrices([e.target.value, 200 + parseInt(e.target.value)]);
   };
 
-  const prevPage = () => {
+  // const handleClearSearch = () => {
+  //   dispatch(clearSearch());
+  // };
 
+  const prevPage = () => {
+    setIsDisabled(true)
     Pages > 0 && setPages(Pages - 1);
-  }
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 1000);
+  };
   const nextPage = () => {
-    Products.length > 3 && setPages(Pages + 1);
-  }
+    setIsDisabled(true)
+    allProducts.length > 3 && setPages(Pages + 1);
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 1000);
+  };
 
   return (
     <div
       className={
-        dark && view ?
-          styles.containerDark :
-          dark && !view ?
-            styles.containerListDark :
-            !dark && view ? styles.container : styles.containerList
-      }>
+        dark && view
+          ? styles.containerDark
+          : dark && !view
+          ? styles.containerListDark
+          : !dark && view
+          ? styles.container
+          : styles.containerList
+      }
+    >
       <div className={styles.filter}>
         <div className={styles.title}>
           <span>{t("catalogue.textTwo")}</span>
         </div>
-        <div className={styles.categories}>
 
+        <div className={styles.categories}>
           <span>{t("catalogue.texThree")}</span>
           <select onChange={handleInputChange}>
             <option value="">{t("catalogue.textFour")}</option>
@@ -115,26 +139,27 @@ export function Catalogue({ dark }) {
         </div>
         <div className={styles.view}>
           <span>{t("catalogue.view")} </span>
-          <button onClick={() => { setView(!view) }}>
-            {!view ?
-              <ViewModuleOutlinedIcon />
-              : <ViewListOutlinedIcon />}
+          <button
+            onClick={() => {
+              setView(!view);
+            }}
+          >
+            {!view ? <ViewModuleOutlinedIcon /> : <ViewListOutlinedIcon />}
           </button>
         </div>
         <div className={styles.pagination}>
-          <button onClick={prevPage}>
-            <ArrowBackIosOutlinedIcon style={{ fontSize: '1rem' }} />
-          </button>
-          <input type='text' value={Pages + 1} disabled />
-          <button onClick={nextPage}>
-            <ArrowForwardIosOutlinedIcon style={{ fontSize: '1rem' }} />
-          </button>
+          <Button onClick={prevPage} disabled={isDisabled}>
+            <ArrowBackIosOutlinedIcon style={{ fontSize: "1rem" }} />
+          </Button>
+          <input type="text" value={Pages + 1} disabled />
+          <Button onClick={nextPage} disabled={isDisabled}>
+            <ArrowForwardIosOutlinedIcon style={{ fontSize: "1rem" }} />
+          </Button>
         </div>
       </div>
       <div className={styles.products}>
-
         <div className={styles.searched}>
-          {Products?.map((item) => (
+          {allProducts?.map((item) => (
             <Cards
               key={item.id}
               id={item.id}
@@ -146,29 +171,9 @@ export function Catalogue({ dark }) {
               reviews={item.reviews}
               view={view}
             />
-          ))
-          }
+          ))}
         </div>
       </div>
     </div>
   );
 }
-
-/* <div>
-          <h3>{t("catalogue.category")}:</h3>
-          {
-            document.getElementById('categories') && (<div>
-              <label className={styles.tag}>
-                {document.getElementById('categories').value}
-              </label>
-            </div>)
-          }
-          <h3>{t("catalogue.prices")}:</h3>
-          {
-            document.getElementById('prices') && (<div>
-              <label className={styles.tag}>
-                {document.getElementById('prices').value}
-              </label>
-            </div>)
-          }
-        </div> */

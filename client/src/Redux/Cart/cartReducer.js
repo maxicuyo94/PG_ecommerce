@@ -9,7 +9,6 @@ const InitialState = {
 
 function cartReducer(state = InitialState, action) {
   switch (action.type) {
-
     case actionType.SET_CART:
       return {
         ...state,
@@ -66,7 +65,6 @@ function cartReducer(state = InitialState, action) {
         ...state,
         order: action.payload,
       };
-
 
     case actionType.DELETE_ITEM_CART:
       return {

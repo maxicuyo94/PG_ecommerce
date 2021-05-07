@@ -19,7 +19,7 @@ import { userLogOut } from "../../Redux/Users/usersActions";
 import swal from "sweetalert";
 import MiniCart from "./MiniCart/MiniCart";
 import BtnDark from "./BtnDark/BtnDark";
-import { Search } from "../../Redux/Products/productActions";
+import { clearSearch, Search } from "../../Redux/Products/productActions";
 import logo from "../../Assets/static/simbolo-verde.png"
 
 
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: "50vw",
+    width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
       width: "100%"
@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center"
   },
   inputRoot: {
+    display: 'flex',
     color: "inherit"
   },
   inputInput: {
@@ -70,9 +71,9 @@ const useStyles = makeStyles((theme) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
-    width: "10ch",
+    width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "25ch"
+      width: "100%"
     }
   },
   sectionDesktop: {
@@ -104,6 +105,7 @@ export default function NavBar({ priority, dark }) {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cartReducer.cart)
   const user = useSelector(state =>  state.usersReducer.userLoged)
+  const wishlist = useSelector(state =>  state.wishlistReducer.wishlist)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -132,6 +134,7 @@ export default function NavBar({ priority, dark }) {
 
   const handleCatalogue = (event) => {
     history.push('/catalogue')
+    dispatch(clearSearch())
     setAnchorEl(null);
     handleMobileMenuClose();
   };
@@ -165,7 +168,9 @@ export default function NavBar({ priority, dark }) {
     } else if( e.target.id === 'logOut') {
       handleLogOut()
     } else if( e.target.id === 'wishlist') {
-      history.push('/wishlist')
+      !wishlist.length
+      ? swal('Your wishlist is empty!', 'Add items to your wishlist and come back', 'error')
+      : history.push('/wishlist')
     }
     setAnchorEl(null);
       handleMobileMenuClose();
@@ -206,10 +211,10 @@ export default function NavBar({ priority, dark }) {
       open={isMenuOpen}
       onClose={handleMenuProfile}
     >
+      <MenuItem id='wishlist' onClick={(e) => handleMenuProfile(e)}>Wishlist</MenuItem>
       <MenuItem id='account' onClick={(e) => handleMenuProfile(e)}>Account</MenuItem>
       <MenuItem id='profile' onClick={(e) => handleMenuProfile(e)}>Profile</MenuItem>
       <MenuItem id='logOut' onClick={(e) => handleMenuProfile(e)}>Log Out</MenuItem>
-      <MenuItem id='wishlist' onClick={(e) => handleMenuProfile(e)}>Wishlist</MenuItem>
     </Menu>
   );
   //--------------------------------------------------------------//

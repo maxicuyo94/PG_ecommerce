@@ -1,6 +1,5 @@
 import * as actionType from "../action_types/actionTypes";
 import { createClient } from "@supabase/supabase-js";
-import { FaAddressBook } from "react-icons/fa";
 const supabaseUrl = "https://zgycwtqkzgitgsycfdyk.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE3NzMwOTg0LCJleHAiOjE5MzMzMDY5ODR9.8cmeNSjMvLmtlFtAwRjuR0VhXUhu5PX7174IBiXsU-E";
@@ -8,7 +7,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 //Cart actions
 export function setCart(user_id) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     if (user_id) {
       //if logged
       let { data, error } = await supabase
@@ -19,15 +18,15 @@ export function setCart(user_id) {
       if (error) console.log(error.message);
       var cartDB = data.length
         ? data[0].order_detail.map((item) => {
-          return {
-            id: item.product_id,
-            title: item.title,
-            image: item.image,
-            quantity: item.quantity,
-            price: item.price,
-            stock: item.stock,
-          };
-        })
+            return {
+              id: item.product_id,
+              title: item.title,
+              image: item.image,
+              quantity: item.quantity,
+              price: item.price,
+              stock: item.stock,
+            };
+          })
         : [];
 
       // localStorage.setItem("cart", JSON.stringify(cartDB));
@@ -104,7 +103,6 @@ export const addItemCart = (payload) => {
     previousStorage = [];
   }
 
-  // console.log(previousStorage)
   let found = previousStorage.find((item) => item.id === payload.id);
   // if item is already in the previous cart
   if (found) {
@@ -141,20 +139,23 @@ export const deleteItemCart = (payload) => {
         const idOrder = await supabase
           .from("order")
           .select("id")
-          .eq("user_id", userId);
-        // console.log(idOrder);
+          .eq("user_id", userId)
+          .eq("orderStatus", "inCart");
 
-        await supabase.from("order_detail").delete().match({
-          product_id: payload.id,
-          order_id: idOrder.data[0].id,
-        });
+        await supabase
+          .from("order_detail")
+          .delete()
+          .match({
+            product_id: payload.id,
+            order_id: idOrder.data[0].id,
+          });
       };
       deleteItemDB();
     }
   } else {
     previousStorage = [];
   }
-  // console.log(previousStorage);
+
   const updatedStorage = JSON.stringify(previousStorage);
   window.localStorage.setItem("cart", updatedStorage);
 
@@ -171,13 +172,13 @@ export const clearCart = () => {
       const idOrder = await supabase
         .from("order")
         .select("id")
-        .eq("user_id", userId);
+        .eq("user_id", userId)
+        .eq("orderStatus", "inCart")
 
-      supabase
+      await supabase
         .from("order_detail")
         .delete()
-        .eq("order_id", idOrder.data[0].id)
-
+        .eq("order_id", idOrder.data[0].id);
     };
     clearDbCart(userData.id);
   }
@@ -187,97 +188,107 @@ export const clearCart = () => {
   };
 };
 
-export const checkstock = (userId, status, amount, discountPoints, products) => {
-  return async function (dispatch) {
+export const checkstock = (
+  userId,
+  status,
+  amount,
+  discountPoints,
+  products
+) => {
+  return async function(dispatch) {
     // eslint-disable-next-line
     if (status === "approved") {
       if (userId) {
         let pointsMainUser = await supabase
           .from("users")
           .select("points,recommended")
-          .eq("id", userId)
+          .eq("id", userId);
 
         await supabase
           .from("users")
           .update({
-            points: pointsMainUser.data[0].points + amount
+            points: pointsMainUser.data[0].points + amount,
           })
-          .eq("id", userId)
+          .eq("id", userId);
 
         if (pointsMainUser.data[0].recommended) {
-
           let pointsRecoUser = await supabase
             .from("users")
             .select("points")
-            .eq("email", pointsMainUser.data[0].recommended)
+            .eq("email", pointsMainUser.data[0].recommended);
 
           await supabase
             .from("users")
             .update({
-              points: pointsRecoUser.data[0].points + amount * 0.2
+              points: pointsRecoUser.data[0].points + amount * 0.2,
             })
-            .eq("email", pointsMainUser.data[0].recommended)
+            .eq("email", pointsMainUser.data[0].recommended);
         }
 
         if (discountPoints) {
           await supabase
             .from("users")
             .update({
-              points: pointsMainUser.data[0].points - discountPoints
+              points: pointsMainUser.data[0].points - discountPoints,
             })
-            .eq("id", userId)
+            .eq("id", userId);
 
-            amount = -discountPoints;
+          amount = -discountPoints;
         }
-        console.log(amount)
-        dispatch({type: actionType.ADD_POINTS , payload: amount})
+        console.log(amount);
+        dispatch({ type: actionType.ADD_POINTS, payload: amount });
       }
     } else {
       if (userId) {
+        // eslint-disable-next-line
         let cartuser = await supabase
           .from("order")
           .select("order_detail(*)")
           .eq("user_id", userId)
           .eq("orderStatus", "inCart")
-          .then(res => products = res)
+          .then((res) => (products = res));
 
-        products.data[0].order_detail.map(async product => {
-
+        products.data[0].order_detail.map(async (product) => {
           let stock = await supabase
             .from("product")
             .select("stock")
-            .eq("id", product.product_id)
+            .eq("id", product.product_id);
 
           await supabase
             .from("product")
             .update({
-              stock: stock.data[0]?.stock + product.quantity
+              stock: stock.data[0]?.stock + product.quantity,
             })
-            .eq("id", product.product_id)
-        })
+            .eq("id", product.product_id);
+        });
       } else {
-        products.map(async product => {
-
+        products.map(async (product) => {
           let stock = await supabase
             .from("product")
             .select("stock")
-            .eq("id", product.id)
+            .eq("id", product.id);
 
           await supabase
             .from("product")
             .update({
-              stock: stock.data[0].stock + product.quantity
+              stock: stock.data[0].stock + product.quantity,
             })
-            .eq("id", product.id)
-        })
+            .eq("id", product.id);
+        });
       }
-
     }
   };
 };
 
-export const checkout = (userId, status, amount, userEmail, address, postalCode) => {
-  return async function (dispatch) {
+export const checkout = (
+  userId,
+  status,
+  amount,
+  userEmail,
+  address,
+  postalCode
+) => {
+  return async function(dispatch) {
     if (!userId) {
       await supabase.from("order").insert([
         {
@@ -288,9 +299,10 @@ export const checkout = (userId, status, amount, userEmail, address, postalCode)
           shipAddress: address,
           postalCode: postalCode,
           //orderDate:hoy
-        }
+        },
       ]);
     } else {
+      // eslint-disable-next-line
       const { data, error } = await supabase
         .from("order")
         .update({
@@ -300,7 +312,6 @@ export const checkout = (userId, status, amount, userEmail, address, postalCode)
           postalCode: postalCode,
           email: userEmail,
           //orderDate:hoy,
-
         })
         .eq("user_id", userId)
         .eq("orderStatus", "inCart");
@@ -315,7 +326,5 @@ export const checkout = (userId, status, amount, userEmail, address, postalCode)
     }
     localStorage.setItem("cart", "[]");
     dispatch({ type: actionType.SET_CART, payload: [] });
-  }
-}
-
-
+  };
+};

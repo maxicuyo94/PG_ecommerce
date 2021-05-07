@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocalStorage } from '../../LocalStorage/useLocalStorage';
-import { getUserWishlist } from '../../Redux/Wishlist/wishlistActions';
-import WishListCard from './WishListCard/WishListCard'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocalStorage } from "../../LocalStorage/useLocalStorage";
+import { getUserWishlist } from "../../Redux/Wishlist/wishlistActions";
+import WishListCard from "./WishListCard/WishListCard";
 
 const Wishlist = () => {
   const wishlist = useSelector((state) => state.wishlistReducer.wishlist);
@@ -12,18 +12,28 @@ const Wishlist = () => {
 
   useEffect(() => {
     dispatch(getUserWishlist(userId));
+    // eslint-disable-next-line
   }, []);
 
+  const redirect = () => {
+    window.location.href = "/";
+   // setTimeout (redirect(), 3000);
+  }
+
   return (
-    <div>
-      {
-        wishlist?.map(product => (
-          <WishListCard props={product.product} userId={userId} />
-        ))
-      }
+    <div className="container">
+      {wishlist.length > 0 ? (
+        <div className="productsWishlist">
+          <h2>Wishlist</h2>
+          {wishlist?.map((product) => (
+            <WishListCard props={product.product} userId={userId} />
+          ))}
+        </div>
+      ) : (
+        redirect()
+        )}
     </div>
-  )
-}
+  );
+};
 
-export default Wishlist
-
+export default Wishlist;

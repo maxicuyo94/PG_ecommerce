@@ -5,40 +5,41 @@ import style from './appointment.module.scss';
 import { Link } from "react-router-dom";
 
 
+
 const Hours = [
-    {
-        hour: 10,
-        id: 0,
-    },
-    {
-        hour: 11,
-        id: 1,
-    },
-    {
-        hour: 12,
-        id: 2,
-    },
-    {
-        hour: 13,
-        id: 3,
-    },
-    {
-        hour: 14,
-        id: 4,
-    },
-    {
-        hour: 15,
-        id: 5,
-    },
-    {
-        hour: 16,
-        id: 6,
-    },
-    {
-        hour: 17,
-        id: 7,
-    }
-]
+  {
+    hour: 10,
+    id: 0,
+  },
+  {
+    hour: 11,
+    id: 1,
+  },
+  {
+    hour: 12,
+    id: 2,
+  },
+  {
+    hour: 13,
+    id: 3,
+  },
+  {
+    hour: 14,
+    id: 4,
+  },
+  {
+    hour: 15,
+    id: 5,
+  },
+  {
+    hour: 16,
+    id: 6,
+  },
+  {
+    hour: 17,
+    id: 7,
+  },
+];
 
 export function Appointments () {
     const userLoged = useSelector(state => state.usersReducer.userLoged);
@@ -101,5 +102,4 @@ export function Appointments () {
                 </div>
             </div>
         </div>
-    )
-}
+    )}

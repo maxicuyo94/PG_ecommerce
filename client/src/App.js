@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { ProtectedRoute } from "./AuthRoutes/ProtectedRoute";
 import { useLocalStorage } from "./LocalStorage/useLocalStorage";
 import Layout from "./Components/Layout/Layout";
@@ -19,16 +19,16 @@ import { Reset } from "./Components/Access/ResetPassword/ResetPassword";
 import { Review } from "./Components/Review/review";
 import { Payment } from "./Components/Payment/Payment";
 import { ModifyReview } from "./Components/Review/modifyReview";
-import { checkout } from "./Redux/Cart/cartActions";
 import { getProductsVisited } from "./Redux/Products/productActions";
-import swal from "sweetalert";
-import { Banner, Banner2 } from "./Components/Banner/Banner";
+import { Banner2 } from "./Components/Banner/Banner";
 import { ActiveUser } from "./Components/ControlPanel/ActiveUser/ActiveUser";
+import AboutUs from "./Components/AboutUs/AboutUs";
 import SimonSays from "./Components/VideoGame/SimonSays";
 import { Points } from "./Components/Points/Points";
 import { DaySelector } from "./Components/AppointmentsSelector/DaySelector/DaySelector";
 import { Appointments } from "./Components/AppointmentsSelector/Appointments/Appointments";
 import Wishlist from "./Components/Wishlist/Wishlist";
+import { getUserWishlist } from "./Redux/Wishlist/wishlistActions";
 
 function App() {
   // eslint-disable-next-line
@@ -47,6 +47,7 @@ function App() {
   useEffect(() => {
     if (userLogedStorage) {
       dispatch(userStorage(userLogedStorage.currentSession.user.id));
+      dispatch(getUserWishlist(userLogedStorage.currentSession.user.id));
     }
     dispatch(setCart(userLogedStorage.currentSession?.user.id));
     const lastProducts = async () => {
@@ -56,6 +57,7 @@ function App() {
       }
     };
     lastProducts();
+    // eslint-disable-next-line
   }, [dispatch, userLogedStorage]);
 
   return (
@@ -96,7 +98,9 @@ function App() {
         )}
       />
       <Route exact path="/Order" render={() => <CheckOut dark={dark} />} />
+      <Route exact path="/About" render={() => <AboutUs />} />
       <Route exact path="/points" render={() => <Points dark={dark} />} />
+
       <ProtectedRoute
         exact
         path="/modifyProduct/:id"
@@ -131,7 +135,7 @@ function App() {
       <ProtectedRoute exact path="/videogame" component={SimonSays} />
       <ProtectedRoute exact path="/dayselect" component={DaySelector} />
       <ProtectedRoute exact path="/appointments" component={Appointments} />
-      <Route exact path="/wishlist" component={Wishlist} />
+      <ProtectedRoute exact path="/wishlist" component={Wishlist} />
     </Layout>
   );
 }
