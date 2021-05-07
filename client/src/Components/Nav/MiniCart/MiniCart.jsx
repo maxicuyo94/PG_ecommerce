@@ -171,7 +171,7 @@ export default function SimpleMenu() {
         <div className={classes.checkout}>
           <ListItem className={classes.totalAmount}>
             <Typography variant="h5">{`Total: `}</Typography>
-            <Typography variant="h5">{`us$ ${total}`}</Typography>
+            <Typography variant="h5">{`US$ ${total}`}</Typography>
           </ListItem>
           <Button
             className={classes.buttons}

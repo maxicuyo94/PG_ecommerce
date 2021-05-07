@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import { Button } from "@material-ui/core";
+import { Avatar, Button, ListItemAvatar } from "@material-ui/core";
 import { addItemCart } from "../../../Redux/Cart/cartActions";
 import { useHistory } from "react-router";
 
@@ -22,10 +22,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 900,
     height: "100%",
   },
-  image: {
-    width: 160,
-    height: 160,
-  },
+  // image: {
+  //   width: 160,
+  //   height: 160,
+  // },
   img: {
     margin: "auto",
     display: "block",
@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "100%",
   },
   type: {
-    fontWeight: "bold",
     fontSize: 17.5,
     cursor: "pointer",
     transition: "500ms",
@@ -94,11 +93,13 @@ export default function WishListCard({ props, userId }) {
               onClick={(e) => toProductDetail(e)}
               className={classes.image}
             >
-              <img
-                className={classes.img}
-                alt="complex"
-                src={props.images[0]?.url}
-              />
+              <ListItemAvatar>
+                <Avatar
+                  // className={classes.img}
+                  alt="complex"
+                  src={props.images[0]?.url}
+                />
+              </ListItemAvatar>
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>

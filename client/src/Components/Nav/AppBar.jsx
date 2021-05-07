@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
   },
   navBar: {
     position: "fixed",
-    height: "4rem",
+    height: "5rem",
   },
   Logo: {
     display: "flex",
