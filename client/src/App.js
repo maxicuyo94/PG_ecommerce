@@ -100,7 +100,7 @@ function App() {
         )}
       />
       <Route exact path="/Order" render={() => <CheckOut dark={dark} />} />
-      <Route exact path="/About" render={() => <AboutUs/>} />
+      <Route exact path="/About" render={() => <AboutUs dark={dark}/>} />
       <Route exact path="/points" render={() => <Points dark={dark} />} />
 
       <ProtectedRoute
