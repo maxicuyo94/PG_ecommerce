@@ -118,7 +118,7 @@ export function Home(props) {
         {lastProducts?.length > 0 && (
           <div className={styles.containerP}>
             <div className={styles.title}>
-              <span>¡This product has to be yours!</span>
+              <span>{t("home2.lastProduct")}</span>
             </div>
             <div className={styles.carousel}>
               {lastProducts.length > 0 && (

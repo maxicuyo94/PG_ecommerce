@@ -1,12 +1,10 @@
 import React from "react";
-
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import LanguageIcon from "@material-ui/icons/Language";
 import { useTranslation } from "react-i18next";
 import { IconButton } from "@material-ui/core";
-
 
 export default function BtnLang() {
   // eslint-disable-next-line
@@ -24,12 +22,11 @@ export default function BtnLang() {
   return (
     <div>
       <MenuItem onClick={handleClick}>
-        <IconButton color="primary" >
+        <IconButton color="primary">
           <LanguageIcon />
         </IconButton>
-        <p>Language</p>
+        <p> {t("l.language")}</p>
       </MenuItem>
-
 
       <Menu
         id="customized-menu"

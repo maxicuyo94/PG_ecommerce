@@ -8,8 +8,11 @@ import style from "./login.module.scss";
 import MultifactorAuth from "../MultifactorAuth/MultifactorAuth";
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export function Login() {
+  // eslint-disable-next-line
+  const [t] = useTranslation("global");
   const dispatch = useDispatch();
   const userRegistered = useSelector((state) => state.usersReducer.userLoged);
   const location = useLocation();
@@ -77,7 +80,7 @@ export function Login() {
             className={!user.email ? "danger" : ""}
             type="text"
             name="email"
-            placeholder="Email"
+            placeholder="E-mail"
             value={user.email}
             onChange={handleState}
           />
@@ -101,19 +104,19 @@ export function Login() {
           LogIn
         </button> */}
         <MultifactorAuth
-          prueba="hola"
+          prueba="test"
           email={user.email}
           onLogin={loginUsers}
         />
         <div>
-          <input type="text" id="email" placeholder="Email" />
+          <input type="text" id="email" placeholder="E-mail" />
         </div>
         <button
           className={style.simpleButton}
           type="button"
           onClick={(e) => resetPassword(e)}
         >
-          Forgot password?
+           {t("login.forgot")}
         </button>
         <div className={style.containerGG}>
           <div
@@ -128,7 +131,7 @@ export function Login() {
               className={style.googleButton}
               type="button"
             />
-            <span>Sign in with GitHub</span>
+            <span> {t("login.github")}</span>
           </div>
           <img
             src="/images/btn_google_signin_dark_normal_web.png"

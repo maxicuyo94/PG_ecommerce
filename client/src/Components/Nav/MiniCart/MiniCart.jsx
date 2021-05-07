@@ -81,8 +81,6 @@ export default function SimpleMenu() {
     }
   }, [cart]);
 
-
-
   useEffect(() => {
     setTotal((subtotal - subtotal * (coupon / 100)).toFixed(2));
   }, [subtotal, coupon]);
