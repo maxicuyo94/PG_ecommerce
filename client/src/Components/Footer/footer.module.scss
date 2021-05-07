@@ -5,14 +5,13 @@
     display: flex;
     justify-content: center;
     color: white;
-    border: solid;
-    border-color: #222;
-    //border-width: 1px;
-    //position: absolute;
-    margin-top: 5rem;
-
-    .contents {
-        flex-direction: column;
+    border:solid;
+    border-color:#222;
+    border-width: 1px;
+    // position: absolute;
+    // margin-top: 5rem;
+    .contents{
+        flex-direction: column; 
         width: 80%;
         display: flex;
 

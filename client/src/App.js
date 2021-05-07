@@ -62,7 +62,7 @@ function App() {
 
   return (
     <Layout dark={dark}>
-      <Route exact path="/" component={Banner2} />
+      {/* <Route exact path='/' component={Banner2}/> */}
       <Route exact path="/" render={() => <Home dark={dark} />} />
       <ProtectedRoute exact path="/Access" component={() => <Access />} />
       <ProtectedRoute
