@@ -238,7 +238,7 @@ export const deactivate = (id, userName) => {
         "error"
       );
       await axios.post(
-        `http://localhost:3001/mercadopago/send?userName=${userName}`
+        `https://henrystechstore.web.app/mercadopago/send?userName=${userName}`
       );
     } catch (e) {}
   };
@@ -254,7 +254,7 @@ export const mailActivate = (id, userName) => {
         "success"
       );
       await axios.post(
-        `http://localhost:3001/mercadopago/send?id=${id}&userName=${userName}&status='actived'`
+        `https://henrystechstore.web.app/mercadopago/send?id=${id}&userName=${userName}&status='actived'`
       );
     } catch (e) {}
   };
@@ -271,7 +271,7 @@ export const activate = (email) => {
         .eq("email", email);
       swal("Oops", "Usuario activado", "success");
       await axios.post(
-        `http://localhost:3001/mercadopago/send?email=${email}&status='actived'`
+        `https://henrystechstore.web.app/mercadopago/send?email=${email}&status='actived'`
       );
     } catch (e) {}
   };
@@ -303,7 +303,7 @@ export const activatedUser = (id, name) => {
         .eq("id", id);
       swal("Oops", "usuario activado", "success");
       await axios.post(
-        `http://localhost:3001/mercadopago/send?id=${id}&name=${name}&email=${user.data[0].email}`
+        `https://henrystechstore.web.app/mercadopago/send?id=${id}&name=${name}&email=${user.data[0].email}`
       );
     } catch (e) {}
   };

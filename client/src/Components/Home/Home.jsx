@@ -48,13 +48,13 @@ export function Home(props) {
   let address = `${streetName} ${streetNumber}`;
   let userEmail = lsemail ? lsemail : mpEmail;
   let discountPoints =
-    discount === 0.1
+    discount == 0.1
       ? 2000
-      : discount === 0.2
-        ? 4000
-        : discount === 0.4
-          ? 8000
-          : null;
+      : discount == 0.2
+      ? 4000
+      : discount == 0.4
+      ? 8000
+      : null;
 
   const fecha = new Date();
   // eslint-disable-next-line

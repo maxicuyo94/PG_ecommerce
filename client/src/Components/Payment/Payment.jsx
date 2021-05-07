@@ -107,7 +107,7 @@ export function Payment() {
       swal("Oops", "Haven't stock", "error");
     } else {
       let response = await dispatch(orderPayment(cart, infoUser, discount));
-      response && window.location.replace(response);
+      response && window.location.replace('https://henrystechstore.web.app/');
     }
   };
 
