@@ -3,8 +3,10 @@ $tablet:768px;
 $laptop:992px;
 $pc:1200px;
 $pcxl:1600px;
-$dark:#2C3A40;
+// $dark:#2C3A40;
+$dark:#424242;
 $verde:#9abf15;
+$gris: #222;
 
 
 .container {
@@ -123,7 +125,7 @@ $verde:#9abf15;
     .containerP {
         .title {
             color: #fff !important;
-            background-color: $verde !important;
+            background-color: $gris !important;
             box-shadow: 2px 0px 5px 0px rgba(255, 255, 255, 0.5) !important;
         }
     }

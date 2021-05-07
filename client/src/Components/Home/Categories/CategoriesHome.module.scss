@@ -233,7 +233,7 @@ $gris:#2C3A40;
 .containerDark {
     @extend .container;
 
-    background-color: $gris;
+    background-color: transparent;
     box-shadow: 2px 0px 10px 0px rgba(0, 0, 0, 0.5);
 
     &:hover {
