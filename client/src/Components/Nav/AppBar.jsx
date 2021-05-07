@@ -257,7 +257,7 @@ export default function NavBar({ priority, dark }) {
         {t("bar.6")}
       </MenuItem>
 
-      <BtnLang />
+      {/* <BtnLang /> */}
 
       <MenuItem>
         <IconButton color="primary">
@@ -370,9 +370,9 @@ export default function NavBar({ priority, dark }) {
               </MenuItem>
             )}
 
-            <MenuItem>
+            {/* <MenuItem>
               <BtnLang />
-            </MenuItem>
+            </MenuItem> */}
 
             <MenuItem>
               <IconButton color="primary">
