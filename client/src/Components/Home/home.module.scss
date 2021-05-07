@@ -3,16 +3,18 @@ $tablet:768px;
 $laptop:992px;
 $pc:1200px;
 $pcxl:1600px;
-$dark:#2C3A40;
+// $dark:#2C3A40;
+$dark:#424242;
 $verde:#9abf15;
+$gris: #222;
 
 
 .container {
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 185px);
-    // width: 90%;
-    margin: 0;
+    width: 90%;
+    margin: 1rem auto;
 
     @media screen and (max-width: $tablet) {
 
@@ -83,7 +85,7 @@ $verde:#9abf15;
                     background-color: #222;
                     margin: 0 auto;
                     width: 90%;
-                    height: 2rem;
+                    min-height: 4rem;
                     z-index: 1;
 
                     span {
@@ -123,7 +125,7 @@ $verde:#9abf15;
     .containerP {
         .title {
             color: #fff !important;
-            background-color: $verde !important;
+            background-color: $gris !important;
             box-shadow: 2px 0px 5px 0px rgba(255, 255, 255, 0.5) !important;
         }
     }
