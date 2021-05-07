@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Footer } from "../Footer/Footer";
+import Footer from "../Footer/Footer";
 import Whatsapp from "../Whatsapp/Whatsapp";
 import { MyChatbot } from "../ChatBot/ChatBot";
 import styles from "./layout.module.scss";

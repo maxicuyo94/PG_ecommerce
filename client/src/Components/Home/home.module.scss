@@ -14,7 +14,7 @@ $gris: #222;
     flex-direction: column;
     min-height: calc(100vh - 185px);
     width: 90%;
-    margin: 0 auto;
+    margin: 1rem auto;
 
     @media screen and (max-width: $tablet) {
 
@@ -85,7 +85,7 @@ $gris: #222;
                     background-color: #222;
                     margin: 0 auto;
                     width: 90%;
-                    height: 2rem;
+                    min-height: 4rem;
                     z-index: 1;
 
                     span {
